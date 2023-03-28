@@ -1,5 +1,6 @@
-/** @type {import("tailwindcss").Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+
+export default {
 	content: [
 		"./src/**/*.{html,svelte,js,ts}"
 	],
@@ -16,4 +17,4 @@ module.exports = {
 	future: {
 		hoverOnlyWhenSupported: true
 	}
-};
+} satisfies Config;
