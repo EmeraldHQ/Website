@@ -1,14 +1,13 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
-	content: [
-		"./src/**/*.{html,svelte,js,ts}"
-	],
+	content: ["./src/**/*.{html,svelte,js,ts}"],
 	theme: {
 		extend: {}
 	},
 	plugins: [
-		require("tailwindcss/plugin")(function({ addVariant }) {
+		plugin(function ({ addVariant }) {
 			addVariant("child", "& > *");
 			addVariant("child-hover", "& > *:hover");
 			addVariant("child-focus", "& > *:focus");

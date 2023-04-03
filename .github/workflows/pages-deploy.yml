@@ -3,7 +3,7 @@ name: Build and Deploy to Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -60,6 +60,9 @@ jobs:
 
       - name: 📥 Installing NPM dependencies
         run: pnpm i
+
+      - name: ✨ Checking lint
+        run: pnpm lint
 
       - name: 🔨 Building repo
         run: pnpm build
