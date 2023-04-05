@@ -61,8 +61,11 @@ jobs:
       - name: 📥 Installing NPM dependencies
         run: pnpm i
 
+      - name: ✨ Checking Svelte format
+        run: pnpm check
+
       - name: ✨ Checking lint
-        run: pnpm lint
+        run: pnpm lint:ci
 
       - name: 🔨 Building repo
         run: pnpm build

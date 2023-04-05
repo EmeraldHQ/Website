@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # Check weekly for updates to npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
