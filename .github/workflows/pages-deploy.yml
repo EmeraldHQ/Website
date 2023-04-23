@@ -4,6 +4,7 @@ name: Build and Deploy to Pages
 on:
   push:
     branches: [main]
+  pull_request:
 
   workflow_dispatch:
 
@@ -77,6 +78,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     needs: build
     environment:
       name: github-pages

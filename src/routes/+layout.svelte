@@ -17,7 +17,7 @@
 		<a href=".">About Us</a>
 		<a href=".">Our Work</a>
 		<a href=".">Who we are</a>
-		<a href="/contact" class="border-primary border-2 text-primary rounded-lg py-1 px-3">Contact</a>
+		<a href="/contact" class="font-medium border-primary border-2 text-primary rounded-lg py-1 px-3">Contact</a>
 	</div>
 </nav>
 
