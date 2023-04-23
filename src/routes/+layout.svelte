@@ -23,7 +23,7 @@
 		<a href=".">Our Work</a>
 		<a href=".">Who we are</a>
 		<a
-			href="/contact"
+			href="."
 			class="font-medium border-primary border-2 text-primary rounded-lg py-1 px-3"
 		>
 			Contact
