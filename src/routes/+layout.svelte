@@ -7,7 +7,7 @@
 <svelte:window bind:scrollY />
 
 <nav
-	class="flex items-center justify-center px-20 py-5 sticky top-0 w-full z-10 backdrop-blur-sm backdrop-saturate-150"
+	class="flex items-center justify-center px-20 py-5 sticky top-0 w-full z-10 backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
 	class:shadow-navbar-bottom={scrollY > 0}
 >
 	<a href="/" class="mr-auto">
@@ -18,7 +18,9 @@
 			class="h-8 duration-300 hover:opacity-70"
 		/>
 	</a>
-	<div class="flex items-center gap-10 child:duration-200 child-hover:opacity-50">
+	<div
+		class="flex items-center gap-10 child:transition-opacity child:duration-200 child-hover:opacity-50"
+	>
 		<a href=".">About Us</a>
 		<a href=".">Our Work</a>
 		<a href=".">Who we are</a>
