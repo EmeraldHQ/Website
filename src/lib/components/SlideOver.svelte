@@ -40,7 +40,7 @@
 						leaveFrom="translate-x-0"
 						leaveTo="translate-x-full"
 					>
-						<!-- FIXME: close on click + this h-full shouldn't be -->
+						<!-- FIXME: close on click not working for some reason (lib bug or height/placement issue?) -->
 						<div class="pointer-events-auto w-screen max-w-md h-full">
 							<div class="flex h-full flex-col overflow-y-scroll bg-secondary shadow-xl">
 								<div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
