@@ -1,10 +1,36 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
 	content: ["./src/**/*.{html,svelte,js,ts}"],
 	theme: {
-		extend: {}
+		screens: {
+			xs: "475px",
+			...defaultTheme.screens
+		},
+		extend: {
+			fontFamily: {
+				sans: ["Chillax", ...defaultTheme.fontFamily.sans]
+			},
+			colors: {
+				dominant: "#30d158"
+			},
+			borderColor: {
+				primary: "white"
+			},
+			textColor: {
+				primary: "white",
+				inverted: "black"
+			},
+			backgroundColor: {
+				primary: "black",
+				secondary: "#1c1c1e"
+			},
+			boxShadow: {
+				"navbar-bottom": "inset 0 -1px 0 0 hsla(0, 0%, 100%, 0.1)"
+			}
+		}
 	},
 	plugins: [
 		plugin(function ({ addVariant }) {
