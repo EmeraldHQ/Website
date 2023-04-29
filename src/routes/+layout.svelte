@@ -117,7 +117,7 @@
 
 <slot />
 
-<style>
+<style lang="postcss">
 	.nav-items-container > * {
 		@apply relative;
 	}

@@ -1,7 +1,5 @@
 import type { Config } from "tailwindcss";
-// @ts-expect-error: TailwindCSS is bad typed for this
 import plugin from "tailwindcss/plugin";
-// @ts-expect-error: TailwindCSS is bad typed for this
 import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
