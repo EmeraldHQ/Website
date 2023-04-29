@@ -22,8 +22,8 @@
 				to life.
 			</div>
 			<div class="pt-10 scale-110 origin-bottom-left">
-				<Button class="hover-child:translate-x-1"
-					>Contact Us
+				<Button class="hover-child:translate-x-1">
+					Contact Us
 					<ArrowRightIcon class="w-6 h-6 transition-transform duration-700" />
 				</Button>
 				<Button type="secondary">See our work</Button>
