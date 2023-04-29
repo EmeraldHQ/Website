@@ -26,9 +26,6 @@ export default {
 			backgroundColor: {
 				primary: "black",
 				secondary: "#1c1c1e"
-			},
-			boxShadow: {
-				"navbar-bottom": "inset 0 -1px 0 0 hsla(0, 0%, 100%, 0.1)"
 			}
 		}
 	},

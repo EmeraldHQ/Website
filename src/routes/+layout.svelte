@@ -1,26 +1,38 @@
 <script lang="ts">
 	import "../app.css";
+	import { fade } from "svelte/transition";
 	import { MenuIcon } from "@rgossiaux/svelte-heroicons/solid";
 	import Button from "$ui/Button.svelte";
 	import SlideOver from "$components/SlideOver.svelte";
+	import resolveConfig from "tailwindcss/resolveConfig";
+	import tailwindConfig from "../../tailwind.config";
 
+	// Tailwind
+	const fullTailwindConfig = resolveConfig(tailwindConfig);
+	const tailwindXSScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
+
+	// Config
 	const navbarItems = [
 		{ name: "About Us", href: "#abc" },
 		{ name: "Our Work", href: "#def" },
 		{ name: "Who we are", href: "#abc" },
 		{ name: "Contact Us", href: "." }
 	];
+	const scrollDistanceContactButton = 150;
+	const scrollDistanceLogoSwitch = 300;
 
+	// Functions
 	function scrollTo(selector: string) {
-		const el = document.querySelector(selector);
-		if (el) {
-			el.scrollIntoView({ behavior: "smooth" });
+		const element = document.querySelector(selector);
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth" });
 		}
 	}
 
+	// Bindings & variables
 	let innerWidth = 0;
 	let scrollY = 0;
-	$: showButton = scrollY >= 150;
+	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
 </script>
 
@@ -28,63 +40,72 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<nav
-	class="flex items-center justify-center px-5 sm:px-10 md:px-20 py-5 sticky top-0 w-full h-20 z-10 backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
-	class:shadow-navbar-bottom={scrollY > 0}
->
-	<a href="/" class="mr-auto">
-		<img
-			loading="lazy"
-			src="/logo-dark.svg"
-			alt="Renew logo"
-			class="h-8 duration-300 hover:opacity-70"
-		/>
-	</a>
-	<div class="flex items-center gap-5 sm:gap-10">
-		<div
-			class="flex items-center gap-10 ease-out duration-700 max-lg:hidden nav-items-container"
-			class:-mr-40={!showButton}
+<div class="top-0 sticky w-full z-10 pt-2 sm:pt-5">
+	<nav
+		class="flex items-center justify-center px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
+	>
+		<a
+			href="/"
+			class="mr-auto grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
 		>
-			{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
-				<button
-					on:click={() => {
-						scrollTo(item.href);
-					}}
-				>
-					{item.name}
-				</button>
-			{/each}
+			{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXSScreen)}
+				<img
+					in:fade={{ delay: 250 }}
+					out:fade
+					src="/favicon.svg"
+					alt="Renew logo - small"
+					class="h-8 duration-300 hover:opacity-70"
+				/>
+			{:else}
+				<img
+					in:fade={{ delay: 250 }}
+					out:fade
+					src="/logo-dark.svg"
+					alt="Renew logo"
+					class="h-8 duration-300 hover:opacity-70"
+				/>
+			{/if}
+		</a>
+		<div class="flex items-center gap-5 sm:gap-10">
+			<div
+				class="flex items-center gap-10 ease-out duration-700 max-lg:hidden nav-items-container"
+				class:-mr-40={!showButton}
+			>
+				{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
+					<button on:click={() => scrollTo(item.href)}>
+						{item.name}
+					</button>
+				{/each}
+			</div>
+			<span
+				id="contact-us"
+				class="transition-opacity max-xs:hidden"
+				class:opacity-0={!showButton}
+				class:duration-200={!showButton}
+				class:duration-1000={showButton}
+				class:pointer-events-none={!showButton}
+			>
+				<Button type="secondary">Contact Us</Button>
+			</span>
+			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
+				<MenuIcon class="w-8 h-8" />
+			</button>
 		</div>
-		<span
-			id="contact-us"
-			class="transition-opacity max-xs:hidden"
-			class:opacity-0={!showButton}
-			class:duration-200={!showButton}
-			class:duration-1000={showButton}
-			class:pointer-events-none={!showButton}
-		>
-			<Button type="secondary">Contact Us</Button>
-		</span>
-		<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
-			<MenuIcon class="w-8 h-8" />
-		</button>
-	</div>
-</nav>
+	</nav>
+</div>
 
 <!-- Responsive slide-over -->
 <SlideOver bind:show={showSlideOver}>
 	<svelte:fragment slot="content">
 		<div
-			class="h-full flex flex-col justify-center items-center gap-20 text-5xl font-medium nav-items-container child:after:!h-2 child:after:!-bottom-3"
+			class="h-full flex flex-col justify-center items-center gap-20 text-6xl font-medium nav-items-container child:after:!h-2 child:after:!-bottom-3"
 		>
-			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= 475)) as item}
+			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXSScreen)) as item}
 				<button
 					class:text-dominant={!item.href.startsWith("#")}
 					on:click={() => {
 						showSlideOver = false;
-						setTimeout(() => {
-							scrollTo(item.href);
-						}, 300);
+						setTimeout(() => scrollTo(item.href), 300);
 					}}
 				>
 					{item.name}
@@ -96,7 +117,7 @@
 
 <slot />
 
-<style>
+<style lang="postcss">
 	.nav-items-container > * {
 		@apply relative;
 	}
