@@ -1,14 +1,21 @@
 <script lang="ts">
-	import { ArrowRightIcon } from "@rgossiaux/svelte-heroicons/solid";
+	import { ArrowDownIcon, ArrowRightIcon } from "@rgossiaux/svelte-heroicons/solid";
 	import Button from "$ui/Button.svelte";
 	import Section from "$components/Section.svelte";
+
+	function scrollTo(selector: string) {
+		const element = document.querySelector(selector);
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth" });
+		}
+	}
 </script>
 
 <svelte:head>
 	<title>Home | Renew</title>
 </svelte:head>
 
-<main class="h-[80vh] flex items-center justify-center">
+<main class="h-[90dvh] flex flex-col items-center justify-center">
 	<div
 		class="max-md:flex max-md:flex-col max-md:px-10 md:grid md:grid-cols-2 h-fit m-auto child:sm:px-10 child:py-10"
 	>
@@ -32,6 +39,12 @@
 		<div class="">
 			<!-- Upcoming -->
 		</div>
+	</div>
+	<div class="pb-10">
+		<ArrowDownIcon
+			class="w-10 h-10 p-1.5 bg-dominant text-black rounded-full cursor-pointer duration-500 hover:scale-110"
+			on:click={() => scrollTo("" /* TODO: Add section selector */)}
+		/>
 	</div>
 </main>
 
