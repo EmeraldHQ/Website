@@ -2,6 +2,7 @@
 	import { ArrowDownIcon, ArrowRightIcon } from "@rgossiaux/svelte-heroicons/solid";
 	import Button from "$ui/Button.svelte";
 	import Section from "$components/Section.svelte";
+	import MagneticElement from "$components/MagneticElement.svelte";
 
 	function scrollTo(selector: string) {
 		const element = document.querySelector(selector);
@@ -40,12 +41,32 @@
 			<!-- Upcoming -->
 		</div>
 	</div>
-	<div class="pb-10">
+	<MagneticElement
+		class="pb-10 transition-transform duration-500"
+		on:in_zone={(e) => {
+			const element = e.detail.element;
+			element.style.transitionDuration = "500ms";
+			setTimeout(() => {
+				element.style.removeProperty("transition-duration");
+			}, 500);
+			element.parentElement.style.transform = "scale(1.2)";
+		}}
+		on:out_zone={(e) => {
+			const element = e.detail.element;
+			element.style.transitionDuration = "500ms";
+			element.parentElement.style.transform = "scale(1)";
+		}}
+	>
 		<ArrowDownIcon
-			class="w-10 h-10 p-1.5 bg-dominant text-black rounded-full cursor-pointer duration-500 hover:scale-110"
+			class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-black rounded-full cursor-pointer
+			hover:text-dominant hover:bg-inherit hover:border-dominant"
+			style="
+				transition-property: transform;
+				transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			"
 			on:click={() => scrollTo("" /* TODO: Add section selector */)}
 		/>
-	</div>
+	</MagneticElement>
 </main>
 
 <Section id="">
