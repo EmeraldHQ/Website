@@ -1,18 +1,22 @@
 <!-- Created from https://github.com/andrewwoan/magnetic-button-effect-tutorial-01 -->
 <script lang="ts">
-	import { useId } from "$lib/ts/id";
 	import { createEventDispatcher, onMount } from "svelte";
+	import { useId } from "$lib/ts/id";
 
-	const elementId = `magnetic-element-${useId()}`;
+	// Constants
+	const elementId = `svelte-magnetic-element-${useId()}`;
 	const dispatch = createEventDispatcher();
 
+	// Configuration
+	export let triggerArea = 200;
+	export let interpolationFactor = 0.8;
+
+	// Magnetic Object
 	class MagneticObject {
 		mousePosition: { x: number; y: number };
 		domElement: HTMLElement;
 		boundingClientRect: DOMRect;
-		triggerArea: number;
 		inArea: boolean;
-		interpolationFactor: number;
 		lerpingData: {
 			x: { current: number; target: number };
 			y: { current: number; target: number };
@@ -21,8 +25,6 @@
 		constructor(domElement: HTMLElement) {
 			this.domElement = domElement;
 			this.boundingClientRect = this.domElement.getBoundingClientRect();
-			this.triggerArea = 200;
-			this.interpolationFactor = 0.8;
 
 			this.mousePosition = { x: 0, y: 0 };
 			this.inArea = false;
@@ -36,7 +38,7 @@
 			window.addEventListener("resize", () => {
 				this.boundingClientRect = this.domElement.getBoundingClientRect();
 			});
-			window.addEventListener("mousemove", (e) => {
+			document.addEventListener("mousemove", (e) => {
 				this.mousePosition.x = e.pageX;
 				this.mousePosition.y = e.pageY;
 				this.render();
@@ -53,7 +55,7 @@
 
 			let targetHolder = { x: 0, y: 0 };
 
-			if (distanceFromMouseToCenter < this.triggerArea) {
+			if (distanceFromMouseToCenter < triggerArea) {
 				if (!this.inArea) {
 					this.inArea = true;
 					this.domElement.classList.add("in-zone");
@@ -76,7 +78,7 @@
 			this.lerpingData["y"].target = targetHolder.y;
 
 			for (const item of Object.values(this.lerpingData)) {
-				const lerp = this.lerp(item.current, item.target, this.interpolationFactor);
+				const lerp = this.lerp(item.current, item.target, interpolationFactor);
 				item.current = Math.abs(lerp) < 0.1 ? 0 : lerp;
 			}
 

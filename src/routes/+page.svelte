@@ -1,8 +1,15 @@
 <script lang="ts">
-	import { ArrowDownIcon, ArrowRightIcon } from "@rgossiaux/svelte-heroicons/solid";
+	import {
+		ArrowDownIcon,
+		ArrowRightIcon,
+		CodeBracketIcon,
+		DevicePhoneMobileIcon
+	} from "@babeard/svelte-heroicons/solid";
+	import { SparklesIcon, WindowIcon } from "@babeard/svelte-heroicons/outline";
 	import Button from "$ui/Button.svelte";
 	import Section from "$components/Section.svelte";
 	import MagneticElement from "$components/MagneticElement.svelte";
+	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
 
 	function scrollTo(selector: string) {
 		const element = document.querySelector(selector);
@@ -16,12 +23,11 @@
 	<title>Home | Renew</title>
 </svelte:head>
 
-<main class="h-[90dvh] flex flex-col items-center justify-center">
-	<div
-		class="max-md:flex max-md:flex-col max-md:px-10 md:grid md:grid-cols-2 h-fit m-auto child:sm:px-10 child:py-10"
-	>
+<main class="h-[90dvh] flex flex-col items-center justify-center overflow-x-hidden">
+	<div class="max-md:flex max-md:flex-col max-md:px-10 md:grid md:grid-cols-2 h-fit m-auto">
+		<!-- Left part -->
 		<div
-			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto"
+			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto sm:px-10 py-10"
 		>
 			<div>When your ideas</div>
 			<div>become <span class="text-dominant">reality</span>.</div>
@@ -37,10 +43,36 @@
 				<Button type="secondary">See our work</Button>
 			</div>
 		</div>
-		<div class="">
-			<!-- Upcoming -->
-		</div>
+		<!-- Right part -->
+		<Mouse3DTilting
+			defaultX={13}
+			defaultY={-30}
+			intensity={0.05}
+			class="md:ml-20 aspect-square flex justify-center items-center relative child:absolute
+			before:content-[''] before:absolute before:-inset-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:rounded-full before:-translate-z-40 before:blur-lg before:opacity-20"
+		>
+			<WindowIcon class="text-dominant" />
+			<div
+				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[5000px]
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-30"
+			>
+				<CodeBracketIcon />
+			</div>
+			<div
+				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[5000px]
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-30"
+			>
+				<SparklesIcon />
+			</div>
+			<div
+				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[5000px]
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-30"
+			>
+				<DevicePhoneMobileIcon />
+			</div>
+		</Mouse3DTilting>
 	</div>
+	<!-- Bottom arrow -->
 	<MagneticElement
 		class="pb-10 transition-transform duration-500"
 		on:in_zone={(e) => {

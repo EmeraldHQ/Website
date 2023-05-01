@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { XIcon } from "@rgossiaux/svelte-heroicons/outline";
+	import { XMarkIcon } from "@babeard/svelte-heroicons/outline";
 	import {
 		Dialog,
 		DialogOverlay,
@@ -51,7 +51,7 @@
 										<div class="ml-3 flex h-7 items-center">
 											<button type="button" class="-m-2 p-2 hover:opacity-75" on:click={close}>
 												<span class="sr-only">Close panel</span>
-												<XIcon class="h-6 w-6" aria-hidden="true" />
+												<XMarkIcon class="h-6 w-6" aria-hidden="true" />
 											</button>
 										</div>
 									</div>

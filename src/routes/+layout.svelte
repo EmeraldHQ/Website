@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import { fade } from "svelte/transition";
-	import { MenuIcon } from "@rgossiaux/svelte-heroicons/solid";
+	import { Bars3Icon } from "@babeard/svelte-heroicons/solid";
 	import Button from "$ui/Button.svelte";
 	import SlideOver from "$components/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -88,7 +88,7 @@
 				<Button type="secondary">Contact Us</Button>
 			</span>
 			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
-				<MenuIcon class="w-8 h-8" />
+				<Bars3Icon class="w-8 h-8" />
 			</button>
 		</div>
 	</nav>

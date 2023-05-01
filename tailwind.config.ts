@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 import defaultTheme from "tailwindcss/defaultTheme";
+import tailwindcss3d from "tailwindcss-3d";
 
 export default {
 	content: ["./src/**/*.{html,svelte,js,ts}"],
@@ -38,7 +39,8 @@ export default {
 			addVariant("child-hover", "& > *:hover");
 			addVariant("child-focus", "& > *:focus");
 			addVariant("hover-child", "&:hover > *");
-		})
+		}),
+		tailwindcss3d
 	],
 	future: {
 		hoverOnlyWhenSupported: true
