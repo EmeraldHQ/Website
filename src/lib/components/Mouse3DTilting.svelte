@@ -67,7 +67,7 @@
 	style="
 				--rotateX: 0deg;
 				--rotateY: 0deg;
-				transform: perspective(5000px)
+				transform: perspective(312rem)
 									rotateX(calc({defaultX}deg + var(--rotateY)))
 									rotateY(calc({defaultY}deg + var(--rotateX)));
 				transform-style: preserve-3d;

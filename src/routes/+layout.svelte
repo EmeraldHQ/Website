@@ -18,8 +18,8 @@
 		{ name: "Who we are", href: "#abc" },
 		{ name: "Contact Us", href: "." }
 	];
-	const scrollDistanceContactButton = 150;
-	const scrollDistanceLogoSwitch = 300;
+	const scrollDistanceContactButton = 800;
+	const scrollDistanceLogoSwitch = 900;
 
 	// Functions
 	function scrollTo(selector: string) {
@@ -40,7 +40,7 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<div class="top-0 flex justify-center sticky w-full z-10 pt-2 sm:pt-5">
+<div class="top-0 flex justify-center sticky w-full z-10 pt-10">
 	<nav
 		class="flex items-center justify-center w-full max-w-large-screen px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
 	>
@@ -118,6 +118,10 @@
 <slot />
 
 <style lang="postcss">
+	:global(body) {
+		@apply bg-primary text-primary;
+	}
+
 	.nav-items-container > * {
 		@apply relative;
 	}

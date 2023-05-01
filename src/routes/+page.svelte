@@ -23,9 +23,10 @@
 	<title>Home | Renew</title>
 </svelte:head>
 
-<main class="h-[90dvh] flex flex-col items-center justify-center overflow-x-hidden">
+<main class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
 	<div
-		class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32"
+		class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32
+			before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
 	>
 		<!-- Left part -->
 		<div
@@ -50,24 +51,23 @@
 			defaultX={13}
 			defaultY={-30}
 			intensity={0.05}
-			class="lg:ml-20 aspect-square flex justify-center items-center relative child:absolute
-			before:content-[''] before:absolute before:-inset-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:rounded-full before:-translate-z-40 before:blur-lg before:opacity-20"
+			class="lg:ml-20 aspect-square flex max-h-full justify-center items-center relative child:absolute"
 		>
 			<WindowIcon class="text-dominant" />
 			<div
-				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[5000px]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-30"
+				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[312rem]
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-50"
 			>
 				<CodeBracketIcon />
 			</div>
 			<div
-				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[5000px]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-30"
+				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[312rem]
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-40"
 			>
 				<SparklesIcon />
 			</div>
 			<div
-				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[5000px]
+				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[312rem]
 				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-30"
 			>
 				<DevicePhoneMobileIcon />
