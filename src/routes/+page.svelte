@@ -24,7 +24,9 @@
 </svelte:head>
 
 <main class="h-[90dvh] flex flex-col items-center justify-center overflow-x-hidden">
-	<div class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32">
+	<div
+		class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32"
+	>
 		<!-- Left part -->
 		<div
 			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto"
