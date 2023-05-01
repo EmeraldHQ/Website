@@ -24,10 +24,10 @@
 </svelte:head>
 
 <main class="h-[90dvh] flex flex-col items-center justify-center overflow-x-hidden">
-	<div class="max-md:flex max-md:flex-col max-md:px-10 md:grid md:grid-cols-2 h-fit m-auto">
+	<div class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32">
 		<!-- Left part -->
 		<div
-			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto sm:px-10 py-10"
+			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto"
 		>
 			<div>When your ideas</div>
 			<div>become <span class="text-dominant">reality</span>.</div>
@@ -48,7 +48,7 @@
 			defaultX={13}
 			defaultY={-30}
 			intensity={0.05}
-			class="md:ml-20 aspect-square flex justify-center items-center relative child:absolute
+			class="lg:ml-20 aspect-square flex justify-center items-center relative child:absolute
 			before:content-[''] before:absolute before:-inset-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:rounded-full before:-translate-z-40 before:blur-lg before:opacity-20"
 		>
 			<WindowIcon class="text-dominant" />
