@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {
 		ArrowDownIcon,
-		ArrowRightIcon,
+		ChevronRightIcon,
 		CodeBracketIcon,
 		DevicePhoneMobileIcon
 	} from "@babeard/svelte-heroicons/solid";
@@ -41,15 +41,15 @@
 			<div class="pt-10 scale-110 origin-bottom-left">
 				<Button class="hover-child:translate-x-1">
 					Contact Us
-					<ArrowRightIcon class="w-6 h-6 transition-transform duration-700" />
+					<ChevronRightIcon class="w-6 h-6 transition-transform duration-500" />
 				</Button>
 				<Button type="secondary">See our work</Button>
 			</div>
 		</div>
 		<!-- Right part -->
 		<Mouse3DTilting
-			defaultX={13}
-			defaultY={-30}
+			initialX={13}
+			initialY={-30}
 			intensity={0.05}
 			class="lg:ml-20 aspect-square flex max-h-full justify-center items-center relative child:absolute"
 		>
