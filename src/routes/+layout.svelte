@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import { fade } from "svelte/transition";
-	import { MenuIcon } from "@rgossiaux/svelte-heroicons/solid";
+	import { Bars3Icon } from "@babeard/svelte-heroicons/solid";
 	import Button from "$ui/Button.svelte";
 	import SlideOver from "$components/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -18,8 +18,8 @@
 		{ name: "Who we are", href: "#abc" },
 		{ name: "Contact Us", href: "." }
 	];
-	const scrollDistanceContactButton = 150;
-	const scrollDistanceLogoSwitch = 300;
+	const scrollDistanceContactButton = 800;
+	const scrollDistanceLogoSwitch = 900;
 
 	// Functions
 	function scrollTo(selector: string) {
@@ -40,9 +40,9 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<div class="top-0 sticky w-full z-10 pt-2 sm:pt-5">
+<div class="top-0 flex justify-center sticky w-full z-10 pt-10">
 	<nav
-		class="flex items-center justify-center px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
+		class="flex items-center justify-center w-full max-w-large-screen px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
 	>
 		<a
 			href="/"
@@ -88,7 +88,7 @@
 				<Button type="secondary">Contact Us</Button>
 			</span>
 			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
-				<MenuIcon class="w-8 h-8" />
+				<Bars3Icon class="w-8 h-8" />
 			</button>
 		</div>
 	</nav>
@@ -118,6 +118,10 @@
 <slot />
 
 <style lang="postcss">
+	:global(body) {
+		@apply bg-primary text-primary;
+	}
+
 	.nav-items-container > * {
 		@apply relative;
 	}
