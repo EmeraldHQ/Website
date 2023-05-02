@@ -8,8 +8,8 @@
 	let isWorking = false;
 
 	// Svelte Props
-	export let defaultX = 0;
-	export let defaultY = 0;
+	export let initialX = 0;
+	export let initialY = 0;
 	export let intensity = 0.5;
 
 	// Rotate Element
@@ -68,8 +68,8 @@
 				--rotateX: 0deg;
 				--rotateY: 0deg;
 				transform: perspective(312rem)
-									rotateX(calc({defaultX}deg + var(--rotateY)))
-									rotateY(calc({defaultY}deg + var(--rotateX)));
+									rotateX(calc({initialX}deg + var(--rotateY)))
+									rotateY(calc({initialY}deg + var(--rotateX)));
 				transform-style: preserve-3d;
 	"
 >
