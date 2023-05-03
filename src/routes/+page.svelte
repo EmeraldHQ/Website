@@ -5,7 +5,7 @@
 		CodeBracketIcon,
 		DevicePhoneMobileIcon,
 		CloudIcon,
-		SwatchIcon,
+		SwatchIcon
 	} from "@babeard/svelte-heroicons/solid";
 	import { SparklesIcon, WindowIcon } from "@babeard/svelte-heroicons/outline";
 	import Button from "$ui/Button.svelte";
@@ -21,11 +21,25 @@
 	}
 
 	let processSections = [
-		{ title: 'Design', icon: SwatchIcon, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla.' },
-		{ title: 'Development', icon: CodeBracketIcon, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla.' },
-		{ title: 'Hosting', icon: CloudIcon, description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla.' }
+		{
+			title: "Design",
+			icon: SwatchIcon,
+			description:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+		},
+		{
+			title: "Development",
+			icon: CodeBracketIcon,
+			description:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+		},
+		{
+			title: "Hosting",
+			icon: CloudIcon,
+			description:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+		}
 	];
-
 </script>
 
 <svelte:head>
@@ -114,10 +128,9 @@
 <Section id="process">
 	<svelte:fragment slot="title" />
 
-	<div 
-		 
-		class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start mb-8 
-		lg:flex-row lg:flex-wrap lg:justify-center lg:gap-8 lg:mb-0 lg:overflow-hidden" 
+	<div
+		class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start mb-8
+		lg:flex-row lg:flex-wrap lg:justify-center lg:gap-8 lg:mb-0 lg:overflow-hidden"
 	>
 		{#each processSections as { title, icon, description }}
 			<div class="flex-none w-fit xl:w-1/4 mr-8 md:pb-4">
@@ -132,4 +145,3 @@
 		{/each}
 	</div>
 </Section>
-
