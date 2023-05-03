@@ -23,6 +23,9 @@ export default {
 			borderColor: {
 				primary: "white"
 			},
+			boxShadowColor: {
+				primary: "black"
+			},
 			textColor: {
 				primary: "white",
 				inverted: "black"

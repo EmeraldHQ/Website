@@ -9,7 +9,7 @@
 		border-transparent border-[1px]
 		py-1 px-3
 		inline-flex items-center gap-2
-		rounded-xl transition-colors duration-300
+		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
 		hover:bg-inherit hover:border-dominant hover:text-dominant
 	  {$$props.class}"
 	>
@@ -21,7 +21,7 @@
 		border-dominant border-[1px]
 		py-1 px-3
 		inline-flex items-center gap-2
-		rounded-xl transition-colors duration-300
+		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
 		hover:border-primary hover:text-primary
 	  {$$props.class}"
 	>
