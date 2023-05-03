@@ -25,20 +25,19 @@
 
 <main class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
 	<div
-		class="max-md:flex max-md:flex-col max-md:px-10 md:grid max-md:gap-10 md:items-center md:grid-cols-2 h-fit m-auto px-32
+		class="grid items-center grid-cols-1 xl:grid-cols-2 h-fit m-auto px-10 md:px-32
 			before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
 	>
 		<!-- Left part -->
 		<div
-			class="text-4xl sm:text-5xl lg:text-[5rem] font-medium flex flex-col justify-center sm:mx-auto"
+			class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl font-medium flex flex-col justify-center sm:mx-auto"
 		>
-			<div>When your ideas</div>
-			<div>become <span class="text-dominant">reality</span>.</div>
-			<div class="text-xl font-normal pt-10 text-gray-400">
-				From a fast and modern website to a cross-platform<br />mobile app, let's bring your project
-				to life.
-			</div>
-			<div class="pt-10 scale-110 origin-bottom-left">
+			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
+			<h2 class="text-xl font-normal pt-10 text-gray-400">
+				Powered by cutting-edge technologies, let's build<br />your next website or cross-platform
+				mobile app.
+			</h2>
+			<div class="flex flex-col gap-5 child:max-w-fit xs:block pt-10 scale-110 origin-bottom-left">
 				<Button class="hover-child:translate-x-1">
 					Contact Us
 					<ChevronRightIcon class="w-6 h-6 transition-transform duration-500" />
@@ -51,7 +50,7 @@
 			initialX={13}
 			initialY={-30}
 			intensity={0.05}
-			class="lg:ml-20 aspect-square flex max-h-full justify-center items-center relative child:absolute"
+			class="hidden xl:flex lg:ml-20 aspect-square max-h-full justify-center items-center relative child:absolute"
 		>
 			<WindowIcon class="text-dominant" />
 			<div
