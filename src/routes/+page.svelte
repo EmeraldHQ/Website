@@ -34,8 +34,8 @@
 		>
 			<div>Your <span class="text-dominant">super-fast</span><br />digital project.</div>
 			<div class="text-xl font-normal pt-10 text-gray-400">
-				Powered by cutting-edge technologies, let's build<br />your next website or cross-platform mobile
-				app.
+				Powered by cutting-edge technologies, let's build<br />your next website or cross-platform
+				mobile app.
 			</div>
 			<div class="flex flex-col gap-5 child:max-w-fit xs:block pt-10 scale-110 origin-bottom-left">
 				<Button class="hover-child:translate-x-1">
