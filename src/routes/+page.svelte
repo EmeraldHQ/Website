@@ -34,8 +34,8 @@
 		>
 			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
 			<h2 class="text-xl font-normal pt-10 text-gray-400">
-				Powered by cutting-edge technologies, let's build<br />your next website or cross-platform
-				mobile app.
+				Powered by cutting-edge technologies, let's build<br />the web application you've been
+				dreaming of.
 			</h2>
 			<div class="flex flex-col gap-5 child:max-w-fit xs:block pt-10 scale-110 origin-bottom-left">
 				<Button class="hover-child:translate-x-1">
@@ -55,19 +55,19 @@
 			<WindowIcon class="text-dominant" />
 			<div
 				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-50"
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-[0.35]"
 			>
 				<CodeBracketIcon />
 			</div>
 			<div
 				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-40"
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-50"
 			>
 				<SparklesIcon />
 			</div>
 			<div
 				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-30"
+				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-[0.55]"
 			>
 				<DevicePhoneMobileIcon />
 			</div>
