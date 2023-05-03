@@ -32,7 +32,7 @@
 		<div
 			class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl font-medium flex flex-col justify-center sm:mx-auto"
 		>
-			<h1>Your <span class="text-dominant">super-fast</span><br />digital project.</h1>
+			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
 			<h2 class="text-xl font-normal pt-10 text-gray-400">
 				Powered by cutting-edge technologies, let's build<br />your next website or cross-platform
 				mobile app.
