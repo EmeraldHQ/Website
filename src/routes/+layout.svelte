@@ -1,11 +1,12 @@
 <script lang="ts">
 	import "../app.css";
 	import { fade } from "svelte/transition";
-	import { Bars3Icon } from "@babeard/svelte-heroicons/solid";
+	import { Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import Button from "$ui/Button.svelte";
 	import SlideOver from "$components/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
+	import { Github } from "@inqling/svelte-icons/simple-icons";
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
@@ -88,7 +89,7 @@
 				<Button type="secondary">Contact Us</Button>
 			</span>
 			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
-				<Bars3Icon class="w-8 h-8" />
+				<Bars3 class="w-8 h-8" />
 			</button>
 		</div>
 	</nav>
@@ -116,6 +117,65 @@
 </SlideOver>
 
 <slot />
+
+<footer class="p-24 border-t border-gray-500 text-gray-400">
+	<!-- Main grid -->
+	<div class="grid grid-cols-5">
+		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
+			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
+		</a>
+		<div>
+			<h4 class="text-primary mb-5">Solutions</h4>
+			<div class="flex flex-col gap-2">
+				<a href="/">Showcase website</a>
+				<a href="/">Comprehensive web app</a>
+				<a href="/">E-commerce</a>
+				<a href="/">Legacy website rework</a>
+			</div>
+		</div>
+		<div>
+			<h4 class="text-primary mb-5">Pages</h4>
+			<div class="flex flex-col gap-2">
+				<a href="/">Process</a>
+				<a href="/">Solutions</a>
+				<a href="/">Technologies</a>
+			</div>
+		</div>
+		<div>
+			<h4 class="text-primary mb-5">Company</h4>
+			<div class="flex flex-col gap-2">
+				<a href="/">About</a>
+				<a href="/">Contact</a>
+				<a href="/">Team</a>
+				<a href="/">Environment</a>
+				<a href="/">Open Source</a>
+			</div>
+		</div>
+		<div>
+			<h4 class="text-primary mb-5">Legal</h4>
+			<div class="flex flex-col gap-2">
+				<a href="/">Privacy Policy</a>
+				<a href="/">Terms of Service</a>
+			</div>
+		</div>
+	</div>
+	<!-- Bottom links & settings -->
+	<div class="mt-10 flex items-end">
+		<!-- Left -->
+		<div>
+			© {new Date().getFullYear()} Renew
+			<div
+				class="mt-5 divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
+			>
+				<a href="https://github.com/RenewHQ/Website">
+					<Github class="w-8 h-8" />
+				</a>
+			</div>
+		</div>
+		<!-- Right -->
+		<div class="ml-auto">Language • Dark mode • Scroll to top?</div>
+	</div>
+</footer>
 
 <style lang="postcss">
 	:global(body) {

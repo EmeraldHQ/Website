@@ -1,11 +1,11 @@
 <script lang="ts">
 	import {
-		ArrowDownIcon,
-		ChevronRightIcon,
-		CodeBracketIcon,
-		DevicePhoneMobileIcon
-	} from "@babeard/svelte-heroicons/solid";
-	import { SparklesIcon, WindowIcon } from "@babeard/svelte-heroicons/outline";
+		ArrowDown,
+		ChevronRight,
+		CodeBracket,
+		DevicePhoneMobile
+	} from "@inqling/svelte-icons/heroicon-24-solid";
+	import { Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
 	import Button from "$ui/Button.svelte";
 	import Section from "$components/Section.svelte";
 	import MagneticElement from "$components/MagneticElement.svelte";
@@ -40,7 +40,7 @@
 			<div class="flex flex-col gap-5 child:max-w-fit xs:block pt-10 scale-110 origin-bottom-left">
 				<Button class="hover-child:translate-x-1">
 					Contact Us
-					<ChevronRightIcon class="w-6 h-6 transition-transform duration-500" />
+					<ChevronRight class="w-6 h-6 transition-transform duration-500" />
 				</Button>
 				<Button type="secondary">See our work</Button>
 			</div>
@@ -52,24 +52,24 @@
 			intensity={0.05}
 			class="hidden xl:flex lg:ml-20 aspect-square max-h-full justify-center items-center relative child:absolute"
 		>
-			<WindowIcon class="text-dominant" />
+			<Window class="text-dominant w-full h-full" />
 			<div
 				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[312rem]
 				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-[0.35]"
 			>
-				<CodeBracketIcon />
+				<CodeBracket class="w-full h-full" />
 			</div>
 			<div
 				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[312rem]
 				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-50"
 			>
-				<SparklesIcon />
+				<Sparkles class="w-full h-full" />
 			</div>
 			<div
 				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[312rem]
 				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-[0.55]"
 			>
-				<DevicePhoneMobileIcon />
+				<DevicePhoneMobile class="w-full h-full" />
 			</div>
 		</Mouse3DTilting>
 	</div>
@@ -90,7 +90,7 @@
 			element.parentElement.style.transform = "scale(1)";
 		}}
 	>
-		<ArrowDownIcon
+		<ArrowDown
 			class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-black rounded-full cursor-pointer
 			hover:text-dominant hover:bg-inherit hover:border-dominant"
 			style="
