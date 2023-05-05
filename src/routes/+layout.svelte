@@ -1,12 +1,13 @@
 <script lang="ts">
 	import "../app.css";
 	import { fade } from "svelte/transition";
-	import { Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
+	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import Button from "$ui/Button.svelte";
 	import SlideOver from "$components/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import RadioButtonsGroup from "$ui/RadioButtonsGroup.svelte";
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
@@ -18,6 +19,43 @@
 		{ name: "Our Work", href: "#def" },
 		{ name: "Who we are", href: "#abc" },
 		{ name: "Contact Us", href: "." }
+	];
+	const footerItems = [
+		{
+			name: "Solutions",
+			items: [
+				{ name: "Showcase website", href: "/" },
+				{ name: "Comprehensive web app", href: "/" },
+				{ name: "E-commerce", href: "/" },
+				{ name: "Legacy website rework", href: "/" }
+			]
+		},
+		{
+			name: "Pages",
+			items: [
+				{ name: "Home", href: "/" },
+				{ name: "Process", href: "/" },
+				{ name: "Solutions", href: "/" },
+				{ name: "Technologies", href: "/" }
+			]
+		},
+		{
+			name: "Company",
+			items: [
+				{ name: "About", href: "/" },
+				{ name: "Contact", href: "/" },
+				{ name: "Team", href: "/" },
+				{ name: "Environment", href: "/" },
+				{ name: "Open Source", href: "https://github.com/RenewHQ" }
+			]
+		},
+		{
+			name: "Legal",
+			items: [
+				{ name: "Privacy Policy", href: "/" },
+				{ name: "Terms of Service", href: "/" }
+			]
+		}
 	];
 	const scrollDistanceContactButton = 800;
 	const scrollDistanceLogoSwitch = 900;
@@ -120,60 +158,59 @@
 
 <footer class="p-24 border-t border-gray-500 text-gray-400">
 	<!-- Main grid -->
-	<div class="grid grid-cols-5">
+	<div class="grid" style="grid-template-columns: repeat({footerItems.length + 1}, minmax(0, 1fr))">
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 		</a>
-		<div>
-			<h4 class="text-primary mb-5">Solutions</h4>
-			<div class="flex flex-col gap-2">
-				<a href="/">Showcase website</a>
-				<a href="/">Comprehensive web app</a>
-				<a href="/">E-commerce</a>
-				<a href="/">Legacy website rework</a>
+		{#each footerItems as column}
+			<div>
+				<h4 class="text-primary mb-5">{column.name}</h4>
+				<div
+					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
+				>
+					{#each column.items as link}
+						<a href={link.href}>{link.name}</a>
+					{/each}
+				</div>
 			</div>
-		</div>
-		<div>
-			<h4 class="text-primary mb-5">Pages</h4>
-			<div class="flex flex-col gap-2">
-				<a href="/">Process</a>
-				<a href="/">Solutions</a>
-				<a href="/">Technologies</a>
-			</div>
-		</div>
-		<div>
-			<h4 class="text-primary mb-5">Company</h4>
-			<div class="flex flex-col gap-2">
-				<a href="/">About</a>
-				<a href="/">Contact</a>
-				<a href="/">Team</a>
-				<a href="/">Environment</a>
-				<a href="/">Open Source</a>
-			</div>
-		</div>
-		<div>
-			<h4 class="text-primary mb-5">Legal</h4>
-			<div class="flex flex-col gap-2">
-				<a href="/">Privacy Policy</a>
-				<a href="/">Terms of Service</a>
-			</div>
-		</div>
+		{/each}
 	</div>
 	<!-- Bottom links & settings -->
-	<div class="mt-10 flex items-end">
+	<div class="mt-10 flex items-end child:h-min justify-between">
 		<!-- Left -->
 		<div>
 			© {new Date().getFullYear()} Renew
 			<div
-				class="mt-5 divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
+				class="mt-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a href="https://github.com/RenewHQ/Website">
 					<Github class="w-8 h-8" />
 				</a>
 			</div>
 		</div>
+		<!-- Middle -->
+		<div
+			on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+			on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+		>
+			<ArrowUp
+				class="w-8 h-8 p-1.5
+				border-[1px] border-dominant text-dominant
+				rounded-full cursor-pointer transition-colors duration-300
+				hover:text-inverted hover:bg-dominant hover:border-transparent"
+			/>
+		</div>
 		<!-- Right -->
-		<div class="ml-auto">Language • Dark mode • Scroll to top?</div>
+		<!-- TODO: Actually make it work -->
+		<RadioButtonsGroup
+			values={["FR", "EN"]}
+			defaultIndex={1}
+			description="Language selection"
+			on:change={(e) => {
+				const selectionIndex = e.detail.index;
+				console.log(selectionIndex);
+			}}
+		/>
 	</div>
 </footer>
 

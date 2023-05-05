@@ -90,15 +90,19 @@
 			element.parentElement.style.transform = "scale(1)";
 		}}
 	>
-		<ArrowDown
-			class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-black rounded-full cursor-pointer
-			hover:text-dominant hover:bg-inherit hover:border-dominant"
+		<div
 			style="
-				transition-property: transform;
-				transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-			"
+					transition-property: transform;
+					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+				"
+			on:keypress={() => scrollTo("" /* TODO: Add section selector */)}
 			on:click={() => scrollTo("" /* TODO: Add section selector */)}
-		/>
+		>
+			<ArrowDown
+				class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
+				hover:text-dominant hover:bg-inherit hover:border-dominant"
+			/>
+		</div>
 	</MagneticElement>
 </main>
 
