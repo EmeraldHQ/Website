@@ -21,7 +21,7 @@
 			class:hover:bg-slate-600={index === currentIndex}
 			class:hover:bg-slate-800={index !== currentIndex}
 			on:click={() => {
-        if (index === currentIndex) return;
+				if (index === currentIndex) return;
 				currentIndex = index;
 				dispatch("change", { index });
 			}}
