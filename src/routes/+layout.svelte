@@ -11,7 +11,8 @@
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
-	const tailwindXSScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
+	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
+	const tailwindXlScreen = Number(fullTailwindConfig.theme.screens.xl.replace("px", ""));
 
 	// Config
 	const navbarItems = [
@@ -87,7 +88,7 @@
 			href="/"
 			class="mr-auto grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
 		>
-			{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXSScreen)}
+			{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
 				<img
 					in:fade={{ delay: 250 }}
 					out:fade
@@ -139,7 +140,7 @@
 		<div
 			class="h-full flex flex-col justify-center items-center gap-20 text-6xl font-medium nav-items-container child:after:!h-2 child:after:!-bottom-3"
 		>
-			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXSScreen)) as item}
+			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
 				<button
 					class:text-dominant={!item.href.startsWith("#")}
 					on:click={() => {
@@ -158,12 +159,19 @@
 
 <footer class="p-24 border-t border-gray-500 text-gray-400">
 	<!-- Main grid -->
-	<div class="grid" style="grid-template-columns: repeat({footerItems.length + 1}, minmax(0, 1fr))">
+	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 		</a>
+	{/if}
+	<div class="flex flex-wrap gap-10 justify-between mt-10 xl:mt-0">
+		{#if innerWidth >= tailwindXlScreen}
+			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
+				<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
+			</a>
+		{/if}
 		{#each footerItems as column}
-			<div>
+			<div class="min-w-fit sm:mx-auto my-5 sm:my-10 xl:my-0">
 				<h4 class="text-primary mb-5">{column.name}</h4>
 				<div
 					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
@@ -179,38 +187,56 @@
 	<div class="mt-10 flex items-end child:h-min justify-between">
 		<!-- Left -->
 		<div>
-			© {new Date().getFullYear()} Renew
 			<div
-				class="mt-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
+				class="mb-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a href="https://github.com/RenewHQ/Website">
 					<Github class="w-8 h-8" />
 				</a>
 			</div>
+			© {new Date().getFullYear()} Renew
 		</div>
 		<!-- Middle -->
-		<div
-			on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-			on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-		>
-			<ArrowUp
-				class="w-8 h-8 p-1.5
-				border-[1px] border-dominant text-dominant
-				rounded-full cursor-pointer transition-colors duration-300
-				hover:text-inverted hover:bg-dominant hover:border-transparent"
+		{#if innerWidth >= tailwindXsScreen}
+			<div
+				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+			>
+				<ArrowUp
+					class="w-8 h-8 p-1.5
+					border-[1px] border-dominant text-dominant
+					rounded-full cursor-pointer transition-colors duration-300
+					hover:text-inverted hover:bg-dominant hover:border-transparent"
+				/>
+			</div>
+		{/if}
+		<!-- Right -->
+		<div class="flex flex-col gap-2 items-end">
+			{#if innerWidth < tailwindXsScreen}
+				<div
+					on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+					on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+				>
+					<ArrowUp
+						class="w-8 h-8 p-1.5
+						border-[1px] border-dominant text-dominant
+						rounded-full cursor-pointer transition-colors duration-300
+						hover:text-inverted hover:bg-dominant hover:border-transparent"
+					/>
+				</div>
+			{/if}
+			<!-- TODO: Actually make it work -->
+			<RadioButtonsGroup
+				values={["FR", "EN"]}
+				defaultIndex={1}
+				description="Language selection"
+				class="scale-75 origin-bottom-right xs:scale-90 sm:scale-100"
+				on:change={(e) => {
+					const selectionIndex = e.detail.index;
+					console.log(selectionIndex);
+				}}
 			/>
 		</div>
-		<!-- Right -->
-		<!-- TODO: Actually make it work -->
-		<RadioButtonsGroup
-			values={["FR", "EN"]}
-			defaultIndex={1}
-			description="Language selection"
-			on:change={(e) => {
-				const selectionIndex = e.detail.index;
-				console.log(selectionIndex);
-			}}
-		/>
 	</div>
 </footer>
 

@@ -1,3 +1,4 @@
+<!-- Inspired by https://www.skeleton.dev/components/radio-groups -->
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 
@@ -12,7 +13,7 @@
 <div
 	role="radiogroup"
 	aria-label={description}
-	class="inline-flex p-1 space-x-1 border-[1px] border-gray-400 text-primary shadow-2xl shadow-black rounded-full"
+	class="inline-flex p-1 space-x-1 border-[1px] border-gray-400 text-primary shadow-2xl shadow-black rounded-full {$$props.class}"
 >
 	{#each values as toggle, index}
 		<button
