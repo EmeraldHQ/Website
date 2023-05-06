@@ -129,20 +129,19 @@
 	</MagneticElement>
 </main>
 
-<Section id="process">
+<Section id="process"  class="overflow-hidden">
 	<svelte:fragment slot="title" />
-
 	<div
-		class="flex flex-no-wrap overflow-x-scroll scrolling-touch items-start mb-8
-		lg:flex-row lg:flex-wrap lg:justify-center lg:gap-8 lg:mb-0 lg:overflow-hidden"
+		class="flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll scrolling-touch mb-8
+		md:flex-row md:flex-wrap md:justify-center md:w-full md:gap-8 md:mb-0 md:overflow-hidden"
 	>
 		{#each processSections as { title, icon, description }}
-			<div class="flex-none w-fit xl:w-1/4 mr-8 md:pb-4">
+			<div class="flex-col max-md:min-w-full md:w-2/3 lg:w-1/4 md:pb-4">
 				<div class="flex flex-row items-center gap-4">
 					<svelte:component this={icon} class="w-10 h-10" />
 					<span class="text-2xl font-medium">{title}</span>
 				</div>
-				<p class="text-lg font-normal pt-4">
+				<p class="text-lg font-normal pt-4 w-full xs:w-4/5">
 					{description}
 				</p>
 			</div>
