@@ -19,19 +19,19 @@
 			title: "Design",
 			icon: Swatch,
 			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+				"We design the graphical interface of your project in accordance with your visual identity, to ensure an optimal user experience. "
 		},
 		{
 			title: "Development",
 			icon: CodeBracket,
 			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+				"Our company specializes in transforming your concepts into functional code, utilizing the latest and most advanced technologies in the market."
 		},
 		{
 			title: "Hosting",
 			icon: Cloud,
 			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla."
+				"We take care of all the steps hosting options for your project so that you can focus on your business rather than the technical tasks associated with hosting."
 		}
 	];
 </script>
