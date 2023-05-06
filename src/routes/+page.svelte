@@ -14,13 +14,14 @@
 	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
 
 	function scrollTo(selector: string) {
-		const element = document.querySelector('#'+selector);
+		const element = document.querySelector("#" + selector);
 		if (element) {
-			const navbar = document.getElementsByTagName('nav');
-			
+			const navbar = document.getElementsByTagName("nav");
+
 			if (navbar.length > 0) {
 				// Minus height of navbar to scroll position to top of element and 40px for padding
-				const scrollPosition = element.getBoundingClientRect().top + window.scrollY - navbar[0].clientHeight - 40;
+				const scrollPosition =
+					element.getBoundingClientRect().top + window.scrollY - navbar[0].clientHeight - 40;
 				console.log(scrollPosition);
 				window.scrollTo({ top: scrollPosition, behavior: "smooth" });
 			} else {
@@ -138,7 +139,7 @@
 	</MagneticElement>
 </main>
 
-<Section id="process"  class="overflow-hidden">
+<Section id="process" class="overflow-hidden">
 	<svelte:fragment slot="title" />
 	<div
 		class="flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll scrolling-touch mb-8
