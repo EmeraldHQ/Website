@@ -168,20 +168,20 @@
 			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 		</a>
 	{/if}
-	<div class="flex flex-wrap gap-10 justify-between mt-10 xl:mt-0">
+	<div class="flex flex-wrap md:justify-center lg:justify-between gap-x-20 gap-y-16 my-14 xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 				<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
-			<div class="min-w-fit sm:mx-auto my-5 sm:my-10 xl:my-0">
+			<div class="min-w-fit">
 				<h4 class="text-primary mb-5">{column.name}</h4>
 				<div
 					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
 				>
-					{#each column.items as link}
-						<a href={link.href}>{link.name}</a>
+					{#each column.items as item}
+						<a href={item.href}>{item.name}</a>
 					{/each}
 				</div>
 			</div>
