@@ -40,10 +40,8 @@ jobs:
 
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v2
-        id: pnpm-install
         with:
-          version: latest
-          run_install: false
+          version: 7 # Switch back to latest once https://github.com/Inqling/svelte-icons/pull/21 is merged
 
       - name: 🗄️ Get pnpm store directory
         id: pnpm-cache

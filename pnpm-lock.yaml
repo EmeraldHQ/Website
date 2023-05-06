@@ -1,9 +1,9 @@
 lockfileVersion: '6.0'
 
 devDependencies:
-  '@babeard/svelte-heroicons':
-    specifier: 2.0.0-rc.0
-    version: 2.0.0-rc.0(svelte@3.58.0)
+  '@inqling/svelte-icons':
+    specifier: ^3.1.0
+    version: 3.1.0(svelte@3.58.0)
   '@rgossiaux/svelte-headlessui':
     specifier: ^1.0.2
     version: 1.0.2(svelte@3.58.0)
@@ -32,8 +32,8 @@ devDependencies:
     specifier: ^8.8.0
     version: 8.8.0(eslint@8.39.0)
   eslint-plugin-svelte:
-    specifier: ^2.27.2
-    version: 2.27.2(eslint@8.39.0)(svelte@3.58.0)
+    specifier: ^2.27.3
+    version: 2.27.3(eslint@8.39.0)(svelte@3.58.0)
   mini-svg-data-uri:
     specifier: ^1.4.4
     version: 1.4.4
@@ -76,14 +76,6 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
-    dev: true
-
-  /@babeard/svelte-heroicons@2.0.0-rc.0(svelte@3.58.0):
-    resolution: {integrity: sha512-zjoRKBHA2QLjj3bi9mJMtyUyb/Y+PGlxiMdVXO3Bv8If3RJBuxtvVAYD2/tUakhxocB272PxhGNz4sixmB0rpA==}
-    peerDependencies:
-      svelte: ^3.44.0
-    dependencies:
-      svelte: 3.58.0
     dev: true
 
   /@esbuild/android-arm64@0.17.18:
@@ -339,6 +331,15 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@inqling/svelte-icons@3.1.0(svelte@3.58.0):
+    resolution: {integrity: sha512-aFEvg6UmisSyNHsDHZmEwFWFtDaT1KbHASGUGv3JYRTNKAKU4Tr8PGpOl9xsg5WxrPefIoOG/nDnRfkmtTXDGg==}
+    engines: {pnpm: ^7.0.0}
+    peerDependencies:
+      svelte: ^3.55.1
+    dependencies:
+      svelte: 3.58.0
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -920,8 +921,8 @@ packages:
       eslint: 8.39.0
     dev: true
 
-  /eslint-plugin-svelte@2.27.2(eslint@8.39.0)(svelte@3.58.0):
-    resolution: {integrity: sha512-1tIl65TMF0MtY26+O/1Y5S5HEFc0vRzzoX3m9FHI6VuiruqFU9PBr8WzoqdaSPlcL/q7xPUzQYl4Fzg/3GBpcg==}
+  /eslint-plugin-svelte@2.27.3(eslint@8.39.0)(svelte@3.58.0):
+    resolution: {integrity: sha512-LPri23kkKeeh+TkYr9FndQEy2Q5BhOrIwatnLdXx6hUtTIolohzrTJhWMK3k8BwitVBnJGl5CDVWNkV80tmdkQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0-0
