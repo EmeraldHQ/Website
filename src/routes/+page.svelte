@@ -37,10 +37,10 @@
 				Powered by cutting-edge technologies, let's build<br />the web application you've been
 				dreaming of.
 			</h2>
-			<div class="flex items-center flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left">
-				<Button>
-					Contact Us
-				</Button>
+			<div
+				class="flex items-center flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left"
+			>
+				<Button>Contact Us</Button>
 				<Button type="minimal" class="hover-child:translate-x-1">
 					See our work
 					<ChevronRight class="w-4 h-4 transition-transform duration-500" />
