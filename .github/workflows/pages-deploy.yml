@@ -26,6 +26,9 @@ jobs:
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.WORKFLOW_PAT }}
 
       - name: 🔧 Configure pages
         uses: actions/configure-pages@v3
@@ -64,8 +67,21 @@ jobs:
         run: pnpm check
 
       - name: ✨ Checking lint
+        id: lint-check
         run: pnpm lint:ci
 
+      # This step should only ever trigger on PRs because merge is not allowed on failure
+      - name: 🔧 Fixing lint
+        if: steps.lint-check.outcome == 'failure'
+        run: pnpm format
+
+      - name: 📤 Committing lint fixes
+        if: steps.lint-check.outcome == 'failure'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Fix lint"
+
+      # These steps shouldn't run on errors by default anyway
       - name: 🔨 Building repo
         run: pnpm build
 
