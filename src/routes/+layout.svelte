@@ -245,6 +245,10 @@
 </footer>
 
 <style lang="postcss">
+	:global(::selection) {
+		@apply bg-dominant/75 text-primary;
+	}
+
 	:global(body) {
 		@apply bg-primary text-primary;
 	}
