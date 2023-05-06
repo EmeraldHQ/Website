@@ -30,7 +30,7 @@
 		}
 	}
 
-	let processSections = [
+	const processSections = [
 		{
 			title: "Design",
 			icon: Swatch,
@@ -128,8 +128,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("process" /* TODO: Add section selector */)}
-			on:click={() => scrollTo("process" /* TODO: Add section selector */)}
+			on:keypress={() => scrollTo("process")}
+			on:click={() => scrollTo("process")}
 		>
 			<ArrowDown
 				class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
@@ -143,7 +143,7 @@
 	<svelte:fragment slot="title" />
 	<div
 		class="flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll scrolling-touch mb-8
-		md:flex-row md:flex-wrap md:justify-center md:w-full md:gap-8 md:mb-0 md:overflow-hidden"
+		md:flex-row md:flex-wrap md:justify-center md:w-full gap-16 md:overflow-hidden"
 	>
 		{#each processSections as { title, icon, description }}
 			<div class="flex-col max-md:min-w-full md:w-2/3 lg:w-1/4 md:pb-4">
@@ -151,7 +151,7 @@
 					<svelte:component this={icon} class="w-10 h-10" />
 					<span class="text-2xl font-medium">{title}</span>
 				</div>
-				<p class="text-lg font-normal pt-4 w-full xs:w-4/5">
+				<p class="text-lg font-normal pt-4 w-11/12 xs:w-4/5">
 					{description}
 				</p>
 			</div>
