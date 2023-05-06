@@ -72,11 +72,11 @@ jobs:
 
       # This step should only ever trigger on PRs because merge is not allowed on failure
       - name: 🔧 Fixing lint
-        if: steps.lint-check.outcome == 'failure'
+        if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
         run: pnpm format
 
       - name: 📤 Committing lint fixes
-        if: steps.lint-check.outcome == 'failure'
+        if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Fix lint"
