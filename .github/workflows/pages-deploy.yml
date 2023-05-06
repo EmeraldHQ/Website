@@ -6,11 +6,9 @@ on:
     branches: [main]
   pull_request:
 
-  workflow_dispatch:
-
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -36,7 +34,7 @@ jobs:
         with:
           static_site_generator: "sveltekit"
 
-      - name: 🧭 Setting up Node
+      - name: 🧭 Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: latest
@@ -49,8 +47,7 @@ jobs:
       - name: 🗄️ Get pnpm store directory
         id: pnpm-cache
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: 🔄 Setup pnpm cache
         uses: actions/cache@v3
@@ -60,29 +57,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: 📥 Installing NPM dependencies
+      - name: 📥 Install NPM dependencies
         run: pnpm i
 
-      - name: ✨ Checking Svelte format
+      - name: ✨ Check Svelte format
         run: pnpm check
 
-      - name: ✨ Checking lint
+      - name: ✨ Check style with Prettier & ESLint
         id: lint-check
         run: pnpm lint:ci
 
-      # This step should only ever trigger on PRs because merge is not allowed on failure
-      - name: 🔧 Fixing lint
+      # These steps will only ever trigger on PRs because merge is not allowed on failure
+      - name: 🔧 Fix lint (if needed)
         if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
-        run: pnpm format
+        run: |
+          git reset --hard
+          pnpm format
 
-      - name: 📤 Committing lint fixes
+      - name: 📤 Commit lint fixes (if needed)
         if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Fix lint"
 
-      # These steps shouldn't run on errors by default anyway
-      - name: 🔨 Building repo
+      # These steps won't run on previous errors (by default)
+      - name: 🔨 Build repo
         run: pnpm build
 
       - name: 📤 Upload artifact
@@ -98,6 +97,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: 🌍 Deploying Pages
+      - name: 🌍 Deploy Pages
         uses: actions/deploy-pages@v2
         id: deployment
