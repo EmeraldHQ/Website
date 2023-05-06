@@ -3,9 +3,9 @@
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
-	import Button from "$ui/Button.svelte";
-	import RadioButtonsGroup from "$ui/RadioButtonsGroup.svelte";
-	import SlideOver from "$components/SlideOver.svelte";
+	import Button from "$elements/Button.svelte";
+	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
+	import SlideOver from "$shells/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 
