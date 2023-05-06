@@ -35,7 +35,7 @@
 			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
 			<h2 class="text-xl font-normal pt-10 text-gray-400">
 				Powered by cutting-edge technologies, let's build<br />the web application you've been
-				dreaming of
+				dreaming of.
 			</h2>
 			<div class="flex items-center flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left">
 				<Button>
