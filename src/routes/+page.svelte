@@ -22,7 +22,6 @@
 				// Minus height of navbar to scroll position to top of element and 40px for padding
 				const scrollPosition =
 					element.getBoundingClientRect().top + window.scrollY - navbar[0].clientHeight - 40;
-				console.log(scrollPosition);
 				window.scrollTo({ top: scrollPosition, behavior: "smooth" });
 			} else {
 				element.scrollIntoView({ behavior: "smooth" });
