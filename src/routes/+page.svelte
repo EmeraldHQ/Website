@@ -12,22 +12,7 @@
 	import Section from "$components/Section.svelte";
 	import MagneticElement from "$components/MagneticElement.svelte";
 	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
-
-	function scrollTo(selector: string) {
-		const element = document.querySelector("#" + selector);
-		if (element) {
-			const navbar = document.getElementsByTagName("nav");
-
-			if (navbar.length > 0) {
-				// Minus height of navbar to scroll position to top of element and 40px for padding
-				const scrollPosition =
-					element.getBoundingClientRect().top + window.scrollY - navbar[0].clientHeight - 40;
-				window.scrollTo({ top: scrollPosition, behavior: "smooth" });
-			} else {
-				element.scrollIntoView({ behavior: "smooth" });
-			}
-		}
-	}
+	import { scrollTo } from "$ts/scroll";
 
 	const processSections = [
 		{
@@ -127,8 +112,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("process")}
-			on:click={() => scrollTo("process")}
+			on:keypress={() => scrollTo("#process")}
+			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
 				class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
@@ -138,11 +123,12 @@
 	</MagneticElement>
 </main>
 
-<Section id="process" class="overflow-hidden">
+<Section id="process" class="overflow-hidden scroll-mt-9">
 	<svelte:fragment slot="title" />
 	<div
-		class="flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll scrolling-touch mb-8
-		md:flex-row md:flex-wrap md:justify-center md:w-full gap-16 md:overflow-hidden"
+		class="scrolling-touch mb-8 gap-16 pb-8
+		flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll
+		md:flex-row md:flex-wrap md:justify-center md:w-full md:overflow-hidden"
 	>
 		{#each processSections as { title, icon, description }}
 			<div class="flex-col max-md:min-w-full md:w-2/3 lg:w-1/4 md:pb-4">
