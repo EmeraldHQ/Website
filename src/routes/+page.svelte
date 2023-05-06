@@ -6,6 +6,7 @@
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
+	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import Button from "$elements/Button.svelte";
 	import Section from "$layouts/Section.svelte";
 	import MagneticElement from "$shells/MagneticElement.svelte";
@@ -19,9 +20,65 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Home | Renew</title>
-</svelte:head>
+<MetaTags
+	title="Home"
+	titleTemplate="%s | Renew"
+	description="Your web apps. Modern and fast."
+	canonical="https://renewhq.studio"
+	languageAlternates={[
+		{
+			hrefLang: "fr",
+			href: "https://renewhq.studio"
+		}
+	]}
+	openGraph={{
+		images: [
+			{
+				url: "https://renewhq.studio/og-banner.png",
+				width: 1536,
+				height: 768,
+				alt: "Og Banner"
+			}
+		],
+		site_name: "Renew"
+	}}
+	twitter={{
+		cardType: "summary_large_image",
+		/*
+		site: "@RenewHQ", // Someday
+		handle: "@RenewHQ"
+		*/
+		title: "Home | Renew",
+		description: "Your web apps. Modern and fast.",
+		image: "https://renewhq.studio/og-banner.png",
+		imageAlt: "Og Banner"
+	}}
+	robotsProps={{
+		noarchive: true
+	}}
+/>
+
+<JsonLd
+	schema={[
+		{
+			"@type": "Organization",
+			url: "https://renewhq.studio",
+			logo: "https://renewhq.studio/favicon.svg",
+		}/*,
+		{
+			"@type": "WebSite",
+			url: "https://renewhq.studio",
+			potentialAction: {
+				"@type": "SearchAction",
+				target: {
+					"@type": "EntryPoint",
+					urlTemplate: "https://renewhq.studio/search?q={search_term_string}"
+				},
+				"query-input": "required name=search_term_string"
+			}
+		}*/
+	]}
+/>
 
 <main class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
 	<div
