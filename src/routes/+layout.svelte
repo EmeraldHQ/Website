@@ -94,7 +94,9 @@
 					out:fade
 					src="/favicon.svg"
 					alt="Renew logo - small"
-					class="h-8 duration-300 hover:opacity-70"
+					width="32"
+					height="32"
+					class="h-8 transition-opacity duration-300 hover:opacity-70"
 				/>
 			{:else}
 				<img
@@ -102,13 +104,15 @@
 					out:fade
 					src="/logo-dark.svg"
 					alt="Renew logo"
-					class="h-8 duration-300 hover:opacity-70"
+					width="174"
+					height="32"
+					class="h-8 transition-opacity duration-300 hover:opacity-70"
 				/>
 			{/if}
 		</a>
 		<div class="flex items-center gap-5 sm:gap-10">
 			<div
-				class="flex items-center gap-10 ease-out duration-700 max-lg:hidden nav-items-container"
+				class="flex items-center gap-10 max-lg:hidden nav-items-container"
 				class:-mr-40={!showButton}
 			>
 				{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
