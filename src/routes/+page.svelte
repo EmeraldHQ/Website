@@ -14,9 +14,18 @@
 	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
 
 	function scrollTo(selector: string) {
-		const element = document.querySelector(selector);
+		const element = document.querySelector('#'+selector);
 		if (element) {
-			element.scrollIntoView({ behavior: "smooth" });
+			const navbar = document.getElementsByTagName('nav');
+			
+			if (navbar.length > 0) {
+				// Minus height of navbar to scroll position to top of element and 40px for padding
+				const scrollPosition = element.getBoundingClientRect().top + window.scrollY - navbar[0].clientHeight - 40;
+				console.log(scrollPosition);
+				window.scrollTo({ top: scrollPosition, behavior: "smooth" });
+			} else {
+				element.scrollIntoView({ behavior: "smooth" });
+			}
 		}
 	}
 
@@ -118,8 +127,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("" /* TODO: Add section selector */)}
-			on:click={() => scrollTo("" /* TODO: Add section selector */)}
+			on:keypress={() => scrollTo("process" /* TODO: Add section selector */)}
+			on:click={() => scrollTo("process" /* TODO: Add section selector */)}
 		>
 			<ArrowDown
 				class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
