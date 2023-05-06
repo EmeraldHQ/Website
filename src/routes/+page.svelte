@@ -63,8 +63,8 @@
 		{
 			"@type": "Organization",
 			url: "https://renewhq.studio",
-			logo: "https://renewhq.studio/favicon.svg",
-		}/*,
+			logo: "https://renewhq.studio/favicon.svg"
+		} /*,
 		{
 			"@type": "WebSite",
 			url: "https://renewhq.studio",
