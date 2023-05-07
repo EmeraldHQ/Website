@@ -158,7 +158,7 @@
 			on:click={() => scrollTo("" /* TODO: Add section selector */)}
 		>
 			<ArrowDown
-				class="w-10 h-10 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
+				class="w-8 h-8 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
 				hover:text-dominant hover:bg-inherit hover:border-dominant"
 			/>
 		</div>
