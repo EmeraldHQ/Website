@@ -1,5 +1,6 @@
 <script lang="ts">
 	import "../app.css";
+	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
@@ -9,9 +10,16 @@
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 
+	// Breadcrumb
+	let currentRoute: string[] = [];
+	page.subscribe((value) => {
+		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
+	});
+
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
 	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
+	const tailwindLgScreen = Number(fullTailwindConfig.theme.screens.lg.replace("px", ""));
 	const tailwindXlScreen = Number(fullTailwindConfig.theme.screens.xl.replace("px", ""));
 
 	// Config
@@ -84,35 +92,62 @@
 	<nav
 		class="flex items-center justify-center w-full max-w-large-screen px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
 	>
-		<a
-			href="/"
-			class="mr-auto grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
-		>
-			{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
-				<img
-					in:fade={{ delay: 250 }}
-					out:fade
-					src="/favicon.svg"
-					alt="Renew logo - small"
-					width="32"
-					height="32"
-					class="h-8 transition-opacity duration-300 hover:opacity-70"
-				/>
-			{:else}
-				<img
-					in:fade={{ delay: 250 }}
-					out:fade
-					src="/logo-dark.svg"
-					alt="Renew logo"
-					width="174"
-					height="32"
-					class="h-8 transition-opacity duration-300 hover:opacity-70"
-				/>
+		<div class="mr-auto flex items-center gap-5">
+			<a
+				href="/"
+				class="grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+			>
+				{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
+					<img
+						in:fade={{ delay: 250 }}
+						out:fade
+						src="/favicon.svg"
+						alt="Renew logo - small"
+						width="32"
+						height="32"
+						class="h-8 transition-opacity duration-300 hover:opacity-70"
+					/>
+				{:else}
+					<img
+						in:fade={{ delay: 250 }}
+						out:fade
+						src="/logo-dark.svg"
+						alt="Renew logo"
+						width="174"
+						height="32"
+						class="h-8 transition-opacity duration-300 hover:opacity-70"
+					/>
+				{/if}
+			</a>
+			{#if currentRoute.length > 0 && innerWidth >= tailwindLgScreen}
+				<div class="text-lg line-clamp-1">
+					{#each currentRoute as route, i}
+						{#if currentRoute.length > 3 && i > 0 && i < currentRoute.length - 2}
+							<!-- Only show the first & last 2 elements if route is larger than 3 -->
+							{#if i === 1}
+								<span>/</span>
+								<span>... </span>
+							{/if}
+						{:else}
+							<span>/</span>
+							<span>
+								{#if i < currentRoute.length - 1}
+									<a
+										href="/{currentRoute.slice(0, i + 1).join('/')}"
+										class="text-dominant underline-offset-4 hover:underline">{route}</a
+									>
+								{:else}
+									{route}
+								{/if}
+							</span>
+						{/if}
+					{/each}
+				</div>
 			{/if}
-		</a>
+		</div>
 		<div class="flex items-center gap-5 sm:gap-10">
 			<div
-				class="flex items-center gap-10 max-lg:hidden nav-items-container"
+				class="hidden xl:flex items-center gap-10 nav-items-container"
 				class:-mr-40={!showButton}
 			>
 				{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
@@ -131,7 +166,7 @@
 			>
 				<Button type="secondary">Contact Us</Button>
 			</span>
-			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
+			<button class="xl:hidden" on:click={() => (showSlideOver = true)}>
 				<Bars3 class="w-8 h-8" />
 			</button>
 		</div>
