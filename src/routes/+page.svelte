@@ -80,7 +80,7 @@
 	]}
 />
 
-<main class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
+<main id="hero" class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
 	<div
 		class="grid items-center grid-cols-1 xl:grid-cols-2 h-fit m-auto px-10 md:px-32
 			before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
@@ -95,7 +95,7 @@
 				dreaming of.
 			</h2>
 			<div
-				class="flex items-center flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left"
+				class="flex flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left"
 			>
 				<Button>Contact Us</Button>
 				<Button type="minimal" class="hover-child:translate-x-1">
@@ -109,6 +109,7 @@
 			initialX={13}
 			initialY={-30}
 			intensity={0.05}
+			scope={"#hero"}
 			class="hidden xl:flex lg:ml-20 aspect-square max-h-full justify-center items-center relative child:absolute"
 		>
 			<Window class="text-dominant w-full h-full" />

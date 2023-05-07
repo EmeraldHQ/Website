@@ -1,4 +1,7 @@
 <script lang="ts">
+	/**
+	 * Defines the style of the button. Defaults to `"primary"`.
+	 */
 	export let type: "primary" | "secondary" | "minimal" = "primary";
 </script>
 
