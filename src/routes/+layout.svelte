@@ -1,5 +1,6 @@
 <script lang="ts">
 	import "../app.css";
+	import { onDestroy } from "svelte";
 	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
@@ -12,7 +13,7 @@
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
-	page.subscribe((value) => {
+	const unsubscribe = page.subscribe((value) => {
 		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
 	});
 
@@ -82,6 +83,9 @@
 	let scrollY = 0;
 	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
+
+	// Lifecycle
+	onDestroy(unsubscribe);
 </script>
 
 <!-- Binding for scroll-dependent elements -->
