@@ -83,8 +83,8 @@
 				--rotateX: 0deg;
 				--rotateY: 0deg;
 				transform: perspective(312rem)
-									rotateX(calc({initialX}deg + var(--rotateY)))
-									rotateY(calc({initialY}deg + var(--rotateX)));
+									rotateX(calc({-initialY}deg + var(--rotateY)))
+									rotateY(calc({initialX}deg + var(--rotateX)));
 				transform-style: preserve-3d;
 	"
 >

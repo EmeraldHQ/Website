@@ -106,8 +106,8 @@
 		</div>
 		<!-- Right part -->
 		<Mouse3DTilting
-			initialX={13}
-			initialY={-30}
+			initialX={-32}
+			initialY={-13}
 			intensity={0.05}
 			scope={"#hero"}
 			class="hidden xl:flex lg:ml-20 aspect-square max-h-full justify-center items-center relative child:absolute"
