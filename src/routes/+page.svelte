@@ -135,7 +135,7 @@
 					{i + 1}
 				</span>
 				<div class="flex flex-row items-center gap-4 w-fit">
-					<svelte:component this={icon} class="w-10 h-10 text-dominant"/>
+					<svelte:component this={icon} class="w-10 h-10 text-dominant" />
 					<span class="text-2xl font-medium">{title}</span>
 				</div>
 				<p class="text-lg font-normal text-gray-200 pt-4 w-full">
