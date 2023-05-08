@@ -1,9 +1,9 @@
 <script lang="ts">
-	import MagneticElement from "$components/MagneticElement.svelte";
-	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
-	import Section from "$components/Section.svelte";
+	import MagneticElement from "$shells/MagneticElement.svelte";
+	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
+	import Section from "$layouts/Section.svelte";
 	import { scrollTo } from "$ts/scroll";
-	import Button from "$ui/Button.svelte";
+	import Button from "$elements/Button.svelte";
 	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
