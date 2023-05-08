@@ -121,9 +121,9 @@
 	</MagneticElement>
 </main>
 
-<Section id="process" class="overflow-hidden scroll-mt-9">
+<Section id="process">
 	<div
-		class="scrolling-touch gap-16 py-8 snap-x snap-mandatory child:snap-start mx-8
+		class="scrolling-touch gap-16 py-8 snap-x snap-mandatory child:snap-start
 		flex flex-no-wrap items-start overflow-x-auto
 		md:child:h-min md:justify-center"
 	>
