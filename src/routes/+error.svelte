@@ -17,8 +17,14 @@
 >
 	<!-- Middle text -->
 	<div class="leading-none">
-		<h1 class="font-semibold text-9xl xs:text-[12rem] sm:text-[14rem] md:text-[16rem] text-dominant">{$page.status}</h1>
-		<h2 class="font-medium text-5xl xs:text-7xl md:text-[6rem]">{$page.error?.message.toLowerCase()}</h2>
+		<h1
+			class="font-semibold text-9xl xs:text-[12rem] sm:text-[14rem] md:text-[16rem] text-dominant"
+		>
+			{$page.status}
+		</h1>
+		<h2 class="font-medium text-5xl xs:text-7xl md:text-[6rem]">
+			{$page.error?.message.toLowerCase()}
+		</h2>
 	</div>
 
 	<!-- Absolute icons -->
