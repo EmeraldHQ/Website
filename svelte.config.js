@@ -10,7 +10,8 @@ const config = {
 		alias: {
 			$elements: path.resolve("./src/lib/elements"),
 			$layouts: path.resolve("./src/lib/layouts"),
-			$shells: path.resolve("./src/lib/shells")
+			$shells: path.resolve("./src/lib/shells"),
+			$ts: path.resolve("./src/lib/ts")
 		}
 	},
 	vitePlugin: {

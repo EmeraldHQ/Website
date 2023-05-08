@@ -10,6 +10,7 @@
 	import SlideOver from "$shells/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
+	import { scrollTo } from "$ts/scroll";
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
@@ -25,7 +26,7 @@
 
 	// Config
 	const navbarItems = [
-		{ name: "About Us", href: "#abc" },
+		{ name: "About Us", href: "#process" },
 		{ name: "Our Work", href: "#def" },
 		{ name: "Who we are", href: "#abc" },
 		{ name: "Contact Us", href: "." }
@@ -70,14 +71,6 @@
 	const scrollDistanceContactButton = 800;
 	const scrollDistanceLogoSwitch = 900;
 
-	// Functions
-	function scrollTo(selector: string) {
-		const element = document.querySelector(selector);
-		if (element) {
-			element.scrollIntoView({ behavior: "smooth" });
-		}
-	}
-
 	// Bindings & variables
 	let innerWidth = 0;
 	let scrollY = 0;
@@ -94,6 +87,7 @@
 <!-- Navbar -->
 <div class="top-0 flex justify-center sticky w-full z-10 pt-10">
 	<nav
+		id="navbar"
 		class="flex items-center justify-center w-full max-w-large-screen px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
 	>
 		<div class="mr-auto flex items-center gap-5">

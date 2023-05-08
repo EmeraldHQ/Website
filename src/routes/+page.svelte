@@ -1,23 +1,38 @@
 <script lang="ts">
+	import MagneticElement from "$components/MagneticElement.svelte";
+	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
+	import Section from "$components/Section.svelte";
+	import { scrollTo } from "$ts/scroll";
+	import Button from "$ui/Button.svelte";
+	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
+	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
 		ChevronRight,
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import Button from "$elements/Button.svelte";
-	import Section from "$layouts/Section.svelte";
-	import MagneticElement from "$shells/MagneticElement.svelte";
-	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 
-	function scrollTo(selector: string) {
-		const element = document.querySelector(selector);
-		if (element) {
-			element.scrollIntoView({ behavior: "smooth" });
+	const processSections = [
+		{
+			title: "Design",
+			icon: PaintBrush,
+			description:
+				"We design the graphical interface of your project in accordance with your visual identity, to ensure an optimal user experience. "
+		},
+		{
+			title: "Development",
+			icon: CodeBracket,
+			description:
+				"Our company specializes in transforming your concepts into functional code, utilizing the latest and most advanced technologies in the market."
+		},
+		{
+			title: "Hosting",
+			icon: Cloud,
+			description:
+				"We handle all aspects of hosting options for your project, freeing you to focus on your business. We offer both at-Vercel hosting and on-premise hosting."
 		}
-	}
+	];
 </script>
 
 <MetaTags
@@ -155,8 +170,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("" /* TODO: Add section selector */)}
-			on:click={() => scrollTo("" /* TODO: Add section selector */)}
+			on:keypress={() => scrollTo("#process")}
+			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
 				class="w-8 h-8 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
@@ -166,6 +181,27 @@
 	</MagneticElement>
 </main>
 
-<Section id="">
-	<svelte:fragment slot="title" />
+<Section id="process">
+	<div
+		class="scrolling-touch gap-16 py-8 snap-x snap-mandatory child:snap-start
+		flex flex-no-wrap items-start overflow-x-auto
+		md:child:h-min md:justify-center"
+	>
+		{#each processSections as { title, icon, description }, i}
+			<div class="max-md:min-w-full md:w-1/4 lg:pb-4 relative">
+				<span
+					class="absolute w-full h-full text-gray-700/75 text-9xl -z-10 font-medium flex items-center justify-center"
+				>
+					{i + 1}
+				</span>
+				<div class="flex flex-row items-center gap-4 w-fit">
+					<svelte:component this={icon} class="w-10 h-10 text-dominant" />
+					<span class="text-2xl font-medium">{title}</span>
+				</div>
+				<p class="text-lg font-normal text-gray-200 pt-4 w-full">
+					{description}
+				</p>
+			</div>
+		{/each}
+	</div>
 </Section>
