@@ -1,23 +1,21 @@
 <script lang="ts">
+	import MagneticElement from "$components/MagneticElement.svelte";
+	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
+	import Section from "$components/Section.svelte";
+	import { scrollTo } from "$ts/scroll";
+	import Button from "$ui/Button.svelte";
+	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
 	import {
 		ArrowDown,
 		ChevronRight,
 		CodeBracket,
-		DevicePhoneMobile,
-		Cloud,
-		Swatch
+		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
-	import Button from "$ui/Button.svelte";
-	import Section from "$components/Section.svelte";
-	import MagneticElement from "$components/MagneticElement.svelte";
-	import Mouse3DTilting from "$components/Mouse3DTilting.svelte";
-	import { scrollTo } from "$ts/scroll";
 
 	const processSections = [
 		{
 			title: "Design",
-			icon: Swatch,
+			icon: PaintBrush,
 			description:
 				"We design the graphical interface of your project in accordance with your visual identity, to ensure an optimal user experience. "
 		},
@@ -124,19 +122,22 @@
 </main>
 
 <Section id="process" class="overflow-hidden scroll-mt-9">
-	<svelte:fragment slot="title" />
 	<div
-		class="scrolling-touch mb-8 gap-16 pb-8
-		flex flex-no-wrap items-start w-[calc(100%-2.6rem)] overflow-x-scroll
-		md:flex-row md:flex-wrap md:justify-center md:w-full md:overflow-hidden"
+		class="scrolling-touch gap-16 py-8 snap-x snap-mandatory child:snap-start mx-8
+		flex flex-no-wrap items-start overflow-x-auto
+		md:child:h-min md:justify-center"
 	>
-		{#each processSections as { title, icon, description }}
-			<div class="flex-col max-md:min-w-full md:w-2/3 lg:w-1/4 md:pb-4">
-				<div class="flex flex-row items-center gap-4">
-					<svelte:component this={icon} class="w-10 h-10" />
+		{#each processSections as { title, icon, description }, i}
+			<div class="max-md:min-w-full md:w-1/4 lg:pb-4 relative">
+				<span
+					class="absolute w-full h-full text-gray-700/75 text-9xl -z-10 font-medium flex items-center justify-center"
+					>{i + 1}</span
+				>
+				<div class="flex flex-row items-center gap-4 w-fit">
+					<svelte:component this={icon} class="w-10 h-10 text-dominant " />
 					<span class="text-2xl font-medium">{title}</span>
 				</div>
-				<p class="text-lg font-normal pt-4 w-11/12 xs:w-4/5">
+				<p class="text-lg font-normal text-gray-200 pt-4 w-full">
 					{description}
 				</p>
 			</div>
