@@ -31,7 +31,7 @@
 			title: "Hosting",
 			icon: Cloud,
 			description:
-				"We take care of  all the steps involved in hosting options for your project, allowing you to concentrate on your business rather than the technical tasks associated with hosting. Additionally, we offer both at-Vercel hosting and on-premise hosting."
+				"We handle all aspects of hosting options for your project, freeing you to focus on your business. We offer both at-Vercel hosting and on-premise hosting."
 		}
 	];
 </script>
