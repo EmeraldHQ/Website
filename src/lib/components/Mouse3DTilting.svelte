@@ -1,7 +1,7 @@
 <!-- Created from https://codepen.io/kevinpowell/pen/GRBdLEv -->
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { useId } from "$lib/ts/id";
+	import { useId } from "$ts/id";
 
 	const elementId = `svelte-mouse-tilt-${useId()}`;
 	let firstFire = true;
