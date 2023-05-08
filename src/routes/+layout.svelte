@@ -6,7 +6,7 @@
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
 	import Button from "$elements/Button.svelte";
-	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
+	// import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
@@ -269,6 +269,7 @@
 				</div>
 			{/if}
 			<!-- TODO: Actually make it work -->
+			<!--
 			<RadioButtonsGroup
 				values={["FR", "EN"]}
 				defaultIndex={1}
@@ -279,6 +280,7 @@
 					console.log(selectionIndex);
 				}}
 			/>
+			-->
 		</div>
 	</div>
 </footer>
