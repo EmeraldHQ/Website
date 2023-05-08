@@ -5,10 +5,8 @@
  * @name scrollTo
  *
  * @param {string} selector - The CSS selector of the element to scroll to.
- *
- * @returns {void}
  */
-export function scrollTo(selector: string): void {
+export function scrollTo(selector: string) {
 	const element = document.querySelector(selector);
 	if (element) {
 		const navbar = document.getElementById("navbar");
