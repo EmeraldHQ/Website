@@ -10,7 +10,8 @@
 	 * The index of the default toggle. Defaults to 0, set to 0 if the value is out of bounds of `values`.
 	 */
 	export let defaultIndex = 0;
-	let currentIndex: number = defaultIndex < values.length && defaultIndex >= 0 ? defaultIndex : 0;
+	let currentIndex: number;
+	$: currentIndex = defaultIndex < values.length && defaultIndex >= 0 ? defaultIndex : 0;
 	/**
 	 * The description of the radio buttons group. Used for accessibility. Mandatory.
 	 */
