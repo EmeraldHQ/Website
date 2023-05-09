@@ -26,9 +26,10 @@
 
 	// Config
 	const navbarItems = [
-		{ name: "About Us", href: "#process" },
-		{ name: "Our Work", href: "#def" },
-		{ name: "Who we are", href: "#abc" },
+		{ name: "Solutions", href: "#" }, // Dropdown: 5/6 solutions
+		{ name: "Method", href: "#method" },
+		{ name: "Technologies", href: "#technologies" },
+		{ name: "Company", href: "#" }, // Dropdown: Values, Who we are
 		{ name: "Contact Us", href: "." }
 	];
 	const footerItems = [
@@ -145,7 +146,7 @@
 		</div>
 		<div class="flex items-center gap-5 sm:gap-10">
 			<div
-				class="hidden xl:flex items-center gap-10 nav-items-container"
+				class="hidden lg:flex items-center gap-10 nav-items-container"
 				class:-mr-40={!showButton}
 			>
 				{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
@@ -164,7 +165,7 @@
 			>
 				<Button type="secondary">Contact Us</Button>
 			</span>
-			<button class="xl:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
+			<button class="lg:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
 				<Bars3 class="w-8 h-8" />
 			</button>
 		</div>
