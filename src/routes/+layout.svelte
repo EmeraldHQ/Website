@@ -164,7 +164,7 @@
 			>
 				<Button type="secondary">Contact Us</Button>
 			</span>
-			<button class="xl:hidden" on:click={() => (showSlideOver = true)}>
+			<button class="xl:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
 				<Bars3 class="w-8 h-8" />
 			</button>
 		</div>
@@ -209,7 +209,7 @@
 		{/if}
 		{#each footerItems as column}
 			<div class="min-w-fit">
-				<h4 class="text-primary mb-5">{column.name}</h4>
+				<h3 class="text-primary mb-5">{column.name}</h3>
 				<div
 					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
 				>
@@ -227,7 +227,7 @@
 			<div
 				class="mb-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
-				<a href="https://github.com/RenewHQ/Website">
+				<a href="https://github.com/RenewHQ/Website" aria-label="Take a look at the source code of this website" target="_blank" rel="noopener noreferrer">
 					<Github class="w-8 h-8" />
 				</a>
 			</div>

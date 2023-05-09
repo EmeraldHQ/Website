@@ -27,6 +27,9 @@
 >
 	{#each values as toggle, index}
 		<button
+			role="radio"
+			aria-checked={index === currentIndex}
+			tabindex="0"
 			class="text-center px-4 py-1 rounded-full"
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}
