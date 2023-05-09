@@ -102,7 +102,7 @@ jobs:
       - name: 🌍 Deploy Pages
         uses: actions/deploy-pages@v2
         id: deployment
-  
+
   perf-check:
     runs-on: ubuntu-latest
     needs: deploy
@@ -122,4 +122,3 @@ jobs:
         with:
           name: unlighthouse-report
           path: .unlighthouse/ci-report.json
-

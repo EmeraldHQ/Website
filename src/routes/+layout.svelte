@@ -227,7 +227,12 @@
 			<div
 				class="mb-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
-				<a href="https://github.com/RenewHQ/Website" aria-label="Take a look at the source code of this website" target="_blank" rel="noopener noreferrer">
+				<a
+					href="https://github.com/RenewHQ/Website"
+					aria-label="Take a look at the source code of this website"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<Github class="w-8 h-8" />
 				</a>
 			</div>
