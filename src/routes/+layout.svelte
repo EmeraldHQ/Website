@@ -85,7 +85,7 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<div class="top-0 flex justify-center sticky w-full z-10 pt-10 bg-dominant">
+<div class="top-0 flex justify-center sticky w-full z-10 pt-10">
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
 			class="flex items-center justify-center px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full"
