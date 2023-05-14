@@ -1,14 +1,22 @@
 <script lang="ts">
 	import "../app.css";
+	import { onDestroy } from "svelte";
+	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
-	import Button from "$ui/Button.svelte";
-	import RadioButtonsGroup from "$ui/RadioButtonsGroup.svelte";
-	import SlideOver from "$components/SlideOver.svelte";
+	import Button from "$elements/Button.svelte";
+	// import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
+	import SlideOver from "$shells/SlideOver.svelte";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 	import { scrollTo } from "$ts/scroll";
+
+	// Breadcrumb
+	let currentRoute: string[] = [];
+	const unsubscribe = page.subscribe((value) => {
+		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
+	});
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
@@ -17,9 +25,10 @@
 
 	// Config
 	const navbarItems = [
-		{ name: "About Us", href: "#process" },
-		{ name: "Our Work", href: "#def" },
-		{ name: "Who we are", href: "#abc" },
+		{ name: "Solutions", href: "#" }, // Dropdown: 5/6 solutions
+		{ name: "Method", href: "#method" },
+		{ name: "Technologies", href: "#technologies" },
+		{ name: "Company", href: "#" }, // Dropdown: Values, Who we are
 		{ name: "Contact Us", href: "." }
 	];
 	const footerItems = [
@@ -67,6 +76,9 @@
 	let scrollY = 0;
 	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
+
+	// Lifecycle
+	onDestroy(unsubscribe);
 </script>
 
 <!-- Binding for scroll-dependent elements -->
@@ -74,58 +86,90 @@
 
 <!-- Navbar -->
 <div class="top-0 flex justify-center sticky w-full z-10 pt-10">
-	<nav
-		id="navbar"
-		class="flex items-center justify-center w-full max-w-large-screen px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full backdrop-blur-sm backdrop-saturate-150 transition-shadow duration-500"
-	>
-		<a
-			href="/"
-			class="mr-auto grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
+		<nav
+			class="flex items-center justify-center px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full"
 		>
-			{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
-				<img
-					in:fade={{ delay: 250 }}
-					out:fade
-					src="/favicon.svg"
-					alt="Renew logo - small"
-					class="h-8 duration-300 hover:opacity-70"
-				/>
-			{:else}
-				<img
-					in:fade={{ delay: 250 }}
-					out:fade
-					src="/logo-dark.svg"
-					alt="Renew logo"
-					class="h-8 duration-300 hover:opacity-70"
-				/>
-			{/if}
-		</a>
-		<div class="flex items-center gap-5 sm:gap-10">
-			<div
-				class="flex items-center gap-10 ease-out duration-700 max-lg:hidden nav-items-container"
-				class:-mr-40={!showButton}
-			>
-				{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
-					<button on:click={() => scrollTo(item.href)}>
-						{item.name}
-					</button>
-				{/each}
+			<div class="mr-auto flex items-center gap-5">
+				<a
+					href="/"
+					class="grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+				>
+					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
+						<img
+							in:fade={{ delay: 250 }}
+							out:fade
+							src="/favicon.svg"
+							alt="Renew logo - small"
+							width="32"
+							height="32"
+							class="h-8 transition-opacity duration-300 hover:opacity-70"
+						/>
+					{:else}
+						<img
+							in:fade={{ delay: 250 }}
+							out:fade
+							src="/logo-dark.svg"
+							alt="Renew logo"
+							width="174"
+							height="32"
+							class="h-8 transition-opacity duration-300 hover:opacity-70"
+						/>
+					{/if}
+				</a>
 			</div>
-			<span
-				id="contact-us"
-				class="transition-opacity max-xs:hidden"
-				class:opacity-0={!showButton}
-				class:duration-200={!showButton}
-				class:duration-1000={showButton}
-				class:pointer-events-none={!showButton}
+			<div class="flex items-center gap-5 sm:gap-10">
+				<div
+					class="hidden lg:flex items-center gap-10 nav-items-container"
+					class:-mr-40={!showButton}
+				>
+					{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
+						<button on:click={() => scrollTo(item.href)}>
+							{item.name}
+						</button>
+					{/each}
+				</div>
+				<span
+					id="contact-us"
+					class="transition-opacity max-xs:hidden"
+					class:opacity-0={!showButton}
+					class:duration-200={!showButton}
+					class:duration-1000={showButton}
+					class:pointer-events-none={!showButton}
+				>
+					<Button type="secondary">Contact Us</Button>
+				</span>
+				<button class="lg:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
+					<Bars3 class="w-8 h-8" />
+				</button>
+			</div>
+		</nav>
+		{#if currentRoute.length > 0}
+			<div
+				class="mx-12 sm:mx-16 md:mx-20 py-1 px-6 sm:px-8 md:px-12 bg-black/70 rounded-b-3xl text-lg"
 			>
-				<Button type="secondary">Contact Us</Button>
-			</span>
-			<button class="lg:hidden" on:click={() => (showSlideOver = true)}>
-				<Bars3 class="w-8 h-8" />
-			</button>
-		</div>
-	</nav>
+				<div class="flex flex-row-reverse whitespace-nowrap overflow-x-auto">
+					<div class="flex flex-row gap-1.5 mr-auto">
+						{#each currentRoute as route, i}
+							<span>/</span>
+							<span>
+								{#if i < currentRoute.length - 1}
+									<a
+										href="/{currentRoute.slice(0, i + 1).join('/')}"
+										class="text-dominant underline-offset-4 hover:underline"
+									>
+										{route}
+									</a>
+								{:else}
+									{route}
+								{/if}
+							</span>
+						{/each}
+					</div>
+				</div>
+			</div>
+		{/if}
+	</div>
 </div>
 
 <!-- Responsive slide-over -->
@@ -158,20 +202,20 @@
 			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 		</a>
 	{/if}
-	<div class="flex flex-wrap gap-10 justify-between mt-10 xl:mt-0">
+	<div class="flex flex-wrap md:justify-center lg:justify-between gap-x-20 gap-y-16 my-14 xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 				<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
-			<div class="min-w-fit sm:mx-auto my-5 sm:my-10 xl:my-0">
-				<h4 class="text-primary mb-5">{column.name}</h4>
+			<div class="min-w-fit">
+				<h3 class="text-primary mb-5">{column.name}</h3>
 				<div
 					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
 				>
-					{#each column.items as link}
-						<a href={link.href}>{link.name}</a>
+					{#each column.items as item}
+						<a href={item.href}>{item.name}</a>
 					{/each}
 				</div>
 			</div>
@@ -184,7 +228,12 @@
 			<div
 				class="mb-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
-				<a href="https://github.com/RenewHQ/Website">
+				<a
+					href="https://github.com/RenewHQ/Website"
+					aria-label="Take a look at the source code of this website"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<Github class="w-8 h-8" />
 				</a>
 			</div>
@@ -220,6 +269,7 @@
 				</div>
 			{/if}
 			<!-- TODO: Actually make it work -->
+			<!--
 			<RadioButtonsGroup
 				values={["FR", "EN"]}
 				defaultIndex={1}
@@ -230,11 +280,16 @@
 					console.log(selectionIndex);
 				}}
 			/>
+			-->
 		</div>
 	</div>
 </footer>
 
 <style lang="postcss">
+	:global(::selection) {
+		@apply bg-dominant/75 text-primary;
+	}
+
 	:global(body) {
 		@apply bg-primary text-primary;
 	}

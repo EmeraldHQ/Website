@@ -8,7 +8,13 @@
 		TransitionChild
 	} from "@rgossiaux/svelte-headlessui";
 
+	/**
+	 * Whether the slide over is shown or not.
+	 */
 	export let show = false;
+	/**
+	 * The optional title of the slide over, displayed in the header.
+	 */
 	export let title: string | undefined = undefined;
 
 	function close() {

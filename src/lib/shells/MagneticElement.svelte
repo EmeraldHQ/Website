@@ -8,7 +8,13 @@
 	const dispatch = createEventDispatcher();
 
 	// Configuration
+	/**
+	 * The trigger area for the magnetic effect. Defaults to 200.
+	 */
 	export let triggerArea = 200;
+	/**
+	 * The interpolation factor for the magnetic effect. Often a value between 0 and 1. Defaults to 0.8.
+	 */
 	export let interpolationFactor = 0.8;
 
 	// Magnetic Object

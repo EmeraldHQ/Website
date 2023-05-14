@@ -2,9 +2,19 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 
+	/**
+	 * The content of each toggle. Likely a string or an icon.
+	 */
 	export let values: unknown[] = [];
+	/**
+	 * The index of the default toggle. Defaults to 0, set to 0 if the value is out of bounds of `values`.
+	 */
 	export let defaultIndex = 0;
-	let currentIndex: number = defaultIndex;
+	let currentIndex: number;
+	$: currentIndex = defaultIndex < values.length && defaultIndex >= 0 ? defaultIndex : 0;
+	/**
+	 * The description of the radio buttons group. Used for accessibility. Mandatory.
+	 */
 	export let description: string;
 
 	const dispatch = createEventDispatcher();
@@ -17,6 +27,9 @@
 >
 	{#each values as toggle, index}
 		<button
+			role="radio"
+			aria-checked={index === currentIndex}
+			tabindex="0"
 			class="text-center px-4 py-1 rounded-full"
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}

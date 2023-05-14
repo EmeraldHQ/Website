@@ -8,9 +8,23 @@
 	let isWorking = false;
 
 	// Svelte Props
+	/**
+	 * The initial X rotation of the element. Defaults to 0.
+	 */
 	export let initialX = 0;
+	/**
+	 * The initial Y rotation of the element. Defaults to 0.
+	 */
 	export let initialY = 0;
+	/**
+	 * The intensity of the mouse tilting effect. Often a value between 0 and 1. Defaults to 0.5.
+	 */
 	export let intensity = 0.5;
+	/**
+	 * The scope of the mouse tilting effect. Defines a selector for the element to be actively tilting in.
+	 * Defaults to the whole body.
+	 */
+	export let scope = "body";
 
 	// Rotate Element
 	async function rotateElement(event: MouseEvent, element: HTMLElement) {
@@ -53,11 +67,12 @@
 
 	onMount(() => {
 		const element = document.querySelector(`.${elementId}`);
-		const listener = (e: MouseEvent) => rotateElement(e, <HTMLElement>element);
-		document.addEventListener("mousemove", listener);
+		const listener = (e: Event) => rotateElement(<MouseEvent>e, <HTMLElement>element);
+		const scopeElement = document.querySelector(scope) || document.body;
+		scopeElement.addEventListener("mousemove", listener);
 
 		return () => {
-			document.removeEventListener("mousemove", listener);
+			scopeElement.removeEventListener("mousemove", listener);
 		};
 	});
 </script>
@@ -68,8 +83,8 @@
 				--rotateX: 0deg;
 				--rotateY: 0deg;
 				transform: perspective(312rem)
-									rotateX(calc({initialX}deg + var(--rotateY)))
-									rotateY(calc({initialY}deg + var(--rotateX)));
+									rotateX(calc({-initialY}deg + var(--rotateY)))
+									rotateY(calc({initialX}deg + var(--rotateX)));
 				transform-style: preserve-3d;
 	"
 >

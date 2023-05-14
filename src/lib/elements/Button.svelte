@@ -1,5 +1,12 @@
 <script lang="ts">
-	export let type: "primary" | "secondary" = "primary";
+	import { createEventDispatcher } from "svelte";
+
+	/**
+	 * Defines the style of the button. Defaults to `"primary"`.
+	 */
+	export let type: "primary" | "secondary" | "minimal" = "primary";
+
+	const dispatch = createEventDispatcher();
 </script>
 
 {#if type === "primary"}
@@ -11,7 +18,8 @@
 		inline-flex items-center gap-2
 		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
 		hover:bg-inherit hover:border-dominant hover:text-dominant
-	  {$$props.class}"
+		{$$props.class}"
+		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>
@@ -23,7 +31,18 @@
 		inline-flex items-center gap-2
 		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
 		hover:border-primary hover:text-primary
-	  {$$props.class}"
+	  	{$$props.class}"
+		on:click={() => dispatch("click")}
+	>
+		<slot />
+	</button>
+{:else if type === "minimal"}
+	<button
+		class="font-normal text-base text-dominant
+		flex justify-center items-center gap-1
+		hover:text-primary
+	  	{$$props.class}"
+		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>

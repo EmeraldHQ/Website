@@ -9,7 +9,7 @@
 export function scrollTo(selector: string) {
 	const element = document.querySelector(selector);
 	if (element) {
-		const navbar = document.getElementById("navbar");
+		const navbar = document.getElementsByName("nav")[0];
 		if (navbar && selector.startsWith("#")) {
 			// The navbar is fixed, so we need to account for its height.
 			const navbarHeight =
