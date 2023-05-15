@@ -1,5 +1,7 @@
 import fs from "fs";
 
+export const prerender = true;
+
 /**
  * Recursively scans the routes directory for routes and their last modified date. Does not include dynamic routes.
  * @param path the path to start scanning for routes from
@@ -54,16 +56,16 @@ export async function GET() {
             xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
         >
         ${routes
-					.map((route) => {
-						return `
-                    <url>
-                        <loc>${rootURL}${route.path}</loc>
-                        <lastmod>${route.lastMod}</lastmod>
-                        <changefreq>${route.changeFreq}</changefreq>
-                        <priority>${route.priority}</priority>
-                    </url>
-                    `.trim();
-					})
+					.map((route) =>
+						`
+                        <url>
+                            <loc>${rootURL}${route.path}</loc>
+                            <lastmod>${route.lastMod}</lastmod>
+                            <changefreq>${route.changeFreq}</changefreq>
+                            <priority>${route.priority}</priority>
+                        </url>
+                        `.trim()
+					)
 					.join("\n")}
         </urlset>`.trim(),
 		{
