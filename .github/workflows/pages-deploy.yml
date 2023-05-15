@@ -91,10 +91,10 @@ jobs:
       - name: 🔨 Build repo
         run: pnpm build
       
-      - name: ▶️ Start server
+      - name: ▶️ Start dev server
         if: github.event_name == 'pull_request'
         run: |
-          pnpm start &
+          pnpm dev &
           sleep 5
 
       - name: ⚓️ Unlighthouse check
