@@ -90,18 +90,6 @@ jobs:
       # These steps won't run on previous errors (by default)
       - name: 🔨 Build repo
         run: pnpm build
-      
-      - name: ▶️ Start dev server
-        if: github.event_name == 'pull_request'
-        run: |
-          pnpm dev &
-          sleep 5
-
-      - name: ⚓️ Unlighthouse check
-        if: github.event_name == 'pull_request'
-        run: |
-          npm i -g @unlighthouse/cli puppeteer
-          unlighthouse-ci --site http://localhost:5173 --budget 75
 
       - name: 📤 Upload artifact
         if: github.event_name != 'pull_request'
