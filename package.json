@@ -3,12 +3,12 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
-		"preinstall": "npx only-allow pnpm",
-		"dev": "vite dev",
+		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
-		"update": "pnpm update",
-		"update:latest": "pnpm update -L",
+		"deps:install": "pnpm i",
+		"deps:update": "pnpm up",
+		"deps:update-latest": "pnpm up -L",
 		"check": "svelte-kit sync && svelte-check --tsconfig tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
@@ -20,9 +20,9 @@
 		"@rgossiaux/svelte-headlessui": "^1.0.2",
 		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.16.3",
-		"@types/node": "^20.1.3",
-		"@typescript-eslint/eslint-plugin": "^5.59.5",
-		"@typescript-eslint/parser": "^5.59.5",
+		"@types/node": "^20.1.4",
+		"@typescript-eslint/eslint-plugin": "^5.59.6",
+		"@typescript-eslint/parser": "^5.59.6",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.40.0",
 		"eslint-config-prettier": "^8.8.0",
@@ -39,7 +39,7 @@
 		"tailwindcss-3d": "^0.2.3",
 		"tslib": "^2.5.0",
 		"typescript": "^5.0.4",
-		"vite": "^4.3.5"
+		"vite": "^4.3.6"
 	},
 	"type": "module"
 }
