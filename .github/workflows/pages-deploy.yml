@@ -12,7 +12,7 @@ on:
       - "pnpm-lock.yaml"
       - "*.config.*s"
       - "tsconfig.json"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/*"
   pull_request:
     paths:
       - "src/**"
@@ -21,7 +21,7 @@ on:
       - "pnpm-lock.yaml"
       - "*.config.*s"
       - "tsconfig.json"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/*"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
