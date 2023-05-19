@@ -1,6 +1,6 @@
-<section id={$$props.id} class="child:mx-10 md:child:mx-20 py-10">
+<section id={$$props.id} class="py-10 child:mx-10 md:child:mx-20">
 	{#if $$slots.title}
-		<h2 class="drop-shadow-lg pb-10 !ml-24 text-4xl">
+		<h2 class="!ml-24 pb-10 text-4xl drop-shadow-lg">
 			<slot name="title" />
 		</h2>
 	{/if}

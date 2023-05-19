@@ -95,27 +95,27 @@
 	]}
 />
 
-<div id="hero" class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
+<div id="hero" class="flex h-[calc(100dvh_-_7.5rem)] flex-col items-center justify-center">
 	<div
-		class="grid items-center grid-cols-1 xl:grid-cols-2 h-fit m-auto px-10 md:px-32
-			before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
+		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
+			before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
 	>
 		<!-- Left part -->
 		<div
-			class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl font-medium flex flex-col justify-center sm:mx-auto"
+			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
 		>
 			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
-			<h2 class="text-xl font-normal pt-10 text-gray-400">
+			<h2 class="pt-10 text-xl font-normal text-gray-400">
 				Powered by cutting-edge technologies, let's build<br />the web application you've been
 				dreaming of.
 			</h2>
 			<div
-				class="flex flex-col xs:flex-row gap-5 child:max-w-fit pt-10 scale-110 origin-bottom-left"
+				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
 				<Button>Contact Us</Button>
 				<Button type="minimal" class="hover-child:translate-x-1">
 					See our work
-					<ChevronRight class="w-4 h-4 transition-transform duration-500" />
+					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>
@@ -125,26 +125,26 @@
 			initialY={-13}
 			intensity={0.05}
 			scope={"#hero"}
-			class="hidden xl:flex lg:ml-20 aspect-square max-h-full justify-center items-center relative child:absolute"
+			class="relative hidden aspect-square max-h-full items-center justify-center child:absolute lg:ml-20 xl:flex"
 		>
-			<Window class="text-dominant w-full h-full" />
+			<Window class="h-full w-full text-dominant" />
 			<div
-				class="w-36 left-10 bottom-10 translate-z-28 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-28 before:blur-lg before:opacity-[0.35]"
+				class="bottom-10 left-10 w-36 perspective-[312rem] transform-style-3d translate-z-28
+				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
-				<CodeBracket class="w-full h-full" />
+				<CodeBracket class="h-full w-full" />
 			</div>
 			<div
-				class="w-36 top-0 left-1/2 translate-z-20 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-20 before:blur-lg before:opacity-50"
+				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20
+				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
 			>
-				<Sparkles class="w-full h-full" />
+				<Sparkles class="h-full w-full" />
 			</div>
 			<div
-				class="w-36 -right-10 bottom-0 translate-z-16 transform-style-3d perspective-[312rem]
-				before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:-translate-z-16 before:blur-lg before:opacity-[0.55]"
+				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16
+				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
 			>
-				<DevicePhoneMobile class="w-full h-full" />
+				<DevicePhoneMobile class="h-full w-full" />
 			</div>
 		</Mouse3DTilting>
 	</div>
@@ -174,8 +174,8 @@
 			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
-				class="w-8 h-8 p-1.5 bg-dominant border-[1px] border-transparent text-inverted rounded-full cursor-pointer
-				hover:text-dominant hover:bg-inherit hover:border-dominant"
+				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-transparent bg-dominant p-1.5 text-inverted
+				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</div>
 	</MagneticElement>
@@ -183,22 +183,20 @@
 
 <Section id="process">
 	<div
-		class="scrolling-touch gap-16 py-8 snap-x snap-mandatory child:snap-start
-		flex flex-no-wrap items-start overflow-x-auto
-		md:child:h-min md:justify-center"
+		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"
 	>
 		{#each processSections as { title, icon, description }, i}
-			<div class="max-md:min-w-full md:w-1/4 lg:pb-4 relative">
+			<div class="relative max-md:min-w-full md:w-1/4 lg:pb-4">
 				<span
-					class="absolute w-full h-full text-gray-700/75 text-9xl -z-10 font-medium flex items-center justify-center"
+					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
 				>
 					{i + 1}
 				</span>
-				<div class="flex flex-row items-center gap-4 w-fit">
-					<svelte:component this={icon} class="w-10 h-10 text-dominant" />
+				<div class="flex w-fit flex-row items-center gap-4">
+					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
 					<span class="text-2xl font-medium">{title}</span>
 				</div>
-				<p class="text-lg font-normal text-gray-200 pt-4 w-full">
+				<p class="w-full pt-4 text-lg font-normal text-gray-200">
 					{description}
 				</p>
 			</div>

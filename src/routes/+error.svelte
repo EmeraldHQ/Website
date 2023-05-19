@@ -12,54 +12,54 @@
 </svelte:head>
 
 <div
-	class="flex flex-col justify-center items-center gap-32 text-center py-44 relative
-        before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-t before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
+	class="relative flex flex-col items-center justify-center gap-32 py-44 text-center
+        before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-t before:from-dominant before:to-transparent before:opacity-20 before:content-['']"
 >
 	<!-- Middle text -->
 	<div class="leading-none">
 		<h1
-			class="font-semibold text-9xl xs:text-[12rem] sm:text-[14rem] md:text-[16rem] text-dominant"
+			class="text-9xl font-semibold text-dominant xs:text-[12rem] sm:text-[14rem] md:text-[16rem]"
 		>
 			{$page.status}
 		</h1>
-		<h2 class="font-medium text-5xl xs:text-7xl md:text-[6rem]">
+		<h2 class="text-5xl font-medium xs:text-7xl md:text-[6rem]">
 			{$page.error?.message.toLowerCase()}
 		</h2>
 	</div>
 
 	<!-- Absolute icons -->
-	<div class="absolute w-full h-full -z-10">
-		<Mouse3DTilting initialX={20} initialY={13} intensity={0.05} class="w-24 h-24">
+	<div class="absolute -z-10 h-full w-full">
+		<Mouse3DTilting initialX={20} initialY={13} intensity={0.05} class="h-24 w-24">
 			<div
-				class="w-full h-full text-gray-200/75 translate-x-72 translate-y-32
-					before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:blur-lg before:opacity-30"
+				class="h-full w-full text-gray-200/75 translate-x-72 translate-y-32
+					before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-30 before:blur-lg before:content-['']"
 			>
-				<Sparkles class="w-full h-full" />
+				<Sparkles class="h-full w-full" />
 			</div>
 		</Mouse3DTilting>
-		<Mouse3DTilting initialX={20} initialY={-15} intensity={0.05} class="w-24 h-24">
+		<Mouse3DTilting initialX={20} initialY={-15} intensity={0.05} class="h-24 w-24">
 			<div
-				class="w-full h-full text-gray-200/75 translate-x-96 translate-y-72
-					before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:blur-lg before:opacity-30"
+				class="h-full w-full text-gray-200/75 translate-x-96 translate-y-72
+					before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-30 before:blur-lg before:content-['']"
 			>
-				<ExclamationCircle class="w-full h-full" />
+				<ExclamationCircle class="h-full w-full" />
 			</div>
 		</Mouse3DTilting>
 		<div class="flex justify-end">
-			<Mouse3DTilting initialX={-20} initialY={20} intensity={0.05} class="w-24 h-24">
+			<Mouse3DTilting initialX={-20} initialY={20} intensity={0.05} class="h-24 w-24">
 				<div
-					class="w-full h-full text-gray-200/75 -translate-x-96
-						before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:blur-lg before:opacity-30"
+					class="h-full w-full text-gray-200/75 -translate-x-96
+						before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-30 before:blur-lg before:content-['']"
 				>
-					<XMark class="w-full h-full" />
+					<XMark class="h-full w-full" />
 				</div>
 			</Mouse3DTilting>
-			<Mouse3DTilting initialX={-40} initialY={-13} intensity={0.05} class="w-24 h-24">
+			<Mouse3DTilting initialX={-40} initialY={-13} intensity={0.05} class="h-24 w-24">
 				<div
-					class="w-full h-full text-gray-200/75 -translate-x-96 translate-y-96
-						before:content-[''] before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:blur-lg before:opacity-30"
+					class="h-full w-full text-gray-200/75 -translate-x-96 translate-y-96
+						before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-30 before:blur-lg before:content-['']"
 				>
-					<CodeBracket class="w-full h-full" />
+					<CodeBracket class="h-full w-full" />
 				</div>
 			</Mouse3DTilting>
 		</div>
