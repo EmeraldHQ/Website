@@ -193,7 +193,9 @@
 	</svelte:fragment>
 </SlideOver>
 
-<slot />
+<main>
+	<slot />
+</main>
 
 <footer class="p-24 border-t border-gray-500 text-gray-400">
 	<!-- Main grid -->

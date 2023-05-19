@@ -95,7 +95,7 @@
 	]}
 />
 
-<main id="hero" class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
+<div id="hero" class="h-[calc(100dvh_-_7.5rem)] flex flex-col items-center justify-center">
 	<div
 		class="grid items-center grid-cols-1 xl:grid-cols-2 h-fit m-auto px-10 md:px-32
 			before:content-[''] before:absolute before:max-w-full before:inset-0 before:bg-gradient-to-l before:from-dominant before:to-transparent before:-z-10 before:opacity-20"
@@ -179,7 +179,7 @@
 			/>
 		</div>
 	</MagneticElement>
-</main>
+</div>
 
 <Section id="process">
 	<div
