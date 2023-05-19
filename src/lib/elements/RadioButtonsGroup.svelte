@@ -23,14 +23,14 @@
 <div
 	role="radiogroup"
 	aria-label={description}
-	class="inline-flex p-1 space-x-1 border-[1px] border-gray-400 text-primary shadow-2xl shadow-black rounded-full {$$props.class}"
+	class="inline-flex space-x-1 rounded-full border-[1px] border-gray-400 p-1 text-primary shadow-2xl shadow-black {$$props.class}"
 >
 	{#each values as toggle, index}
 		<button
 			role="radio"
 			aria-checked={index === currentIndex}
 			tabindex="0"
-			class="text-center px-4 py-1 rounded-full"
+			class="rounded-full px-4 py-1 text-center"
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}
 			class:hover:bg-slate-800={index !== currentIndex}

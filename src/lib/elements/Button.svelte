@@ -11,37 +11,21 @@
 
 {#if type === "primary"}
 	<button
-		class="font-medium text-lg text-inverted
-		bg-dominant
-		border-transparent border-[1px]
-		py-1 px-3
-		inline-flex items-center gap-2
-		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
-		hover:bg-inherit hover:border-dominant hover:text-dominant
-		{$$props.class}"
+		class="inline-flex items-center gap-2 rounded-xl border-[1px] border-transparent bg-dominant px-3 py-1 text-lg font-medium text-inverted shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant {$$props.class}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>
 {:else if type === "secondary"}
 	<button
-		class="font-medium text-lg text-dominant
-		border-dominant border-[1px]
-		py-1 px-3
-		inline-flex items-center gap-2
-		rounded-xl shadow-lg shadow-primary/25 transition-colors duration-300
-		hover:border-primary hover:text-primary
-	  	{$$props.class}"
+		class="inline-flex items-center gap-2 rounded-xl border-[1px] border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-primary hover:text-primary {$$props.class}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>
 {:else if type === "minimal"}
 	<button
-		class="font-normal text-base text-dominant
-		flex justify-center items-center gap-1
-		hover:text-primary
-	  	{$$props.class}"
+		class="flex items-center justify-center gap-1 text-base font-normal text-dominant hover:text-primary {$$props.class}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />

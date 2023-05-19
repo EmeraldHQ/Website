@@ -85,10 +85,10 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<div class="top-0 flex justify-center sticky w-full z-10 pt-10">
+<div class="sticky top-0 z-10 flex w-full justify-center pt-10">
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
-			class="flex items-center justify-center px-10 md:px-20 py-5 mx-2 sm:mx-5 md:mx-10 h-20 bg-black/60 rounded-full"
+			class="mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 sm:mx-5 md:mx-10 md:px-20"
 		>
 			<div class="mr-auto flex items-center gap-5">
 				<a
@@ -120,7 +120,7 @@
 			</div>
 			<div class="flex items-center gap-5 sm:gap-10">
 				<div
-					class="hidden lg:flex items-center gap-10 nav-items-container"
+					class="nav-items-container hidden items-center gap-10 lg:flex"
 					class:-mr-40={!showButton}
 				>
 					{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
@@ -140,16 +140,16 @@
 					<Button type="secondary">Contact Us</Button>
 				</span>
 				<button class="lg:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
-					<Bars3 class="w-8 h-8" />
+					<Bars3 class="h-8 w-8" />
 				</button>
 			</div>
 		</nav>
 		{#if currentRoute.length > 0}
 			<div
-				class="mx-12 sm:mx-16 md:mx-20 py-1 px-6 sm:px-8 md:px-12 bg-black/70 rounded-b-3xl text-lg"
+				class="mx-12 rounded-b-3xl bg-black/70 px-6 py-1 text-lg sm:mx-16 sm:px-8 md:mx-20 md:px-12"
 			>
-				<div class="flex flex-row-reverse whitespace-nowrap overflow-x-auto">
-					<div class="flex flex-row gap-1.5 mr-auto">
+				<div class="flex flex-row-reverse overflow-x-auto whitespace-nowrap">
+					<div class="mr-auto flex flex-row gap-1.5">
 						{#each currentRoute as route, i}
 							<span>/</span>
 							<span>
@@ -176,7 +176,7 @@
 <SlideOver bind:show={showSlideOver}>
 	<svelte:fragment slot="content">
 		<div
-			class="h-full flex flex-col justify-center items-center gap-20 text-6xl font-medium nav-items-container child:after:!h-2 child:after:!-bottom-3"
+			class="nav-items-container flex h-full flex-col items-center justify-center gap-20 text-6xl font-medium child:after:!-bottom-3 child:after:!h-2"
 		>
 			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
 				<button
@@ -197,14 +197,14 @@
 	<slot />
 </main>
 
-<footer class="p-24 border-t border-gray-500 text-gray-400">
+<footer class="border-t border-gray-500 p-24 text-gray-400">
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
 		</a>
 	{/if}
-	<div class="flex flex-wrap md:justify-center lg:justify-between gap-x-20 gap-y-16 my-14 xl:my-0">
+	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
 				<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
@@ -212,9 +212,9 @@
 		{/if}
 		{#each footerItems as column}
 			<div class="min-w-fit">
-				<h3 class="text-primary mb-5">{column.name}</h3>
+				<h3 class="mb-5 text-primary">{column.name}</h3>
 				<div
-					class="flex flex-col gap-2 child:w-fit child-hover:underline child:underline-offset-4 child-hover:text-dominant"
+					class="flex flex-col gap-2 child:w-fit child:underline-offset-4 child-hover:text-dominant child-hover:underline"
 				>
 					{#each column.items as item}
 						<a href={item.href}>{item.name}</a>
@@ -224,11 +224,11 @@
 		{/each}
 	</div>
 	<!-- Bottom links & settings -->
-	<div class="mt-10 flex items-end child:h-min justify-between">
+	<div class="mt-10 flex items-end justify-between child:h-min">
 		<!-- Left -->
 		<div>
 			<div
-				class="mb-5 text-primary divide-x divide-gray-400 child:transition-opacity child:duration-300 child-hover:opacity-70"
+				class="mb-5 divide-x divide-gray-400 text-primary child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a
 					href="https://github.com/RenewHQ/Website"
@@ -236,7 +236,7 @@
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<Github class="w-8 h-8" />
+					<Github class="h-8 w-8" />
 				</a>
 			</div>
 			© {new Date().getFullYear()} Renew
@@ -248,25 +248,19 @@
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
 				<ArrowUp
-					class="w-8 h-8 p-1.5
-					border-[1px] border-dominant text-dominant
-					rounded-full cursor-pointer transition-colors duration-300
-					hover:text-inverted hover:bg-dominant hover:border-transparent"
+					class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</div>
 		{/if}
 		<!-- Right -->
-		<div class="flex flex-col gap-2 items-end">
+		<div class="flex flex-col items-end gap-2">
 			{#if innerWidth < tailwindXsScreen}
 				<div
 					on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 					on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				>
 					<ArrowUp
-						class="w-8 h-8 p-1.5
-						border-[1px] border-dominant text-dominant
-						rounded-full cursor-pointer transition-colors duration-300
-						hover:text-inverted hover:bg-dominant hover:border-transparent"
+						class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 					/>
 				</div>
 			{/if}
@@ -301,7 +295,7 @@
 	}
 
 	.nav-items-container > *::after {
-		@apply content-[""] absolute bg-dominant h-1 w-0 left-0 -bottom-1.5 duration-300;
+		@apply absolute -bottom-1.5 left-0 h-1 w-0 bg-dominant duration-300 content-[""];
 	}
 
 	.nav-items-container > *:hover::after {
