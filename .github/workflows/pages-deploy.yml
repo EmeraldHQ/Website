@@ -67,6 +67,9 @@ jobs:
       - name: 📥 Install NPM dependencies
         run: pnpm i --no-frozen-lockfile
 
+      - name: 🌱 Create .env file
+        run: echo ${{ secrets.ENV }} > .env
+        
       - name: ✨ Check Svelte format
         run: pnpm check
 
@@ -88,9 +91,6 @@ jobs:
           commit_message: "Fix lint"
 
       # These steps won't run on previous errors (by default)
-      - name: 🌱 Create .env file
-        run: echo ${{ secrets.ENV }} > .env
-
       - name: 🔨 Build repo
         run: pnpm build
 
