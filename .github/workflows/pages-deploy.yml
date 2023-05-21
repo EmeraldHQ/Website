@@ -67,6 +67,17 @@ jobs:
       - name: 📥 Install NPM dependencies
         run: pnpm i --no-frozen-lockfile
 
+      - name: 📤 Commit updated lock file
+        id: auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update lock file"
+          file_pattern: "pnpm-lock.yaml"  # Should not be needed, but still
+      
+      - name: ❌ Exit if changes detected
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: exit 1
+
       - name: 🌱 Create .env file
         run: echo ${{ secrets.ENV }} > .env
         
