@@ -1,4 +1,5 @@
 import fs from "fs";
+import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
 
 export const prerender = true;
 
@@ -24,7 +25,6 @@ function getRoutes(path: string) {
 	return routes;
 }
 
-const rootURL = "https://renewhq.studio";
 const routes = getRoutes("src/routes").map((route) => {
 	return {
 		...route,
@@ -59,7 +59,7 @@ export async function GET() {
 					.map((route) =>
 						`
                         <url>
-                            <loc>${rootURL}${route.path}</loc>
+                            <loc>${ROOT_URL}${route.path}</loc>
                             <lastmod>${route.lastMod}</lastmod>
                             <changefreq>${route.changeFreq}</changefreq>
                             <priority>${route.priority}</priority>

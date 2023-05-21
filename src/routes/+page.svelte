@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -35,21 +36,22 @@
 	];
 </script>
 
+<!-- Meta tags -->
 <MetaTags
 	title="Home"
 	titleTemplate="%s | Renew"
 	description="Your web apps. Modern and fast."
-	canonical="https://renewhq.studio"
+	canonical={ROOT_URL}
 	languageAlternates={[
 		{
 			hrefLang: "fr",
-			href: "https://renewhq.studio"
+			href: ROOT_URL
 		}
 	]}
 	openGraph={{
 		images: [
 			{
-				url: "https://renewhq.studio/og-banner.png",
+				url: `${ROOT_URL}/og-banner.png`,
 				width: 1536,
 				height: 768,
 				alt: "Og Banner"
@@ -65,7 +67,7 @@
 		*/
 		title: "Home | Renew",
 		description: "Your web apps. Modern and fast.",
-		image: "https://renewhq.studio/og-banner.png",
+		image: `${ROOT_URL}/og-banner.png`,
 		imageAlt: "Og Banner"
 	}}
 	robotsProps={{
@@ -77,17 +79,17 @@
 	schema={[
 		{
 			"@type": "Organization",
-			url: "https://renewhq.studio",
-			logo: "https://renewhq.studio/favicon.svg"
+			url: ROOT_URL,
+			logo: `${ROOT_URL}/favicon.svg`
 		} /*,
 		{
 			"@type": "WebSite",
-			url: "https://renewhq.studio",
+			url: ROOT_URL,
 			potentialAction: {
 				"@type": "SearchAction",
 				target: {
 					"@type": "EntryPoint",
-					urlTemplate: "https://renewhq.studio/search?q={search_term_string}"
+					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
 				},
 				"query-input": "required name=search_term_string"
 			}
@@ -95,6 +97,7 @@
 	]}
 />
 
+<!-- Body -->
 <div id="hero" class="flex h-[calc(100dvh_-_7.5rem)] flex-col items-center justify-center">
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
