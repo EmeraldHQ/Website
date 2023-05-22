@@ -199,7 +199,7 @@
 				</span>
 				<div class="flex w-fit flex-row items-center gap-4">
 					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
-					<span class="text-2xl font-medium">{title}</span>
+					<h3 class="text-2xl font-medium">{title}</h3>
 				</div>
 				<p class="w-full pt-4 text-lg font-normal text-gray-200">
 					{description}
