@@ -19,19 +19,19 @@
 			title: "Design",
 			icon: PaintBrush,
 			description:
-				"We design the graphical interface of your project in accordance with your visual identity, to ensure an optimal user experience. "
+				"We design the user interface of your project following your visual identity, to guarantee an optimal user experience."
 		},
 		{
 			title: "Development",
 			icon: CodeBracket,
 			description:
-				"Our company specializes in transforming your concepts into functional code, utilizing the latest and most advanced technologies in the market."
+				"The concept is then transformed into code, using the latest and most advanced technologies on the market."
 		},
 		{
 			title: "Hosting",
 			icon: Cloud,
 			description:
-				"We handle all aspects of hosting options for your project, freeing you to focus on your business. We offer both at-Vercel hosting and on-premise hosting."
+				"We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel and on-site hosting."
 		}
 	];
 </script>
@@ -98,6 +98,7 @@
 />
 
 <!-- Body -->
+<!-- Hero -->
 <div id="hero" class="flex h-[calc(100dvh_-_7.5rem)] flex-col items-center justify-center">
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
@@ -184,6 +185,7 @@
 	</MagneticElement>
 </div>
 
+<!-- Process -->
 <Section id="process">
 	<div
 		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"

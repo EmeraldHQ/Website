@@ -25,7 +25,7 @@
 	</button>
 {:else if type === "minimal"}
 	<button
-		class="flex items-center justify-center gap-1 text-base font-normal text-dominant hover:text-primary {$$props.class}"
+		class="flex items-center justify-center gap-1 text-base font-normal text-dominant underline-offset-4 hover:underline {$$props.class}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />
