@@ -154,7 +154,7 @@
 	<!-- Bottom arrow -->
 	<MagneticElement
 		class="pb-10 transition-transform duration-500"
-		on:in_zone={(e) => {
+		on:in_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
 			setTimeout(() => {
@@ -162,7 +162,7 @@
 			}, 500);
 			element.parentElement.style.transform = "scale(1.2)";
 		}}
-		on:out_zone={(e) => {
+		on:out_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
 			element.parentElement.style.transform = "scale(1)";

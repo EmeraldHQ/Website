@@ -14,7 +14,7 @@
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
-	const unsubscribe = page.subscribe((value) => {
+	const unsubscribe = page.subscribe(value => {
 		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
 	});
 
@@ -123,7 +123,7 @@
 					class="nav-items-container hidden items-center gap-10 lg:flex"
 					class:-mr-40={!showButton}
 				>
-					{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
+					{#each navbarItems.filter(item => item.href.startsWith("#")) as item}
 						<button on:click={() => scrollTo(item.href)}>
 							{item.name}
 						</button>

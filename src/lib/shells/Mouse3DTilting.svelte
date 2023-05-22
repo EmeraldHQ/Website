@@ -52,7 +52,7 @@
 			setProperties();
 			isWorking = true;
 			// Caveat: Doesn't solve the problem if you move too much during the x ms
-			await new Promise<void>((resolve) =>
+			await new Promise<void>(resolve =>
 				setTimeout(() => {
 					element.classList.remove("transition-transform", "duration-500");
 					resolve();

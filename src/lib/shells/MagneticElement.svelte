@@ -44,7 +44,7 @@
 			window.addEventListener("resize", () => {
 				this.boundingClientRect = this.domElement.getBoundingClientRect();
 			});
-			document.addEventListener("mousemove", (e) => {
+			document.addEventListener("mousemove", e => {
 				this.mousePosition.x = e.pageX;
 				this.mousePosition.y = e.pageY;
 				this.render();
