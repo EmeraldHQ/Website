@@ -73,10 +73,10 @@ jobs:
         with:
           commit_message: "Update lock file"
           file_pattern: "pnpm-lock.yaml" # Should not be needed, but still
-      
+
       - name: 🔧 Check Inlang config
         run: pnpm ci:update-inlang
-      
+
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
         uses: stefanzweifel/git-auto-commit-action@v4
