@@ -1,4 +1,5 @@
 import fs from "fs";
+import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
 
 export const prerender = true;
 
@@ -8,7 +9,7 @@ export const prerender = true;
  * @returns an array of routes and their last modified date
  */
 function getRoutes(path: string) {
-	const files = fs.readdirSync(path).filter((file) => !file.includes("[") && !file.includes("]")); // Filter out dynamic routes
+	const files = fs.readdirSync(path).filter(file => !file.includes("[") && !file.includes("]")); // Filter out dynamic routes
 	const routes: { path: string; lastMod: string }[] = [];
 	for (const file of files) {
 		const filePath = `${path}/${file}`;
@@ -24,8 +25,7 @@ function getRoutes(path: string) {
 	return routes;
 }
 
-const rootURL = "https://renewhq.studio";
-const routes = getRoutes("src/routes").map((route) => {
+const routes = getRoutes("src/routes").map(route => {
 	return {
 		...route,
 		// Set the priority of the homepage to 1. All other pages are 0.7, unless they have been modified in the last 7 days, in which case they are 0.8
@@ -56,10 +56,10 @@ export async function GET() {
             xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
         >
         ${routes
-					.map((route) =>
+					.map(route =>
 						`
                         <url>
-                            <loc>${rootURL}${route.path}</loc>
+                            <loc>${ROOT_URL}${route.path}</loc>
                             <lastmod>${route.lastMod}</lastmod>
                             <changefreq>${route.changeFreq}</changefreq>
                             <priority>${route.priority}</priority>

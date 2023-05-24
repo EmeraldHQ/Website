@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -18,38 +19,39 @@
 			title: "Design",
 			icon: PaintBrush,
 			description:
-				"We design the graphical interface of your project in accordance with your visual identity, to ensure an optimal user experience. "
+				"We design the user interface of your project following your visual identity, to guarantee an optimal user experience."
 		},
 		{
 			title: "Development",
 			icon: CodeBracket,
 			description:
-				"Our company specializes in transforming your concepts into functional code, utilizing the latest and most advanced technologies in the market."
+				"The concept is then transformed into code, using the latest and most advanced technologies on the market."
 		},
 		{
 			title: "Hosting",
 			icon: Cloud,
 			description:
-				"We handle all aspects of hosting options for your project, freeing you to focus on your business. We offer both at-Vercel hosting and on-premise hosting."
+				"We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel and on-site hosting."
 		}
 	];
 </script>
 
+<!-- Meta tags -->
 <MetaTags
 	title="Home"
 	titleTemplate="%s | Renew"
 	description="Your web apps. Modern and fast."
-	canonical="https://renewhq.studio"
+	canonical={ROOT_URL}
 	languageAlternates={[
 		{
 			hrefLang: "fr",
-			href: "https://renewhq.studio"
+			href: ROOT_URL
 		}
 	]}
 	openGraph={{
 		images: [
 			{
-				url: "https://renewhq.studio/og-banner.png",
+				url: `${ROOT_URL}/og-banner.png`,
 				width: 1536,
 				height: 768,
 				alt: "Og Banner"
@@ -65,7 +67,7 @@
 		*/
 		title: "Home | Renew",
 		description: "Your web apps. Modern and fast.",
-		image: "https://renewhq.studio/og-banner.png",
+		image: `${ROOT_URL}/og-banner.png`,
 		imageAlt: "Og Banner"
 	}}
 	robotsProps={{
@@ -77,17 +79,17 @@
 	schema={[
 		{
 			"@type": "Organization",
-			url: "https://renewhq.studio",
-			logo: "https://renewhq.studio/favicon.svg"
+			url: ROOT_URL,
+			logo: `${ROOT_URL}/favicon.svg`
 		} /*,
 		{
 			"@type": "WebSite",
-			url: "https://renewhq.studio",
+			url: ROOT_URL,
 			potentialAction: {
 				"@type": "SearchAction",
 				target: {
 					"@type": "EntryPoint",
-					urlTemplate: "https://renewhq.studio/search?q={search_term_string}"
+					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
 				},
 				"query-input": "required name=search_term_string"
 			}
@@ -95,6 +97,8 @@
 	]}
 />
 
+<!-- Body -->
+<!-- Hero -->
 <div id="hero" class="flex h-[calc(100dvh_-_7.5rem)] flex-col items-center justify-center">
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
@@ -151,7 +155,7 @@
 	<!-- Bottom arrow -->
 	<MagneticElement
 		class="pb-10 transition-transform duration-500"
-		on:in_zone={(e) => {
+		on:in_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
 			setTimeout(() => {
@@ -159,7 +163,7 @@
 			}, 500);
 			element.parentElement.style.transform = "scale(1.2)";
 		}}
-		on:out_zone={(e) => {
+		on:out_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
 			element.parentElement.style.transform = "scale(1)";
@@ -181,6 +185,7 @@
 	</MagneticElement>
 </div>
 
+<!-- Process -->
 <Section id="process">
 	<div
 		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"
@@ -194,7 +199,7 @@
 				</span>
 				<div class="flex w-fit flex-row items-center gap-4">
 					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
-					<span class="text-2xl font-medium">{title}</span>
+					<h3 class="text-2xl font-medium">{title}</h3>
 				</div>
 				<p class="w-full pt-4 text-lg font-normal text-gray-200">
 					{description}

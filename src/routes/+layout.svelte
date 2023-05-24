@@ -8,13 +8,13 @@
 	import Button from "$elements/Button.svelte";
 	// import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
+	import { scrollTo } from "$ts/scroll";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
-	import { scrollTo } from "$ts/scroll";
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
-	const unsubscribe = page.subscribe((value) => {
+	const unsubscribe = page.subscribe(value => {
 		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
 	});
 
@@ -95,7 +95,7 @@
 					href="/"
 					class="grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
 				>
-					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth && innerWidth < tailwindXsScreen)}
+					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 						<img
 							in:fade={{ delay: 250 }}
 							out:fade
@@ -120,10 +120,10 @@
 			</div>
 			<div class="flex items-center gap-5 sm:gap-10">
 				<div
-					class="nav-items-container hidden items-center gap-10 lg:flex"
+					class="nav-items-container hidden items-center gap-10 duration-700 ease-out lg:flex"
 					class:-mr-40={!showButton}
 				>
-					{#each navbarItems.filter((item) => item.href.startsWith("#")) as item}
+					{#each navbarItems.filter(item => item.href.startsWith("#")) as item}
 						<button on:click={() => scrollTo(item.href)}>
 							{item.name}
 						</button>
