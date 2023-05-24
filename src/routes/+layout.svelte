@@ -5,8 +5,9 @@
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
 	import Button from "$elements/Button.svelte";
-	// import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
+	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 	import { scrollTo } from "$ts/scroll";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -25,46 +26,48 @@
 
 	// Config
 	const navbarItems = [
-		{ name: "Solutions", href: "#" }, // Dropdown: 5/6 solutions
-		{ name: "Method", href: "#method" },
-		{ name: "Technologies", href: "#technologies" },
-		{ name: "Company", href: "#" }, // Dropdown: Values, Who we are
-		{ name: "Contact Us", href: "." }
+		{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
+		{ name: i("common.pages.process"), href: "#method" },
+		{ name: i("common.pages.technologies"), href: "#technologies" },
+		{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
+		{ name: i("common.contact"), href: "." }
 	];
 	const footerItems = [
 		{
-			name: "Solutions",
+			name: i("common.pages.solutions"),
 			items: [
-				{ name: "Showcase website", href: "/" },
-				{ name: "Comprehensive web app", href: "/" },
-				{ name: "E-commerce", href: "/" },
-				{ name: "Legacy website rework", href: "/" }
+				{ name: i("common.solutions.comprehensive"), href: "/" },
+				{ name: i("common.solutions.web-app"), href: "/" },
+				{ name: i("common.solutions.landing"), href: "/" },
+				{ name: i("common.solutions.ecommerce"), href: "/" },
+				{ name: i("common.solutions.rewrite"), href: "/" },
+				{ name: i("common.solutions.custom"), href: "/" }
 			]
 		},
 		{
-			name: "Pages",
+			name: i("common.pages.title"),
 			items: [
-				{ name: "Home", href: "/" },
-				{ name: "Process", href: "/" },
-				{ name: "Solutions", href: "/" },
-				{ name: "Technologies", href: "/" }
+				{ name: i("common.pages.home"), href: "/" },
+				{ name: i("common.pages.process"), href: "/" },
+				{ name: i("common.pages.solutions"), href: "/" },
+				{ name: i("common.pages.technologies"), href: "/" }
 			]
 		},
 		{
-			name: "Company",
+			name: i("common.pages.company"),
 			items: [
-				{ name: "About", href: "/" },
-				{ name: "Contact", href: "/" },
-				{ name: "Team", href: "/" },
-				{ name: "Environment", href: "/" },
-				{ name: "Open Source", href: "https://github.com/RenewHQ" }
+				{ name: i("common.company.about"), href: "/" },
+				{ name: i("common.contact"), href: "/" },
+				{ name: i("common.company.team"), href: "/" },
+				{ name: i("common.company.env"), href: "/" },
+				{ name: i("common.company.oss"), href: "https://github.com/RenewHQ" }
 			]
 		},
 		{
-			name: "Legal",
+			name: i("legal.title"),
 			items: [
-				{ name: "Privacy Policy", href: "/" },
-				{ name: "Terms of Service", href: "/" }
+				{ name: i("legal.privacy"), href: "/" },
+				{ name: i("legal.terms"), href: "/" }
 			]
 		}
 	];
@@ -100,7 +103,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/favicon.svg"
-							alt="Renew logo - small"
+							alt={i("alt.logo-small")}
 							width="32"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -110,7 +113,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/logo-dark.svg"
-							alt="Renew logo"
+							alt={i("alt.logo")}
 							width="174"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -137,9 +140,13 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button type="secondary">Contact Us</Button>
+					<Button type="secondary">{i("common.contact")}</Button>
 				</span>
-				<button class="lg:hidden" aria-label="Menu" on:click={() => (showSlideOver = true)}>
+				<button
+					class="lg:hidden"
+					aria-label={i("aria.menu")}
+					on:click={() => (showSlideOver = true)}
+				>
 					<Bars3 class="h-8 w-8" />
 				</button>
 			</div>
@@ -150,12 +157,12 @@
 			>
 				<div class="flex flex-row-reverse overflow-x-auto whitespace-nowrap">
 					<div class="mr-auto flex flex-row gap-1.5">
-						{#each currentRoute as route, i}
+						{#each currentRoute as route, index}
 							<span>/</span>
 							<span>
-								{#if i < currentRoute.length - 1}
+								{#if index < currentRoute.length - 1}
 									<a
-										href="/{currentRoute.slice(0, i + 1).join('/')}"
+										href="/{currentRoute.slice(0, index + 1).join('/')}"
 										class="text-dominant underline-offset-4 hover:underline"
 									>
 										{route}
@@ -201,13 +208,13 @@
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
+			<img src="/logo-dark.svg" alt={i("alt.logo")} width="174" height="32" />
 		</a>
 	{/if}
 	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-				<img src="/logo-dark.svg" alt="Renew logo" width="174" height="32" />
+				<img src="/logo-dark.svg" alt={i("alt.logo")} width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
@@ -232,7 +239,7 @@
 			>
 				<a
 					href="https://github.com/RenewHQ/Website"
-					aria-label="Take a look at the source code of this website"
+					aria-label={i("aria.source")}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -264,19 +271,20 @@
 					/>
 				</div>
 			{/if}
-			<!-- TODO: Actually make it work -->
-			<!--
 			<RadioButtonsGroup
-				values={["FR", "EN"]}
-				defaultIndex={1}
-				description="Language selection"
-				class="scale-75 origin-bottom-right xs:scale-90 sm:scale-100"
-				on:change={(e) => {
-					const selectionIndex = e.detail.index;
-					console.log(selectionIndex);
+				values={languages.map(language => language.toUpperCase())}
+				defaultIndex={languages.indexOf(language)}
+				description={i("aria.radio-language")}
+				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
+				on:hover={async e => {
+					await loadResource(languages[e.detail.index]);
+				}}
+				on:change={e => {
+					switchLanguage(languages[e.detail.index]).then(() => {
+						location.reload(); // FIXME: improve that to not reload the whole page
+					});
 				}}
 			/>
-			-->
 		</div>
 	</div>
 </footer>

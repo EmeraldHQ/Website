@@ -13,25 +13,24 @@
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
+	import { i } from "@inlang/sdk-js";
+	import { c } from "$ts/inlang-color";
 
 	const processSections = [
 		{
-			title: "Design",
+			title: i("common.process.design"),
 			icon: PaintBrush,
-			description:
-				"We design the user interface of your project following your visual identity, to guarantee an optimal user experience."
+			description: i("home.process.design-desc")
 		},
 		{
-			title: "Development",
+			title: i("common.process.development"),
 			icon: CodeBracket,
-			description:
-				"The concept is then transformed into code, using the latest and most advanced technologies on the market."
+			description: i("home.process.development-desc")
 		},
 		{
-			title: "Hosting",
+			title: i("common.process.hosting"),
 			icon: Cloud,
-			description:
-				"We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel and on-site hosting."
+			description: i("home.process.hosting-desc")
 		}
 	];
 </script>
@@ -108,17 +107,17 @@
 		<div
 			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
 		>
-			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			<h1>{@html c(i("home.hero.title.first"))}<br />{@html c(i("home.hero.title.second"))}</h1>
 			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				Powered by cutting-edge technologies, let's build<br />the web application you've been
-				dreaming of.
+				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
 			</h2>
 			<div
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
-				<Button>Contact Us</Button>
+				<Button>{i("common.contact")}</Button>
 				<Button type="minimal" class="hover-child:translate-x-1">
-					See our work
+					{i("home.hero.cta-secondary")}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
@@ -190,12 +189,12 @@
 	<div
 		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"
 	>
-		{#each processSections as { title, icon, description }, i}
+		{#each processSections as { title, icon, description }, index}
 			<div class="relative max-md:min-w-full md:w-1/4 lg:pb-4">
 				<span
 					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
 				>
-					{i + 1}
+					{index + 1}
 				</span>
 				<div class="flex w-fit flex-row items-center gap-4">
 					<svelte:component this={icon} class="h-10 w-10 text-dominant" />

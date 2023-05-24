@@ -34,6 +34,14 @@
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}
 			class:hover:bg-slate-800={index !== currentIndex}
+			on:focus={() => {
+				if (index === currentIndex) return;
+				dispatch("hover", { index });
+			}}
+			on:mouseover={() => {
+				if (index === currentIndex) return;
+				dispatch("hover", { index });
+			}}
 			on:click={() => {
 				if (index === currentIndex) return;
 				currentIndex = index;
