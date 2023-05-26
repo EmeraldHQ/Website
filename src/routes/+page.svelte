@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
+	import type { SvelteComponent } from "svelte";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -17,7 +18,7 @@
 	import { c } from "$ts/inlang-color";
 
 	// Sections
-	let processSections: { title: string; icon: any; description: string }[] = [];
+	let processSections: { title: string; icon: typeof SvelteComponent; description: string }[] = [];
 	$: if (language) {
 		processSections = [
 			{
