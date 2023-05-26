@@ -1,12 +1,12 @@
 {
-    "alt": {
-        "logo": "Logo Renew",
-        "logo-small": "Logo Renew - petit"
-    },
-    "aria": {
-        "menu": "Menu",
-        "panel-close": "Fermer le panneau",
-        "radio-language": "Sélection de langue",
-        "source": "Jetez un œil au code source de cette page"
-    }
+	"alt": {
+		"logo": "Logo Renew",
+		"logo-small": "Logo Renew - petit"
+	},
+	"aria": {
+		"menu": "Menu",
+		"panel-close": "Fermer le panneau",
+		"radio-language": "Sélection de langue",
+		"source": "Jetez un œil au code source de cette page"
+	}
 }
