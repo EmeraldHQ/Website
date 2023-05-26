@@ -13,26 +13,29 @@
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { i } from "@inlang/sdk-js";
+	import { i, language } from "@inlang/sdk-js";
 	import { c } from "$ts/inlang-color";
 
-	const processSections = [
-		{
-			title: i("common.process.design"),
-			icon: PaintBrush,
-			description: i("home.process.design-desc")
-		},
-		{
-			title: i("common.process.development"),
-			icon: CodeBracket,
-			description: i("home.process.development-desc")
-		},
-		{
-			title: i("common.process.hosting"),
-			icon: Cloud,
-			description: i("home.process.hosting-desc")
-		}
-	];
+	// Sections
+	let processSections: { title: string; icon: any; description: string }[] = [];
+	$: if (language) {
+		processSections = [
+			{
+				title: i("common.process.design"),
+				icon: PaintBrush,
+				description: i("home.process.design-desc")
+			},
+			{
+				title: i("common.process.development"),
+				icon: CodeBracket,
+				description: i("home.process.development-desc")
+			},
+			{
+				title: i("common.process.hosting"),
+				icon: Cloud,
+				description: i("home.process.hosting-desc")
+			}
+		];
 </script>
 
 <!-- Meta tags -->

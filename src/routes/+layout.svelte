@@ -25,52 +25,56 @@
 	const tailwindXlScreen = Number(fullTailwindConfig.theme.screens.xl.replace("px", ""));
 
 	// Config
-	const navbarItems = [
-		{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
-		{ name: i("common.pages.process"), href: "#method" },
-		{ name: i("common.pages.technologies"), href: "#technologies" },
-		{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
-		{ name: i("common.contact"), href: "." }
-	];
-	const footerItems = [
-		{
-			name: i("common.pages.solutions"),
-			items: [
-				{ name: i("common.solutions.comprehensive"), href: "/" },
-				{ name: i("common.solutions.web-app"), href: "/" },
-				{ name: i("common.solutions.landing"), href: "/" },
-				{ name: i("common.solutions.ecommerce"), href: "/" },
-				{ name: i("common.solutions.rewrite"), href: "/" },
-				{ name: i("common.solutions.custom"), href: "/" }
-			]
-		},
-		{
-			name: i("common.pages.title"),
-			items: [
-				{ name: i("common.pages.home"), href: "/" },
-				{ name: i("common.pages.process"), href: "/" },
-				{ name: i("common.pages.solutions"), href: "/" },
-				{ name: i("common.pages.technologies"), href: "/" }
-			]
-		},
-		{
-			name: i("common.pages.company"),
-			items: [
-				{ name: i("common.company.about"), href: "/" },
-				{ name: i("common.contact"), href: "/" },
-				{ name: i("common.company.team"), href: "/" },
-				{ name: i("common.company.env"), href: "/" },
-				{ name: i("common.company.oss"), href: "https://github.com/RenewHQ" }
-			]
-		},
-		{
-			name: i("legal.title"),
-			items: [
-				{ name: i("legal.privacy"), href: "/" },
-				{ name: i("legal.terms"), href: "/" }
-			]
-		}
-	];
+	let navbarItems: { name: string; href: string }[] = [];
+	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
+	$: if (language) {
+		navbarItems = [
+			{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
+			{ name: i("common.pages.process"), href: "#method" },
+			{ name: i("common.pages.technologies"), href: "#technologies" },
+			{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
+			{ name: i("common.contact"), href: "." }
+		];
+		footerItems = [
+			{
+				name: i("common.pages.solutions"),
+				items: [
+					{ name: i("common.solutions.comprehensive"), href: "/" },
+					{ name: i("common.solutions.web-app"), href: "/" },
+					{ name: i("common.solutions.landing"), href: "/" },
+					{ name: i("common.solutions.ecommerce"), href: "/" },
+					{ name: i("common.solutions.rewrite"), href: "/" },
+					{ name: i("common.solutions.custom"), href: "/" }
+				]
+			},
+			{
+				name: i("common.pages.title"),
+				items: [
+					{ name: i("common.pages.home"), href: "/" },
+					{ name: i("common.pages.process"), href: "/" },
+					{ name: i("common.pages.solutions"), href: "/" },
+					{ name: i("common.pages.technologies"), href: "/" }
+				]
+			},
+			{
+				name: i("common.pages.company"),
+				items: [
+					{ name: i("common.company.about"), href: "/" },
+					{ name: i("common.contact"), href: "/" },
+					{ name: i("common.company.team"), href: "/" },
+					{ name: i("common.company.env"), href: "/" },
+					{ name: i("common.company.oss"), href: "https://github.com/RenewHQ" }
+				]
+			},
+			{
+				name: i("legal.title"),
+				items: [
+					{ name: i("legal.privacy"), href: "/" },
+					{ name: i("legal.terms"), href: "/" }
+				]
+			}
+		];
+	}
 	const scrollDistanceContactButton = 800;
 	const scrollDistanceLogoSwitch = 900;
 
@@ -280,9 +284,7 @@
 					await loadResource(languages[e.detail.index]);
 				}}
 				on:change={e => {
-					switchLanguage(languages[e.detail.index]).then(() => {
-						location.reload(); // FIXME: improve that to not reload the whole page
-					});
+					switchLanguage(languages[e.detail.index]);
 				}}
 			/>
 		</div>
