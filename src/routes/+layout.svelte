@@ -67,10 +67,10 @@
 				]
 			},
 			{
-				name: i("legal.title"),
+				name: i("common.legal.title"),
 				items: [
-					{ name: i("legal.privacy"), href: "/" },
-					{ name: i("legal.terms"), href: "/" }
+					{ name: i("common.legal.privacy"), href: "/" },
+					{ name: i("common.legal.terms"), href: "/" }
 				]
 			}
 		];
@@ -107,7 +107,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/favicon.svg"
-							alt={i("alt.logo-small")}
+							alt={i("a11y.alt.logo-small")}
 							width="32"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -117,7 +117,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/logo-dark.svg"
-							alt={i("alt.logo")}
+							alt={i("a11y.alt.logo")}
 							width="174"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -148,7 +148,7 @@
 				</span>
 				<button
 					class="lg:hidden"
-					aria-label={i("aria.menu")}
+					aria-label={i("a11y.aria.menu")}
 					on:click={() => (showSlideOver = true)}
 				>
 					<Bars3 class="h-8 w-8" />
@@ -212,13 +212,13 @@
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-dark.svg" alt={i("alt.logo")} width="174" height="32" />
+			<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 		</a>
 	{/if}
 	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-				<img src="/logo-dark.svg" alt={i("alt.logo")} width="174" height="32" />
+				<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
@@ -243,7 +243,7 @@
 			>
 				<a
 					href="https://github.com/RenewHQ/Website"
-					aria-label={i("aria.source")}
+					aria-label={i("a11y.aria.source")}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -278,7 +278,7 @@
 			<RadioButtonsGroup
 				values={languages.map(language => language.toUpperCase())}
 				defaultIndex={languages.indexOf(language)}
-				description={i("aria.radio-language")}
+				description={i("a11y.aria.radio-language")}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
 				on:hover={async e => {
 					await loadResource(languages[e.detail.index]);

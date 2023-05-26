@@ -1,0 +1,12 @@
+{
+    "alt": {
+        "logo": "Renew logo",
+        "logo-small": "Renew logo - small"
+    },
+    "aria": {
+        "menu": "Menu",
+        "panel-close": "Close panel",
+        "radio-language": "Language selection",
+        "source": "Take a look at the source code of this website"
+    }
+}
