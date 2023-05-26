@@ -36,6 +36,7 @@
 				description: i("home.process.hosting-desc")
 			}
 		];
+	}
 </script>
 
 <!-- Meta tags -->
