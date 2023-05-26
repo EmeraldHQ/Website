@@ -41,9 +41,9 @@
 
 <!-- Meta tags -->
 <MetaTags
-	title="Home"
+	title={i("common.pages.home")}
 	titleTemplate="%s | Renew"
-	description="Your web apps. Modern and fast."
+	description={i("home.description")}
 	canonical={ROOT_URL}
 	languageAlternates={[
 		{
@@ -54,10 +54,10 @@
 	openGraph={{
 		images: [
 			{
-				url: `${ROOT_URL}/og-banner.png`,
+				url: `${ROOT_URL}/${i("home.og-banner")}`,
 				width: 1536,
 				height: 768,
-				alt: "Og Banner"
+				alt: i("a11y.alt.og-banner")
 			}
 		],
 		site_name: "Renew"
@@ -68,10 +68,10 @@
 		site: "@RenewHQ", // Someday
 		handle: "@RenewHQ"
 		*/
-		title: "Home | Renew",
-		description: "Your web apps. Modern and fast.",
-		image: `${ROOT_URL}/og-banner.png`,
-		imageAlt: "Og Banner"
+		title: `${i("common.pages.home")} | Renew`,
+		description: i("home.description"),
+		image: `${ROOT_URL}/${i("home.og-banner")}`,
+		imageAlt: i("a11y.alt.og-ban")
 	}}
 	robotsProps={{
 		noarchive: true

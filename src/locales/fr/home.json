@@ -1,4 +1,6 @@
 {
+	"description": "Votre web app. Moderne et rapide.",
+	"og-banner": "og-banner-fr.png",
 	"hero": {
 		"title": {
 			"first": "Votre projet",

@@ -1,4 +1,6 @@
 {
+	"description": "Your web app. Modern and fast.",
+	"og-banner": "og-banner.png",
 	"hero": {
 		"title": {
 			"first": "Your [super-fast]",
