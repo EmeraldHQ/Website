@@ -3,9 +3,9 @@
 	import { createEventDispatcher } from "svelte";
 
 	/**
-	 * The content of each toggle. Likely a string or an icon.
+	 * The content of each toggle. Likely a string or an icon. Mandatory.
 	 */
-	export let values: unknown[] = [];
+	export let values: unknown[];
 	/**
 	 * The content of each toggle when hovered. Likely a string or an icon.
 	 */
