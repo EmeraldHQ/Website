@@ -277,6 +277,14 @@
 			{/if}
 			<RadioButtonsGroup
 				values={languages.map(language => language.toUpperCase())}
+				hoverValues={languages.map(language => {
+					language = language === "en" ? "us" : language; // "en" is not a valid flag
+					// Credit: https://twitter.com/karimfromjordan/status/1661840878174863360
+					const points = [...language.toUpperCase()].map(char => {
+						return 127397 + char.charCodeAt(0);
+					});
+					return String.fromCodePoint(...points);
+				})}
 				defaultIndex={languages.indexOf(language)}
 				description={i("a11y.aria.radio-language")}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"

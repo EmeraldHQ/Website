@@ -7,6 +7,10 @@
 	 */
 	export let values: unknown[] = [];
 	/**
+	 * The content of each toggle when hovered. Likely a string or an icon.
+	 */
+	export let hoverValues: unknown[] = [];
+	/**
 	 * The index of the default toggle. Defaults to 0, set to 0 if the value is out of bounds of `values`.
 	 */
 	export let defaultIndex = 0;
@@ -30,7 +34,7 @@
 			role="radio"
 			aria-checked={index === currentIndex}
 			tabindex="0"
-			class="rounded-full px-4 py-1 text-center"
+			class="group grid overflow-hidden rounded-full px-4 py-1 text-center child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}
 			class:hover:bg-slate-800={index !== currentIndex}
@@ -48,7 +52,12 @@
 				dispatch("change", { index });
 			}}
 		>
-			{toggle}
+			<span class="transition-opacity duration-300 group-hover:opacity-0">{toggle}</span>
+			{#if hoverValues.length > index}
+				<span class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+					{hoverValues[index]}
+				</span>
+			{/if}
 		</button>
 	{/each}
 </div>
