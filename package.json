@@ -12,10 +12,12 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"lint:ci": "prettier --plugin-search-dir . --check ./src && eslint ./src",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"ci:lint": "prettier --plugin-search-dir . --check ./src && eslint ./src",
+		"ci:update-inlang": "node ./scripts/update-inlang-config.js"
 	},
 	"devDependencies": {
+		"@inlang/sdk-js": "^0.6.1",
 		"@inqling/svelte-icons": "^3.3.0",
 		"@rgossiaux/svelte-headlessui": "^1.0.2",
 		"@sveltejs/adapter-static": "^2.0.2",

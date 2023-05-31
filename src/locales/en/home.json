@@ -1,0 +1,20 @@
+{
+	"description": "Your web app. Modern and fast.",
+	"og-banner": "og-banner.png",
+	"hero": {
+		"title": {
+			"first": "Your [super-fast]",
+			"second": "digital project"
+		},
+		"subtitle": {
+			"first": "Powered by cutting-edge technologies, let's build",
+			"second": "the web application you've been dreaming of."
+		},
+		"cta-secondary": "See our work"
+	},
+	"process": {
+		"design-desc": "We design the user interface of your project following your visual identity, to guarantee an optimal user experience.",
+		"development-desc": "The concept is then transformed into code, using the latest and most advanced technologies on the market.",
+		"hosting-desc": "We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel or on-site hosting."
+	}
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
+	import type { SvelteComponent } from "svelte";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -13,34 +14,37 @@
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
+	import { i, language } from "@inlang/sdk-js";
+	import { c } from "$ts/inlang-color";
 
-	const processSections = [
-		{
-			title: "Design",
-			icon: PaintBrush,
-			description:
-				"We design the user interface of your project following your visual identity, to guarantee an optimal user experience."
-		},
-		{
-			title: "Development",
-			icon: CodeBracket,
-			description:
-				"The concept is then transformed into code, using the latest and most advanced technologies on the market."
-		},
-		{
-			title: "Hosting",
-			icon: Cloud,
-			description:
-				"We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel and on-site hosting."
-		}
-	];
+	// Sections
+	let processSections: { title: string; icon: typeof SvelteComponent; description: string }[] = [];
+	$: if (language) {
+		processSections = [
+			{
+				title: i("common.process.design"),
+				icon: PaintBrush,
+				description: i("home.process.design-desc")
+			},
+			{
+				title: i("common.process.development"),
+				icon: CodeBracket,
+				description: i("home.process.development-desc")
+			},
+			{
+				title: i("common.process.hosting"),
+				icon: Cloud,
+				description: i("home.process.hosting-desc")
+			}
+		];
+	}
 </script>
 
 <!-- Meta tags -->
 <MetaTags
-	title="Home"
+	title={i("common.pages.home")}
 	titleTemplate="%s | Renew"
-	description="Your web apps. Modern and fast."
+	description={i("home.description")}
 	canonical={ROOT_URL}
 	languageAlternates={[
 		{
@@ -51,10 +55,10 @@
 	openGraph={{
 		images: [
 			{
-				url: `${ROOT_URL}/og-banner.png`,
+				url: `${ROOT_URL}/${i("home.og-banner")}`,
 				width: 1536,
 				height: 768,
-				alt: "Og Banner"
+				alt: i("a11y.alt.og-banner")
 			}
 		],
 		site_name: "Renew"
@@ -65,10 +69,10 @@
 		site: "@RenewHQ", // Someday
 		handle: "@RenewHQ"
 		*/
-		title: "Home | Renew",
-		description: "Your web apps. Modern and fast.",
-		image: `${ROOT_URL}/og-banner.png`,
-		imageAlt: "Og Banner"
+		title: `${i("common.pages.home")} | Renew`,
+		description: i("home.description"),
+		image: `${ROOT_URL}/${i("home.og-banner")}`,
+		imageAlt: i("a11y.alt.og-ban")
 	}}
 	robotsProps={{
 		noarchive: true
@@ -108,17 +112,17 @@
 		<div
 			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
 		>
-			<h1>Your <span class="text-dominant">super-fast</span><br />digital project</h1>
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			<h1>{@html c(i("home.hero.title.first"))}<br />{@html c(i("home.hero.title.second"))}</h1>
 			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				Powered by cutting-edge technologies, let's build<br />the web application you've been
-				dreaming of.
+				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
 			</h2>
 			<div
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
-				<Button>Contact Us</Button>
+				<Button>{i("common.contact")}</Button>
 				<Button type="minimal" class="hover-child:translate-x-1">
-					See our work
+					{i("home.hero.cta-secondary")}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
@@ -190,12 +194,12 @@
 	<div
 		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"
 	>
-		{#each processSections as { title, icon, description }, i}
+		{#each processSections as { title, icon, description }, index}
 			<div class="relative max-md:min-w-full md:w-1/4 lg:pb-4">
 				<span
 					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
 				>
-					{i + 1}
+					{index + 1}
 				</span>
 				<div class="flex w-fit flex-row items-center gap-4">
 					<svelte:component this={icon} class="h-10 w-10 text-dominant" />

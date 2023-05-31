@@ -68,14 +68,24 @@ jobs:
         run: pnpm i --no-frozen-lockfile
 
       - name: 📤 Commit updated lock file
-        id: auto-commit-action
+        id: auto-commit-action-lock
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Update lock file"
           file_pattern: "pnpm-lock.yaml" # Should not be needed, but still
 
+      - name: 🔧 Check Inlang config
+        run: pnpm ci:update-inlang
+
+      - name: 📤 Commit updated Inlang config
+        id: auto-commit-action-inlang
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update Inlang config"
+          file_pattern: "inlang.config.js" # Should not be needed, but still
+
       - name: ❌ Exit if changes detected
-        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        if: steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 🌱 Create .env file
@@ -86,7 +96,7 @@ jobs:
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: pnpm lint:ci
+        run: pnpm ci:lint
 
       # These steps will only ever trigger on PRs because merge is not allowed on failure
       - name: 🔧 Fix lint (if needed)
