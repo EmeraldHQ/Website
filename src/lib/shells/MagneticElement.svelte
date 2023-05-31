@@ -106,6 +106,6 @@
 	});
 </script>
 
-<div class="{elementId} {$$props.class}">
+<div class="{elementId} {$$props.class ?? ''}">
 	<slot />
 </div>
