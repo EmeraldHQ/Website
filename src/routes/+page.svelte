@@ -16,9 +16,17 @@
 	} from "@inqling/svelte-icons/heroicon-24-solid";
 	import { i, language } from "@inlang/sdk-js";
 	import { c } from "$ts/inlang-color";
+	import resolveConfig from "tailwindcss/resolveConfig";
+	import tailwindConfig from "../../tailwind.config";
+
+	// Tailwind
+	const fullTailwindConfig = resolveConfig(tailwindConfig);
+	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
 
 	// Sections
 	let processSections: { title: string; icon: typeof SvelteComponent; description: string }[] = [];
+	let solutionsSections: { title: string; description: string }[] = [];
+	let solutions: typeof solutionsSections = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -37,8 +45,48 @@
 				description: i("home.process.hosting-desc")
 			}
 		];
+		solutionsSections = [
+			{
+				title: i("common.solutions.comprehensive"),
+				description: i("home.solutions.comprehensive-desc")
+			},
+			{
+				title: i("common.solutions.web-app"),
+				description: i("home.solutions.web-app-desc")
+			},
+			{
+				title: i("common.solutions.landing"),
+				description: i("home.solutions.landing-desc")
+			},
+			{
+				title: i("common.solutions.ecommerce"),
+				description: i("home.solutions.ecommerce-desc")
+			},
+			{
+				title: i("common.solutions.rewrite"),
+				description: i("home.solutions.rewrite-desc")
+			},
+			{
+				title: i("common.solutions.custom"),
+				description: i("home.solutions.custom-desc")
+			}
+		];
+		solutions = solutionsSections;
+	}
+
+	// Keep only 3 solutions sections if screen is too small
+	let innerWidth = 0;
+	$: if (innerWidth > 0) {
+		if (tailwindSmScreen > innerWidth) {
+			solutions = solutionsSections.slice(0, 3).concat(solutionsSections.slice(-1));
+		} else {
+			solutions = solutionsSections;
+		}
 	}
 </script>
+
+<!-- Window bindings -->
+<svelte:window bind:innerWidth />
 
 <!-- Meta tags -->
 <MetaTags
@@ -210,5 +258,55 @@
 				</p>
 			</div>
 		{/each}
+	</div>
+</Section>
+
+<!-- Solutions -->
+<Section id="solutions" class="relative py-20">
+	<div
+		class="absolute inset-0 -z-10 !ml-0 w-screen bg-left content-[''] bg-grid-slate-400/[0.2]
+				before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:to-black before:content-['']
+				after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:to-black after:content-['']"
+	/>
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.solutions.title"))}
+	</svelte:fragment>
+	<div class="flex items-center justify-between">
+		<div class="grid gap-16 py-8 sm:grid-cols-2 lg:grid-cols-3">
+			{#each solutions.slice(0, -1) as solution}
+				<div>
+					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
+					<p class="text-lg text-gray-200">
+						{solution.description}
+					</p>
+				</div>
+			{/each}
+			<em class="text-center sm:hidden">
+				{i("home.solutions.more.before-link")}
+				<Button type="minimal">{i("home.solutions.more.link")}</Button>
+				{i("home.solutions.more.after-link")}
+			</em>
+			<div class="flex items-end justify-end">
+				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+					{solutions.slice(-1)[0].description}
+					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
+				</Button>
+			</div>
+		</div>
+	</div>
+</Section>
+
+<!-- Bottom CTA -->
+<Section>
+	<div class="my-32 flex flex-col items-center justify-center">
+		<p class="text-lg text-gray-400 xs:text-2xl">
+			{i("home.cta-bottom.subtitle")}
+		</p>
+		<h3 class="mx-10 mb-16 mt-4 text-center text-3xl font-medium xs:text-5xl">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html c(i("home.cta-bottom.title"))}
+		</h3>
+		<Button class="scale-110">{i("common.contact")}</Button>
 	</div>
 </Section>
