@@ -78,7 +78,7 @@
 </script>
 
 <div
-	class="{elementId} transition-transform duration-500 {$$props.class}"
+	class="{elementId} transition-transform duration-500 {$$props.class ?? ''}"
 	style="
 				--rotateX: 0deg;
 				--rotateY: 0deg;

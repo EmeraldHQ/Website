@@ -92,7 +92,7 @@
 <svelte:window bind:innerWidth bind:scrollY />
 
 <!-- Navbar -->
-<div class="sticky top-0 z-10 flex w-full justify-center pt-10">
+<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
 			class="mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 sm:mx-5 md:mx-10 md:px-20"
@@ -187,7 +187,7 @@
 <SlideOver bind:show={showSlideOver}>
 	<svelte:fragment slot="content">
 		<div
-			class="nav-items-container flex h-full flex-col items-center justify-center gap-20 text-6xl font-medium child:after:!-bottom-3 child:after:!h-2"
+			class="nav-items-container flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
 		>
 			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
 				<button
@@ -208,7 +208,7 @@
 	<slot />
 </main>
 
-<footer class="border-t border-gray-500 p-24 text-gray-400">
+<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
@@ -235,7 +235,7 @@
 		{/each}
 	</div>
 	<!-- Bottom links & settings -->
-	<div class="mt-10 flex items-end justify-between child:h-min">
+	<div class="relative mt-10 flex items-end justify-between child:h-min">
 		<!-- Left -->
 		<div>
 			<div
@@ -255,6 +255,7 @@
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}
 			<div
+				class="absolute bottom-0 left-0 right-0 text-center"
 				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
@@ -277,14 +278,6 @@
 			{/if}
 			<RadioButtonsGroup
 				values={languages.map(language => language.toUpperCase())}
-				hoverValues={languages.map(language => {
-					language = language === "en" ? "us" : language; // "en" is not a valid flag
-					// Credit: https://twitter.com/karimfromjordan/status/1661840878174863360
-					const points = [...language.toUpperCase()].map(char => {
-						return 127397 + char.charCodeAt(0);
-					});
-					return String.fromCodePoint(...points);
-				})}
 				defaultIndex={languages.indexOf(language)}
 				description={i("a11y.aria.radio-language")}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"

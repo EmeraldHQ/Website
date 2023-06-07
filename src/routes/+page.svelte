@@ -151,7 +151,10 @@
 
 <!-- Body -->
 <!-- Hero -->
-<div id="hero" class="flex h-[calc(100dvh_-_7.5rem)] flex-col items-center justify-center">
+<div
+	id="hero"
+	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
+>
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
 			before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
@@ -240,10 +243,10 @@
 <!-- Process -->
 <Section id="process">
 	<div
-		class="scrolling-touch flex-no-wrap flex snap-x snap-mandatory items-start gap-16 overflow-x-auto py-8 child:snap-start md:justify-center md:child:h-min"
+		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
 	>
 		{#each processSections as { title, icon, description }, index}
-			<div class="relative max-md:min-w-full md:w-1/4 lg:pb-4">
+			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
 				<span
 					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
 				>
@@ -253,7 +256,9 @@
 					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
 					<h3 class="text-2xl font-medium">{title}</h3>
 				</div>
-				<p class="w-full pt-4 text-lg font-normal text-gray-200">
+				<p
+					class="h-full w-full pt-4 text-lg font-normal text-gray-200 max-lg:max-w-[95%] max-md:max-w-[90%]"
+				>
 					{description}
 				</p>
 			</div>
@@ -264,16 +269,16 @@
 <!-- Solutions -->
 <Section id="solutions" class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !ml-0 w-screen bg-left content-[''] bg-grid-slate-400/[0.2]
-				before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:to-black before:content-['']
-				after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:to-black after:content-['']"
+		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/[0.2]
+			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
+			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.solutions.title"))}
 	</svelte:fragment>
 	<div class="flex items-center justify-between">
-		<div class="grid gap-16 py-8 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each solutions.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
