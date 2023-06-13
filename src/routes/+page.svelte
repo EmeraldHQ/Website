@@ -109,7 +109,7 @@
 				alt: i("a11y.alt.og-banner")
 			}
 		],
-		site_name: "Emerald Studio",
+		site_name: "Emerald Studio"
 	}}
 	twitter={{
 		cardType: "summary_large_image",
