@@ -63,7 +63,7 @@
 					{ name: i("common.contact"), href: "/" },
 					{ name: i("common.company.team"), href: "/" },
 					{ name: i("common.company.env"), href: "/" },
-					{ name: i("common.company.oss"), href: "https://github.com/RenewHQ" }
+					{ name: i("common.company.oss"), href: "https://github.com/EmeraldStudio" }
 				]
 			},
 			{
@@ -242,7 +242,7 @@
 				class="mb-5 divide-x divide-gray-400 text-primary child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a
-					href="https://github.com/RenewHQ/Website"
+					href="https://github.com/EmeraldStudio/Website"
 					aria-label={i("a11y.aria.source")}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -250,7 +250,7 @@
 					<Github class="h-8 w-8" />
 				</a>
 			</div>
-			© {new Date().getFullYear()} Renew
+			© {new Date().getFullYear()} Emerald Studio
 		</div>
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}

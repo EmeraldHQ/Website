@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://renewhq.studio/sitemap.xml
+Sitemap: https://emeraldstudio.fr/sitemap.xml
