@@ -63,7 +63,7 @@
 					{ name: i("common.contact"), href: "/" },
 					{ name: i("common.company.team"), href: "/" },
 					{ name: i("common.company.env"), href: "/" },
-					{ name: i("common.company.oss"), href: "https://github.com/EmeraldStudio" }
+					{ name: i("common.company.oss"), href: "https://github.com/EmeraldHQ" }
 				]
 			},
 			{
@@ -242,7 +242,7 @@
 				class="mb-5 divide-x divide-gray-400 text-primary child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a
-					href="https://github.com/EmeraldStudio/Website"
+					href="https://github.com/EmeraldHQ/Website"
 					aria-label={i("a11y.aria.source")}
 					target="_blank"
 					rel="noopener noreferrer"
