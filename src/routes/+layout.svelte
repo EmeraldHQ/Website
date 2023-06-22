@@ -9,7 +9,7 @@
 	import Button from "$elements/Button.svelte";
 	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
-	import { scrollTo } from "$ts/scroll";
+	import { scrollTo } from "$utils/scroll";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 

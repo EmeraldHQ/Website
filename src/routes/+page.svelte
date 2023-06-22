@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
+	import { ROOT_URL } from "$server/config";
 	import type { SvelteComponent } from "svelte";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import { scrollTo } from "$ts/scroll";
+	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
 	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
@@ -15,7 +15,7 @@
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
 	import { i, language } from "@inlang/sdk-js";
-	import { c } from "$ts/inlang-color";
+	import { c } from "$utils/inlang-color";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 
