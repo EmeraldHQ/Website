@@ -15,7 +15,8 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"ci:lint": "prettier --plugin-search-dir . --check ./src && eslint ./src",
-		"ci:update-inlang": "node ./scripts/update-inlang-config.js"
+		"ci:update-inlang": "node ./scripts/update-inlang-config.js",
+		"prepare": "husky install"
 	},
 	"devDependencies": {
 		"@inlang/sdk-js": "^0.6.3",
@@ -30,6 +31,7 @@
 		"eslint": "^8.41.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-svelte": "^2.29.0",
+		"husky": "^8.0.3",
 		"mini-svg-data-uri": "^1.4.4",
 		"postcss": "^8.4.24",
 		"postcss-import": "^15.1.0",
