@@ -1,5 +1,5 @@
 import fs from "fs";
-import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
+import { ROOT_URL } from "$config";
 
 export const prerender = true;
 

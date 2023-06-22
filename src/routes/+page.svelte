@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ROOT_URL } from "$server/config";
+	import { ROOT_URL } from "$config";
 	import type { SvelteComponent } from "svelte";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
