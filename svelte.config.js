@@ -12,7 +12,7 @@ const config = {
 			$layouts: path.resolve("./src/lib/layouts"),
 			$shells: path.resolve("./src/lib/shells"),
 			$utils: path.resolve("./src/lib/utils"),
-			$server: path.resolve("./src/lib/server"),
+			$server: path.resolve("./src/lib/server")
 		}
 	},
 	vitePlugin: {

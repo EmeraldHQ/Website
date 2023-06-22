@@ -1,1 +1,1 @@
-export const ROOT_URL = "https://emeraldstudio.fr"
+export const ROOT_URL = "https://emeraldstudio.fr";
