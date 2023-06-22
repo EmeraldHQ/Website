@@ -24,7 +24,7 @@
 	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
 
 	// Sections
-	let processSections: { title: string; icon: typeof SvelteComponent; description: string }[] = [];
+	let processSections: { title: string; icon: typeof SvelteComponent<any>; description: string }[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
 	$: if (language) {
@@ -224,7 +224,7 @@
 			element.parentElement.style.transform = "scale(1)";
 		}}
 	>
-		<div
+		<button
 			style="
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -236,7 +236,7 @@
 				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
-		</div>
+		</button>
 	</MagneticElement>
 </div>
 
