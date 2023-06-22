@@ -24,7 +24,8 @@
 	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
 
 	// Sections
-	let processSections: { title: string; icon: typeof SvelteComponent<any>; description: string }[] = [];
+	let processSections: { title: string; icon: typeof SvelteComponent<any>; description: string }[] =
+		[];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
 	$: if (language) {
