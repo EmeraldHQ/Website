@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_ROOT_URL as ROOT_URL } from "$env/static/public";
 	import type { SvelteComponent } from "svelte";
+	import type { SvelteHTMLElements } from "svelte/elements";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -26,7 +27,7 @@
 	// Sections
 	let processSections: {
 		title: string;
-		icon: typeof SvelteComponent<any>;
+		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
 		description: string;
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
