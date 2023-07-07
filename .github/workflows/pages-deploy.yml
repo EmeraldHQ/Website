@@ -31,6 +31,7 @@ concurrency:
 # Start the workflow
 jobs:
   prechecks:
+    name: Prechecks
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     
@@ -94,6 +95,7 @@ jobs:
           commit_message: Fix lint
 
   build:
+    name: Build website
     runs-on: ubuntu-latest
     needs: prechecks
     if: always() && !cancelled() && (needs.prechecks.result == 'success' || needs.prechecks.result == 'skipped')
@@ -126,7 +128,6 @@ jobs:
       - name: 📥 Install NPM dependencies
         run: pnpm i  # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
 
-      # These steps won't run on previous errors (by default)
       - name: 🔨 Build repo
         run: pnpm build
 
@@ -137,6 +138,7 @@ jobs:
           path: ./build
 
   deploy:
+    name: Deploy website to GH Pages
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: build
@@ -156,6 +158,7 @@ jobs:
         id: deployment
 
   perf-check:
+    name: Performance checks
     runs-on: ubuntu-latest
     needs: deploy
 
