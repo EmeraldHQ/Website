@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   assign-author:
+    name: Auto assign author
     runs-on: ubuntu-latest
     steps:
       - name: 🧑🏻‍💻 Automatically assign an author
