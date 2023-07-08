@@ -31,7 +31,7 @@ concurrency:
 # Start the workflow
 jobs:
   prechecks:
-    name: Prechecks
+    name: Pre-checks
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     
@@ -138,12 +138,11 @@ jobs:
           path: ./build
 
   deploy:
-    name: Deploy website to GH Pages
+    name: Deploy website to GitHub Pages
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: build
     permissions:
-      contents: read
       pages: write
       id-token: write
     environment:
