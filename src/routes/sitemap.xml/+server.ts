@@ -17,7 +17,7 @@ function getRoutes(path: string) {
 		if (stats.isDirectory()) {
 			routes.push(...getRoutes(filePath));
 		} else if (file === "+page.svelte") {
-			const lastmod = stats.mtime.toISOString().split("T")[0];
+			const lastmod = stats.mtime.toISOString().split("T")[0] as string;
 			const path = filePath.replace("src/routes", "").replace("/+page.svelte", "");
 			routes.push({ path, lastMod: lastmod });
 		}

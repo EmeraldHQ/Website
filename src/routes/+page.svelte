@@ -294,7 +294,7 @@
 			</em>
 			<div class="flex items-end justify-end">
 				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
-					{solutions.slice(-1)[0].description}
+					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>

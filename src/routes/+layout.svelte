@@ -282,10 +282,12 @@
 				description={i("a11y.aria.radio-language")}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
 				on:hover={async e => {
-					await loadResource(languages[e.detail.index]);
+					const lang = languages[e.detail.index];
+					lang ? await loadResource(lang) : console.warn(`Language ${lang} not found`);
 				}}
 				on:change={e => {
-					switchLanguage(languages[e.detail.index]);
+					const lang = languages[e.detail.index];
+					lang ? switchLanguage(lang) : console.error(`Language ${lang} not found`);
 				}}
 			/>
 		</div>
