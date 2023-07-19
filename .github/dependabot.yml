@@ -6,3 +6,7 @@ updates:
     target-branch: "main"
     schedule:
       interval: "daily"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
