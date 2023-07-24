@@ -7,7 +7,7 @@ settings:
 devDependencies:
   '@inlang/sdk-js':
     specifier: ^0.6.3
-    version: 0.6.3(@sveltejs/kit@1.21.0)(esbuild@0.18.16)(svelte@4.0.1)
+    version: 0.6.3(@sveltejs/kit@1.22.3)(esbuild@0.18.16)(svelte@4.0.1)
   '@inqling/svelte-icons':
     specifier: ^3.3.2
     version: 3.3.2(svelte@4.0.1)
@@ -16,10 +16,10 @@ devDependencies:
     version: 1.0.2(svelte@4.0.1)
   '@sveltejs/adapter-static':
     specifier: ^2.0.2
-    version: 2.0.2(@sveltejs/kit@1.21.0)
+    version: 2.0.2(@sveltejs/kit@1.22.3)
   '@sveltejs/kit':
-    specifier: ^1.21.0
-    version: 1.21.0(svelte@4.0.1)(vite@4.3.9)
+    specifier: ^1.22.3
+    version: 1.22.3(svelte@4.0.1)(vite@4.3.9)
   '@types/node':
     specifier: ^20.2.5
     version: 20.2.5
@@ -587,7 +587,7 @@ packages:
       - esbuild
     dev: true
 
-  /@inlang/sdk-js@0.6.3(@sveltejs/kit@1.21.0)(esbuild@0.18.16)(svelte@4.0.1):
+  /@inlang/sdk-js@0.6.3(@sveltejs/kit@1.22.3)(esbuild@0.18.16)(svelte@4.0.1):
     resolution: {integrity: sha512-100KT96wTixyHHBzg+6Rggf4oaCMsJWckZs6rmt7fFAewZ2U6qEd8Mzer9rohbdxzlKkiUpxQ9t+L2c7+eg+OQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -595,7 +595,7 @@ packages:
       svelte: ^3.0.0
     dependencies:
       '@inlang/core': 0.9.2(esbuild@0.18.16)
-      '@sveltejs/kit': 1.21.0(svelte@4.0.1)(vite@4.3.9)
+      '@sveltejs/kit': 1.22.3(svelte@4.0.1)(vite@4.3.9)
       svelte: 4.0.1
     transitivePeerDependencies:
       - esbuild
@@ -676,16 +676,16 @@ packages:
       svelte: 4.0.1
     dev: true
 
-  /@sveltejs/adapter-static@2.0.2(@sveltejs/kit@1.21.0):
+  /@sveltejs/adapter-static@2.0.2(@sveltejs/kit@1.22.3):
     resolution: {integrity: sha512-9wYtf6s6ew7DHUHMrt55YpD1FgV7oWql2IGsW5BXquLxqcY9vjrqCFo0TzzDpo+ZPZkW/v77k0eOP6tsAb8HmQ==}
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.21.0(svelte@4.0.1)(vite@4.3.9)
+      '@sveltejs/kit': 1.22.3(svelte@4.0.1)(vite@4.3.9)
     dev: true
 
-  /@sveltejs/kit@1.21.0(svelte@4.0.1)(vite@4.3.9):
-    resolution: {integrity: sha512-CBsYoI34SjtOQp0eG85dmVnvTR3Pjs8VgAQhO0CgQja9BIorKl808F1X8EunPhCcyek5r5lKQE1Mmbi0RuzHqA==}
+  /@sveltejs/kit@1.22.3(svelte@4.0.1)(vite@4.3.9):
+    resolution: {integrity: sha512-IpHD5wvuoOIHYaHQUBJ1zERD2Iz+fB/rBXhXjl8InKw6X4VKE9BSus+ttHhE7Ke+Ie9ecfilzX8BnWE3FeQyng==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
