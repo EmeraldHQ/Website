@@ -254,7 +254,7 @@
 		</div>
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}
-			<div
+			<button
 				class="absolute bottom-0 left-0 right-0 text-center"
 				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -262,19 +262,19 @@
 				<ArrowUp
 					class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
-			</div>
+			</button>
 		{/if}
 		<!-- Right -->
 		<div class="flex flex-col items-end gap-2">
 			{#if innerWidth < tailwindXsScreen}
-				<div
+				<button
 					on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 					on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				>
 					<ArrowUp
 						class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 					/>
-				</div>
+				</button>
 			{/if}
 			<RadioButtonsGroup
 				values={languages.map(language => language.toUpperCase())}
