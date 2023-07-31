@@ -8,12 +8,6 @@
       .cls-2 {
         fill: #30D158;
       }
-
-      @media (prefers-color-scheme: dark) {
-        .cls-1 {
-          fill: black;
-        }
-      }
     </style>
   </defs>
   <g>

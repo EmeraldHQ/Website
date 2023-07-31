@@ -100,15 +100,15 @@
 			<div class="mr-auto flex items-center gap-5">
 				<a
 					href="/"
-					class="grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+					class="grid origin-left overflow-hidden scale-110 child:col-start-1 child:row-start-1 child:row-end-1"
 				>
 					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 						<img
 							in:fade={{ delay: 250 }}
 							out:fade
-							src="/favicon.svg"
+							src="/logo-small.svg"
 							alt={i("a11y.alt.logo-small")}
-							width="32"
+							width="28"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
@@ -116,9 +116,9 @@
 						<img
 							in:fade={{ delay: 250 }}
 							out:fade
-							src="/logo-dark.svg"
+							src="/logo-title.svg"
 							alt={i("a11y.alt.logo")}
-							width="174"
+							width="100"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
@@ -212,13 +212,13 @@
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
+			<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 		</a>
 	{/if}
 	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-				<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
+				<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
