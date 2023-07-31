@@ -30,7 +30,8 @@
 
 @font-face {
 	font-family: "Chillax-Variable";
-	src: url("/fonts/chillax/Chillax-Variable.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Variable.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Variable.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Variable.ttf") format("truetype");
 	font-weight: 200 700;
@@ -40,7 +41,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Extralight.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Extralight.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Extralight.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Extralight.ttf") format("truetype");
 	font-weight: 200;
@@ -50,7 +52,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Light.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Light.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Light.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Light.ttf") format("truetype");
 	font-weight: 300;
@@ -60,7 +63,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Regular.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Regular.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Regular.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Regular.ttf") format("truetype");
 	font-weight: 400;
@@ -70,7 +74,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Medium.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Medium.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Medium.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Medium.ttf") format("truetype");
 	font-weight: 500;
@@ -80,7 +85,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Semibold.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Semibold.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Semibold.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Semibold.ttf") format("truetype");
 	font-weight: 600;
@@ -90,7 +96,8 @@
 
 @font-face {
 	font-family: "Chillax";
-	src: url("/fonts/chillax/Chillax-Bold.woff2") format("woff2"),
+	src:
+		url("/fonts/chillax/Chillax-Bold.woff2") format("woff2"),
 		url("/fonts/chillax/Chillax-Bold.woff") format("woff"),
 		url("/fonts/chillax/Chillax-Bold.ttf") format("truetype");
 	font-weight: 700;
