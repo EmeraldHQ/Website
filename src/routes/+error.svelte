@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Error {$page.status} | Renew</title>
+	<title>Error {$page.status} | Emerald Studio</title>
 </svelte:head>
 
 <div

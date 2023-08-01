@@ -1,6 +1,6 @@
 # Website
 
-**Renew's website.** Visit it [here](https://renewhq.studio).
+**Emerald Studio**'s website. Visit it [here](https://emeraldstudio.fr).
 
 ## Build locally
 
