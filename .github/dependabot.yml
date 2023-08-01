@@ -1,9 +1,13 @@
 version: 2
 updates:
-  # Check weekly for updates to npm dependencies
+  # Check daily for updates to npm dependencies
   - package-ecosystem: "npm"
     directory: "/"
-    target-branch: "main"
+    schedule:
+      interval: "daily"
+  # Check daily for updates to GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
       interval: "daily"
     groups:

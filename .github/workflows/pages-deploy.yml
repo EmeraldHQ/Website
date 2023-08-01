@@ -4,54 +4,55 @@ name: Build and Deploy to Pages
 on:
   push:
     branches:
-      - "main"
+      - main
     paths:
-      - "src/**"
-      - "static/**"
-      - "package.json"
-      - "pnpm-lock.yaml"
+      - src/**
+      - static/**
+      - package.json
+      - pnpm-lock.yaml
       - "*.config.*s"
-      - "tsconfig.json"
-      - ".github/workflows/*"
+      - tsconfig.json
+      - .github/workflows/*
   pull_request:
     paths:
-      - "src/**"
-      - "static/**"
-      - "package.json"
-      - "pnpm-lock.yaml"
+      - src/**
+      - static/**
+      - package.json
+      - pnpm-lock.yaml
       - "*.config.*s"
-      - "tsconfig.json"
-      - ".github/workflows/*"
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+      - tsconfig.json
+      - .github/workflows/*
 
 # Start the workflow
 jobs:
-  build:
+  permissions-check:
+    name: Permissions check
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+
+    steps:
+      - name: ❓ Has access to secrets?
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.repository.full_name }}
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.WORKFLOW_PAT }}
+
+  prechecks:
+    name: Pre-checks
+    runs-on: ubuntu-latest
+    needs: permissions-check
+    if: always() && !cancelled() && github.event_name == 'pull_request'
+    permissions:
+      contents: write
 
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v3
         with:
+          repository: ${{ github.event.repository.full_name }}
           ref: ${{ github.head_ref }}
-          token: ${{ secrets.WORKFLOW_PAT }}
-
-      - name: 🔧 Configure pages
-        uses: actions/configure-pages@v3
-        if: github.event_name != 'pull_request'
-        id: pages
-        with:
-          static_site_generator: "sveltekit"
+          token: ${{ needs.permissions-check.result == 'failure' && github.token || secrets.WORKFLOW_PAT }}
 
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v2
@@ -62,36 +63,32 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: latest
-          cache: "pnpm"
+          cache: pnpm
 
       - name: 📥 Install NPM dependencies
         run: pnpm i --no-frozen-lockfile
 
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
-        if: github.event_name == 'pull_request'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Update lock file"
-          file_pattern: "pnpm-lock.yaml" # Should not be needed, but still
+          commit_message: Update lock file
+          file_pattern: pnpm-lock.yaml
 
       - name: 🔧 Check Inlang config
         run: pnpm ci:update-inlang
 
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
-        if: github.event_name == 'pull_request'
+        if: needs.permissions-check.result != 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Update Inlang config"
-          file_pattern: "inlang.config.js" # Should not be needed, but still
+          commit_message: Update Inlang config
+          file_pattern: inlang.config.js
 
       - name: ❌ Exit if changes detected
-        if: steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
+        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
-
-      - name: 🌱 Create .env file
-        run: echo ${{ secrets.ENV }} > .env
 
       - name: ✨ Check Svelte format
         run: pnpm check
@@ -100,20 +97,50 @@ jobs:
         id: lint-check
         run: pnpm ci:lint
 
-      # These steps will only ever trigger on PRs because merge is not allowed on failure
-      - name: 🔧 Fix lint (if needed)
-        if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
-        run: |
-          git reset --hard
-          pnpm format
+      - name: 🔧 Fix lint
+        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
+        run: pnpm format
 
-      - name: 📤 Commit lint fixes (if needed)
-        if: ${{ failure() && steps.lint-check.conclusion == 'failure' }}
+      - name: 📤 Commit lint fixes
+        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Fix lint"
+          commit_message: Fix lint
 
-      # These steps won't run on previous errors (by default)
+  build:
+    name: Build website
+    runs-on: ubuntu-latest
+    needs: prechecks
+    if: always() && !cancelled() && (needs.prechecks.result == 'success' || needs.prechecks.result == 'skipped')
+
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.repository.full_name }}
+          ref: ${{ github.head_ref }}
+
+      - name: 🔧 Configure pages
+        uses: actions/configure-pages@v3
+        if: github.event_name != 'pull_request'
+        id: pages
+        with:
+          static_site_generator: sveltekit
+
+      - name: 📥 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: 🧭 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+          cache: pnpm
+
+      - name: 📥 Install NPM dependencies
+        run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
+
       - name: 🔨 Build repo
         run: pnpm build
 
@@ -124,22 +151,32 @@ jobs:
           path: ./build
 
   deploy:
+    name: Deploy website to GitHub Pages
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
     needs: build
+    if: github.event_name != 'pull_request'
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     outputs:
       page_url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: 🌍 Deploy Pages
         uses: actions/deploy-pages@v2
         id: deployment
 
   perf-check:
+    name: Performance checks
     runs-on: ubuntu-latest
     needs: deploy
+
     steps:
       - name: ⚓️ Unlighthouse check
         run: |
