@@ -33,9 +33,11 @@ jobs:
 
     steps:
       - name: ❓ Has access to secrets?
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api /repos/${{ github.event.repository.full_name }}/actions/secrets/WORKFLOW_PAT
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.WORKFLOW_PAT }}
 
   prechecks:
     name: Pre-checks
@@ -65,7 +67,7 @@ jobs:
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        run: pnpm i--no-frozen-lockfile
+        run: pnpm i --no-frozen-lockfile
 
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
