@@ -2,17 +2,11 @@
   <defs>
     <style>
       .cls-1 {
-        fill: black;
+        fill: white;
       }
 
       .cls-2 {
         fill: #30D158;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        .cls-1 {
-          fill: white;
-        }
       }
     </style>
   </defs>

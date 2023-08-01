@@ -63,7 +63,7 @@
 					{ name: i("common.contact"), href: "/" },
 					{ name: i("common.company.team"), href: "/" },
 					{ name: i("common.company.env"), href: "/" },
-					{ name: i("common.company.oss"), href: "https://github.com/RenewHQ" }
+					{ name: i("common.company.oss"), href: "https://github.com/EmeraldHQ" }
 				]
 			},
 			{
@@ -100,15 +100,15 @@
 			<div class="mr-auto flex items-center gap-5">
 				<a
 					href="/"
-					class="grid overflow-hidden child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+					class="grid origin-left overflow-hidden scale-110 child:col-start-1 child:row-start-1 child:row-end-1"
 				>
 					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 						<img
 							in:fade={{ delay: 250 }}
 							out:fade
-							src="/favicon.svg"
+							src="/logo-small.svg"
 							alt={i("a11y.alt.logo-small")}
-							width="32"
+							width="28"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
@@ -116,9 +116,9 @@
 						<img
 							in:fade={{ delay: 250 }}
 							out:fade
-							src="/logo-dark.svg"
+							src="/logo-title.svg"
 							alt={i("a11y.alt.logo")}
-							width="174"
+							width="100"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
@@ -212,13 +212,13 @@
 	<!-- Main grid -->
 	{#if innerWidth < tailwindXlScreen}
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
+			<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 		</a>
 	{/if}
 	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
 		{#if innerWidth >= tailwindXlScreen}
 			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-				<img src="/logo-dark.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
+				<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
 			</a>
 		{/if}
 		{#each footerItems as column}
@@ -242,7 +242,7 @@
 				class="mb-5 divide-x divide-gray-400 text-primary child:transition-opacity child:duration-300 child-hover:opacity-70"
 			>
 				<a
-					href="https://github.com/RenewHQ/Website"
+					href="https://github.com/EmeraldHQ/Website"
 					aria-label={i("a11y.aria.source")}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -250,7 +250,7 @@
 					<Github class="h-8 w-8" />
 				</a>
 			</div>
-			© {new Date().getFullYear()} Renew
+			© {new Date().getFullYear()} Emerald Studio
 		</div>
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}
@@ -282,10 +282,12 @@
 				description={i("a11y.aria.radio-language")}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
 				on:hover={async e => {
-					await loadResource(languages[e.detail.index]);
+					const lang = languages[e.detail.index];
+					lang ? await loadResource(lang) : console.warn(`Language ${lang} not found`);
 				}}
 				on:change={e => {
-					switchLanguage(languages[e.detail.index]);
+					const lang = languages[e.detail.index];
+					lang ? switchLanguage(lang) : console.error(`Language ${lang} not found`);
 				}}
 			/>
 		</div>

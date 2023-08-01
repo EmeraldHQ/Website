@@ -96,7 +96,7 @@
 <!-- Meta tags -->
 <MetaTags
 	title={i("common.pages.home")}
-	titleTemplate="%s | Renew"
+	titleTemplate="%s | Emerald Studio"
 	description={i("home.description")}
 	canonical={ROOT_URL}
 	languageAlternates={[
@@ -114,18 +114,18 @@
 				alt: i("a11y.alt.og-banner")
 			}
 		],
-		site_name: "Renew"
+		site_name: "Emerald Studio"
 	}}
 	twitter={{
 		cardType: "summary_large_image",
 		/*
-		site: "@RenewHQ", // Someday
-		handle: "@RenewHQ"
+		site: "@EmeraldStudio", // Someday
+		handle: "@EmeraldStudio"
 		*/
-		title: `${i("common.pages.home")} | Renew`,
+		title: `${i("common.pages.home")} | Emerald Studio`,
 		description: i("home.description"),
 		image: `${ROOT_URL}/${i("home.og-banner")}`,
-		imageAlt: i("a11y.alt.og-ban")
+		imageAlt: i("a11y.alt.og-banner")
 	}}
 	robotsProps={{
 		noarchive: true
@@ -299,7 +299,7 @@
 			</em>
 			<div class="flex items-end justify-end">
 				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
-					{solutions.slice(-1)[0].description}
+					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
