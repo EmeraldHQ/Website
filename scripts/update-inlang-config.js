@@ -25,7 +25,7 @@ function updateConfig() {
 	if (sdkDependencyVersion !== sdkConfigVersion) {
 		console.log("Updating inlang config...");
 		const newConfig = inlangConfig.replace(
-			/sdk-js-plugin[^@]+@[^/]+/,
+			/sdk-js-plugin@[\d.]+/,
 			`sdk-js-plugin@${sdkDependencyVersion}`
 		);
 		writeFileSync("./inlang.config.js", newConfig);
