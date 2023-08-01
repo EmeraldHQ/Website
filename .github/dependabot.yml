@@ -5,12 +5,16 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
   # Check daily for updates to GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     groups:
-      npm-dependencies:
+      gh-actions:
         patterns:
           - "*"
