@@ -31,7 +31,7 @@
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.41.0",
 		"eslint-config-prettier": "^8.8.0",
-		"eslint-plugin-svelte": "^2.32.2",
+		"eslint-plugin-svelte": "^2.32.4",
 		"husky": "^8.0.3",
 		"mini-svg-data-uri": "^1.4.4",
 		"postcss": "^8.4.24",
