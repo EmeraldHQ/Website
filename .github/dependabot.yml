@@ -9,6 +9,8 @@ updates:
       npm-dependencies:
         patterns:
           - "*"
+        exclude-patterns:
+          - "@inlang/*"
   # Check daily for updates to GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
