@@ -1,7 +1,7 @@
 <!-- Created from https://github.com/andrewwoan/magnetic-button-effect-tutorial-01 -->
 <script lang="ts">
 	import { createEventDispatcher, onMount } from "svelte";
-	import { useId } from "$ts/id";
+	import { useId } from "$utils/id";
 
 	// Constants
 	const elementId = `svelte-magnetic-element-${useId()}`;

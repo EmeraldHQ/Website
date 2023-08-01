@@ -3,7 +3,7 @@
  */
 export async function defineConfig(env) {
 	const { default: pluginJson } = await env.$import(
-		"https://cdn.jsdelivr.net/gh/samuelstroschein/inlang-plugin-json@latest/dist/index.js"
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-json@3/dist/index.js"
 	);
 
 	const { default: sdkPlugin } = await env.$import(
@@ -11,7 +11,7 @@ export async function defineConfig(env) {
 	);
 
 	const { default: standardLintRules } = await env.$import(
-		"https://cdn.jsdelivr.net/gh/inlang/standard-lint-rules@latest/dist/index.js"
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-standard-lint-rules@3/dist/index.js"
 	);
 
 	return {

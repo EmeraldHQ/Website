@@ -11,7 +11,8 @@ const config = {
 			$elements: path.resolve("./src/lib/elements"),
 			$layouts: path.resolve("./src/lib/layouts"),
 			$shells: path.resolve("./src/lib/shells"),
-			$ts: path.resolve("./src/lib/ts")
+			$utils: path.resolve("./src/lib/utils"),
+			$config: path.resolve("./src/lib/config")
 		}
 	},
 	vitePlugin: {
