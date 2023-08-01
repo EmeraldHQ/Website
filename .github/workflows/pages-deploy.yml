@@ -23,17 +23,25 @@ on:
       - tsconfig.json
       - .github/workflows/*
 
-# Allow one concurrent deployment
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 # Start the workflow
 jobs:
+  permissions-check:
+    name: Permissions check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+
+    steps:
+      - name: ❓ Has access to secrets?
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api /repos/${{ github.event.repository.name }}/actions/secrets/WORKFLOW_PAT
+
   prechecks:
     name: Pre-checks
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    needs: permissions-check
+    if: always() && !cancelled() && github.event_name == 'pull_request'
     permissions:
       contents: write
     
@@ -43,6 +51,7 @@ jobs:
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.head_ref }}
+          token: ${{ needs.permissions-check.result == 'failure' && github.token || secrets.WORKFLOW_PAT }}
       
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v2
@@ -56,7 +65,7 @@ jobs:
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        run: pnpm i --no-frozen-lockfile
+        run: pnpm ci --no-frozen-lockfile
 
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
@@ -66,17 +75,18 @@ jobs:
           file_pattern: pnpm-lock.yaml
 
       - name: 🔧 Check Inlang config
-        run: pnpm ci:update-inlang
+        run: pnpm ci-cd:update-inlang
 
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
+        if: needs.permissions-check.result != 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update Inlang config
           file_pattern: inlang.config.js
 
       - name: ❌ Exit if changes detected
-        if: steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
+        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: ✨ Check Svelte format
@@ -84,14 +94,14 @@ jobs:
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: pnpm ci:lint
+        run: pnpm ci-cd:lint
 
       - name: 🔧 Fix lint
-        if: failure() && steps.lint-check.conclusion == 'failure'
+        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
         run: pnpm format
 
       - name: 📤 Commit lint fixes
-        if: failure() && steps.lint-check.conclusion == 'failure'
+        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Fix lint
@@ -106,7 +116,7 @@ jobs:
       - name: 📂 Checkout
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          repository: ${{ github.event.repository.name }}
           ref: ${{ github.head_ref }}
 
       - name: 🔧 Configure pages
@@ -128,7 +138,7 @@ jobs:
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        run: pnpm i  # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
+        run: pnpm ci  # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
 
       - name: 🔨 Build repo
         run: pnpm build
@@ -142,8 +152,11 @@ jobs:
   deploy:
     name: Deploy website to GitHub Pages
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
     needs: build
+    if: github.event_name != 'pull_request'
+    concurrency:
+      group: pages
+      cancel-in-progress: true
     permissions:
       pages: write
       id-token: write
