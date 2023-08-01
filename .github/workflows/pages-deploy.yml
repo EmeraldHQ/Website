@@ -35,7 +35,7 @@ jobs:
       - name: ❓ Has access to secrets?
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api /repos/${{ github.event.repository.name }}/actions/secrets/WORKFLOW_PAT
+        run: gh api /repos/${{ github.event.repository.full_name }}/actions/secrets/WORKFLOW_PAT
 
   prechecks:
     name: Pre-checks
@@ -65,7 +65,7 @@ jobs:
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        run: pnpm ci --no-frozen-lockfile
+        run: pnpm i--no-frozen-lockfile
 
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
@@ -75,7 +75,7 @@ jobs:
           file_pattern: pnpm-lock.yaml
 
       - name: 🔧 Check Inlang config
-        run: pnpm ci-cd:update-inlang
+        run: pnpm ci:update-inlang
 
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
@@ -94,7 +94,7 @@ jobs:
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: pnpm ci-cd:lint
+        run: pnpm ci:lint
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
@@ -138,7 +138,7 @@ jobs:
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        run: pnpm ci  # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
+        run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
 
       - name: 🔨 Build repo
         run: pnpm build
