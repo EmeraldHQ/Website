@@ -42,7 +42,7 @@ jobs:
     name: Pre-checks
     runs-on: ubuntu-latest
     needs: permissions-check
-    if: always() && !cancelled() && github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && (success() || failure())
     permissions:
       contents: write
 
@@ -111,7 +111,7 @@ jobs:
     name: Build website
     runs-on: ubuntu-latest
     needs: prechecks
-    if: always() && !cancelled() && (needs.prechecks.result == 'success' || needs.prechecks.result == 'skipped')
+    if: success() || github.event_name == 'push'
 
     steps:
       - name: 📂 Checkout
@@ -154,7 +154,7 @@ jobs:
     name: Deploy website to GitHub Pages
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'push'
     concurrency:
       group: pages
       cancel-in-progress: true
