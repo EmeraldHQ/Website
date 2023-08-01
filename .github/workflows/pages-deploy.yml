@@ -145,7 +145,7 @@ jobs:
         run: pnpm build
 
       - name: 📤 Upload artifact
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./build
