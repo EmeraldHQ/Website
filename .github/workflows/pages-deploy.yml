@@ -23,7 +23,6 @@ on:
       - tsconfig.json
       - .github/workflows/*
 
-
 # Start the workflow
 jobs:
   permissions-check:
@@ -46,7 +45,7 @@ jobs:
     if: always() && !cancelled() && github.event_name == 'pull_request'
     permissions:
       contents: write
-    
+
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v3
@@ -54,7 +53,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.head_ref }}
           token: ${{ needs.permissions-check.result == 'failure' && github.token || secrets.WORKFLOW_PAT }}
-      
+
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v2
         with:

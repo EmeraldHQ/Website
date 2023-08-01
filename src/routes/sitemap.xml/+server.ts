@@ -32,9 +32,9 @@ const routes = getRoutes("src/routes").map(route => {
 		priority:
 			route.path === ""
 				? 1
-				: (new Date(route.lastMod).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
+				: new Date(route.lastMod).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
 				? 0.8
-				: 0.7),
+				: 0.7,
 		// Set the change frequency to weekly, unless the page has not been modified in the last month, in which case it is monthly
 		changeFreq:
 			new Date(route.lastMod).getTime() > Date.now() - 30 * 24 * 60 * 60 * 1000
