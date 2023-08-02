@@ -126,7 +126,7 @@ jobs:
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: pnpm ci:lint
+        run: pnpm lint
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.result != 'failure'
