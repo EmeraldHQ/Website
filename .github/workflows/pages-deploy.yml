@@ -76,7 +76,7 @@ jobs:
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
           fi
-      
+
       - name: ❌ Exit if lock file is not updated
         if: needs.permissions-check.result == 'failure' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
         run: exit 1
@@ -88,14 +88,14 @@ jobs:
         with:
           commit_message: Update lock file
           file_pattern: pnpm-lock.yaml
-      
+
       - name: ❌ Exit if lock file has been committed
         if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 🔧 Check Inlang config
         run: pnpm ci:update-inlang
-      
+
       - name: 🔍 Detect file changes
         id: detect-changes-inlang
         run: |
@@ -116,7 +116,7 @@ jobs:
         with:
           commit_message: Update Inlang config
           file_pattern: inlang.config.js
-      
+
       - name: ❌ Exit if Inlang config has been committed
         if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
