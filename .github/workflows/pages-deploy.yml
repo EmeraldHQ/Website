@@ -68,15 +68,46 @@ jobs:
       - name: 📥 Install NPM dependencies
         run: pnpm i --no-frozen-lockfile
 
+      - name: 🔍 Detect file changes
+        id: detect-changes-pnpm
+        run: |
+          if [[ $(git diff --name-only HEAD^ HEAD) =~ pnpm-lock.yaml ]]; then
+            echo "::set-output name=changes_detected::true"
+          else
+            echo "::set-output name=changes_detected::false"
+          fi
+      
+      - name: ❌ Exit if lock file is not updated
+        if: needs.permissions-check.result == 'failure' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
+        run: exit 1
+
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
+        if: needs.permissions-check.result != 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update lock file
           file_pattern: pnpm-lock.yaml
+      
+      - name: ❌ Exit if lock file has been committed
+        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
+        run: exit 1
 
       - name: 🔧 Check Inlang config
         run: pnpm ci:update-inlang
+      
+      - name: 🔍 Detect file changes
+        id: detect-changes-inlang
+        run: |
+          if [[ $(git diff --name-only HEAD^ HEAD) =~ inlang.config.js ]]; then
+            echo "::set-output name=changes_detected::true"
+          else
+            echo "::set-output name=changes_detected::false"
+          fi
+
+      - name: ❌ Exit if Inlang config is not updated
+        if: needs.permissions-check.result == 'failure' && steps.detect-changes-inlang.outputs.changes_detected == 'true'
+        run: exit 1
 
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
@@ -85,9 +116,9 @@ jobs:
         with:
           commit_message: Update Inlang config
           file_pattern: inlang.config.js
-
-      - name: ❌ Exit if changes detected
-        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true' || steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
+      
+      - name: ❌ Exit if Inlang config has been committed
+        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: ✨ Check Svelte format
@@ -98,11 +129,11 @@ jobs:
         run: pnpm ci:lint
 
       - name: 🔧 Fix lint
-        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
+        if: failure() && needs.permissions-check.result != 'failure'
         run: pnpm format
 
       - name: 📤 Commit lint fixes
-        if: failure() && needs.permissions-check.result != 'failure' && steps.lint-check.conclusion == 'failure'
+        if: failure() && needs.permissions-check.result != 'failure'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Fix lint
