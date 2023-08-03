@@ -29,20 +29,29 @@ jobs:
     name: Permissions check
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+    outputs:
+      has-permissions: ${{ steps.check-output.outputs.has-permissions }}
 
     steps:
       - name: ❓ Has access to secrets?
+        id: secrets-check
+        continue-on-error: true
         uses: actions/checkout@v3
         with:
           repository: ${{ github.event.repository.full_name }}
           ref: ${{ github.head_ref }}
           token: ${{ secrets.WORKFLOW_PAT }}
 
+      - name: 📤 Set output
+        id: check-output
+        if: always()
+        run: echo "has-permissions=${{ steps.secrets-check.outcome == 'success' && 'true' || 'false' }}" >> $GITHUB_OUTPUT
+
   prechecks:
     name: Pre-checks
     runs-on: ubuntu-latest
     needs: permissions-check
-    if: github.event_name == 'pull_request' && (success() || failure())
+    if: github.event_name == 'pull_request' && !failure() && !cancelled()
     permissions:
       contents: write
 
@@ -52,7 +61,7 @@ jobs:
         with:
           repository: ${{ github.event.repository.full_name }}
           ref: ${{ github.head_ref }}
-          token: ${{ needs.permissions-check.result == 'failure' && github.token || secrets.WORKFLOW_PAT }}
+          token: ${{ needs.permissions-check.outputs.has-permissions == 'false' && github.token || secrets.WORKFLOW_PAT }}
 
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v2
@@ -78,19 +87,19 @@ jobs:
           fi
 
       - name: ❌ Exit if lock file is not updated
-        if: needs.permissions-check.result == 'failure' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
-        if: needs.permissions-check.result != 'failure'
+        if: needs.permissions-check.outputs.has-permissions == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update lock file
           file_pattern: pnpm-lock.yaml
 
       - name: ❌ Exit if lock file has been committed
-        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 🔧 Check Inlang config
@@ -106,19 +115,19 @@ jobs:
           fi
 
       - name: ❌ Exit if Inlang config is not updated
-        if: needs.permissions-check.result == 'failure' && steps.detect-changes-inlang.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-inlang.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
-        if: needs.permissions-check.result != 'failure'
+        if: needs.permissions-check.outputs.has-permissions == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update Inlang config
           file_pattern: inlang.config.js
 
       - name: ❌ Exit if Inlang config has been committed
-        if: needs.permissions-check.result != 'failure' && steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: ✨ Check Svelte format
@@ -129,11 +138,11 @@ jobs:
         run: pnpm lint
 
       - name: 🔧 Fix lint
-        if: failure() && needs.permissions-check.result != 'failure'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
         run: pnpm format
 
       - name: 📤 Commit lint fixes
-        if: failure() && needs.permissions-check.result != 'failure'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Fix lint
@@ -142,7 +151,7 @@ jobs:
     name: Build website
     runs-on: ubuntu-latest
     needs: prechecks
-    if: success() || github.event_name == 'push'
+    if: (!failure() || github.event_name == 'push') && !cancelled()
 
     steps:
       - name: 📂 Checkout
