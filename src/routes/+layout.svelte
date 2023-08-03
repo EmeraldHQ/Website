@@ -255,7 +255,7 @@
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}
 			<button
-				class="absolute bottom-0 left-0 right-0 text-center"
+				class="absolute bottom-0 left-0 right-0 text-center w-fit mx-auto"
 				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
