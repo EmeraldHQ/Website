@@ -4,6 +4,6 @@
 @import "tailwindcss/utilities";
 
 :root {
-    /* To color scrollbars, form controls and other system colors  */
-    color-scheme: dark;
+	/* To color scrollbars, form controls and other system colors  */
+	color-scheme: dark;
 }
