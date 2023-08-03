@@ -295,6 +295,18 @@
 </footer>
 
 <style lang="postcss">
+	:global(::selection) {
+		@apply bg-dominant/75 text-primary;
+	}
+
+	:global(body) {
+		@apply bg-primary text-primary;
+	}
+
+	:root {
+		/* To color scrollbars, form controls and other system colors  */
+		color-scheme: dark;
+	}
 
 	.nav-items-container > * {
 		@apply relative;
