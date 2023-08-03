@@ -9,9 +9,9 @@
 }
 
 :global(::selection) {
-    @apply bg-dominant/75 text-primary;
+	@apply bg-dominant/75 text-primary;
 }
 
 :global(body) {
-    @apply bg-primary text-primary;
+	@apply bg-primary text-primary;
 }
