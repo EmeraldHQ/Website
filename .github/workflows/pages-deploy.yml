@@ -41,7 +41,7 @@ jobs:
           repository: ${{ github.event.repository.full_name }}
           ref: ${{ github.head_ref }}
           token: ${{ secrets.WORKFLOW_PAT }}
-      
+
       - name: 📤 Set output
         id: check-output
         if: always()
