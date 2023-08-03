@@ -7,3 +7,11 @@
 	/* To color scrollbars, form controls and other system colors  */
 	color-scheme: dark;
 }
+
+:global(::selection) {
+    @apply bg-dominant/75 text-primary;
+}
+
+:global(body) {
+    @apply bg-primary text-primary;
+}
