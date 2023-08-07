@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@inlang/sdk-js':
-    specifier: ^0.11.3
-    version: 0.11.3(@sveltejs/kit@1.22.4)(esbuild@0.18.17)(svelte@4.1.2)
+    specifier: ^0.11.4
+    version: 0.11.4(@sveltejs/kit@1.22.4)(esbuild@0.18.17)(svelte@4.1.2)
   '@inqling/svelte-icons':
     specifier: ^3.4.3
     version: 3.4.3(svelte@4.1.2)
@@ -395,8 +395,8 @@ packages:
       - esbuild
     dev: true
 
-  /@inlang/sdk-js@0.11.3(@sveltejs/kit@1.22.4)(esbuild@0.18.17)(svelte@4.1.2):
-    resolution: {integrity: sha512-e5BC3TQmIxz7RHqPO6qK/934PNT4WcPi3LS3A+Z3ROQuKESWTslDbl7SWAm2s0lCDqaUO43ETRVxqFosfw0WwA==}
+  /@inlang/sdk-js@0.11.4(@sveltejs/kit@1.22.4)(esbuild@0.18.17)(svelte@4.1.2):
+    resolution: {integrity: sha512-hKPvPrJgmCfZtvE5mXyzxhDUHXl0NaYtuNeAMOE03eJsMfORZCgC9ifShdwJbZIXxZkfdxyUpxqI5d8ADNwEpA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
