@@ -28,7 +28,7 @@ jobs:
   permissions-check:
     name: Permissions check
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+    if: github.event_name == 'pull_request'
     outputs:
       has-permissions: ${{ steps.check-output.outputs.has-permissions }}
 
