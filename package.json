@@ -18,24 +18,24 @@
 		"prepare": "husky install"
 	},
 	"devDependencies": {
-		"@inlang/sdk-js": "^0.6.6",
+		"@inlang/sdk-js": "^0.11.4",
 		"@inqling/svelte-icons": "^3.4.3",
 		"@rgossiaux/svelte-headlessui": "^2.0.0",
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.22.4",
 		"@total-typescript/ts-reset": "^0.4.2",
-		"@types/node": "^20.4.5",
-		"@typescript-eslint/eslint-plugin": "^6.2.1",
-		"@typescript-eslint/parser": "^6.2.1",
+		"@types/node": "^20.4.8",
+		"@typescript-eslint/eslint-plugin": "^6.3.0",
+		"@typescript-eslint/parser": "^6.3.0",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.46.0",
-		"eslint-config-prettier": "^8.9.0",
+		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.32.4",
 		"husky": "^8.0.3",
 		"mini-svg-data-uri": "^1.4.4",
 		"postcss": "^8.4.27",
 		"postcss-import": "^15.1.0",
-		"prettier": "^3.0.0",
+		"prettier": "^3.0.1",
 		"prettier-plugin-svelte": "^3.0.3",
 		"prettier-plugin-tailwindcss": "^0.4.1",
 		"svelte": "^4.1.2",
@@ -45,7 +45,7 @@
 		"tailwindcss-3d": "^0.2.6",
 		"tslib": "^2.6.1",
 		"typescript": "^5.1.6",
-		"vite": "^4.4.8"
+		"vite": "^4.4.9"
 	},
 	"type": "module"
 }
