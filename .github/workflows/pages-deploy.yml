@@ -182,13 +182,15 @@ jobs:
         run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
 
       - name: 🔨 Build repo
-        run: pnpm build
+        run: |
+          pnpm build
+          touch build/.nojekyll
 
       - name: 📤 Upload artifact
         if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./build
+          path: build
 
   deploy:
     name: Deploy website to GitHub Pages
