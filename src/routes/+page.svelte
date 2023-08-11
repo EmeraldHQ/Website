@@ -221,12 +221,12 @@
 			setTimeout(() => {
 				element.style.removeProperty("transition-duration");
 			}, 500);
-			element.parentElement.style.transform = "scale(1.2)";
+			if (element.parentElement) element.parentElement.style.transform = "scale(1.2)";
 		}}
 		on:out_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
-			element.parentElement.style.transform = "scale(1)";
+			if (element.parentElement) element.parentElement.style.transform = "scale(1)";
 		}}
 	>
 		<button
