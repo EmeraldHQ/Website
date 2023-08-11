@@ -221,12 +221,12 @@
 			setTimeout(() => {
 				element.style.removeProperty("transition-duration");
 			}, 500);
-			element.parentElement.style.transform = "scale(1.2)";
+			if (element.parentElement) element.parentElement.style.transform = "scale(1.2)";
 		}}
 		on:out_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
-			element.parentElement.style.transform = "scale(1)";
+			if (element.parentElement) element.parentElement.style.transform = "scale(1)";
 		}}
 	>
 		<button
@@ -300,7 +300,7 @@
 			<div class="flex items-end justify-end">
 				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
-					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
+					<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>

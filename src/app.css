@@ -2,3 +2,18 @@
 @import "./chillax.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer base {
+	::selection {
+		@apply bg-dominant/75 text-primary;
+	}
+
+	body {
+		@apply bg-primary text-primary;
+	}
+
+	:root {
+		/* To color scrollbars, form controls and other system colors  */
+		color-scheme: dark;
+	}
+}

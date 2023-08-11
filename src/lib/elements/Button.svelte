@@ -6,7 +6,9 @@
 	 */
 	export let type: "primary" | "secondary" | "minimal" = "primary";
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		click: null;
+	}>();
 </script>
 
 {#if type === "primary"}

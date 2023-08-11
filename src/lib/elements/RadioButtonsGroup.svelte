@@ -21,7 +21,10 @@
 	 */
 	export let description: string;
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		change: { index: number };
+		hover: { index: number };
+	}>();
 </script>
 
 <div

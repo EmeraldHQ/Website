@@ -1,0 +1,12 @@
+{
+	"css.customData": [".vscode/tailwind.json"],
+	"tailwindCSS.classAttributes": [
+		"class",
+		"enter",
+		"enterFrom",
+		"enterTo",
+		"leave",
+		"leaveFrom",
+		"leaveTo"
+	]
+}

@@ -127,11 +127,14 @@
 			</div>
 			<div class="flex items-center gap-5 sm:gap-10">
 				<div
-					class="nav-items-container hidden items-center gap-10 duration-700 ease-out lg:flex"
+					class="hidden items-center gap-10 duration-700 ease-out lg:flex"
 					class:-mr-40={!showButton}
 				>
 					{#each navbarItems.filter(item => item.href.startsWith("#")) as item}
-						<button on:click={() => scrollTo(item.href)}>
+						<button
+							class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+							on:click={() => scrollTo(item.href)}
+						>
 							{item.name}
 						</button>
 					{/each}
@@ -187,10 +190,11 @@
 <SlideOver bind:show={showSlideOver}>
 	<svelte:fragment slot="content">
 		<div
-			class="nav-items-container flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
+			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
 		>
 			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
 				<button
+					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					class:text-dominant={!item.href.startsWith("#")}
 					on:click={() => {
 						showSlideOver = false;
@@ -255,7 +259,7 @@
 		<!-- Middle -->
 		{#if innerWidth >= tailwindXsScreen}
 			<button
-				class="absolute bottom-0 left-0 right-0 text-center"
+				class="absolute bottom-0 left-0 right-0 mx-auto w-fit text-center"
 				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
@@ -293,25 +297,3 @@
 		</div>
 	</div>
 </footer>
-
-<style lang="postcss">
-	:global(::selection) {
-		@apply bg-dominant/75 text-primary;
-	}
-
-	:global(body) {
-		@apply bg-primary text-primary;
-	}
-
-	.nav-items-container > * {
-		@apply relative;
-	}
-
-	.nav-items-container > *::after {
-		@apply absolute -bottom-1.5 left-0 h-1 w-0 bg-dominant duration-300 content-[""];
-	}
-
-	.nav-items-container > *:hover::after {
-		@apply w-full;
-	}
-</style>

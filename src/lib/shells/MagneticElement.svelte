@@ -5,7 +5,10 @@
 
 	// Constants
 	const elementId = `svelte-magnetic-element-${useId()}`;
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{
+		in_zone: { element: HTMLElement };
+		out_zone: { element: HTMLElement };
+	}>();
 
 	// Configuration
 	/**
