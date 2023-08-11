@@ -5,10 +5,11 @@
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import { CodeBracket, Sparkles } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { ExclamationCircle, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import { i } from "@inlang/sdk-js";
 </script>
 
 <svelte:head>
-	<title>Error {$page.status} | Emerald Studio</title>
+	<title>{i("errors.error")} {$page.status} | Emerald Studio</title>
 </svelte:head>
 
 <div
@@ -72,6 +73,6 @@
 			goto("/", { replaceState: true });
 		}}
 	>
-		Go back to a safe place
+		{i("errors.go-home")}
 	</Button>
 </div>
