@@ -300,7 +300,7 @@
 			<div class="flex items-end justify-end">
 				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
-					<ChevronRight class="w-10 h-10 transition-transform duration-500" />
+					<ChevronRight class="h-10 w-10 transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>
