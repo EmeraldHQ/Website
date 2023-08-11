@@ -131,10 +131,11 @@ jobs:
         run: exit 1
 
       - name: ✨ Check localizations
+        id: inlang-lint
         run: pnpx @inlang/cli lint
 
       - name: ❌ Fail if localizations are not valid
-        if: failure()
+        if: failure() && steps.inlang-lint.conclusion == 'failure'
         run: exit 1
 
       - name: ✨ Check Svelte format
