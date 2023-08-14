@@ -31,6 +31,21 @@
 			"after-link": "!"
 		}
 	},
+	"technologies": {
+		"title": "The [technologies] we use",
+		"framework": {
+			"title": "Framework: [SvelteKit]",
+			"desc": "Svelte, with its SvelteKit framework, gives us unrivalled performance and a simple, pleasant development experience."
+		},
+		"database": {
+			"title": "Database: [PostgreSQL]",
+			"desc": "PostgreSQL is a powerful, reliable and proven database, perfect for storing your data securely."
+		},
+		"infrastructure": {
+			"title": "Infrastructure: [Vercel]",
+			"desc": "Vercel is a high-performance cloud platform designed for SvelteKit, enabling us to host your project in the best possible conditions."
+		}
+	},
 	"cta-bottom": {
 		"subtitle": "Ready to get started?",
 		"title": "Let's build your [dream] project"

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ROOT_URL } from "$config";
-	import type { SvelteComponent } from "svelte";
+	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
@@ -15,6 +15,7 @@
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
+	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
 	import { i, language } from "@inlang/sdk-js";
 	import { c } from "$utils/inlang-color";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -32,6 +33,7 @@
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
+	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -77,7 +79,31 @@
 			}
 		];
 		solutions = solutionsSections;
+		technologiesSections = [
+			{
+				title: c(i("home.technologies.framework.title")),
+				icon: Svelte,
+				brandColor: "#FF3E00",
+				description: i("home.technologies.framework.desc")
+			},
+			{
+				title: c(i("home.technologies.database.title")),
+				icon: Postgresql,
+				brandColor: "#4169E1",
+				description: i("home.technologies.database.desc")
+			},
+			{
+				title: c(i("home.technologies.infrastructure.title")),
+				icon: Vercel,
+				brandColor: "#FFFFFF",
+				description: i("home.technologies.infrastructure.desc")
+			}
+		];
 	}
+
+	// Technologies cards
+	let technoCards: HTMLElement;
+	let technoIcons: HTMLElement;
 
 	// Keep only 3 solutions sections if screen is too small
 	let innerWidth = 0;
@@ -88,6 +114,51 @@
 			solutions = solutionsSections;
 		}
 	}
+
+	onMount(() => {
+		// Auto-scroll technologies cards
+		if (!technoCards) return;
+		const cards = technoCards.children;
+		const icons = technoIcons.children;
+		if (cards.length < 2) return;
+		if (cards.length !== icons.length) return;
+
+		const DELAY = 5000;
+		let currentCard = 0;
+
+		const scroll = () => {
+			if (currentCard === cards.length - 1) {
+				currentCard = 0;
+			} else {
+				currentCard++;
+			}
+			const card = cards[currentCard];
+			if (!card) return;
+			technoCards.scrollTo({
+				left: card.clientWidth * currentCard,
+				behavior: "smooth"
+			});
+			const icon = icons[currentCard];
+			if (!icon) return;
+			icon.dispatchEvent(
+				new MouseEvent("mouseenter", { bubbles: true, cancelable: true, view: window })
+			);
+		};
+
+		let interval = setInterval(scroll, DELAY);
+
+		technoCards.addEventListener("mouseenter", () => {
+			clearInterval(interval);
+		});
+
+		technoCards.addEventListener("mouseleave", () => {
+			interval = setInterval(scroll, DELAY);
+		});
+
+		return () => {
+			clearInterval(interval);
+		};
+	});
 </script>
 
 <!-- Window bindings -->
@@ -302,6 +373,55 @@
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
 				</Button>
+			</div>
+		</div>
+	</div>
+</Section>
+
+<!-- Technologies -->
+<Section id="technologies">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.technologies.title"))}
+	</svelte:fragment>
+	<div class="mx-auto flex items-center gap-8">
+		<!-- Left part -->
+		<div class="">
+			<div
+				bind:this={technoCards}
+				class="flex snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start"
+			>
+				{#each technologiesSections as techno}
+					<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8">
+						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+						<h3 class="text-xl font-medium">{@html techno.title}</h3>
+						<p class="text-lg text-gray-200">
+							{techno.description}
+						</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<!-- Right part -->
+		<div class="aspect-square flex-1 outline outline-blue-500">
+			<div
+				bind:this={technoIcons}
+				class="relative flex h-full w-full items-center justify-center rotate-12"
+			>
+				{#each technologiesSections as techno, index}
+					{@const offsetX = index === 0 ? 0 : index === 1 ? -45 : 45}
+					{@const offsetY = index === 0 ? -40 : index === 1 ? 40 : 40}
+					<div
+						style="transform: translate({offsetX}%, {offsetY}%);"
+						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700 hover:bg-gray-600 hover:scale-105"
+					>
+						<svelte:component
+							this={techno.icon}
+							class="w-1/2 transition-all duration-700 -rotate-12 group-hover:fill-dominant group-hover:scale-105"
+						/>
+					</div>
+				{/each}
 			</div>
 		</div>
 	</div>
