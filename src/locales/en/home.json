@@ -35,7 +35,7 @@
 		"title": "The [technologies] we use",
 		"framework": {
 			"title": "Framework: [SvelteKit]",
-			"desc": "Svelte, with its SvelteKit framework, gives us unrivalled performance and a simple, pleasant development experience."
+			"desc": "Svelte, with its SvelteKit metaframework, gives us unrivalled performance and a simple, pleasant development experience."
 		},
 		"database": {
 			"title": "Database: [PostgreSQL]",

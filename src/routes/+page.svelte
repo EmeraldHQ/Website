@@ -384,7 +384,7 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.technologies.title"))}
 	</svelte:fragment>
-	<div class="mx-auto flex items-center gap-8">
+	<div class="mx-auto inline-flex items-center gap-8">
 		<!-- Left part -->
 		<div class="">
 			<div
@@ -404,7 +404,7 @@
 		</div>
 
 		<!-- Right part -->
-		<div class="aspect-square flex-1 outline outline-blue-500">
+		<div class="aspect-square self-stretch outline outline-blue-500">
 			<div
 				bind:this={technoIcons}
 				class="relative flex h-full w-full items-center justify-center rotate-12"
