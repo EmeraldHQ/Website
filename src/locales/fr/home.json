@@ -31,6 +31,25 @@
 			"after-link": " !"
 		}
 	},
+	"values": {
+		"title": "Nos [valeurs]",
+		"quality": {
+			"title": "Qualité",
+			"desc": "Nous nous efforçons de fournir un travail de qualité, en utilisant les technologies les plus récentes et avancées du marché."
+		},
+		"passion": {
+			"title": "Passion",
+			"desc": "Nous sommes une équipe passionnés par notre travail, qui veulent changer la manière dont le web est construit et utilisé."
+		},
+		"automation": {
+			"title": "Automatisation",
+			"desc": "Nous automatisons les tâches répétitives, afin de nous concentrer sur ce qui compte vraiment : votre projet."
+		},
+		"performance": {
+			"title": "Performance",
+			"desc": "Nous nous assurons que votre projet soit rapide et efficace, afin d'offrir la meilleure expérience utilisateur possible."
+		}
+	},
 	"cta-bottom": {
 		"subtitle": "Prêt à vous lancer ?",
 		"title": "Construisons votre projet [de rêve]"
