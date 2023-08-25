@@ -105,6 +105,26 @@
 	let technoCards: HTMLElement;
 	let technoIcons: HTMLElement;
 
+	function getOffset(
+		totalPoints: number,
+		pointNumber: number,
+		radius: number = 60,
+		clockwise: boolean = true
+	) {
+		if (pointNumber > totalPoints) {
+			throw new Error("Point number cannot exceed total number of points.");
+		}
+
+		const baseAngle = ((2 * Math.PI) / totalPoints) * pointNumber;
+
+		const angle = clockwise ? baseAngle : 2 * Math.PI - baseAngle;
+
+		return {
+			x: radius * Math.cos(angle),
+			y: radius * Math.sin(angle)
+		};
+	}
+
 	// Keep only 3 solutions sections if screen is too small
 	let innerWidth = 0;
 	$: if (innerWidth > 0) {
@@ -126,6 +146,18 @@
 		const DELAY = 5000;
 		let currentCard = 0;
 
+		function hoverIcon(index: number) {
+			const icon = icons[index];
+			if (!icon) return;
+			icon.classList.add("is-selected");
+			for (let i = 0; i < icons.length; i++) {
+				if (i === index) continue;
+				icons[i]?.classList.remove("is-selected");
+			}
+		}
+
+		hoverIcon(currentCard);
+
 		const scroll = () => {
 			if (currentCard === cards.length - 1) {
 				currentCard = 0;
@@ -138,11 +170,7 @@
 				left: card.clientWidth * currentCard,
 				behavior: "smooth"
 			});
-			const icon = icons[currentCard];
-			if (!icon) return;
-			icon.dispatchEvent(
-				new MouseEvent("mouseenter", { bubbles: true, cancelable: true, view: window })
-			);
+			hoverIcon(currentCard);
 		};
 
 		let interval = setInterval(scroll, DELAY);
@@ -405,18 +433,22 @@
 		<div class="aspect-square h-56 lg:h-48">
 			<div
 				bind:this={technoIcons}
-				class="relative flex h-full w-full items-center justify-center rotate-12"
+				class="relative flex h-full w-full items-center justify-center -rotate-45"
 			>
 				{#each technologiesSections as techno, index}
-					{@const offsetX = index === 0 ? 0 : index === 1 ? -45 : 45}
-					{@const offsetY = index === 0 ? -40 : index === 1 ? 40 : 40}
+					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
 					<div
-						style="transform: translate({offsetX}%, {offsetY}%);"
-						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700 hover:bg-gray-600 hover:scale-105"
+						style="transform: translate({x}%, {y}%);"
+						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
+						hover:bg-gray-500 hover:scale-110
+						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
 					>
 						<svelte:component
 							this={techno.icon}
-							class="w-1/2 transition-all duration-700 -rotate-12 group-hover:fill-dominant group-hover:scale-105"
+							style="--brand-color: {techno.brandColor}"
+							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45
+							group-hover:fill-[var(--brand-color)] group-hover:scale-110
+							group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
 						/>
 					</div>
 				{/each}
