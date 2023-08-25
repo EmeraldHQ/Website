@@ -384,27 +384,25 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.technologies.title"))}
 	</svelte:fragment>
-	<div class="mx-auto inline-flex items-center gap-8">
+	<div class="flex flex-col items-center gap-8 sm:flex-row">
 		<!-- Left part -->
-		<div class="">
-			<div
-				bind:this={technoCards}
-				class="flex snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start"
-			>
-				{#each technologiesSections as techno}
-					<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8">
-						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						<h3 class="text-xl font-medium">{@html techno.title}</h3>
-						<p class="text-lg text-gray-200">
-							{techno.description}
-						</p>
-					</div>
-				{/each}
-			</div>
+		<div
+			bind:this={technoCards}
+			class="flex max-w-lg snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
+		>
+			{#each technologiesSections as techno}
+				<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8">
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					<h3 class="text-xl font-medium">{@html techno.title}</h3>
+					<p class="text-lg text-gray-200">
+						{techno.description}
+					</p>
+				</div>
+			{/each}
 		</div>
 
 		<!-- Right part -->
-		<div class="aspect-square self-stretch outline outline-blue-500">
+		<div class="aspect-square h-56 lg:h-48">
 			<div
 				bind:this={technoIcons}
 				class="relative flex h-full w-full items-center justify-center rotate-12"
