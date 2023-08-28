@@ -1,35 +1,35 @@
 {
-  "contact": "Contact Us",
-  "pages": {
-    "title": "Pages",
-    "home": "Home",
-    "solutions": "Solutions",
-    "process": "Process",
-    "technologies": "Technologies",
-    "company": "Company"
-  },
-  "solutions": {
-    "comprehensive": "Comprehensive application",
-    "web-app": "Web app",
-    "landing": "Landing page",
-    "ecommerce": "E-commerce",
-    "rewrite": "Rewrite",
-    "custom": "Custom"
-  },
-  "process": {
-    "design": "Design",
-    "development": "Development",
-    "hosting": "Hosting"
-  },
-  "company": {
-    "about": "About",
-    "team": "Team",
-    "env": "Environment",
-    "oss": "Open Source"
-  },
-  "legal": {
-    "title": "Legal",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
-  }
+	"contact": "Contact Us",
+	"pages": {
+		"title": "Pages",
+		"home": "Home",
+		"solutions": "Solutions",
+		"process": "Process",
+		"technologies": "Technologies",
+		"company": "Company"
+	},
+	"solutions": {
+		"comprehensive": "Comprehensive application",
+		"web-app": "Web app",
+		"landing": "Landing page",
+		"ecommerce": "E-commerce",
+		"rewrite": "Rewrite",
+		"custom": "Custom"
+	},
+	"process": {
+		"design": "Design",
+		"development": "Development",
+		"hosting": "Hosting"
+	},
+	"company": {
+		"about": "About",
+		"team": "Team",
+		"env": "Environment",
+		"oss": "Open Source"
+	},
+	"legal": {
+		"title": "Legal",
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service"
+	}
 }

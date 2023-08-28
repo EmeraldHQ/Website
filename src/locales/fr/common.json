@@ -1,35 +1,35 @@
 {
-  "contact": "Contactez-nous",
-  "pages": {
-    "title": "Pages",
-    "home": "Accueil",
-    "solutions": "Solutions",
-    "process": "Processus",
-    "technologies": "Technologies",
-    "company": "Entreprise"
-  },
-  "solutions": {
-    "comprehensive": "Application complète",
-    "web-app": "Web app",
-    "landing": "Page d'accueil",
-    "ecommerce": "E-commerce",
-    "rewrite": "Refonte",
-    "custom": "Personnalisé"
-  },
-  "process": {
-    "design": "Design",
-    "development": "Développement",
-    "hosting": "Hébergement"
-  },
-  "company": {
-    "about": "À propos",
-    "team": "Équipe",
-    "env": "Environnement",
-    "oss": "Open Source"
-  },
-  "legal": {
-    "title": "Juridique",
-    "privacy": "Politique de confidentialité",
-    "terms": "Conditions d'utilisation"
-  }
+	"contact": "Contactez-nous",
+	"pages": {
+		"title": "Pages",
+		"home": "Accueil",
+		"solutions": "Solutions",
+		"process": "Processus",
+		"technologies": "Technologies",
+		"company": "Entreprise"
+	},
+	"solutions": {
+		"comprehensive": "Application complète",
+		"web-app": "Web app",
+		"landing": "Page d'accueil",
+		"ecommerce": "E-commerce",
+		"rewrite": "Refonte",
+		"custom": "Personnalisé"
+	},
+	"process": {
+		"design": "Design",
+		"development": "Développement",
+		"hosting": "Hébergement"
+	},
+	"company": {
+		"about": "À propos",
+		"team": "Équipe",
+		"env": "Environnement",
+		"oss": "Open Source"
+	},
+	"legal": {
+		"title": "Juridique",
+		"privacy": "Politique de confidentialité",
+		"terms": "Conditions d'utilisation"
+	}
 }

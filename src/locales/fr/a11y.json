@@ -1,13 +1,13 @@
 {
-  "alt": {
-    "og-banner": "Bannière OG",
-    "logo": "Logo Emerald Studio",
-    "logo-small": "Logo Emerald Studio - petit"
-  },
-  "aria": {
-    "menu": "Menu",
-    "panel-close": "Fermer le panneau",
-    "radio-language": "Sélection de langue",
-    "source": "Jetez un œil au code source de cette page"
-  }
+	"alt": {
+		"og-banner": "Bannière OG",
+		"logo": "Logo Emerald Studio",
+		"logo-small": "Logo Emerald Studio - petit"
+	},
+	"aria": {
+		"menu": "Menu",
+		"panel-close": "Fermer le panneau",
+		"radio-language": "Sélection de langue",
+		"source": "Jetez un œil au code source de cette page"
+	}
 }
