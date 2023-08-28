@@ -1,13 +1,13 @@
 {
-	"alt": {
-		"og-banner": "OG banner",
-		"logo": "Emerald Studio logo",
-		"logo-small": "Emerald Studio logo - small"
-	},
-	"aria": {
-		"menu": "Menu",
-		"panel-close": "Close panel",
-		"radio-language": "Language selection",
-		"source": "Take a look at the source code of this website"
-	}
+  "alt": {
+    "og-banner": "OG banner",
+    "logo": "Emerald Studio logo",
+    "logo-small": "Emerald Studio logo - small"
+  },
+  "aria": {
+    "menu": "Menu",
+    "panel-close": "Close panel",
+    "radio-language": "Language selection",
+    "source": "Take a look at the source code of this website"
+  }
 }

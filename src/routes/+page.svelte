@@ -76,7 +76,6 @@
 				description: i("home.solutions.custom-desc")
 			}
 		];
-		solutions = solutionsSections;
 	}
 
 	// Keep only 3 solutions sections if screen is too small
@@ -303,6 +302,20 @@
 					<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
 				</Button>
 			</div>
+		</div>
+	</div>
+</Section>
+
+<!-- About us -->
+<Section id="aboutUs">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.about-us.title"))}
+	</svelte:fragment>
+	<div class="flex items-center justify-between">
+		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
+			<img src="" alt="">
+			<p>{i("home.about-us.desc")}</p>
 		</div>
 	</div>
 </Section>
