@@ -1,42 +1,43 @@
 {
-	"description": "Votre web app. Moderne et rapide.",
-	"og-banner": "og-banner-fr.png",
-	"hero": {
-		"title": {
-			"first": "Votre projet",
-			"second": "digital, [rapide]"
-		},
-		"subtitle": {
-			"first": "Grâce à des technologies de pointe, construisons",
-			"second": "l'application web dont vous avez toujours rêvé."
-		},
-		"cta-secondary": "Voir notre travail"
-	},
-	"process": {
-		"design-desc": "Nous concevons l'interface de votre projet selon votre identité visuelle, garantissant une expérience utilisateur optimale.",
-		"development-desc": "Le concept est alors transformé en code, en utilisant les technologies les plus récentes et avancées du marché.",
-		"hosting-desc": "Nous nous occupons de l'hébergement de votre projet, vous permettant de vous concentrer sur votre activité. Nous proposons un hébergement chez Vercel ou sur site."
-	},
-	"solutions": {
-		"title": "Tout est [possible]",
-		"comprehensive-desc": "Interface utilisateur, base de données, chat, paiement... Donnez vie à votre grand projet, sans limites.",
-		"web-app-desc": "Une application web qui peut être installée sur tous les appareils, offrant une expérience utilisateur complète avec des notifications, le hors-ligne, et plus encore.",
-		"landing-desc": "Votre page d'accueil est la première chose que vos clients voient. Concevons-la pour qu'elle soit la  plus attrayante possible.",
-		"ecommerce-desc": "Vendez vos produits en ligne avec une boutique moderne et efficace, maximisant vos ventes.",
-		"rewrite-desc": "Votre site internet est lent et obsolète ? Nous le réécrivons avec les dernières technologies pour en exploiter tout son potentiel.",
-		"custom-desc": "Une idée unique ? Faites-en nous part !",
-		"more": {
-			"before-link": "...et ",
-			"link": "plus encore",
-			"after-link": " !"
-		}
-	},
-	"about-us": {
-		"title": "A propos de [nous]",
-		"desc": "Nous sommes trois fondateurs passionnée par une même cause réalisé des défis. Suite à notre école d’ingénieurs nous avons réaliser qu’ensemble nous nous complétons que se soit sur le plans humain et technique. Trop souvent nous constatons certain site ou application avec des bugs ou problèmes de maintenance. C’est pour cela que nous souhaitons accompagner des start-up / entreprises à résoudre leurs besoin avec le développement d’une solution de qualité."
-	},
-	"cta-bottom": {
-		"subtitle": "Prêt à vous lancer ?",
-		"title": "Construisons votre projet [de rêve]"
-	}
+  "description": "Votre web app. Moderne et rapide.",
+  "og-banner": "og-banner-fr.png",
+  "hero": {
+    "title": {
+      "first": "Votre projet",
+      "second": "digital, [rapide]"
+    },
+    "subtitle": {
+      "first": "Grâce à des technologies de pointe, construisons",
+      "second": "l'application web dont vous avez toujours rêvé."
+    },
+    "cta-secondary": "Voir notre travail"
+  },
+  "process": {
+    "design-desc": "Nous concevons l'interface de votre projet selon votre identité visuelle, garantissant une expérience utilisateur optimale.",
+    "development-desc": "Le concept est alors transformé en code, en utilisant les technologies les plus récentes et avancées du marché.",
+    "hosting-desc": "Nous nous occupons de l'hébergement de votre projet, vous permettant de vous concentrer sur votre activité. Nous proposons un hébergement chez Vercel ou sur site."
+  },
+  "solutions": {
+    "title": "Tout est [possible]",
+    "comprehensive-desc": "Interface utilisateur, base de données, chat, paiement... Donnez vie à votre grand projet, sans limites.",
+    "web-app-desc": "Une application web qui peut être installée sur tous les appareils, offrant une expérience utilisateur complète avec des notifications, le hors-ligne, et plus encore.",
+    "landing-desc": "Votre page d'accueil est la première chose que vos clients voient. Concevons-la pour qu'elle soit la  plus attrayante possible.",
+    "ecommerce-desc": "Vendez vos produits en ligne avec une boutique moderne et efficace, maximisant vos ventes.",
+    "rewrite-desc": "Votre site internet est lent et obsolète ? Nous le réécrivons avec les dernières technologies pour en exploiter tout son potentiel.",
+    "custom-desc": "Une idée unique ? Faites-en nous part !",
+    "more": {
+      "before-link": "...et ",
+      "link": "plus encore",
+      "after-link": " !"
+    }
+  },
+  "about-us": {
+    "title": "A propos de [nous]",
+    "desc": "Nous sommes trois fondateurs passionnée par une même cause réalisé des défis. Suite à notre école d’ingénieurs nous avons réaliser qu’ensemble nous nous complétons que se soit sur le plans humain et technique. Trop souvent nous constatons certain site ou application avec des bugs ou problèmes de maintenance. C’est pour cela que nous souhaitons accompagner des start-up / entreprises à résoudre leurs besoin avec le développement d’une solution de qualité.",
+    "more": "En savoir plus sur nous"
+  },
+  "cta-bottom": {
+    "subtitle": "Prêt à vous lancer ?",
+    "title": "Construisons votre projet [de rêve]"
+  }
 }

@@ -1,42 +1,43 @@
 {
-	"description": "Your web app. Modern and fast.",
-	"og-banner": "og-banner.png",
-	"hero": {
-		"title": {
-			"first": "Your [super-fast]",
-			"second": "digital project"
-		},
-		"subtitle": {
-			"first": "Powered by cutting-edge technologies, let's build",
-			"second": "the web application you've been dreaming of."
-		},
-		"cta-secondary": "See our work"
-	},
-	"process": {
-		"design-desc": "We design the user interface of your project following your visual identity, to guarantee an optimal user experience.",
-		"development-desc": "The concept is then transformed into code, using the latest and most advanced technologies on the market.",
-		"hosting-desc": "We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel or on-site hosting."
-	},
-	"solutions": {
-		"title": "Everything is [possible]",
-		"comprehensive-desc": "User interface, database, chat, payment... Bring your big project to life, without limits.",
-		"web-app-desc": "A web application that can be installed on all devices, offering a complete user experience with notifications, offline, and more.",
-		"landing-desc": "Your landing page is the first thing your customers see. Let's design it to be as attractive as possible.",
-		"ecommerce-desc": "Sell your products online with a modern and efficient online store, maximizing your sales.",
-		"rewrite-desc": "Your website is slow and outdated? We rewrite it with the latest technologies to leverage its full potential.",
-		"custom-desc": "A unique idea? Let us know!",
-		"more": {
-			"before-link": "...and ",
-			"link": "more",
-			"after-link": "!"
-		}
-	},
-	"about-us": {
-		"title": "About us",
-		"desc": "We are three founders who share the same passion and take on challenges. After our time at engineering school, we realized that we complement each other both in terms of human interaction and technical skills. All too often, we come across websites or applications with bugs or maintenance issues. That's why we want to help start-ups and companies meet their needs by creating high-quality solutions."
-	},
-	"cta-bottom": {
-		"subtitle": "Ready to get started?",
-		"title": "Let's build your [dream] project"
-	}
+  "description": "Your web app. Modern and fast.",
+  "og-banner": "og-banner.png",
+  "hero": {
+    "title": {
+      "first": "Your [super-fast]",
+      "second": "digital project"
+    },
+    "subtitle": {
+      "first": "Powered by cutting-edge technologies, let's build",
+      "second": "the web application you've been dreaming of."
+    },
+    "cta-secondary": "See our work"
+  },
+  "process": {
+    "design-desc": "We design the user interface of your project following your visual identity, to guarantee an optimal user experience.",
+    "development-desc": "The concept is then transformed into code, using the latest and most advanced technologies on the market.",
+    "hosting-desc": "We take care of the hosting of your project, allowing you to focus on your business. We offer at-Vercel or on-site hosting."
+  },
+  "solutions": {
+    "title": "Everything is [possible]",
+    "comprehensive-desc": "User interface, database, chat, payment... Bring your big project to life, without limits.",
+    "web-app-desc": "A web application that can be installed on all devices, offering a complete user experience with notifications, offline, and more.",
+    "landing-desc": "Your landing page is the first thing your customers see. Let's design it to be as attractive as possible.",
+    "ecommerce-desc": "Sell your products online with a modern and efficient online store, maximizing your sales.",
+    "rewrite-desc": "Your website is slow and outdated? We rewrite it with the latest technologies to leverage its full potential.",
+    "custom-desc": "A unique idea? Let us know!",
+    "more": {
+      "before-link": "...and ",
+      "link": "more",
+      "after-link": "!"
+    }
+  },
+  "about-us": {
+    "title": "About us",
+    "desc": "We are three founders who share the same passion and take on challenges. After our time at engineering school, we realized that we complement each other both in terms of human interaction and technical skills. All too often, we come across websites or applications with bugs or maintenance issues. That's why we want to help start-ups and companies meet their needs by creating high-quality solutions.",
+    "more": "En savoir plus sur nous"
+  },
+  "cta-bottom": {
+    "subtitle": "Ready to get started?",
+    "title": "Let's build your [dream] project"
+  }
 }

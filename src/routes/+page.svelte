@@ -312,11 +312,14 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
-	<div class="flex items-center justify-between">
-		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
-			<img src="" alt="">
-			<p>{i("home.about-us.desc")}</p>
-		</div>
+	<div class="flex items-center justify-center">
+		<p class="pb-8 pt-4 w-2/3">{i("home.about-us.desc")}</p>
+	</div>
+	<div class="flex items-center justify-end">
+		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+			{i("home.about-us.more")}
+			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+		</Button>
 	</div>
 </Section>
 
