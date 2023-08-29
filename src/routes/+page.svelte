@@ -312,8 +312,12 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
-	<div class="flex items-center justify-center">
-		<p class="pb-8 pt-4 w-2/3">{i("home.about-us.desc")}</p>
+	<div class="pb-10 flex items-center justify-center">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8 md:p-16">
+			<p class="text-lg text-gray-200">
+				{i("home.about-us.desc")}
+			</p>
+		</div>
 	</div>
 	<div class="flex items-center justify-end">
 		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
