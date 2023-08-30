@@ -7,7 +7,16 @@
 	import Section from "$layouts/Section.svelte";
 	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
-	import { Cloud, Heart, PaintBrush, RocketLaunch, Sparkles, Trophy, Window, WrenchScrewdriver } from "@inqling/svelte-icons/heroicon-24-outline";
+	import {
+		Cloud,
+		Heart,
+		PaintBrush,
+		RocketLaunch,
+		Sparkles,
+		Trophy,
+		Window,
+		WrenchScrewdriver
+	} from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
@@ -32,7 +41,11 @@
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
-	let valuesSections: { icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>; title: string; description: string }[] = [];
+	let valuesSections: {
+		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+		title: string;
+		description: string;
+	}[] = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -100,8 +113,7 @@
 				description: i("home.values.performance.desc")
 			}
 		];
-	};
-
+	}
 
 	// Keep only 3 solutions sections if screen is too small
 	let innerWidth = 0;
@@ -340,7 +352,7 @@
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
-				<div class="grid grid-flow-col gap-x-4 items-start justify-start">
+				<div class="grid grid-flow-col items-start justify-start gap-x-4">
 					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
