@@ -150,7 +150,7 @@
 				alt: i("a11y.alt.og-banner")
 			}
 		],
-		site_name: "Emerald Studio"
+		siteName: "Emerald Studio"
 	}}
 	twitter={{
 		cardType: "summary_large_image",
@@ -163,7 +163,7 @@
 		image: `${ROOT_URL}/${i("home.og-banner")}`,
 		imageAlt: i("a11y.alt.og-banner")
 	}}
-	robotsProps={{
+	additionalRobotsProps={{
 		noarchive: true
 	}}
 />
