@@ -33,7 +33,6 @@
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
 	let valuesSections: { icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>; title: string; description: string }[] = [];
-	let values: typeof valuesSections = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -101,8 +100,6 @@
 				description: i("home.values.performance.desc")
 			}
 		];
-		values = valuesSections;
-		console.log(values)
 	};
 
 
@@ -342,8 +339,8 @@
 	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
-			{#each values as value}
-				<div class="grid grid-flow-col gird gap-x-4 items-start justify-start">
+			{#each valuesSections as value}
+				<div class="grid grid-flow-col gap-x-4 items-start justify-start">
 					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
