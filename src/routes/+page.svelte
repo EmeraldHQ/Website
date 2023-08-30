@@ -76,6 +76,7 @@
 				description: i("home.solutions.custom-desc")
 			}
 		];
+		solutions = solutionsSections;
 	}
 
 	// Keep only 3 solutions sections if screen is too small
