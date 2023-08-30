@@ -30,7 +30,7 @@
 	$: if (language) {
 		navbarItems = [
 			{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
-			{ name: i("common.pages.process"), href: "#method" },
+			{ name: i("common.pages.process"), href: "#process" },
 			{ name: i("common.pages.technologies"), href: "#technologies" },
 			{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
 			{ name: i("common.contact"), href: "." }
