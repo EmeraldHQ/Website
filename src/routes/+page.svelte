@@ -135,57 +135,102 @@
 		}
 	}
 
+	// Auto-scroll technologies cards
+	const DELAY = 5000;
+	let currentCard = 0;
+
+	function hoverIcon(index: number) {
+		const icons = technoIcons.children;
+		if (!icons || icons.length < index) return;
+		const icon = icons[index];
+		if (!icon) return;
+
+		icon.classList.add("is-selected");
+		for (let i = 0; i < icons.length; i++) {
+			if (i === index) continue;
+			icons[i]?.classList.remove("is-selected");
+		}
+	}
+
+	function scrollToCard(index: number) {
+		const cards = technoCards?.children;
+		if (!cards || cards.length < index) return;
+		const card = cards[index];
+		if (!card) return;
+
+		technoCards.scrollTo({
+			left: card.clientWidth * index,
+			behavior: "smooth"
+		});
+		hoverIcon(index);
+		currentCard = index;
+	}
+
 	onMount(() => {
 		// Auto-scroll technologies cards
-		if (!technoCards) return;
-		const cards = technoCards.children;
-		const icons = technoIcons.children;
-		if (cards.length < 2) return;
-		if (cards.length !== icons.length) return;
-
-		const DELAY = 5000;
-		let currentCard = 0;
-
-		function hoverIcon(index: number) {
-			const icon = icons[index];
-			if (!icon) return;
-			icon.classList.add("is-selected");
-			for (let i = 0; i < icons.length; i++) {
-				if (i === index) continue;
-				icons[i]?.classList.remove("is-selected");
-			}
-		}
+		const cards = technoCards?.children;
+		if (!cards || cards.length < 2) return;
 
 		hoverIcon(currentCard);
 
-		const scroll = () => {
+		const autoScroll = () => {
 			if (currentCard === cards.length - 1) {
 				currentCard = 0;
 			} else {
 				currentCard++;
 			}
-			const card = cards[currentCard];
-			if (!card) return;
-			technoCards.scrollTo({
-				left: card.clientWidth * currentCard,
-				behavior: "smooth"
+			scrollToCard(currentCard);
+		};
+
+		let interval = setInterval(autoScroll, DELAY);
+
+		type EventType = string; // I wish I could type this better
+		const events: Record<EventType, EventType> = {
+			mouseenter: "mouseleave",
+			scroll: "scrollend"
+		};
+		Object.keys(events).forEach(event => {
+			technoCards.addEventListener(event, () => {
+				eventHasBeTriggered[events[event as EventType] as LeaveEvent] = false;
+				clearInterval(interval);
 			});
+		});
+
+		[...technoIcons.children].forEach(icon => {
+			icon.addEventListener("mouseenter", () => {
+				clearInterval(interval);
+			});
+
+			icon.addEventListener("mouseleave", () => {
+				interval = setInterval(autoScroll, DELAY);
+			});
+		});
+
+		technoCards.addEventListener("scrollend", () => {
+			const scrollDistance = technoCards.scrollLeft;
+			currentCard = Math.round(scrollDistance / technoCards.clientWidth);
 			hoverIcon(currentCard);
-		};
-
-		let interval = setInterval(scroll, DELAY);
-
-		technoCards.addEventListener("mouseenter", () => {
-			clearInterval(interval);
 		});
 
-		technoCards.addEventListener("mouseleave", () => {
-			interval = setInterval(scroll, DELAY);
+		const leaveEvents = Object.values(events);
+		type LeaveEvent = keyof typeof leaveEvents;
+		const eventHasBeTriggered: Record<LeaveEvent, boolean> = leaveEvents.reduce(
+			(acc, event) => {
+				acc[event as LeaveEvent] = true;
+				return acc;
+			},
+			{} as Record<LeaveEvent, boolean>
+		);
+		leaveEvents.forEach(event => {
+			technoCards.addEventListener(event, () => {
+				eventHasBeTriggered[event as LeaveEvent] = true;
+				if (Object.values(eventHasBeTriggered).every(hasBeenTriggered => hasBeenTriggered)) {
+					interval = setInterval(autoScroll, DELAY);
+				}
+			});
 		});
 
-		return () => {
-			clearInterval(interval);
-		};
+		return () => clearInterval(interval);
 	});
 </script>
 
@@ -416,7 +461,7 @@
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
-			class="flex max-w-lg snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
+			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
 				<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8">
@@ -437,11 +482,12 @@
 			>
 				{#each technologiesSections as techno, index}
 					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
-					<div
+					<button
 						style="transform: translate({x}%, {y}%);"
 						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
 						hover:bg-gray-500 hover:scale-110
 						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
+						on:click={() => scrollToCard(index)}
 					>
 						<svelte:component
 							this={techno.icon}
@@ -450,7 +496,7 @@
 							group-hover:fill-[var(--brand-color)] group-hover:scale-110
 							group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
 						/>
-					</div>
+					</button>
 				{/each}
 			</div>
 		</div>
