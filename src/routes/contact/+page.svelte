@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { ROOT_URL } from "$config";
+	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { Check, PaperAirplane, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import { i } from "@inlang/sdk-js";
 	import { c } from "$lib/utils/inlang-color";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/Button.svelte";
-	import { page } from "$app/stores";
 
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
 	function mailHandler(node: HTMLFormElement) {
