@@ -110,8 +110,8 @@
 		images: [
 			{
 				url: `${ROOT_URL}/${i("home.og-banner")}`,
-				width: 1536,
-				height: 768,
+				width: 512,
+				height: 256,
 				alt: i("a11y.alt.og-banner")
 			}
 		],
@@ -140,6 +140,7 @@
 			url: ROOT_URL,
 			logo: `${ROOT_URL}/favicon.svg`
 		} /*,
+		// Add FAQ?
 		{
 			"@type": "WebSite",
 			url: ROOT_URL,

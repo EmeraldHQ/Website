@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { MetaTags } from "svelte-meta-tags";
+	import { ROOT_URL } from "$config";
+	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { Check, PaperAirplane, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import { i } from "@inlang/sdk-js";
 	import { c } from "$lib/utils/inlang-color";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/Button.svelte";
+	import { page } from "$app/stores";
 
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
 	function mailHandler(node: HTMLFormElement) {
@@ -73,8 +75,70 @@
 	}
 </script>
 
-<MetaTags title="Contact" titleTemplate="%s | Emerald Studio" />
+<!-- Meta tags -->
+<MetaTags
+	title={i("contact.pageTitle")}
+	titleTemplate="%s | Emerald Studio"
+	description={i("contact.description")}
+	canonical="{ROOT_URL}{$page.route.id}"
+	languageAlternates={[
+		{
+			hrefLang: "fr",
+			href: `${ROOT_URL}${$page.route.id}`
+		}
+	]}
+	openGraph={{
+		images: [
+			{
+				url: `${ROOT_URL}/${i("home.og-banner")}`,
+				width: 512,
+				height: 256,
+				alt: i("a11y.alt.og-banner")
+			}
+		],
+		siteName: "Emerald Studio"
+	}}
+	twitter={{
+		cardType: "summary_large_image",
+		title: `${i("contact.pageTitle")} | Emerald Studio`,
+		description: i("contact.description"),
+		image: `${ROOT_URL}/${i("home.og-banner")}`,
+		imageAlt: i("a11y.alt.og-banner")
+	}}
+	additionalRobotsProps={{
+		noarchive: true
+	}}
+/>
 
+<JsonLd
+	schema={[
+		{
+			"@type": "Organization",
+			url: ROOT_URL,
+			logo: `${ROOT_URL}/favicon.svg`
+		},
+		// Add type WebSite from home once done
+		{
+			"@type": "BreadcrumbList",
+			itemListElement: [
+				{
+					"@type": "ListItem",
+					position: 1,
+					name: i("common.pages.home"),
+					item: ROOT_URL
+				},
+				{
+					"@type": "ListItem",
+					position: 2,
+					name: i("contact.pageTitle"),
+					item: `${ROOT_URL}${$page.route.id}`
+				}
+			]
+		}
+	]}
+/>
+
+<!-- Page -->
 <div class="relative -mt-28 justify-center pt-28 md:-mt-40 md:pt-40">
 	<div
 		class="before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-['']"
