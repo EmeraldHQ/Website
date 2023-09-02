@@ -1,6 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import { onDestroy } from "svelte";
+	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
@@ -29,11 +30,10 @@
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 	$: if (language) {
 		navbarItems = [
-			{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
+			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.process"), href: "#process" },
 			{ name: i("common.pages.technologies"), href: "#technologies" },
-			{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
-			{ name: i("common.contact"), href: "." }
+			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
 		];
 		footerItems = [
 			{
@@ -97,6 +97,7 @@
 		<nav
 			class="mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 sm:mx-5 md:mx-10 md:px-20"
 		>
+			<!-- Left logo -->
 			<div class="mr-auto flex items-center gap-5">
 				<a
 					href="/"
@@ -125,18 +126,33 @@
 					{/if}
 				</a>
 			</div>
+			<!-- Right navigation -->
 			<div class="flex items-center gap-5 sm:gap-10">
 				<div
 					class="hidden items-center gap-10 duration-700 ease-out lg:flex"
 					class:-mr-40={!showButton}
 				>
-					{#each navbarItems.filter(item => item.href.startsWith("#")) as item}
-						<button
-							class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-							on:click={() => scrollTo(item.href)}
-						>
-							{item.name}
-						</button>
+					{#each navbarItems as item}
+						{#if item.href === $page.route.id}
+							<span
+								class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
+							>
+								{item.name}
+							</span>
+						{:else}
+							<button
+								class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+								on:click={() => {
+									if (item.href.startsWith("/")) {
+										goto(item.href);
+									} else {
+										scrollTo(item.href);
+									}
+								}}
+							>
+								{item.name}
+							</button>
+						{/if}
 					{/each}
 				</div>
 				<span
@@ -158,6 +174,7 @@
 				</button>
 			</div>
 		</nav>
+		<!-- Breadcrumb -->
 		{#if currentRoute.length > 0}
 			<div
 				class="mx-12 rounded-b-3xl bg-black/70 px-6 py-1 text-lg sm:mx-16 sm:px-8 md:mx-20 md:px-12"
