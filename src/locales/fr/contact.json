@@ -1,0 +1,32 @@
+{
+	"title": "Contactez-[nous]",
+	"labels": {
+		"name": "Votre nom et prénom",
+		"email": "Votre adresse email, que nous puissions vous répondre",
+		"company": "Votre entreprise",
+		"budget": "Avez-vous un budget en tête ?",
+		"description": "Dites-nous en plus sur votre projet"
+	},
+	"fields": {
+		"name": "Michel Dupont",
+		"nameError": "Veuillez indiquer votre nom et prénom",
+		"email": "michel.dupont@gmail.com",
+		"emailError": "Veuillez indiquer une adresse email valide",
+		"company": "Dupont & Cie",
+		"budget": {
+			"choose": "Choisissez un budget",
+			"none": "Aucun",
+			"less": "Moins de 1 000 €",
+			"1k": "Entre 1 000 € et 5 000 €",
+			"5k": "Entre 5 000 € et 10 000 €",
+			"10k": "10 000 € ou plus"
+		},
+		"description": "Type de projet, objectifs, cible, délais, etc."
+	},
+	"sendButton": {
+		"default": "Envoyer",
+		"loading": "Envoi en cours...",
+		"success": "Message envoyé !",
+		"error": "Erreur"
+	}
+}

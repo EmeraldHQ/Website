@@ -30,7 +30,7 @@
 <div
 	role="radiogroup"
 	aria-label={description}
-	class="inline-flex space-x-1 rounded-full border-[1px] border-gray-400 p-1 text-primary shadow-2xl shadow-black
+	class="inline-flex space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black
 	{$$props.class ?? ''}"
 >
 	{#each values as toggle, index}

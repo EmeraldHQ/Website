@@ -19,6 +19,7 @@
 	import { c } from "$utils/inlang-color";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
+	import { goto } from "$app/navigation";
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
@@ -161,8 +162,8 @@
 	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
-			before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
+		class="m-auto grid h-fit grid-cols-1 items-center px-10
+		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
 	>
 		<!-- Left part -->
 		<div
@@ -176,8 +177,8 @@
 			<div
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
-				<Button>{i("common.contact")}</Button>
-				<Button type="minimal" class="hover-child:translate-x-1">
+				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+				<Button styleType="minimal" class="hover-child:translate-x-1">
 					{i("home.hero.cta-secondary")}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
@@ -238,7 +239,7 @@
 			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
-				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-transparent bg-dominant p-1.5 text-inverted
+				class="h-8 w-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
@@ -294,11 +295,11 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{i("home.solutions.more.before-link")}
-				<Button type="minimal">{i("home.solutions.more.link")}</Button>
+				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+				<Button styleType="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
@@ -317,6 +318,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(i("home.cta-bottom.title"))}
 		</h3>
-		<Button class="scale-110">{i("common.contact")}</Button>
+		<Button class="scale-110" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 	</div>
 </Section>
