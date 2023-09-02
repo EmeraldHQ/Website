@@ -162,17 +162,19 @@
 			left: card.clientWidth * index,
 			behavior: "smooth"
 		});
-		hoverIcon(index);
-		currentCard = index;
 	}
 
 	onMount(() => {
-		// Auto-scroll technologies cards
+		// === Auto-scroll technologies cards ===
+		// Initial checks
 		const cards = technoCards?.children;
 		if (!cards || cards.length < 2) return;
 
+		// Hover the first icon on load, otherwise
+		// no icon is hovered until the first scroll
 		hoverIcon(currentCard);
 
+		// Auto-scroll function
 		const autoScroll = () => {
 			if (currentCard === cards.length - 1) {
 				currentCard = 0;
@@ -182,20 +184,20 @@
 			scrollToCard(currentCard);
 		};
 
+		// Initial interval definition, start auto-scrolling
 		let interval = setInterval(autoScroll, DELAY);
 
-		type EventType = string; // I wish I could type this better
-		const events: Record<EventType, EventType> = {
-			mouseenter: "mouseleave",
-			scroll: "scrollend"
-		};
-		Object.keys(events).forEach(event => {
-			technoCards.addEventListener(event, () => {
-				eventHasBeTriggered[events[event as EventType] as LeaveEvent] = false;
-				clearInterval(interval);
-			});
+		// Stop the interval on hover of the cards
+		technoCards.addEventListener("mouseenter", () => {
+			clearInterval(interval);
 		});
 
+		// Restart the interval on mouse leave
+		technoCards.addEventListener("mouseleave", () => {
+			interval = setInterval(autoScroll, DELAY);
+		});
+
+		// Add listeners to the icons to start/stop the interval on hover
 		[...technoIcons.children].forEach(icon => {
 			icon.addEventListener("mouseenter", () => {
 				clearInterval(interval);
@@ -206,30 +208,16 @@
 			});
 		});
 
+		// Scroll handler to update the hovered icon depending on
+		// the card we scrolled to
 		technoCards.addEventListener("scrollend", () => {
 			const scrollDistance = technoCards.scrollLeft;
-			currentCard = Math.round(scrollDistance / technoCards.clientWidth);
+			const containerWidth = technoCards.clientWidth;
+			currentCard = Math.round(scrollDistance / containerWidth);
 			hoverIcon(currentCard);
 		});
 
-		const leaveEvents = Object.values(events);
-		type LeaveEvent = keyof typeof leaveEvents;
-		const eventHasBeTriggered: Record<LeaveEvent, boolean> = leaveEvents.reduce(
-			(acc, event) => {
-				acc[event as LeaveEvent] = true;
-				return acc;
-			},
-			{} as Record<LeaveEvent, boolean>
-		);
-		leaveEvents.forEach(event => {
-			technoCards.addEventListener(event, () => {
-				eventHasBeTriggered[event as LeaveEvent] = true;
-				if (Object.values(eventHasBeTriggered).every(hasBeenTriggered => hasBeenTriggered)) {
-					interval = setInterval(autoScroll, DELAY);
-				}
-			});
-		});
-
+		// On destroy, clear the interval
 		return () => clearInterval(interval);
 	});
 </script>
