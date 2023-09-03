@@ -308,7 +308,7 @@
 </Section>
 
 <!-- About us -->
-<Section id="about-us" class="child:!mx-8">
+<Section id="about-us" class="max-sm:child:!mx-8">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
