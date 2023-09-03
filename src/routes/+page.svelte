@@ -320,12 +320,12 @@
 			</p>
 		</div>
 	</div>
-	<div class="flex items-center justify-end">
+	<!-- <div class="flex items-center justify-end">
 		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
 			{i("home.about-us.more")}
 			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
 		</Button>
-	</div>
+	</div> -->
 </Section>
 
 <!-- Bottom CTA -->
