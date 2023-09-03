@@ -236,6 +236,7 @@
 				<div class="float-right">
 					<Button submit>
 						{#if mailStatus === "sending"}
+							<!-- TODO: Replace with a library icon -->
 							<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 h-5 w-5 animate-spin" />
 							{i("contact.sendButton.loading")}
 						{:else if mailStatus === "sent"}
