@@ -35,7 +35,8 @@ export default {
 				secondary: "#1c1c1e"
 			},
 			backgroundImage: {
-				glass: "linear-gradient(107.36deg,hsla(0,0%,80%,.1) 37.79%,hsla(0,0%,90%,0.08) 80%,hsla(0,0%,100%,0) 102.99%)",
+				glass:
+					"linear-gradient(107.36deg,hsla(0,0%,80%,.1) 37.79%,hsla(0,0%,90%,0.08) 80%,hsla(0,0%,100%,0) 102.99%)"
 			},
 			maxWidth: {
 				"large-screen": "120rem"
