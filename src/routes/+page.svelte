@@ -300,7 +300,11 @@
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button styleType="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+				<Button
+					styleType="minimal"
+					class="gap-2 text-end text-lg hover-child:translate-x-1"
+					on:click={() => goto("/contact")}
+				>
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
