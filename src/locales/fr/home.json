@@ -32,8 +32,8 @@
 		}
 	},
 	"about-us": {
-		"title": "A propos de [nous]",
-		"desc": "Nous sommes trois fondateurs passionnée par une même cause réalisé des défis. Suite à notre école d’ingénieurs nous avons réaliser qu’ensemble nous nous complétons que se soit sur le plans humain et technique. Trop souvent nous constatons certain site ou application avec des bugs ou problèmes de maintenance. C’est pour cela que nous souhaitons accompagner des start-up / entreprises à résoudre leurs besoin avec le développement d’une solution de qualité.",
+		"title": "À propos de [nous]",
+		"desc": "Nous sommes trois cofondateurs qui partagent la même passion pour les défis. Après notre école d'ingénieur, nous avons réalisé que nous étions complémentaires tant au niveau de l'interaction humaine que des compétences techniques. Trop souvent, nous rencontrons des sites web ou des applications avec des bugs ou des problèmes de maintenance. C'est pourquoi nous voulons mettre nos compétences au service des start-ups et des entreprises pour les aider à répondre à leurs besoins en créant des solutions de qualité.",
 		"more": "En savoir plus sur nous"
 	},
 	"cta-bottom": {
