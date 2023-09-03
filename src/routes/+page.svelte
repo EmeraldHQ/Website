@@ -314,7 +314,7 @@
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
 	<div class="pb-10 flex items-center justify-center">
-		<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8 md:p-16">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8 md:p-16">
 			<p class="text-lg text-gray-200">
 				{i("home.about-us.desc")}
 			</p>
