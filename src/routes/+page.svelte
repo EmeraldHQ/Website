@@ -2,6 +2,7 @@
 	import { ROOT_URL } from "$config";
 	import type { SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
+	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
@@ -19,7 +20,6 @@
 	import { c } from "$utils/inlang-color";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
-	import { goto } from "$app/navigation";
 
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
