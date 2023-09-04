@@ -33,6 +33,7 @@
 			{ name: i("common.pages.process"), href: "#process" },
 			{ name: i("common.pages.technologies"), href: "#technologies" },
 			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
+			{ name: i("common.contact"), href: "/contact" }
 		];
 		footerItems = [
 			{
@@ -156,7 +157,7 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button type="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+					<Button styleType="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 				</span>
 				<button
 					type="button"
@@ -288,7 +289,7 @@
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
 				<ArrowUp
-					class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="h-8 w-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</button>
 			<RadioButtonsGroup

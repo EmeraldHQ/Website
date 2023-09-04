@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { ROOT_URL } from "$config";
-	import type { SvelteComponent } from "svelte";
+	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
+	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
 	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
-	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
+	import {
+		Cloud,
+		Heart,
+		PaintBrush,
+		RocketLaunch,
+		Sparkles,
+		Trophy,
+		Window,
+		WrenchScrewdriver
+	} from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
@@ -15,6 +25,7 @@
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
+	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
 	import { i, language } from "@inlang/sdk-js";
 	import { c } from "$utils/inlang-color";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -32,6 +43,12 @@
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
+	let valuesSections: {
+		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+		title: string;
+		description: string;
+	}[] = [];
+	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -77,6 +94,72 @@
 			}
 		];
 		solutions = solutionsSections;
+		valuesSections = [
+			{
+				icon: Trophy,
+				title: i("home.values.quality.title"),
+				description: i("home.values.quality.desc")
+			},
+			{
+				icon: Heart,
+				title: i("home.values.passion.title"),
+				description: i("home.values.passion.desc")
+			},
+			{
+				icon: WrenchScrewdriver,
+				title: i("home.values.automation.title"),
+				description: i("home.values.automation.desc")
+			},
+			{
+				icon: RocketLaunch,
+				title: i("home.values.performance.title"),
+				description: i("home.values.performance.desc")
+			}
+		];
+		technologiesSections = [
+			{
+				title: c(i("home.technologies.framework.title")),
+				icon: Svelte,
+				brandColor: "#FF3E00",
+				description: i("home.technologies.framework.desc")
+			},
+			{
+				title: c(i("home.technologies.database.title")),
+				icon: Postgresql,
+				brandColor: "#4169E1",
+				description: i("home.technologies.database.desc")
+			},
+			{
+				title: c(i("home.technologies.infrastructure.title")),
+				icon: Vercel,
+				brandColor: "#FFFFFF",
+				description: i("home.technologies.infrastructure.desc")
+			}
+		];
+	}
+
+	// Technologies cards
+	let technoCards: HTMLElement;
+	let technoIcons: HTMLElement;
+
+	function getOffset(
+		totalPoints: number,
+		pointNumber: number,
+		radius: number = 60,
+		clockwise: boolean = true
+	) {
+		if (pointNumber > totalPoints) {
+			throw new Error("Point number cannot exceed total number of points.");
+		}
+
+		const baseAngle = ((2 * Math.PI) / totalPoints) * pointNumber;
+
+		const angle = clockwise ? baseAngle : 2 * Math.PI - baseAngle;
+
+		return {
+			x: radius * Math.cos(angle),
+			y: radius * Math.sin(angle)
+		};
 	}
 
 	// Keep only 3 solutions sections if screen is too small
@@ -88,6 +171,92 @@
 			solutions = solutionsSections;
 		}
 	}
+
+	// Auto-scroll technologies cards
+	const DELAY = 5000;
+	let currentCard = 0;
+
+	function hoverIcon(index: number) {
+		const icons = technoIcons.children;
+		if (!icons || icons.length < index) return;
+		const icon = icons[index];
+		if (!icon) return;
+
+		icon.classList.add("is-selected");
+		for (let i = 0; i < icons.length; i++) {
+			if (i === index) continue;
+			icons[i]?.classList.remove("is-selected");
+		}
+	}
+
+	function scrollToCard(index: number) {
+		const cards = technoCards?.children;
+		if (!cards || cards.length < index) return;
+		const card = cards[index];
+		if (!card) return;
+
+		technoCards.scrollTo({
+			left: card.clientWidth * index,
+			behavior: "smooth"
+		});
+	}
+
+	onMount(() => {
+		// === Auto-scroll technologies cards ===
+		// Initial checks
+		const cards = technoCards?.children;
+		if (!cards || cards.length < 2) return;
+
+		// Hover the first icon on load, otherwise
+		// no icon is hovered until the first scroll
+		hoverIcon(currentCard);
+
+		// Auto-scroll function
+		const autoScroll = () => {
+			if (currentCard === cards.length - 1) {
+				currentCard = 0;
+			} else {
+				currentCard++;
+			}
+			scrollToCard(currentCard);
+		};
+
+		// Initial interval definition, start auto-scrolling
+		let interval = setInterval(autoScroll, DELAY);
+
+		// Stop the interval on hover of the cards
+		technoCards.addEventListener("mouseenter", () => {
+			clearInterval(interval);
+		});
+
+		// Restart the interval on mouse leave
+		technoCards.addEventListener("mouseleave", () => {
+			interval = setInterval(autoScroll, DELAY);
+		});
+
+		// Add listeners to the icons to start/stop the interval on hover
+		[...technoIcons.children].forEach(icon => {
+			icon.addEventListener("mouseenter", () => {
+				clearInterval(interval);
+			});
+
+			icon.addEventListener("mouseleave", () => {
+				interval = setInterval(autoScroll, DELAY);
+			});
+		});
+
+		// Scroll handler to update the hovered icon depending on
+		// the card we scrolled to
+		technoCards.addEventListener("scrollend", () => {
+			const scrollDistance = technoCards.scrollLeft;
+			const containerWidth = technoCards.clientWidth;
+			currentCard = Math.round(scrollDistance / containerWidth);
+			hoverIcon(currentCard);
+		});
+
+		// On destroy, clear the interval
+		return () => clearInterval(interval);
+	});
 </script>
 
 <!-- Window bindings -->
@@ -109,8 +278,8 @@
 		images: [
 			{
 				url: `${ROOT_URL}/${i("home.og-banner")}`,
-				width: 1536,
-				height: 768,
+				width: 512,
+				height: 256,
 				alt: i("a11y.alt.og-banner")
 			}
 		],
@@ -139,6 +308,7 @@
 			url: ROOT_URL,
 			logo: `${ROOT_URL}/favicon.svg`
 		} /*,
+		// Add FAQ?
 		{
 			"@type": "WebSite",
 			url: ROOT_URL,
@@ -161,8 +331,8 @@
 	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
-			before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
+		class="m-auto grid h-fit grid-cols-1 items-center px-10
+		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
 	>
 		<!-- Left part -->
 		<div
@@ -176,8 +346,8 @@
 			<div
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
-				<Button>{i("common.contact")}</Button>
-				<!--				<Button type="minimal" class="hover-child:translate-x-1">-->
+				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+				<!--				<Button styleType="minimal" class="hover-child:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
 				<!--					<ChevronRight class="h-4 w-4 transition-transform duration-500" />-->
 				<!--				</Button>-->
@@ -239,7 +409,7 @@
 			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
-				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-transparent bg-dominant p-1.5 text-inverted
+				class="h-8 w-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
@@ -295,18 +465,118 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{i("home.solutions.more.before-link")}
-				<!--				<Button type="minimal">{i("home.solutions.more.link")}</Button>-->
+				<!--				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>-->
 				{i("home.solutions.more.link")}
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+				<Button
+					styleType="minimal"
+					class="gap-2 text-end text-lg hover-child:translate-x-1"
+					on:click={() => goto("/contact")}
+				>
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>
 	</div>
+</Section>
+
+<!-- Values -->
+<Section id="values" class="relative py-20">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.values.title"))}
+	</svelte:fragment>
+	<div class="flex items-center justify-between">
+		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
+			{#each valuesSections as value}
+				<div class="grid grid-flow-col items-start justify-start gap-x-4">
+					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
+					<div>
+						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
+						<p class="text-lg text-gray-200">
+							{value.description}
+						</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+</Section>
+
+<!-- Technologies -->
+<Section id="technologies">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.technologies.title"))}
+	</svelte:fragment>
+	<div class="flex flex-col items-center gap-8 sm:flex-row">
+		<!-- Left part -->
+		<div
+			bind:this={technoCards}
+			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
+		>
+			{#each technologiesSections as techno}
+				<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8">
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					<h3 class="text-xl font-medium">{@html techno.title}</h3>
+					<p class="text-lg text-gray-200">
+						{techno.description}
+					</p>
+				</div>
+			{/each}
+		</div>
+
+		<!-- Right part -->
+		<div class="aspect-square h-56 lg:h-48">
+			<div
+				bind:this={technoIcons}
+				class="relative flex h-full w-full items-center justify-center -rotate-45"
+			>
+				{#each technologiesSections as techno, index}
+					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
+					<button
+						style="transform: translate({x}%, {y}%);"
+						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
+						hover:bg-gray-500 hover:scale-110
+						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
+						on:click={() => scrollToCard(index)}
+					>
+						<svelte:component
+							this={techno.icon}
+							style="--brand-color: {techno.brandColor}"
+							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45
+							group-hover:fill-[var(--brand-color)] group-hover:scale-110
+							group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
+						/>
+					</button>
+				{/each}
+			</div>
+		</div>
+	</div>
+</Section>
+  
+<!-- About us -->
+<Section id="about-us">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.about-us.title"))}
+	</svelte:fragment>
+	<div class="pb-10 max-sm:child:!-mx-8 flex items-center justify-center">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8 md:p-16">
+			<p class="text-lg text-gray-200">
+				{i("home.about-us.desc")}
+			</p>
+		</div>
+	</div>
+	<!-- <div class="flex items-center justify-end">
+		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+			{i("home.about-us.more")}
+			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+		</Button>
+	</div> -->
 </Section>
 
 <!-- Bottom CTA -->
@@ -319,6 +589,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(i("home.cta-bottom.title"))}
 		</h3>
-		<Button class="scale-110">{i("common.contact")}</Button>
+		<Button class="scale-110" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 	</div>
 </Section>

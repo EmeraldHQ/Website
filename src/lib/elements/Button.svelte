@@ -4,31 +4,35 @@
 	/**
 	 * Defines the style of the button. Defaults to `"primary"`.
 	 */
-	export let type: "primary" | "secondary" | "minimal" = "primary";
+	export let styleType: "primary" | "secondary" | "minimal" = "primary";
+	export let submit = false;
 
 	const dispatch = createEventDispatcher<{
 		click: null;
 	}>();
 </script>
 
-{#if type === "primary"}
+{#if styleType === "primary"}
 	<button
-		class="inline-flex items-center gap-2 rounded-xl border-[1px] border-transparent bg-dominant px-3 py-1 text-lg font-medium text-inverted shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant
+		type={submit ? "submit" : "button"}
+		class="inline-flex items-center gap-2 rounded-xl border border-transparent bg-dominant px-3 py-1 text-lg font-medium text-inverted shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant
 		{$$props.class ?? ''}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>
-{:else if type === "secondary"}
+{:else if styleType === "secondary"}
 	<button
-		class="inline-flex items-center gap-2 rounded-xl border-[1px] border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-primary hover:text-primary
+		type={submit ? "submit" : "button"}
+		class="inline-flex items-center gap-2 rounded-xl border border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-primary hover:text-primary
 		{$$props.class ?? ''}"
 		on:click={() => dispatch("click")}
 	>
 		<slot />
 	</button>
-{:else if type === "minimal"}
+{:else if styleType === "minimal"}
 	<button
+		type={submit ? "submit" : "button"}
 		class="inline-flex items-center gap-1 text-base font-normal text-dominant underline-offset-4 hover:underline
 		{$$props.class ?? ''}"
 		on:click={() => dispatch("click")}
