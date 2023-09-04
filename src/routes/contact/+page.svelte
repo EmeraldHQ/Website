@@ -200,24 +200,24 @@
 							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
 								{i("contact.labels.budget")}
 							</span>
-							<div
-								class="relative after:absolute after:right-3.5 after:top-1.5 after:content-['▼']"
+							<select
+								name="$budget"
+								class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline ring-1 focus:outline-dominant"
+								required
 							>
-								<select
-									name="$budget"
-									class="w-full appearance-none rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-									required
-								>
-									<option value="" selected disabled hidden>
-										{i("contact.fields.budget.choose")}
-									</option>
-									<option class="bg-black/50" value="none">{i("contact.fields.budget.none")}</option>
-									<option class="bg-black/50" value="less">{i("contact.fields.budget.less")}</option>
-									<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
-									<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
-									<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
-								</select>
-							</div>
+								<option value="" selected disabled hidden>
+									{i("contact.fields.budget.choose")}
+								</option>
+								<option class="bg-black/50" value="none">
+									{i("contact.fields.budget.none")}
+								</option>
+								<option class="bg-black/50" value="less">
+									{i("contact.fields.budget.less")}
+								</option>
+								<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
+								<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
+								<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
+							</select>
 						</label>
 						<label>
 							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
