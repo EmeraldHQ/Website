@@ -364,6 +364,26 @@
 			{/each}
 		</div>
 	</div>
+  
+<!-- About us -->
+<Section id="about-us">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.about-us.title"))}
+	</svelte:fragment>
+	<div class="pb-10 max-sm:child:!-mx-8 flex items-center justify-center">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8 md:p-16">
+			<p class="text-lg text-gray-200">
+				{i("home.about-us.desc")}
+			</p>
+		</div>
+	</div>
+	<!-- <div class="flex items-center justify-end">
+		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+			{i("home.about-us.more")}
+			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+		</Button>
+	</div> -->
 </Section>
 
 <!-- Bottom CTA -->
