@@ -31,6 +31,25 @@
 			"after-link": "!"
 		}
 	},
+	"values": {
+		"title": "Our [values]",
+		"quality": {
+			"title": "Quality",
+			"desc": "We are committed to providing you with the best possible experience."
+		},
+		"passion": {
+			"title": "Passion",
+			"desc": "We are passionate about what we do, and we want to share this passion with you."
+		},
+		"automation": {
+			"title": "Automation",
+			"desc": "We automate as much as possible to reduce the risk of human error and to save time."
+		},
+		"performance": {
+			"title": "Performance",
+			"desc": "We make sure that your project is as fast as possible, to offer the best possible experience to your users."
+		}
+	},
 	"technologies": {
 		"title": "The [technologies] we use",
 		"framework": {
@@ -45,6 +64,11 @@
 			"title": "Infrastructure: [Vercel]",
 			"desc": "Vercel is a high-performance cloud platform designed for SvelteKit, enabling us to host your project in the best possible conditions."
 		}
+	},
+	"about-us": {
+		"title": "About us",
+		"desc": "We are three co-founders who share the same passion for taking on challenges. After our engineering school, we realized that we complemented each other both in terms of human interaction and technical skills. Too often, we come across websites or applications with bugs or maintenance problems. That's why we want to use our skills to help start-ups and companies meet their needs by creating high-quality solutions.",
+		"more": "Learn more about us"
 	},
 	"cta-bottom": {
 		"subtitle": "Ready to get started?",

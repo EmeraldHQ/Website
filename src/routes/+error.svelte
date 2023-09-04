@@ -68,7 +68,7 @@
 
 	<!-- Bottom button -->
 	<Button
-		type="secondary"
+		styleType="secondary"
 		on:click={() => {
 			goto("/", { replaceState: true });
 		}}

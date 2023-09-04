@@ -2,12 +2,22 @@
 	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
+	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
 	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
-	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
+	import {
+		Cloud,
+		Heart,
+		PaintBrush,
+		RocketLaunch,
+		Sparkles,
+		Trophy,
+		Window,
+		WrenchScrewdriver
+	} from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
@@ -33,6 +43,11 @@
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
+	let valuesSections: {
+		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+		title: string;
+		description: string;
+	}[] = [];
 	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
 	$: if (language) {
 		processSections = [
@@ -79,6 +94,28 @@
 			}
 		];
 		solutions = solutionsSections;
+		valuesSections = [
+			{
+				icon: Trophy,
+				title: i("home.values.quality.title"),
+				description: i("home.values.quality.desc")
+			},
+			{
+				icon: Heart,
+				title: i("home.values.passion.title"),
+				description: i("home.values.passion.desc")
+			},
+			{
+				icon: WrenchScrewdriver,
+				title: i("home.values.automation.title"),
+				description: i("home.values.automation.desc")
+			},
+			{
+				icon: RocketLaunch,
+				title: i("home.values.performance.title"),
+				description: i("home.values.performance.desc")
+			}
+		];
 		technologiesSections = [
 			{
 				title: c(i("home.technologies.framework.title")),
@@ -241,8 +278,8 @@
 		images: [
 			{
 				url: `${ROOT_URL}/${i("home.og-banner")}`,
-				width: 1536,
-				height: 768,
+				width: 512,
+				height: 256,
 				alt: i("a11y.alt.og-banner")
 			}
 		],
@@ -271,6 +308,7 @@
 			url: ROOT_URL,
 			logo: `${ROOT_URL}/favicon.svg`
 		} /*,
+		// Add FAQ?
 		{
 			"@type": "WebSite",
 			url: ROOT_URL,
@@ -293,8 +331,8 @@
 	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10 before:absolute before:inset-0
-			before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
+		class="m-auto grid h-fit grid-cols-1 items-center px-10
+		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
 	>
 		<!-- Left part -->
 		<div
@@ -308,8 +346,8 @@
 			<div
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
-				<Button>{i("common.contact")}</Button>
-				<Button type="minimal" class="hover-child:translate-x-1">
+				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+				<Button styleType="minimal" class="hover-child:translate-x-1">
 					{i("home.hero.cta-secondary")}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
@@ -370,7 +408,7 @@
 			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
-				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-transparent bg-dominant p-1.5 text-inverted
+				class="h-8 w-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
@@ -426,15 +464,42 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{i("home.solutions.more.before-link")}
-				<Button type="minimal">{i("home.solutions.more.link")}</Button>
+				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+				<Button
+					styleType="minimal"
+					class="gap-2 text-end text-lg hover-child:translate-x-1"
+					on:click={() => goto("/contact")}
+				>
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
 				</Button>
 			</div>
+		</div>
+	</div>
+</Section>
+
+<!-- Values -->
+<Section id="values" class="relative py-20">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.values.title"))}
+	</svelte:fragment>
+	<div class="flex items-center justify-between">
+		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
+			{#each valuesSections as value}
+				<div class="grid grid-flow-col items-start justify-start gap-x-4">
+					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
+					<div>
+						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
+						<p class="text-lg text-gray-200">
+							{value.description}
+						</p>
+					</div>
+				</div>
+			{/each}
 		</div>
 	</div>
 </Section>
@@ -490,6 +555,27 @@
 		</div>
 	</div>
 </Section>
+  
+<!-- About us -->
+<Section id="about-us">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.about-us.title"))}
+	</svelte:fragment>
+	<div class="pb-10 max-sm:child:!-mx-8 flex items-center justify-center">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8 md:p-16">
+			<p class="text-lg text-gray-200">
+				{i("home.about-us.desc")}
+			</p>
+		</div>
+	</div>
+	<!-- <div class="flex items-center justify-end">
+		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+			{i("home.about-us.more")}
+			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+		</Button>
+	</div> -->
+</Section>
 
 <!-- Bottom CTA -->
 <Section>
@@ -501,6 +587,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(i("home.cta-bottom.title"))}
 		</h3>
-		<Button class="scale-110">{i("common.contact")}</Button>
+		<Button class="scale-110" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 	</div>
 </Section>
