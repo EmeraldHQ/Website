@@ -7,7 +7,16 @@
 	import Section from "$layouts/Section.svelte";
 	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
-	import { Cloud, PaintBrush, Sparkles, Window } from "@inqling/svelte-icons/heroicon-24-outline";
+	import {
+		Cloud,
+		Heart,
+		PaintBrush,
+		RocketLaunch,
+		Sparkles,
+		Trophy,
+		Window,
+		WrenchScrewdriver
+	} from "@inqling/svelte-icons/heroicon-24-outline";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
@@ -32,6 +41,11 @@
 	}[] = [];
 	let solutionsSections: { title: string; description: string }[] = [];
 	let solutions: typeof solutionsSections = [];
+	let valuesSections: {
+		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+		title: string;
+		description: string;
+	}[] = [];
 	$: if (language) {
 		processSections = [
 			{
@@ -77,6 +91,28 @@
 			}
 		];
 		solutions = solutionsSections;
+		valuesSections = [
+			{
+				icon: Trophy,
+				title: i("home.values.quality.title"),
+				description: i("home.values.quality.desc")
+			},
+			{
+				icon: Heart,
+				title: i("home.values.passion.title"),
+				description: i("home.values.passion.desc")
+			},
+			{
+				icon: WrenchScrewdriver,
+				title: i("home.values.automation.title"),
+				description: i("home.values.automation.desc")
+			},
+			{
+				icon: RocketLaunch,
+				title: i("home.values.performance.title"),
+				description: i("home.values.performance.desc")
+			}
+		];
 	}
 
 	// Keep only 3 solutions sections if screen is too small
@@ -307,6 +343,29 @@
 	</div>
 </Section>
 
+<!-- Our Values -->
+<Section id="values" class="relative py-20">
+	<svelte:fragment slot="title">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html c(i("home.values.title"))}
+	</svelte:fragment>
+	<div class="flex items-center justify-between">
+		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
+			{#each valuesSections as value}
+				<div class="grid grid-flow-col items-start justify-start gap-x-4">
+					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
+					<div>
+						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
+						<p class="text-lg text-gray-200">
+							{value.description}
+						</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+</Section>
+  
 <!-- About us -->
 <Section id="about-us">
 	<svelte:fragment slot="title">
