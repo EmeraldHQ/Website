@@ -202,7 +202,7 @@
 							</span>
 							<select
 								name="$budget"
-								class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline ring-1 focus:outline-dominant"
+								class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
 								required
 							>
 								<option value="" selected disabled hidden>
