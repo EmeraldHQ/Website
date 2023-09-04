@@ -211,11 +211,11 @@
 									<option value="" selected disabled hidden>
 										{i("contact.fields.budget.choose")}
 									</option>
-									<option value="none">{i("contact.fields.budget.none")}</option>
-									<option value="less">{i("contact.fields.budget.less")}</option>
-									<option value="1k">{i("contact.fields.budget.1k")}</option>
-									<option value="5k">{i("contact.fields.budget.5k")}</option>
-									<option value="10k">{i("contact.fields.budget.10k")}</option>
+									<option class="bg-black/50" value="none">{i("contact.fields.budget.none")}</option>
+									<option class="bg-black/50" value="less">{i("contact.fields.budget.less")}</option>
+									<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
+									<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
+									<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
 								</select>
 							</div>
 						</label>
