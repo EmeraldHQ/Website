@@ -50,6 +50,21 @@
 			"desc": "Nous nous assurons que votre projet soit rapide et efficace, afin d'offrir la meilleure expérience utilisateur possible."
 		}
 	},
+	"technologies": {
+		"title": "Les [technologies] que nous utilisons",
+		"framework": {
+			"title": "Framework : [SvelteKit]",
+			"desc": "Svelte, avec son metaframework SvelteKit, nous permet de bénéficier de performances inégalées et d'une expérience de développement simple et agréable."
+		},
+		"database": {
+			"title": "Base de données : [PostgreSQL]",
+			"desc": "PostgreSQL est une base de données puissante, fiable et éprouvée, parfaite pour stocker vos données en toute sécurité."
+		},
+		"infrastructure": {
+			"title": "Infrastructure : [Vercel]",
+			"desc": "Vercel est une plateforme cloud qui nous permet d'héberger votre projet de façon très performante, car conçue pour SvelteKit."
+		}
+	},
 	"about-us": {
 		"title": "À propos de [nous]",
 		"desc": "Nous sommes trois cofondateurs qui partagent la même passion pour les défis. Après notre école d'ingénieur, nous avons réalisé que nous étions complémentaires tant au niveau de l'interaction humaine que des compétences techniques. Trop souvent, nous rencontrons des sites web ou des applications avec des bugs ou des problèmes de maintenance. C'est pourquoi nous voulons mettre nos compétences au service des start-ups et des entreprises pour les aider à répondre à leurs besoins en créant des solutions de qualité.",
