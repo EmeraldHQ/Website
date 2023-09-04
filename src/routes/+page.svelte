@@ -364,6 +364,7 @@
 			{/each}
 		</div>
 	</div>
+</Section>
   
 <!-- About us -->
 <Section id="about-us">
