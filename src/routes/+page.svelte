@@ -512,7 +512,7 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.technologies.title"))}
 	</svelte:fragment>
-	<div class="flex flex-col items-center gap-8 sm:flex-row">
+	<div class="flex flex-col items-center gap-8 sm:flex-row max-sm:!mx-8">
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
@@ -564,8 +564,8 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
-	<div class="pb-10 max-sm:child:!-mx-8 flex items-center justify-center">
-		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8 md:p-16">
+	<div class="pb-10 flex items-center justify-center">
+		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass max-sm:!-mx-8 p-8">
 			<p class="text-lg text-gray-200">
 				{i("home.about-us.desc")}
 			</p>
