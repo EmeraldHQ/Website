@@ -517,7 +517,7 @@
 			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
-				<div class="flex min-w-full flex-col gap-4 rounded-3xl bg-gray-700 p-8">
+				<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8">
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
 					<p class="text-lg text-gray-200">
