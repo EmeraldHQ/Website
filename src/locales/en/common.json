@@ -26,10 +26,5 @@
 		"team": "Team",
 		"env": "Environment",
 		"oss": "Open Source"
-	},
-	"legal": {
-		"title": "Legal",
-		"privacy": "Privacy Policy",
-		"terms": "Terms of Service"
 	}
 }

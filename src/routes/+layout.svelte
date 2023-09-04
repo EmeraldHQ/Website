@@ -1,6 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import { onDestroy } from "svelte";
+	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
@@ -22,55 +23,46 @@
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
 	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
-	const tailwindXlScreen = Number(fullTailwindConfig.theme.screens.xl.replace("px", ""));
 
 	// Config
 	let navbarItems: { name: string; href: string }[] = [];
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 	$: if (language) {
 		navbarItems = [
-			{ name: i("common.pages.solutions"), href: "#" }, // Dropdown: 5/6 solutions
+			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.process"), href: "#process" },
 			{ name: i("common.pages.technologies"), href: "#technologies" },
-			{ name: i("common.pages.company"), href: "#" }, // Dropdown: Values, Who we are
-			{ name: i("common.contact"), href: "/contact" }
+			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
 		];
 		footerItems = [
 			{
 				name: i("common.pages.solutions"),
 				items: [
-					{ name: i("common.solutions.comprehensive"), href: "/" },
-					{ name: i("common.solutions.web-app"), href: "/" },
-					{ name: i("common.solutions.landing"), href: "/" },
-					{ name: i("common.solutions.ecommerce"), href: "/" },
-					{ name: i("common.solutions.rewrite"), href: "/" },
-					{ name: i("common.solutions.custom"), href: "/" }
+					{ name: i("common.solutions.comprehensive"), href: "." },
+					{ name: i("common.solutions.web-app"), href: "." },
+					{ name: i("common.solutions.landing"), href: "." },
+					{ name: i("common.solutions.ecommerce"), href: "." },
+					{ name: i("common.solutions.rewrite"), href: "." },
+					{ name: i("common.solutions.custom"), href: "." }
 				]
 			},
 			{
 				name: i("common.pages.title"),
 				items: [
 					{ name: i("common.pages.home"), href: "/" },
-					{ name: i("common.pages.process"), href: "/" },
-					{ name: i("common.pages.solutions"), href: "/" },
-					{ name: i("common.pages.technologies"), href: "/" }
+					{ name: i("common.pages.process"), href: "." },
+					{ name: i("common.pages.solutions"), href: "." },
+					{ name: i("common.pages.technologies"), href: "." }
 				]
 			},
 			{
 				name: i("common.pages.company"),
 				items: [
-					{ name: i("common.company.about"), href: "/" },
-					{ name: i("common.contact"), href: "/" },
-					{ name: i("common.company.team"), href: "/" },
-					{ name: i("common.company.env"), href: "/" },
+					{ name: i("common.company.about"), href: "." },
+					{ name: i("common.contact"), href: "/contact" },
+					{ name: i("common.company.team"), href: "." },
+					{ name: i("common.company.env"), href: "." },
 					{ name: i("common.company.oss"), href: "https://github.com/EmeraldHQ" }
-				]
-			},
-			{
-				name: i("common.legal.title"),
-				items: [
-					{ name: i("common.legal.privacy"), href: "/" },
-					{ name: i("common.legal.terms"), href: "/" }
 				]
 			}
 		];
@@ -97,6 +89,7 @@
 		<nav
 			class="mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 sm:mx-5 md:mx-10 md:px-20"
 		>
+			<!-- Left logo -->
 			<div class="mr-auto flex items-center gap-5">
 				<a
 					href="/"
@@ -125,18 +118,34 @@
 					{/if}
 				</a>
 			</div>
+			<!-- Right navigation -->
 			<div class="flex items-center gap-5 sm:gap-10">
 				<div
 					class="hidden items-center gap-10 duration-700 ease-out lg:flex"
 					class:-mr-40={!showButton}
 				>
-					{#each navbarItems.filter(item => item.href.startsWith("#")) as item}
-						<button
-							class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-							on:click={() => scrollTo(item.href)}
-						>
-							{item.name}
-						</button>
+					{#each navbarItems as item}
+						{#if item.href === $page.route.id}
+							<span
+								class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
+							>
+								{item.name}
+							</span>
+						{:else}
+							<button
+								type="button"
+								class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+								on:click={() => {
+									if (item.href.startsWith("/")) {
+										goto(item.href);
+									} else {
+										scrollTo(item.href);
+									}
+								}}
+							>
+								{item.name}
+							</button>
+						{/if}
 					{/each}
 				</div>
 				<span
@@ -147,9 +156,10 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button styleType="secondary">{i("common.contact")}</Button>
+					<Button styleType="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 				</span>
 				<button
+					type="button"
 					class="lg:hidden"
 					aria-label={i("a11y.aria.menu")}
 					on:click={() => (showSlideOver = true)}
@@ -158,6 +168,7 @@
 				</button>
 			</div>
 		</nav>
+		<!-- Breadcrumb -->
 		{#if currentRoute.length > 0}
 			<div
 				class="mx-12 rounded-b-3xl bg-black/70 px-6 py-1 text-lg sm:mx-16 sm:px-8 md:mx-20 md:px-12"
@@ -194,6 +205,7 @@
 		>
 			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
 				<button
+					type="button"
 					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					class:text-dominant={!item.href.startsWith("#")}
 					on:click={() => {
@@ -214,29 +226,29 @@
 
 <footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 	<!-- Main grid -->
-	{#if innerWidth < tailwindXlScreen}
+	<div class="flex flex-col gap-20 xl:flex-row xl:gap-0">
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
+			<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="56" />
 		</a>
-	{/if}
-	<div class="my-14 flex flex-wrap gap-x-20 gap-y-16 md:justify-center lg:justify-between xl:my-0">
-		{#if innerWidth >= tailwindXlScreen}
-			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-				<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="32" />
-			</a>
-		{/if}
-		{#each footerItems as column}
-			<div class="min-w-fit">
-				<h3 class="mb-5 text-primary">{column.name}</h3>
-				<div
-					class="flex flex-col gap-2 child:w-fit child:underline-offset-4 child-hover:text-dominant child-hover:underline"
-				>
-					{#each column.items as item}
-						<a href={item.href}>{item.name}</a>
-					{/each}
+		<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
+			{#each footerItems as column}
+				<div class="min-w-fit">
+					<h3 class="mb-5 text-primary">{column.name}</h3>
+					<div class="flex flex-col gap-2 child:w-fit">
+						{#each column.items as item}
+							<!-- TODO: remove this condition once all links are "made" -->
+							{#if item.href === "."}
+								<span>{item.name}</span>
+							{:else}
+								<a href={item.href} class="underline-offset-4 hover:text-dominant hover:underline">
+									{item.name}
+								</a>
+							{/if}
+						{/each}
+					</div>
 				</div>
-			</div>
-		{/each}
+			{/each}
+		</div>
 	</div>
 	<!-- Bottom links & settings -->
 	<div class="relative mt-10 flex items-end justify-between child:h-min">
@@ -257,9 +269,21 @@
 			© {new Date().getFullYear()} Emerald Studio
 		</div>
 		<!-- Middle -->
-		{#if innerWidth >= tailwindXsScreen}
+		<button
+			type="button"
+			class="absolute bottom-0 left-0 right-0 mx-auto hidden w-fit text-center sm:block"
+			on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+			on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+		>
+			<ArrowUp
+				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+			/>
+		</button>
+		<!-- Right -->
+		<div class="flex flex-col items-end gap-2">
 			<button
-				class="absolute bottom-0 left-0 right-0 mx-auto w-fit text-center"
+				type="button"
+				class="sm:hidden"
 				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
@@ -267,19 +291,6 @@
 					class="h-8 w-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</button>
-		{/if}
-		<!-- Right -->
-		<div class="flex flex-col items-end gap-2">
-			{#if innerWidth < tailwindXsScreen}
-				<button
-					on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-					on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-				>
-					<ArrowUp
-						class="h-8 w-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
-					/>
-				</button>
-			{/if}
 			<RadioButtonsGroup
 				values={languages.map(language => language.toUpperCase())}
 				defaultIndex={languages.indexOf(language)}

@@ -347,10 +347,10 @@
 				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
 			>
 				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
-				<Button styleType="minimal" class="hover-child:translate-x-1">
-					{i("home.hero.cta-secondary")}
-					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
-				</Button>
+				<!--				<Button styleType="minimal" class="hover-child:translate-x-1">-->
+				<!--					{i("home.hero.cta-secondary")}-->
+				<!--					<ChevronRight class="h-4 w-4 transition-transform duration-500" />-->
+				<!--				</Button>-->
 			</div>
 		</div>
 		<!-- Right part -->
@@ -400,6 +400,7 @@
 		}}
 	>
 		<button
+			type="button"
 			style="
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -464,7 +465,8 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{i("home.solutions.more.before-link")}
-				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>
+				<!--				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>-->
+				{i("home.solutions.more.link")}
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">

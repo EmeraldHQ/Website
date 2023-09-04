@@ -26,10 +26,5 @@
 		"team": "Équipe",
 		"env": "Environnement",
 		"oss": "Open Source"
-	},
-	"legal": {
-		"title": "Juridique",
-		"privacy": "Politique de confidentialité",
-		"terms": "Conditions d'utilisation"
 	}
 }
