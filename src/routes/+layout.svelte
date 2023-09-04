@@ -33,7 +33,6 @@
 			{ name: i("common.pages.process"), href: "#process" },
 			{ name: i("common.pages.technologies"), href: "#technologies" },
 			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
-			{ name: i("common.contact"), href: "/contact" }
 		];
 		footerItems = [
 			{
