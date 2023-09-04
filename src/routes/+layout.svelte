@@ -59,7 +59,7 @@
 				name: i("common.pages.company"),
 				items: [
 					{ name: i("common.company.about"), href: "." },
-					{ name: i("common.contact"), href: "." },
+					{ name: i("common.contact"), href: "/contact" },
 					{ name: i("common.company.team"), href: "." },
 					{ name: i("common.company.env"), href: "." },
 					{ name: i("common.company.oss"), href: "https://github.com/EmeraldHQ" }
@@ -156,7 +156,7 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button type="secondary">{i("common.contact")}</Button>
+					<Button type="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
 				</span>
 				<button
 					type="button"
