@@ -29,8 +29,8 @@
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 	$: if (language) {
 		navbarItems = [
-			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.process"), href: "#process" },
+			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.technologies"), href: "#technologies" },
 			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
 		];
@@ -43,7 +43,7 @@
 					{ name: i("common.solutions.landing"), href: "." },
 					{ name: i("common.solutions.ecommerce"), href: "." },
 					{ name: i("common.solutions.rewrite"), href: "." },
-					{ name: i("common.solutions.custom"), href: "." }
+					{ name: i("common.solutions.custom"), href: "/contact" }
 				]
 			},
 			{
