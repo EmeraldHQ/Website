@@ -91,9 +91,17 @@
 		>
 			<!-- Left logo -->
 			<div class="mr-auto flex items-center gap-5">
-				<a
-					href="/"
+				<button
+					type="button"
 					class="grid origin-left overflow-hidden scale-110 child:col-start-1 child:row-start-1 child:row-end-1"
+					on:click={() => {
+						$page.route.id === "/"
+							? window.scrollTo({
+									top: 0,
+									behavior: "smooth"
+							  })
+							: goto("/");
+					}}
 				>
 					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 						<img
@@ -116,7 +124,7 @@
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
 					{/if}
-				</a>
+				</button>
 			</div>
 			<!-- Right navigation -->
 			<div class="flex items-center gap-5 sm:gap-10">
@@ -135,10 +143,13 @@
 							<button
 								type="button"
 								class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-								on:click={() => {
+								on:click={async () => {
 									if (item.href.startsWith("/")) {
-										goto(item.href);
+										await goto(item.href);
 									} else {
+										if ($page.route.id !== "/") {
+											await goto("/");
+										}
 										scrollTo(item.href);
 									}
 								}}
@@ -156,7 +167,9 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button styleType="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+					<Button styleType="secondary" on:click={() => goto("/contact")}>
+						{i("common.contact")}
+					</Button>
 				</span>
 				<button
 					type="button"
