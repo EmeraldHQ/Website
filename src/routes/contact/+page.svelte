@@ -2,7 +2,7 @@
 	import { ROOT_URL } from "$config";
 	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import { Check, PaperAirplane, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import { i } from "@inlang/sdk-js";
 	import { c } from "$lib/utils/inlang-color";
 	import Section from "$layouts/Section.svelte";
@@ -233,7 +233,7 @@
 						</label>
 					</div>
 				</div>
-				<div class="float-right">
+				<div class="flex justify-end">
 					<Button submit>
 						{#if mailStatus === "sending"}
 							<!-- TODO: Replace with a library icon -->
@@ -252,6 +252,35 @@
 					</Button>
 				</div>
 			</form>
+			<div class="my-8 flex items-center justify-center">
+				<div class="w-full border-b border-dominant"></div>
+				<div class="mx-4 font-medium uppercase">{i("contact.orLabel")}</div>
+				<div class="w-full border-b border-dominant"></div>
+			</div>
+			<div>
+				<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					{@html c(i("contact.callSection.title"))}
+				</h2>
+				<div
+					class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
+				>
+					<div class="flex flex-col">
+						<span class="text-xl font-medium text-dominant">Reuben HATTAB</span>
+						<span class="font-light opacity-50">
+							{i("contact.callSection.job")} - Emerald Studio
+						</span>
+					</div>
+					<a href="tel:+33648750897" class="flex w-fit gap-2">
+						<Phone class="inline-block h-6 w-6" />
+						<span
+							class="font-variable [font-variation-settings:_'wght'_400] [transition:_font-variation-settings_0.2s_ease-in-out] hover:[font-variation-settings:_'wght'_600]"
+						>
+							+33 6 48 75 08 97
+						</span>
+					</a>
+				</div>
+			</div>
 		</Section>
 	</div>
 </div>

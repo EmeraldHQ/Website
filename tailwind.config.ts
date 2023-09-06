@@ -15,7 +15,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ["Chillax", ...defaultTheme.fontFamily.sans]
+				sans: ["Chillax", ...defaultTheme.fontFamily.sans],
+				variable: "Chillax Variable"
 			},
 			colors: {
 				dominant: "#30d158"
