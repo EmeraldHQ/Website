@@ -274,7 +274,7 @@
 					<a href="tel:+33648750897" class="flex w-fit gap-2">
 						<Phone class="inline-block h-6 w-6" />
 						<span
-							class="font-variable [font-variation-settings:_'wght'_400] [transition:_font-variation-settings_0.2s_ease-in-out] hover:[font-variation-settings:_'wght'_600]"
+							class="font-variable underline decoration-dominant decoration-from-font underline-offset-4 [font-variation-settings:_'wght'_400] [transition:_font-variation-settings_0.2s_ease-in-out] hover:[font-variation-settings:_'wght'_600]"
 						>
 							+33 6 48 75 08 97
 						</span>
