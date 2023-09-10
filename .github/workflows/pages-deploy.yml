@@ -205,6 +205,8 @@ jobs:
   perf-check:
     name: Performance checks
     runs-on: ubuntu-latest
+    needs: deploy
+    if: github.event_name == 'push' && !failure() && !cancelled()
 
     steps:
       - name: 🧭 Setup Bun
@@ -213,7 +215,7 @@ jobs:
       - name: ⚓️ Unlighthouse check
         run: |
           bun i -g @unlighthouse/cli puppeteer
-          unlighthouse-ci --site https://emeraldstudio.fr --budget 75
+          unlighthouse-ci --site ${{ needs.deploy.outputs.page_url }} --budget 75
 
       - name: 📤 Upload artifact
         uses: actions/upload-artifact@v3
