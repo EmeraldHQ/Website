@@ -205,8 +205,6 @@ jobs:
   perf-check:
     name: Performance checks
     runs-on: ubuntu-latest
-    needs: deploy
-    if: github.event_name == 'push' && !failure() && !cancelled()
 
     steps:
       - name: 🧭 Setup Bun
