@@ -99,7 +99,7 @@ jobs:
         run: exit 1
 
       - name: 🔧 Check Inlang config
-        run: bun run ci:update-inlang
+        run: bun ci:update-inlang
 
       - name: 🔍 Detect file changes
         id: detect-changes-inlang
@@ -127,15 +127,15 @@ jobs:
         run: exit 1
 
       - name: ✨ Check Svelte format
-        run: bun run check
+        run: bun check
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: bun run lint
+        run: bun lint
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
-        run: bun run format
+        run: bun format
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true'

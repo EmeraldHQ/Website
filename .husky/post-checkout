@@ -3,7 +3,7 @@
 
 if [ "$3" == 1 ]; then  # branch checkout only (not file checkout)
     # install deps
-    bun run deps:install
+    bun deps:install
     # remove local branches that have been deleted on remote
     git fetch -p
 fi
