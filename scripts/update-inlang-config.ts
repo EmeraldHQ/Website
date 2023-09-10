@@ -1,6 +1,6 @@
 import pkgJson from "../package.json" assert { type: "json" };
 import { writeFileSync, readFileSync } from "fs";
-import * as url from "node:url";
+import * as url from "bun:url";
 
 function updateConfig() {
 	console.log("Checking for updates to inlang config...");
@@ -13,9 +13,13 @@ function updateConfig() {
 	const sdkConfigVersion = inlangConfig
 		.split("\n")
 		.find(line => line.includes("sdk-js-plugin"))
-		.split("sdk-js-plugin")[1]
-		.split("@")[1]
-		.split("/")[0];
+		?.split("sdk-js-plugin")[1]
+		?.split("@")[1]
+		?.split("/")[0];
+
+	if (!sdkConfigVersion) {
+		throw new Error("Could not find version of inlang sdk in inlang.config.js");
+	}
 
 	console.log(
 		`Installed inlang sdk version: ${sdkDependencyVersion} - config version: ${sdkConfigVersion}`

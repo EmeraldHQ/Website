@@ -7,14 +7,12 @@
 		"dev-exposed": "vite --host",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deps:install": "pnpm i",
-		"deps:update": "pnpm up",
-		"deps:update-latest": "pnpm up -L",
+		"deps:install": "bun i",
 		"check": "svelte-kit sync && svelte-check --tsconfig tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"ci:update-inlang": "node ./scripts/update-inlang-config.js",
+		"ci:update-inlang": "bun --bun scripts/update-inlang-config.ts",
 		"prepare": "husky install"
 	},
 	"devDependencies": {
