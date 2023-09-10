@@ -30,5 +30,10 @@
 		"loading": "Sending...",
 		"success": "Sent!",
 		"error": "Error"
+	},
+	"orLabel": "or",
+	"callSection": {
+		"title": "Call our [sales manager]",
+		"job": "Sales Manager"
 	}
 }
