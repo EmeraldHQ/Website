@@ -8,7 +8,7 @@
 		},
 		"subtitle": {
 			"first": "Powered by bleeding-edge technologies, let's build",
-			"second": "the web application you've been dreaming of."
+			"second": "the web solution you've been dreaming of."
 		},
 		"cta-secondary": "See our work"
 	},
@@ -35,15 +35,15 @@
 		"title": "Our [values]",
 		"quality": {
 			"title": "Quality",
-			"desc": "We are committed to providing you with the best possible experience."
+			"desc": "We are committed to providing you with the best possible experience, using the latest and most advanced technologies on the market."
 		},
 		"passion": {
 			"title": "Passion",
-			"desc": "We are passionate about what we do, and we want to share this passion with you."
+			"desc": "We are a passionate team willing to change the way the web is built and used."
 		},
 		"automation": {
 			"title": "Automation",
-			"desc": "We automate as much as possible to reduce the risk of human error and to save time."
+			"desc": "We automate as much as possible to reduce errors and focus on what really matters: your project."
 		},
 		"performance": {
 			"title": "Performance",
@@ -67,7 +67,7 @@
 	},
 	"about-us": {
 		"title": "About us",
-		"desc": "We are three co-founders who share the same passion for taking on challenges. After our engineering school, we realized that we complemented each other both in terms of human interaction and technical skills. Too often, we come across websites or applications with bugs or maintenance problems. That's why we want to use our skills to help start-ups and companies meet their needs by creating high-quality solutions.",
+		"desc": "We are three co-founders sharing the same passion for taking on challenges. After our engineering school, we realized that we complemented each other both in human terms and technical skills. Too often, we come across websites or applications with bugs or maintenance problems. That's why we want to use our skills to help start-ups and companies meet their needs by creating high-quality solutions.",
 		"more": "Learn more about us"
 	},
 	"cta-bottom": {

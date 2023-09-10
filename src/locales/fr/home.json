@@ -8,7 +8,7 @@
 		},
 		"subtitle": {
 			"first": "Grâce à des technologies de pointe, construisons",
-			"second": "l'application web dont vous avez toujours rêvé."
+			"second": "la solution web dont vous avez toujours rêvé."
 		},
 		"cta-secondary": "Voir notre travail"
 	},
@@ -35,19 +35,19 @@
 		"title": "Nos [valeurs]",
 		"quality": {
 			"title": "Qualité",
-			"desc": "Nous nous efforçons de prodiguer un travail de qualité, en utilisant les technologies les plus récentes et avancées du marché."
+			"desc": "Nous produisons un travail de qualité, en utilisant les technologies les plus récentes et avancées du marché."
 		},
 		"passion": {
 			"title": "Passion",
-			"desc": "Nous formons une équipe passionnés par notre travail, qui veulent changer la manière dont le web est construit et utilisé."
+			"desc": "Nous formons une équipe passionnée par notre travail, qui veut changer la manière dont le web est construit et utilisé."
 		},
 		"automation": {
 			"title": "Automatisation",
-			"desc": "Nous automatisons les tâches répétitives, afin de nous concentrer sur ce qui compte vraiment : votre projet."
+			"desc": "Nous automatisons les tâches répétitives afin de réduire les erreurs et nous concentrer sur ce qui compte vraiment : votre projet."
 		},
 		"performance": {
 			"title": "Performance",
-			"desc": "Nous nous assurons que votre projet soit rapide et efficace, afin d'offrir la meilleure expérience utilisateur possible."
+			"desc": "Nous nous assurons que votre projet soit aussi rapide que possible, afin d'offrir la meilleure expérience utilisateur possible."
 		}
 	},
 	"technologies": {
@@ -67,7 +67,7 @@
 	},
 	"about-us": {
 		"title": "À propos de [nous]",
-		"desc": "Nous sommes trois cofondateurs qui partagent la même passion pour les défis. Après notre école d'ingénieur, nous avons réalisé que nous étions complémentaires tant au niveau de l'interaction humaine que des compétences techniques. Trop souvent, nous rencontrons des sites web ou des applications avec des bugs ou des problèmes de maintenance. C'est pourquoi nous voulons mettre nos compétences au service des start-ups et des entreprises pour les aider à répondre à leurs besoins en créant des solutions de qualité.",
+		"desc": "Nous sommes trois cofondateurs partageant la même passion pour les défis. Après notre école d'ingénieur, nous avons réalisé que nous étions complémentaires tant sur l'aspect humain que sur nos compétences techniques. Trop souvent, nous rencontrons des sites web ou des applications avec des bugs ou des problèmes de maintenance. C'est la raison pour laquelle nous voulons mettre nos compétences au service des start-ups et des entreprises, afin de les aider à répondre à leurs besoins en créant des solutions de qualité.",
 		"more": "En savoir plus sur nous"
 	},
 	"cta-bottom": {

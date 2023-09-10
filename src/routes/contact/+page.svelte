@@ -144,101 +144,103 @@
 />
 
 <!-- Page -->
-<div class="relative -mt-28 justify-center pt-28 md:-mt-40 md:pt-40">
-	<div
-		class="before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-['']"
-	>
-		<Section>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<svelte:fragment slot="title">{@html c(i("contact.title"))}</svelte:fragment>
-			<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
-				<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
-				<input type="text" name="honeypot" class="hidden" />
-				<div class="mb-4 grid gap-8 sm:grid-cols-2">
-					<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
-						<label>
-							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-								{i("contact.labels.name")}
-							</span>
-							<input
-								type="text"
-								name="name"
-								class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-								placeholder={i("contact.fields.name")}
-								required
-							/>
-							<p
-								class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
-							>
-								{i("contact.fields.nameError")}
-							</p>
-						</label>
-						<label>
-							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-								{i("contact.labels.email")}
-							</span>
-							<input
-								type="email"
-								name="email"
-								class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-								placeholder={i("contact.fields.email")}
-								required
-							/>
-							<p
-								class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
-							>
-								{i("contact.fields.emailError")}
-							</p>
-						</label>
-						<label>
-							{i("contact.labels.company")}
-							<input
-								type="text"
-								name="$company"
-								class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-								placeholder={i("contact.fields.company")}
-							/>
-						</label>
-					</div>
-					<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
-						<label>
-							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-								{i("contact.labels.budget")}
-							</span>
-							<select
-								name="$budget"
-								class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
-								required
-							>
-								<option value="" selected disabled hidden>
-									{i("contact.fields.budget.choose")}
-								</option>
-								<option class="bg-black/50" value="none">
-									{i("contact.fields.budget.none")}
-								</option>
-								<option class="bg-black/50" value="less">
-									{i("contact.fields.budget.less")}
-								</option>
-								<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
-								<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
-								<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
-							</select>
-						</label>
-						<label>
-							<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-								{i("contact.labels.description")}
-							</span>
-							<textarea
-								name="message"
-								placeholder={i("contact.fields.description")}
-								rows="4"
-								class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-								required
-							/>
-						</label>
-					</div>
+<div
+	class="relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
+>
+	<Section>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		<svelte:fragment slot="title">{@html c(i("contact.title"))}</svelte:fragment>
+		<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
+			<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
+			<input type="text" name="honeypot" class="hidden" />
+			<div class="mb-4 grid gap-8 sm:grid-cols-2">
+				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+					<label>
+						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
+							{i("contact.labels.name")}
+						</span>
+						<input
+							type="text"
+							name="name"
+							autocomplete="family-name"
+							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							placeholder={i("contact.fields.name")}
+							required
+						/>
+						<p
+							class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
+						>
+							{i("contact.fields.nameError")}
+						</p>
+					</label>
+					<label>
+						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
+							{i("contact.labels.email")}
+						</span>
+						<input
+							type="email"
+							name="email"
+							autocomplete="email"
+							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							placeholder={i("contact.fields.email")}
+							required
+						/>
+						<p
+							class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
+						>
+							{i("contact.fields.emailError")}
+						</p>
+					</label>
+					<label>
+						{i("contact.labels.company")}
+						<input
+							type="text"
+							name="$company"
+							autocomplete="organization"
+							class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							placeholder={i("contact.fields.company")}
+						/>
+					</label>
 				</div>
-				<div class="flex justify-end">
+				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+					<label>
+						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
+							{i("contact.labels.budget")}
+						</span>
+						<select
+							name="$budget"
+							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
+							required
+						>
+							<option value="" selected disabled hidden>
+								{i("contact.fields.budget.choose")}
+							</option>
+							<option class="bg-black/50" value="none">
+								{i("contact.fields.budget.none")}
+							</option>
+							<option class="bg-black/50" value="less">
+								{i("contact.fields.budget.less")}
+							</option>
+							<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
+							<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
+							<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
+						</select>
+					</label>
+					<label>
+						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
+							{i("contact.labels.description")}
+						</span>
+						<textarea
+							name="message"
+							placeholder={i("contact.fields.description")}
+							rows="4"
+							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							required
+						/>
+					</label>
+				</div>
+			</div>
+			<div class="flex justify-end">
 					<Button submit>
 						{#if mailStatus === "sending"}
 							<!-- TODO: Replace with a library icon -->
@@ -287,5 +289,4 @@
 				</div>
 			</div>
 		</Section>
-	</div>
 </div>
