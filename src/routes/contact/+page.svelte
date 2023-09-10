@@ -241,52 +241,52 @@
 				</div>
 			</div>
 			<div class="flex justify-end">
-					<Button submit>
-						{#if mailStatus === "sending"}
-							<!-- TODO: Replace with a library icon -->
-							<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 h-5 w-5 animate-spin" />
-							{i("contact.sendButton.loading")}
-						{:else if mailStatus === "sent"}
-							<Check class="h-6 w-6" />
-							{i("contact.sendButton.success")}
-						{:else if mailStatus === "error"}
-							<XMark class="h-6 w-6" />
-							{i("contact.sendButton.error")}
-						{:else}
-							<PaperAirplane class="h-6 w-6" />
-							{i("contact.sendButton.default")}
-						{/if}
-					</Button>
-				</div>
-			</form>
-			<div class="my-8 flex items-center justify-center">
-				<div class="w-full border-b border-dominant"></div>
-				<div class="mx-4 font-medium uppercase">{i("contact.orLabel")}</div>
-				<div class="w-full border-b border-dominant"></div>
+				<Button submit>
+					{#if mailStatus === "sending"}
+						<!-- TODO: Replace with a library icon -->
+						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 h-5 w-5 animate-spin" />
+						{i("contact.sendButton.loading")}
+					{:else if mailStatus === "sent"}
+						<Check class="h-6 w-6" />
+						{i("contact.sendButton.success")}
+					{:else if mailStatus === "error"}
+						<XMark class="h-6 w-6" />
+						{i("contact.sendButton.error")}
+					{:else}
+						<PaperAirplane class="h-6 w-6" />
+						{i("contact.sendButton.default")}
+					{/if}
+				</Button>
 			</div>
-			<div>
-				<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
-					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-					{@html c(i("contact.callSection.title"))}
-				</h2>
-				<div
-					class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-				>
-					<div class="flex flex-col">
-						<span class="text-xl font-medium text-dominant">{contact.name}</span>
-						<span class="font-light opacity-50">
-							{i("contact.callSection.job")} - Emerald Studio
-						</span>
-					</div>
-					<a href="tel:{contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
-						<Phone class="inline-block h-6 w-6" />
-						<span
-							class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
-						>
-							{contact.phone}
-						</span>
-					</a>
+		</form>
+		<div class="my-8 flex items-center justify-center">
+			<div class="w-full border-b border-dominant"></div>
+			<div class="mx-4 font-medium uppercase">{i("contact.orLabel")}</div>
+			<div class="w-full border-b border-dominant"></div>
+		</div>
+		<div>
+			<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html c(i("contact.callSection.title"))}
+			</h2>
+			<div
+				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
+			>
+				<div class="flex flex-col">
+					<span class="text-xl font-medium text-dominant">{contact.name}</span>
+					<span class="font-light opacity-50">
+						{i("contact.callSection.job")} - Emerald Studio
+					</span>
 				</div>
+				<a href="tel:{contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
+					<Phone class="inline-block h-6 w-6" />
+					<span
+						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
+					>
+						{contact.phone}
+					</span>
+				</a>
 			</div>
-		</Section>
+		</div>
+	</Section>
 </div>
