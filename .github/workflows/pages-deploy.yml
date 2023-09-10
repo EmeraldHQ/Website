@@ -213,7 +213,7 @@ jobs:
       - name: ⚓️ Unlighthouse check
         run: |
           bun i -g @unlighthouse/cli puppeteer
-          unlighthouse-ci --site ${{ needs.deploy.outputs.page_url }} --budget 75
+          unlighthouse-ci --site https://emeraldstudio.fr --budget 75
 
       - name: 📤 Upload artifact
         uses: actions/upload-artifact@v3
