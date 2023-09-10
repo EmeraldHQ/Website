@@ -9,7 +9,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - pnpm-lock.yaml
+      - bun.lockb
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -18,7 +18,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - pnpm-lock.yaml
+      - bun.lockb
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -67,31 +67,23 @@ jobs:
           ref: ${{ github.head_ref }}
           token: ${{ needs.permissions-check.outputs.has-permissions == 'false' && github.token || secrets.WORKFLOW_PAT }}
 
-      - name: 📥 Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: 🧭 Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: 📥 Install NPM dependencies
-        run: pnpm i --no-frozen-lockfile
+      - name: 📥 Install dependencies
+        run: bun i
 
       - name: 🔍 Detect file changes
-        id: detect-changes-pnpm
+        id: detect-changes-bun
         run: |
-          if [[ $(git diff --name-only) =~ pnpm-lock.yaml ]]; then
+          if [[ $(git diff --name-only) =~ bun.lockb ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
           fi
 
       - name: ❌ Exit if lock file is not updated
-        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-bun.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 📤 Commit updated lock file
@@ -100,14 +92,14 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update lock file
-          file_pattern: pnpm-lock.yaml
+          file_pattern: bun.lockb
 
       - name: ❌ Exit if lock file has been committed
         if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 🔧 Check Inlang config
-        run: pnpm ci:update-inlang
+        run: bun run ci:update-inlang
 
       - name: 🔍 Detect file changes
         id: detect-changes-inlang
@@ -135,15 +127,15 @@ jobs:
         run: exit 1
 
       - name: ✨ Check Svelte format
-        run: pnpm check
+        run: bun run check
 
       - name: ✨ Check style with Prettier & ESLint
         id: lint-check
-        run: pnpm lint
+        run: bun run lint
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
-        run: pnpm format
+        run: bun run format
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
@@ -171,23 +163,15 @@ jobs:
         with:
           static_site_generator: sveltekit
 
-      - name: 📥 Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: 🧭 Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: 📥 Install NPM dependencies
-        run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
+      - name: 📥 Install dependencies
+        run: bun i
 
       - name: 🔨 Build repo
         run: |
-          pnpm build
+          bun run build
           touch build/.nojekyll
 
       - name: 📤 Upload artifact
@@ -225,9 +209,12 @@ jobs:
     if: github.event_name == 'push' && !failure() && !cancelled()
 
     steps:
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
+
       - name: ⚓️ Unlighthouse check
         run: |
-          npm i -g @unlighthouse/cli puppeteer
+          bun i -g @unlighthouse/cli puppeteer
           unlighthouse-ci --site ${{ needs.deploy.outputs.page_url }} --budget 75
 
       - name: 📤 Upload artifact
