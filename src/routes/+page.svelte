@@ -248,6 +248,7 @@
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
 		technoCards.addEventListener("scrollend", () => {
+			if (!technoCards) return; // fix "scrollLeft not found on undefined"?
 			const scrollDistance = technoCards.scrollLeft;
 			const containerWidth = technoCards.clientWidth;
 			currentCard = Math.round(scrollDistance / containerWidth);
@@ -512,14 +513,16 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.technologies.title"))}
 	</svelte:fragment>
-	<div class="flex flex-col items-center gap-8 sm:flex-row max-sm:!mx-8">
+	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
 			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
-				<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8">
+				<div
+					class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter"
+				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
 					<p class="text-lg text-gray-200">
@@ -557,15 +560,17 @@
 		</div>
 	</div>
 </Section>
-  
+
 <!-- About us -->
 <Section id="about-us">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
-	<div class="pb-10 flex items-center justify-center">
-		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass max-sm:!-mx-8 p-8">
+	<div class="flex items-center justify-center pb-10">
+		<div
+			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
+		>
 			<p class="text-lg text-gray-200">
 				{i("home.about-us.desc")}
 			</p>
