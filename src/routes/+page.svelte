@@ -179,8 +179,10 @@
 			if(processCards.scrollLeft > processLastCardWidth*3/2 && processCards?.children[lastButtonIndex]) {
 				// opcity-0
 				processCards?.children[lastButtonIndex]?.classList.add('opacity-0');
+				processCards?.children[lastButtonIndex]?.classList.add('hidden');
 			} else {
 				processCards?.children[lastButtonIndex]?.classList.remove('opacity-0');
+				processCards?.children[lastButtonIndex]?.classList.remove('hidden');
 			}
 		}
 		
