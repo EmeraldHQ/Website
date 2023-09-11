@@ -22,6 +22,7 @@
 	import {
 		ArrowDown,
 		ChevronRight,
+		ChevronLeft,
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
@@ -137,6 +138,32 @@
 			}
 		];
 	}
+
+	// Process cards
+	let processCards: HTMLElement;
+	let processButtonLeft: Button;
+	let processButtonRight: Button;
+
+	// TODO: create ScrollTo (params = element, index); use it here and in technologies cards
+	function scrollToProcessCard(button: 'left' | 'right') {
+		console.log('scrollLeft', processCards.scrollLeft);
+		const processCardwidth = processCards.clientWidth;
+		const index = button === 'left' ? Math.floor(processCards.scrollLeft / processCardwidth) - 1 : Math.floor(processCards.scrollLeft / processCardwidth) + 1;
+		const cards = processCards?.children;
+		if (!cards || cards.length < index) return;
+		const card = cards[index];
+		if (!card) return;
+		processCards.scrollTo({
+			left: card.clientWidth * index,
+			behavior: "smooth"
+		});
+	}
+
+
+
+	onMount(() => {
+		
+	});
 
 	// Technologies cards
 	let technoCards: HTMLElement;
@@ -418,12 +445,21 @@
 </div>
 
 <!-- Process -->
-<Section id="process">
-	<div
+<Section id="process" class="relative">
+	<div bind:this={processCards}
 		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
 	>
+		<Button bind:this={processButtonLeft}
+				styleType="minimal"
+				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 left-4"
+				id="process-btn-left"
+				on:click={() => scrollToProcessCard('left')}
+			>
+				<ChevronLeft class="h-10  w-10 text-dominant"/>
+		</Button>
 		{#each processSections as { title, icon, description }, index}
 			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
+				
 				<span
 					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
 				>
@@ -438,8 +474,18 @@
 				>
 					{description}
 				</p>
+			
 			</div>
+			
 		{/each}
+		<Button bind:this={processButtonRight}
+				styleType="minimal"
+				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 right-4"
+				id="process-btn-right"
+				on:click={() => scrollToProcessCard('right')}
+			>
+				<ChevronRight class="h-10  w-10 text-dominant"/>
+		</Button>
 	</div>
 </Section>
 
