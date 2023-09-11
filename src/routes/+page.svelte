@@ -35,7 +35,6 @@
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
 	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
-	const tailwindLgScreen = Number(fullTailwindConfig.theme.screens.lg.replace("px", ""));
 
 	// Sections
 	let processSections: {
@@ -142,10 +141,15 @@
 
 	// Process cards
 	let processCards: HTMLElement;
+	let leftButton: HTMLButtonElement;
+	let rightButton: HTMLButtonElement;
 
-	function scrollToProcessCard(button: 'left' | 'right') {
+	function scrollToProcessCard(button: "left" | "right") {
 		const processCardwidth = processCards.clientWidth;
-		const index = button === 'left' ? Math.floor(processCards.scrollLeft / processCardwidth) - 1 : Math.floor(processCards.scrollLeft / processCardwidth) + 1;
+		const index =
+			button === "left"
+				? Math.floor(processCards.scrollLeft / processCardwidth) - 1
+				: Math.floor(processCards.scrollLeft / processCardwidth) + 1;
 		const cards = processCards?.children;
 		if (!cards || cards.length < index) return;
 		const card = cards[index];
@@ -157,41 +161,23 @@
 	}
 
 	function hideProcessButton() {
-		if(!processCards) return;
-		if(!processCards?.children) return;
-		if(processCards?.children?.length <= 3) return;
+		if (!processCards || !leftButton || !rightButton) return;
 
-		const lastButtonIndex = processCards?.children?.length - 1 ?? 0;
-		const processFirstCardWidth = processCards?.children[1]?.clientWidth ?? 0;
-		const processLastCardWidth = processCards?.children[lastButtonIndex - 1]?.clientWidth ?? 0;
+		const processCardWidth = processCards.clientWidth;
 		// Hide left button if we are at the beginning
-		if(processCards?.children[0]) {
-			if(processCards.scrollLeft < processFirstCardWidth/2 && processCards?.children[0]) {
-				processCards?.children[0].classList.add('opacity-0');
-				processCards?.children[0].classList.add('hidden');
-			} else {
-				processCards?.children[0].classList.remove('opacity-0');
-				processCards?.children[0].classList.remove('hidden');
-			}
+		if (processCards.scrollLeft < processCardWidth) {
+			leftButton.style.opacity = "0";
+		} else {
+			leftButton.style.opacity = "1";
 		}
+
 		// Hide right button if we are at the end
-		if (processCards?.children[lastButtonIndex]) {
-			if(processCards.scrollLeft > processLastCardWidth*3/2 && processCards?.children[lastButtonIndex]) {
-				processCards?.children[lastButtonIndex]?.classList.add('opacity-0');
-				processCards?.children[lastButtonIndex]?.classList.add('hidden');
-			} else {
-				processCards?.children[lastButtonIndex]?.classList.remove('opacity-0');
-				processCards?.children[lastButtonIndex]?.classList.remove('hidden');
-			}
+		if (processCards.scrollLeft > processCards.scrollWidth - processCardWidth * 2) {
+			rightButton.style.opacity = "0";
+		} else {
+			rightButton.style.opacity = "1";
 		}
-		
 	}
-	
-	onMount(() => {
-		hideProcessButton();
-		// On scroll hide the left button if we are at the beginning
-		processCards.addEventListener('scroll', hideProcessButton);
-	});
 
 	// Technologies cards
 	let technoCards: HTMLElement;
@@ -257,6 +243,10 @@
 	}
 
 	onMount(() => {
+		// === Process section ===
+		hideProcessButton();
+		processCards.addEventListener("scroll", hideProcessButton);
+
 		// === Auto-scroll technologies cards ===
 		// Initial checks
 		const cards = technoCards?.children;
@@ -473,51 +463,43 @@
 </div>
 
 <!-- Process -->
-<Section id="process" class="relative">
-	<div bind:this={processCards}
-		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
-	>
-		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
-		<Button
-				styleType="minimal"
-				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 left-4 transition-opacity duration-150 ease-in-out"
-				id="process-btn-left"
-				on:click={() => scrollToProcessCard('left')}
-			>
-				<ChevronLeft class="h-10  w-10 text-dominant"/>
-		</Button>
-		{/if}
-		{#each processSections as { title, icon, description }, index}
-			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
-				
-				<span
-					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
-				>
-					{index + 1}
-				</span>
-				<div class="flex w-fit flex-row items-center gap-4">
-					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
-					<h3 class="text-2xl font-medium">{title}</h3>
+<Section id="process">
+	<div class="!mx-6 flex gap-2">
+		<button
+			bind:this={leftButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("left")}
+		>
+			<ChevronLeft class="h-10 w-10 text-dominant" />
+		</button>
+		<div
+			bind:this={processCards}
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start lg:justify-center"
+		>
+			{#each processSections as { title, icon, description }, index}
+				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
+					<span
+						class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
+					>
+						{index + 1}
+					</span>
+					<div class="flex w-fit flex-row items-center gap-4">
+						<svelte:component this={icon} class="h-10 w-10 text-dominant" />
+						<h3 class="text-2xl font-medium">{title}</h3>
+					</div>
+					<p class="h-full w-full pt-4 text-lg font-normal text-gray-200">
+						{description}
+					</p>
 				</div>
-				<p
-					class="h-full w-full pt-4 text-lg font-normal text-gray-200 max-lg:max-w-[95%] max-md:max-w-[90%]"
-				>
-					{description}
-				</p>
-			
-			</div>
-			
-		{/each}
-		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
-		<Button
-				styleType="minimal"
-				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 right-4 transition-opacity duration-150 ease-in-out"
-				id="process-btn-right"
-				on:click={() => scrollToProcessCard('right')}
-			>
-				<ChevronRight class="h-10  w-10 text-dominant"/>
-		</Button>
-		{/if}
+			{/each}
+		</div>
+		<button
+			bind:this={rightButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("right")}
+		>
+			<ChevronRight class="h-10 w-10 text-dominant" />
+		</button>
 	</div>
 </Section>
 
