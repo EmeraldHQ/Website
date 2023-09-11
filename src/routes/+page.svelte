@@ -35,6 +35,7 @@
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
 	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
+	const tailwindLgScreen = Number(fullTailwindConfig.theme.screens.lg.replace("px", ""));
 
 	// Sections
 	let processSections: {
@@ -449,6 +450,7 @@
 	<div bind:this={processCards}
 		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
 	>
+		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
 		<Button bind:this={processButtonLeft}
 				styleType="minimal"
 				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 left-4"
@@ -457,6 +459,7 @@
 			>
 				<ChevronLeft class="h-10  w-10 text-dominant"/>
 		</Button>
+		{/if}
 		{#each processSections as { title, icon, description }, index}
 			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
 				
@@ -478,6 +481,7 @@
 			</div>
 			
 		{/each}
+		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
 		<Button bind:this={processButtonRight}
 				styleType="minimal"
 				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 right-4"
@@ -486,6 +490,7 @@
 			>
 				<ChevronRight class="h-10  w-10 text-dominant"/>
 		</Button>
+		{/if}
 	</div>
 </Section>
 
