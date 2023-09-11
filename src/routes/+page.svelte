@@ -142,12 +142,8 @@
 
 	// Process cards
 	let processCards: HTMLElement;
-	let processButtonLeft: Button;
-	let processButtonRight: Button;
 
-	// TODO: create ScrollTo (params = element, index); use it here and in technologies cards
 	function scrollToProcessCard(button: 'left' | 'right') {
-		console.log('scrollLeft', processCards.scrollLeft);
 		const processCardwidth = processCards.clientWidth;
 		const index = button === 'left' ? Math.floor(processCards.scrollLeft / processCardwidth) - 1 : Math.floor(processCards.scrollLeft / processCardwidth) + 1;
 		const cards = processCards?.children;
@@ -160,10 +156,39 @@
 		});
 	}
 
+	function hideProcessButton() {
+		if(!processCards) return;
+		if(!processCards?.children) return;
+		if(processCards?.children?.length <= 3) return;
 
-
-	onMount(() => {
+		const lastButtonIndex = processCards?.children?.length - 1 ?? 0;
+		const processFirstCardWidth = processCards?.children[1]?.clientWidth ?? 0;
+		const processLastCardWidth = processCards?.children[lastButtonIndex - 1]?.clientWidth ?? 0;
+		// Hide left button if we are at the beginning
+		if(processCards?.children[0]) {
+			if(processCards.scrollLeft < processFirstCardWidth/2 && processCards?.children[0]) {
+				processCards?.children[0].classList.add('opacity-0');
+				processCards?.children[0].classList.add('hidden');
+			} else {
+				processCards?.children[0].classList.remove('opacity-0');
+				processCards?.children[0].classList.remove('hidden');
+			}
+		}
+		// Hide right button if we are at the end
+		if (processCards?.children[lastButtonIndex]) {
+			if(processCards.scrollLeft > processLastCardWidth*3/2 && processCards?.children[lastButtonIndex]) {
+				// opcity-0
+				processCards?.children[lastButtonIndex]?.classList.add('opacity-0');
+			} else {
+				processCards?.children[lastButtonIndex]?.classList.remove('opacity-0');
+			}
+		}
 		
+	}
+	onMount(() => {
+		hideProcessButton();
+		// On scroll hide the left button if we are at the beginning
+		processCards.addEventListener('scroll', hideProcessButton);
 	});
 
 	// Technologies cards
@@ -451,9 +476,9 @@
 		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
 	>
 		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
-		<Button bind:this={processButtonLeft}
+		<Button
 				styleType="minimal"
-				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 left-4"
+				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 left-4 transition-opacity duration-150 ease-in-out"
 				id="process-btn-left"
 				on:click={() => scrollToProcessCard('left')}
 			>
@@ -482,9 +507,9 @@
 			
 		{/each}
 		{#if innerWidth > 0 && innerWidth < tailwindLgScreen}
-		<Button bind:this={processButtonRight}
+		<Button
 				styleType="minimal"
-				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 right-4"
+				class="gap-2 text-end text-lg hover-child:translate-x-1 absolute top-1/2 right-4 transition-opacity duration-150 ease-in-out"
 				id="process-btn-right"
 				on:click={() => scrollToProcessCard('right')}
 			>
