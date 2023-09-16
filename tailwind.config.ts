@@ -43,7 +43,7 @@ export default {
 				"large-screen": "120rem"
 			},
 			transitionProperty: {
-				'height': 'height',
+				height: "height"
 			}
 		}
 	},
