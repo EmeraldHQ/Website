@@ -146,9 +146,9 @@
 
 	function scrollToProcessCard(button: "left" | "right") {
 		const rigthScroll = processCards.offsetWidth + processCards.scrollLeft;
-		const leftScroll = processCards.scrollLeft - processCards.offsetWidth; 
+		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
 		processCards.scrollTo({
-			left: button === 'left' ? leftScroll : rigthScroll,
+			left: button === "left" ? leftScroll : rigthScroll,
 			behavior: "smooth"
 		});
 	}
