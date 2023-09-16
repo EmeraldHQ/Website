@@ -41,6 +41,9 @@ export default {
 			},
 			maxWidth: {
 				"large-screen": "120rem"
+			},
+			transitionProperty: {
+				'height': 'height',
 			}
 		}
 	},
