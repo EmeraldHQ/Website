@@ -145,17 +145,10 @@
 	let rightButton: HTMLButtonElement;
 
 	function scrollToProcessCard(button: "left" | "right") {
-		const processCardwidth = processCards.clientWidth;
-		const index =
-			button === "left"
-				? Math.floor(processCards.scrollLeft / processCardwidth) - 1
-				: Math.floor(processCards.scrollLeft / processCardwidth) + 1;
-		const cards = processCards?.children;
-		if (!cards || cards.length < index) return;
-		const card = cards[index];
-		if (!card) return;
+		const rigthScroll = processCards.offsetWidth + processCards.scrollLeft;
+		const leftScroll = processCards.scrollLeft - processCards.offsetWidth; 
 		processCards.scrollTo({
-			left: card.clientWidth * index,
+			left: button === 'left' ? leftScroll : rigthScroll,
 			behavior: "smooth"
 		});
 	}
@@ -167,15 +160,19 @@
 		// Hide left button if we are at the beginning
 		if (processCards.scrollLeft < processCardWidth) {
 			leftButton.style.opacity = "0";
+			leftButton.disabled = true;
 		} else {
 			leftButton.style.opacity = "1";
+			leftButton.disabled = false;
 		}
 
 		// Hide right button if we are at the end
 		if (processCards.scrollLeft > processCards.scrollWidth - processCardWidth * 2) {
 			rightButton.style.opacity = "0";
+			rightButton.disabled = true;
 		} else {
 			rightButton.style.opacity = "1";
+			rightButton.disabled = false;
 		}
 	}
 
