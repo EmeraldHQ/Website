@@ -87,7 +87,7 @@
 <div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
-			class="transition-height delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-red-500/60 px-10 py-5 duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
+			class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-height duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
 			class:!h-16={scrollY >= scrollDistanceLogoSwitch ||
 				(innerWidth > 0 && innerWidth < tailwindXsScreen)}
 		>
