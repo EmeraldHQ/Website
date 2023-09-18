@@ -22,6 +22,7 @@
 	import {
 		ArrowDown,
 		ChevronRight,
+		ChevronLeft,
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
@@ -138,6 +139,43 @@
 		];
 	}
 
+	// Process cards
+	let processCards: HTMLElement;
+	let leftButton: HTMLButtonElement;
+	let rightButton: HTMLButtonElement;
+
+	function scrollToProcessCard(button: "left" | "right") {
+		const rigthScroll = processCards.offsetWidth + processCards.scrollLeft;
+		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
+		processCards.scrollTo({
+			left: button === "left" ? leftScroll : rigthScroll,
+			behavior: "smooth"
+		});
+	}
+
+	function hideProcessButton() {
+		if (!processCards || !leftButton || !rightButton) return;
+
+		const processCardWidth = processCards.clientWidth;
+		// Hide left button if we are at the beginning
+		if (processCards.scrollLeft < processCardWidth) {
+			leftButton.style.opacity = "0";
+			leftButton.disabled = true;
+		} else {
+			leftButton.style.opacity = "1";
+			leftButton.disabled = false;
+		}
+
+		// Hide right button if we are at the end
+		if (processCards.scrollLeft > processCards.scrollWidth - processCardWidth * 2) {
+			rightButton.style.opacity = "0";
+			rightButton.disabled = true;
+		} else {
+			rightButton.style.opacity = "1";
+			rightButton.disabled = false;
+		}
+	}
+
 	// Technologies cards
 	let technoCards: HTMLElement;
 	let technoIcons: HTMLElement;
@@ -202,6 +240,10 @@
 	}
 
 	onMount(() => {
+		// === Process section ===
+		hideProcessButton();
+		processCards.addEventListener("scroll", hideProcessButton);
+
 		// === Auto-scroll technologies cards ===
 		// Initial checks
 		const cards = technoCards?.children;
@@ -419,27 +461,42 @@
 
 <!-- Process -->
 <Section id="process">
-	<div
-		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
-	>
-		{#each processSections as { title, icon, description }, index}
-			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
-				<span
-					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
-				>
-					{index + 1}
-				</span>
-				<div class="flex w-fit flex-row items-center gap-4">
-					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
-					<h3 class="text-2xl font-medium">{title}</h3>
+	<div class="!mx-6 flex gap-2">
+		<button
+			bind:this={leftButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("left")}
+		>
+			<ChevronLeft class="h-10 w-10 text-dominant" />
+		</button>
+		<div
+			bind:this={processCards}
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start lg:justify-center"
+		>
+			{#each processSections as { title, icon, description }, index}
+				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
+					<span
+						class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
+					>
+						{index + 1}
+					</span>
+					<div class="flex w-fit flex-row items-center gap-4">
+						<svelte:component this={icon} class="h-10 w-10 text-dominant" />
+						<h3 class="text-2xl font-medium">{title}</h3>
+					</div>
+					<p class="h-full w-full pt-4 text-lg font-normal text-gray-200">
+						{description}
+					</p>
 				</div>
-				<p
-					class="h-full w-full pt-4 text-lg font-normal text-gray-200 max-lg:max-w-[95%] max-md:max-w-[90%]"
-				>
-					{description}
-				</p>
-			</div>
-		{/each}
+			{/each}
+		</div>
+		<button
+			bind:this={rightButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("right")}
+		>
+			<ChevronRight class="h-10 w-10 text-dominant" />
+		</button>
 	</div>
 </Section>
 
