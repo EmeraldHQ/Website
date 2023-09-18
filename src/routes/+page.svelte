@@ -145,10 +145,10 @@
 	let rightButton: HTMLButtonElement;
 
 	function scrollToProcessCard(button: "left" | "right") {
-		const rigthScroll = processCards.offsetWidth + processCards.scrollLeft;
 		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
+		const rightScroll = processCards.scrollLeft + processCards.offsetWidth;
 		processCards.scrollTo({
-			left: button === "left" ? leftScroll : rigthScroll,
+			left: button === "left" ? leftScroll : rightScroll,
 			behavior: "smooth"
 		});
 	}
@@ -371,7 +371,7 @@
 <!-- Hero -->
 <div
 	id="hero"
-	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
+	class="relative -mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10
