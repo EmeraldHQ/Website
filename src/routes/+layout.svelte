@@ -80,8 +80,9 @@
 	let showSlideOver = false;
 
 	let shrinkNavBar = false;
-	const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
 	$: if (scrollY) {
+		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		if (scrollY < scrollDistanceLogoSwitch - rem) {
 			shrinkNavBar = false;
 		}
