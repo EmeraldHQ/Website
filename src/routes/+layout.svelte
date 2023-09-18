@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import { onDestroy } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { fade } from "svelte/transition";
@@ -74,7 +74,22 @@
 	let innerWidth = 0;
 	let scrollY = 0;
 	$: showButton = scrollY >= scrollDistanceContactButton;
+	$: showLogo = scrollY >= scrollDistanceLogoSwitch;
 	let showSlideOver = false;
+	let navBar: HTMLElement;
+
+	onMount(() => {
+		// Event listeners on window scroll
+		window.addEventListener("scroll", () => {
+			if (scrollY < scrollDistanceLogoSwitch) {
+				showLogo = true;
+			}
+
+			if (scrollY >= scrollDistanceLogoSwitch - navBar.clientHeight) {
+				showLogo = false;
+			}
+		});
+	});
 
 	// Lifecycle
 	onDestroy(unsubscribe);
@@ -88,8 +103,7 @@
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
 			class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-height duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
-			class:!h-16={scrollY >= scrollDistanceLogoSwitch ||
-				(innerWidth > 0 && innerWidth < tailwindXsScreen)}
+			class:!h-16={showLogo || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 		>
 			<!-- Left logo -->
 			<div class="mr-auto flex items-center gap-5">
