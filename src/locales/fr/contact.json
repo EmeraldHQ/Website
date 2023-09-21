@@ -30,5 +30,10 @@
 		"loading": "Envoi en cours...",
 		"success": "Message envoyé !",
 		"error": "Erreur"
+	},
+	"orLabel": "ou",
+	"callSection": {
+		"title": "Appelez notre [commercial]",
+		"job": "Commercial"
 	}
 }

@@ -22,6 +22,7 @@
 	import {
 		ArrowDown,
 		ChevronRight,
+		ChevronLeft,
 		CodeBracket,
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
@@ -138,6 +139,43 @@
 		];
 	}
 
+	// Process cards
+	let processCards: HTMLElement;
+	let leftButton: HTMLButtonElement;
+	let rightButton: HTMLButtonElement;
+
+	function scrollToProcessCard(button: "left" | "right") {
+		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
+		const rightScroll = processCards.scrollLeft + processCards.offsetWidth;
+		processCards.scrollTo({
+			left: button === "left" ? leftScroll : rightScroll,
+			behavior: "smooth"
+		});
+	}
+
+	function hideProcessButton() {
+		if (!processCards || !leftButton || !rightButton) return;
+
+		const processCardWidth = processCards.clientWidth;
+		// Hide left button if we are at the beginning
+		if (processCards.scrollLeft < processCardWidth) {
+			leftButton.style.opacity = "0";
+			leftButton.disabled = true;
+		} else {
+			leftButton.style.opacity = "1";
+			leftButton.disabled = false;
+		}
+
+		// Hide right button if we are at the end
+		if (processCards.scrollLeft > processCards.scrollWidth - processCardWidth * 2) {
+			rightButton.style.opacity = "0";
+			rightButton.disabled = true;
+		} else {
+			rightButton.style.opacity = "1";
+			rightButton.disabled = false;
+		}
+	}
+
 	// Technologies cards
 	let technoCards: HTMLElement;
 	let technoIcons: HTMLElement;
@@ -202,6 +240,10 @@
 	}
 
 	onMount(() => {
+		// === Process section ===
+		hideProcessButton();
+		processCards.addEventListener("scroll", hideProcessButton);
+
 		// === Auto-scroll technologies cards ===
 		// Initial checks
 		const cards = technoCards?.children;
@@ -248,6 +290,7 @@
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
 		technoCards.addEventListener("scrollend", () => {
+			if (!technoCards) return; // fix "scrollLeft not found on undefined"?
 			const scrollDistance = technoCards.scrollLeft;
 			const containerWidth = technoCards.clientWidth;
 			currentCard = Math.round(scrollDistance / containerWidth);
@@ -328,7 +371,7 @@
 <!-- Hero -->
 <div
 	id="hero"
-	class="-mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
+	class="relative -mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10
@@ -418,27 +461,42 @@
 
 <!-- Process -->
 <Section id="process">
-	<div
-		class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start md:justify-center"
-	>
-		{#each processSections as { title, icon, description }, index}
-			<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
-				<span
-					class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
-				>
-					{index + 1}
-				</span>
-				<div class="flex w-fit flex-row items-center gap-4">
-					<svelte:component this={icon} class="h-10 w-10 text-dominant" />
-					<h3 class="text-2xl font-medium">{title}</h3>
+	<div class="!mx-6 flex gap-2">
+		<button
+			bind:this={leftButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("left")}
+		>
+			<ChevronLeft class="h-10 w-10 text-dominant" />
+		</button>
+		<div
+			bind:this={processCards}
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start lg:justify-center"
+		>
+			{#each processSections as { title, icon, description }, index}
+				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
+					<span
+						class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
+					>
+						{index + 1}
+					</span>
+					<div class="flex w-fit flex-row items-center gap-4">
+						<svelte:component this={icon} class="h-10 w-10 text-dominant" />
+						<h3 class="text-2xl font-medium">{title}</h3>
+					</div>
+					<p class="h-full w-full pt-4 text-lg font-normal text-gray-200">
+						{description}
+					</p>
 				</div>
-				<p
-					class="h-full w-full pt-4 text-lg font-normal text-gray-200 max-lg:max-w-[95%] max-md:max-w-[90%]"
-				>
-					{description}
-				</p>
-			</div>
-		{/each}
+			{/each}
+		</div>
+		<button
+			bind:this={rightButton}
+			class="transition-opacity duration-300 ease-in-out lg:hidden"
+			on:click={() => scrollToProcessCard("right")}
+		>
+			<ChevronRight class="h-10 w-10 text-dominant" />
+		</button>
 	</div>
 </Section>
 
@@ -512,14 +570,16 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.technologies.title"))}
 	</svelte:fragment>
-	<div class="flex flex-col items-center gap-8 sm:flex-row max-sm:!mx-8">
+	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
 			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
-				<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass p-8">
+				<div
+					class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter"
+				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
 					<p class="text-lg text-gray-200">
@@ -557,15 +617,17 @@
 		</div>
 	</div>
 </Section>
-  
+
 <!-- About us -->
 <Section id="about-us">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html c(i("home.about-us.title"))}
 	</svelte:fragment>
-	<div class="pb-10 flex items-center justify-center">
-		<div class="flex min-w-full flex-col gap-4 rounded-3xl backdrop-filter backdrop-blur border border-opacity-25 border-white bg-glass max-sm:!-mx-8 p-8">
+	<div class="flex items-center justify-center pb-10">
+		<div
+			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
+		>
 			<p class="text-lg text-gray-200">
 				{i("home.about-us.desc")}
 			</p>

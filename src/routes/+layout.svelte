@@ -1,25 +1,23 @@
 <script lang="ts">
-	import "../app.css";
-	import { onDestroy } from "svelte";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { fade } from "svelte/transition";
-	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Github } from "@inqling/svelte-icons/simple-icons";
-	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
 	import Button from "$elements/Button.svelte";
 	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 	import { scrollTo } from "$utils/scroll";
+	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
+	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
+	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import { fade } from "svelte/transition";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
+	import "../app.css";
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
-	const unsubscribe = page.subscribe(value => {
-		currentRoute = value?.route.id?.split("/").filter(Boolean) ?? [];
-	});
-
+	$: if ($page.route.id) {
+		currentRoute = $page.route.id.split("/").filter(Boolean);
+	}
 	// Tailwind
 	const fullTailwindConfig = resolveConfig(tailwindConfig);
 	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
@@ -29,8 +27,8 @@
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 	$: if (language) {
 		navbarItems = [
-			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.process"), href: "#process" },
+			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
 			{ name: i("common.pages.technologies"), href: "#technologies" },
 			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
 		];
@@ -43,7 +41,7 @@
 					{ name: i("common.solutions.landing"), href: "." },
 					{ name: i("common.solutions.ecommerce"), href: "." },
 					{ name: i("common.solutions.rewrite"), href: "." },
-					{ name: i("common.solutions.custom"), href: "." }
+					{ name: i("common.solutions.custom"), href: "/contact" }
 				]
 			},
 			{
@@ -67,33 +65,57 @@
 			}
 		];
 	}
-	const scrollDistanceContactButton = 800;
-	const scrollDistanceLogoSwitch = 900;
 
 	// Bindings & variables
 	let innerWidth = 0;
+	let innerHeight = 0;
 	let scrollY = 0;
+
+	let scrollDistanceContactButton = 0;
+	$: scrollDistanceContactButton = innerHeight * 0.7;
+	let scrollDistanceLogoSwitch = 0;
+	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
+
 	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
 
-	// Lifecycle
-	onDestroy(unsubscribe);
+	let shrinkNavBar = false;
+
+	$: if (scrollY) {
+		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+		if (scrollY < scrollDistanceLogoSwitch - rem) {
+			shrinkNavBar = false;
+		}
+
+		if (scrollY >= scrollDistanceLogoSwitch) {
+			shrinkNavBar = true;
+		}
+	}
 </script>
 
 <!-- Binding for scroll-dependent elements -->
-<svelte:window bind:innerWidth bind:scrollY />
+<svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
 
 <!-- Navbar -->
 <div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
 		<nav
-			class="mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 sm:mx-5 md:mx-10 md:px-20"
+			class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
+			class:!h-16={shrinkNavBar || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 		>
 			<!-- Left logo -->
 			<div class="mr-auto flex items-center gap-5">
-				<a
-					href="/"
+				<button
+					type="button"
 					class="grid origin-left overflow-hidden scale-110 child:col-start-1 child:row-start-1 child:row-end-1"
+					on:click={() => {
+						$page.route.id === "/"
+							? window.scrollTo({
+									top: 0,
+									behavior: "smooth"
+							  })
+							: goto("/");
+					}}
 				>
 					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
 						<img
@@ -116,7 +138,7 @@
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
 						/>
 					{/if}
-				</a>
+				</button>
 			</div>
 			<!-- Right navigation -->
 			<div class="flex items-center gap-5 sm:gap-10">
@@ -135,10 +157,13 @@
 							<button
 								type="button"
 								class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-								on:click={() => {
+								on:click={async () => {
 									if (item.href.startsWith("/")) {
-										goto(item.href);
+										await goto(item.href);
 									} else {
+										if ($page.route.id !== "/") {
+											await goto("/");
+										}
 										scrollTo(item.href);
 									}
 								}}
@@ -156,7 +181,9 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button styleType="secondary" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+					<Button styleType="secondary" on:click={() => goto("/contact")}>
+						{i("common.contact")}
+					</Button>
 				</span>
 				<button
 					type="button"
@@ -203,19 +230,33 @@
 		<div
 			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
 		>
-			{#each navbarItems.filter((_item, index) => !(index === navbarItems.length - 1 && innerWidth >= tailwindXsScreen)) as item}
+			{#each navbarItems as item}
 				<button
 					type="button"
 					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-					class:text-dominant={!item.href.startsWith("#")}
 					on:click={() => {
 						showSlideOver = false;
-						setTimeout(() => scrollTo(item.href), 300);
+						setTimeout(async () => {
+							if ($page.route.id !== "/") {
+								await goto("/");
+							}
+							scrollTo(item.href);
+						}, 300);
 					}}
 				>
 					{item.name}
 				</button>
 			{/each}
+			<button
+				type="button"
+				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+				on:click={() => {
+					showSlideOver = false;
+					setTimeout(() => goto("/contact"), 300);
+				}}
+			>
+				{i("common.contact")}
+			</button>
 		</div>
 	</svelte:fragment>
 </SlideOver>
