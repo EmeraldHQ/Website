@@ -19,7 +19,7 @@ jobs:
         run: |
           echo current_version=$(gh release view --json tagName | jq -r ".tagName" | sed "s/v//") >> $GITHUB_OUTPUT
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
-          
+
           # Gather all commits since last release, excluding merge commits and commits from dependabot, formatted as markdown list of "- commit title - @commit-author"
           changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty="- %s - @%an" --no-merges --invert-grep --grep="dependabot")
 
