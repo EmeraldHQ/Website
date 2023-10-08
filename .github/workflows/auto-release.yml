@@ -1,0 +1,36 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📁 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Get versions
+        id: version-check
+        run: |
+          echo current_version=$(gh release view --json tagName | jq -r ".tagName" | sed "s/v//") >> $GITHUB_OUTPUT
+          echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
+          
+          # Gather all commits since last release, excluding merge commits and commits from dependabot, formatted as markdown list of "- commit title - @commit-author"
+          changelog=$(git log $(git describe --tags --abbrev=0)..HEAD --pretty="- %s - @%an" --no-merges --invert-grep --grep="dependabot")
+
+      - name: ✨ Create release
+        if: steps.version-check.outputs.version != steps.version-check.outputs.current_version
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ steps.version-check.outputs.version }}
+          release_name: ${{ steps.version-check.outputs.version }}
+          body: |
+            ## What's Changed
+            ${{ steps.version-check.outputs.changelog }}
+
+            **Full Changelog:** https://github.com/${{ github.repository }}/compare/v${{ steps.version-check.outputs.current_version }}...v${{ steps.version-check.outputs.version }}
