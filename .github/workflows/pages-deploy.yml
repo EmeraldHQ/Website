@@ -97,7 +97,7 @@ jobs:
       - name: 📤 Commit updated lock file
         id: auto-commit-action-lock
         if: needs.permissions-check.outputs.has-permissions == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update lock file
           file_pattern: pnpm-lock.yaml
@@ -125,7 +125,7 @@ jobs:
       - name: 📤 Commit updated Inlang config
         id: auto-commit-action-inlang
         if: needs.permissions-check.outputs.has-permissions == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update Inlang config
           file_pattern: inlang.config.js
@@ -147,7 +147,7 @@ jobs:
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Fix lint
 
