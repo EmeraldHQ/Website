@@ -46,6 +46,9 @@ jobs:
             changelog+=("- ${changes[$i]} - @$handle")
           done
 
+          # Print the changelog to the console
+          echo "Changelog: ${changelog[*]}"
+
           # Export the changelog as a string
           echo changelog="${changelog[*]}" >> $GITHUB_OUTPUT
 
