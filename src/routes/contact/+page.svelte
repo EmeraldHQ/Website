@@ -11,11 +11,12 @@
 
 	export let data: PageData;
 
+	// Form handling
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
-	function mailHandler(node: HTMLFormElement) {
+	function mailHandler(form: HTMLFormElement) {
 		// A modified version of https://svelte.dev/repl/167e7c7a05844e3dab686b4257641d73
 		let submitting = false;
-		const submitButton = node.querySelector("button[type='submit'], button:not([type])");
+		const submitButton = form.querySelector("button[type='submit'], button:not([type])");
 
 		function handle_submit(event: Event) {
 			event.preventDefault();
@@ -24,7 +25,7 @@
 			submitting = true;
 			submitButton?.setAttribute("disabled", "disabled");
 
-			const entries = [...new FormData(node).entries()].map(([key, value]) => {
+			const entries = [...new FormData(form).entries()].map(([key, value]) => {
 				if (key === "$budget") {
 					value = i(`contact.fields.budget.${value}`);
 				}
@@ -38,8 +39,8 @@
 
 			mailStatus = "sending";
 
-			fetch(node.action, {
-				method: node.method,
+			fetch(form.action, {
+				method: form.method,
 				headers: {
 					"Content-Type": "application/json"
 				},
@@ -48,12 +49,10 @@
 				.then(res => {
 					if (res.ok) {
 						mailStatus = "sent";
-						node.reset();
-						setTimeout(() => {
-							mailStatus = "idle";
-						}, 5000);
+						form.reset();
 					} else {
 						mailStatus = "error";
+						console.error("Error while sending mail: ", res);
 					}
 				})
 				.catch(e => {
@@ -63,16 +62,17 @@
 				.finally(() => {
 					submitting = false;
 					setTimeout(() => {
+						mailStatus = "idle";
 						submitButton?.removeAttribute("disabled");
 					}, 5000);
 				});
 		}
 
-		node.addEventListener("submit", handle_submit);
+		form.addEventListener("submit", handle_submit);
 
 		return {
 			destroy() {
-				node.removeEventListener("submit", handle_submit);
+				form.removeEventListener("submit", handle_submit);
 			}
 		};
 	}
