@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageData } from "./$types";
 	import { ROOT_URL } from "$config";
 	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
@@ -7,6 +8,8 @@
 	import { c } from "$lib/utils/inlang-color";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/Button.svelte";
+
+	export let data: PageData;
 
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
 	function mailHandler(node: HTMLFormElement) {
@@ -73,11 +76,6 @@
 			}
 		};
 	}
-
-	const contact = {
-		name: "Reuben HATTAB",
-		phone: "+33 6 48 75 08 97"
-	};
 </script>
 
 <!-- Meta tags -->
@@ -273,17 +271,17 @@
 				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
 			>
 				<div class="flex flex-col">
-					<span class="text-xl font-medium text-dominant">{contact.name}</span>
+					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
 					<span class="font-light opacity-50">
 						{i("contact.callSection.job")} - Emerald Studio
 					</span>
 				</div>
-				<a href="tel:{contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
+				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
 					<Phone class="inline-block h-6 w-6" />
 					<span
 						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
 					>
-						{contact.phone}
+						{data.contact.phone}
 					</span>
 				</a>
 			</div>
