@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
+	import type { PageData, Snapshot } from "./$types";
 	import { ROOT_URL } from "$config";
 	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
@@ -10,6 +10,19 @@
 	import Button from "$elements/Button.svelte";
 
 	export let data: PageData;
+
+	export const snapshot: Snapshot<typeof formValues> = {
+		capture: () => formValues,
+		restore: value => (formValues = value)
+	};
+
+	let formValues = {
+		name: "",
+		email: "",
+		company: "",
+		budget: "",
+		description: ""
+	};
 
 	// Form handling
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
@@ -160,6 +173,7 @@
 						<input
 							type="text"
 							name="name"
+							bind:value={formValues.name}
 							autocomplete="family-name"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.name")}
@@ -178,6 +192,7 @@
 						<input
 							type="email"
 							name="email"
+							bind:value={formValues.email}
 							autocomplete="email"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.email")}
@@ -194,6 +209,7 @@
 						<input
 							type="text"
 							name="$company"
+							bind:value={formValues.company}
 							autocomplete="organization"
 							class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.company")}
@@ -207,10 +223,11 @@
 						</span>
 						<select
 							name="$budget"
+							bind:value={formValues.budget}
 							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
 							required
 						>
-							<option value="" selected disabled hidden>
+							<option value="" disabled hidden>
 								{i("contact.fields.budget.choose")}
 							</option>
 							<option class="bg-black/50" value="none">
@@ -230,6 +247,7 @@
 						</span>
 						<textarea
 							name="message"
+							bind:value={formValues.description}
 							placeholder={i("contact.fields.description")}
 							rows="4"
 							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
