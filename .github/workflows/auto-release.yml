@@ -14,15 +14,17 @@ jobs:
     steps:
       - name: 📁 Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: 📦 Get versions
         env:
           GH_TOKEN: ${{ github.token }}
         id: version-check
         run: |
-          latest_tag=$(gh release view --json tagName | jq -r ".tagName" | sed "s/v//")
+          # Get the latest tag
+          git fetch --filter=tree:0 origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*
+          latest_tag=$(git describe --tags --abbrev=0)
+
+          # Export the latest tag and the current version
           echo current_version=$latest_tag >> $GITHUB_OUTPUT
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
