@@ -15,7 +15,6 @@ jobs:
       - name: 📁 Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           fetch-tags: true
 
       - name: 📦 Get versions
@@ -34,10 +33,6 @@ jobs:
           # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot
           IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --invert-grep --grep="dependabot"))
           IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --invert-grep --grep="dependabot"))
-
-          # Log the changes and authors
-          echo "Changes: ${changes[*]}"
-          echo "Authors: ${authors[*]}"
 
           # Map author emails to GitHub usernames in a map
           declare -A author_map
@@ -67,7 +62,7 @@ jobs:
           echo "Changelog: ${changelog[*]}"
 
           # Export the changelog as a string
-          echo changelog="${changelog[*]}" >> $GITHUB_OUTPUT
+          echo changelog='${changelog[*]}' >> $GITHUB_OUTPUT
 
       - name: ✨ Create release
         if: steps.version-check.outputs.version != steps.version-check.outputs.current_version
