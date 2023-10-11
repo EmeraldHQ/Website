@@ -24,8 +24,8 @@ jobs:
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
           # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot
-          IFS=$"\n" changes=($(git log $(git describe --tags --abbrev=0)..HEAD --pretty="%s" --no-merges --invert-grep --grep="dependabot"))
-          IFS=$"\n" authors=($(git log $(git describe --tags --abbrev=0)..HEAD --pretty="%ae" --no-merges --invert-grep --grep="dependabot"))
+          IFS=$'\n' changes=($(git log $(git describe --tags --abbrev=0)..HEAD --pretty="%s" --no-merges --invert-grep --grep="dependabot"))
+          IFS=$'\n' authors=($(git log $(git describe --tags --abbrev=0)..HEAD --pretty="%ae" --no-merges --invert-grep --grep="dependabot"))
 
           # Log the changes and authors
           echo "Changes: ${changes[*]}"
