@@ -24,7 +24,7 @@ jobs:
           git fetch --filter=tree:0 origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*
           latest_tag=$(git describe --tags --abbrev=0)
 
-          # Export the latest tag and the current version
+          # Export the current and target versions
           echo current_version=$latest_tag >> $GITHUB_OUTPUT
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
