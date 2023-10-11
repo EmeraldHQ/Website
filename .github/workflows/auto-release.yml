@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: 📁 Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-tags: true
 
       - name: 📦 Get versions
         env:
@@ -23,7 +21,7 @@ jobs:
         id: version-check
         run: |
           # Get the latest tag
-          git fetch --filter=tree:0 origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*
+          git fetch -a
           latest_tag=$(git describe --tags --abbrev=0)
 
           # Export the current and target versions
