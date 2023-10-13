@@ -1,5 +1,5 @@
 {
-	"$schema": "https://inlang.com/schema/project-config-schema",
+	"$schema": "https://inlang.com/schema/project-settings",
 	"sourceLanguageTag": "en",
 	"languageTags": ["en", "fr"],
 	"modules": ["https://cdn.jsdelivr.net/npm/@inlang/plugin-json@4/dist/index.js",
