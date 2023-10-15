@@ -74,4 +74,5 @@ jobs:
             --title ${{ steps.version-check.outputs.version }} \
             --notes "## What's Changed
             ${{ steps.version-check.outputs.changelog }}
+            
             **Full Changelog:** https://github.com/${{ github.repository }}/compare/v${{ steps.version-check.outputs.current_version }}...v${{ steps.version-check.outputs.version }}"
