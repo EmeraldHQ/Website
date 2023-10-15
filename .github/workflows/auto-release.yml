@@ -1,0 +1,76 @@
+name: Auto Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📁 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: 📦 Get versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        id: version-check
+        run: |
+          # Get the latest tag
+          latest_tag=$(git describe --tags --abbrev=0)
+
+          # Export the current and target versions
+          echo current_version=$(echo $latest_tag | sed "s/v//") >> $GITHUB_OUTPUT
+          echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
+
+          # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot
+          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --invert-grep --grep="dependabot"))
+          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --invert-grep --grep="dependabot"))
+
+          # Map author emails to GitHub usernames in a map
+          declare -A author_map
+          while read -r author; do
+          if [[ $author == *"@users.noreply.github.com" ]]; then
+              # if author ends with @users.noreply.github.com, parse the username between '+' and '@'
+              username=$(echo "$author" | cut -d"@" -f1 | cut -d"+" -f2)
+              echo "Parsed username '$username' from '$author'"
+              author_map[$author]=$username
+            else
+              # otherwise, search for the author's GitHub username using the GitHub API
+              username=$(gh api search/users?q="$author"+in:email | jq -r ".items[0].login")
+              echo "Searched for '$author' and found '$username'"
+              author_map[$author]=$username
+            fi
+          done <<< "$(echo "${authors[*]}" | uniq)"
+
+          # Assemble changelog, by formatting it as "- <commit message> - @<author>", where author is picked from the index of the current change, and is passed through the author_map to get the GitHub username
+          changelog=()
+          for i in "${!changes[@]}"; do
+            author=${authors[$i]}
+            handle=${author_map[$author]}
+            changelog+=("- ${changes[$i]} - @$handle")
+          done
+
+          # Print the changelog to the console
+          echo "Changelog: ${changelog[*]}"
+
+          # Export the changelog as a string
+          echo changelog='${changelog[*]}' >> $GITHUB_OUTPUT
+
+      - name: ✨ Create release
+        if: steps.version-check.outputs.version != steps.version-check.outputs.current_version
+        uses: actions/create-release@v1
+        with:
+          tag_name: v${{ steps.version-check.outputs.version }}
+          release_name: ${{ steps.version-check.outputs.version }}
+          body: |
+            ## What's Changed
+            ${{ steps.version-check.outputs.changelog }}
+
+            **Full Changelog:** https://github.com/${{ github.repository }}/compare/v${{ steps.version-check.outputs.current_version }}...v${{ steps.version-check.outputs.version }}
