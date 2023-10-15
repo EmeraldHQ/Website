@@ -30,9 +30,9 @@ jobs:
           echo current_version=$(echo $latest_tag | sed "s/v//") >> $GITHUB_OUTPUT
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
-          # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot
-          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --invert-grep --grep="dependabot"))
-          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --invert-grep --grep="dependabot"))
+          # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot or renovate
+          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
+          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
 
           # Map author emails to GitHub usernames in a map
           declare -A author_map
