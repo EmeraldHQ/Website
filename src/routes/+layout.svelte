@@ -281,9 +281,18 @@
 							{#if item.href === "."}
 								<span>{item.name}</span>
 							{:else}
-								<a href={item.href} class="underline-offset-4 hover:text-dominant hover:underline">
-									{item.name}
-								</a>
+								<span
+									data-link={item.href}
+									class="after:opacity-70 data-[link^='http']:after:content-['↗']"
+								>
+									<a
+										href={item.href}
+										class="underline-offset-4 hover:text-dominant hover:underline"
+										rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+									>
+										{item.name}
+									</a>
+								</span>
 							{/if}
 						{/each}
 					</div>
@@ -295,17 +304,23 @@
 	<div class="relative mt-10 flex items-end justify-between child:h-min">
 		<!-- Left -->
 		<div>
-			<div
-				class="mb-5 divide-x divide-gray-400 text-primary child:transition-opacity child:duration-300 child-hover:opacity-70"
-			>
-				<a
-					href="https://github.com/EmeraldHQ/Website"
-					aria-label={i("a11y.aria.source")}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Github class="h-8 w-8" />
-				</a>
+			<div class="mb-5 divide-x divide-gray-400 text-primary">
+				<div class="inline-flex h-8 items-center gap-1">
+					<a
+						href="https://github.com/EmeraldHQ/Website"
+						class="peer z-10 transition-opacity duration-300 hover:opacity-70"
+						aria-label={i("a11y.aria.source")}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Github class="h-8 w-8" />
+					</a>
+					<span
+						class="opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
+					>
+						↗
+					</span>
+				</div>
 			</div>
 			© {new Date().getFullYear()} Emerald Studio
 		</div>
