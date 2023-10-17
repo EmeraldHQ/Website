@@ -316,7 +316,7 @@
 						<Github class="h-8 w-8" />
 					</a>
 					<span
-						class="opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
+						class="select-none opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
 					>
 						↗
 					</span>
