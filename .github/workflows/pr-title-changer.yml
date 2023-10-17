@@ -14,6 +14,8 @@ jobs:
   pr-title-modifier:
     name: PR Title Modifier
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
 
     steps:
       - name: 📂 Checkout
