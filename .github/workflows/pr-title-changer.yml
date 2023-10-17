@@ -1,0 +1,26 @@
+name: Pull Request Title Modifier
+
+on:
+  pull_request:
+    paths-ignore:
+      - src/**
+      - static/**
+      - tailwind.config.*
+
+env:
+  PREFIX: infra
+
+jobs:
+  pr-title-modifier:
+    name: PR Title Modifier
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📝 Modify PR Title
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          current_title=$(gh pr view --json title --jq '.title')
+          if [[ $current_title != "${{ env.PREFIX }}: "* ]]; then
+            gh pr edit --title "${{ env.PREFIX }}: $current_title"
+          fi
