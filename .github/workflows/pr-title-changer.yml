@@ -23,7 +23,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          current_title=$(gh pr view --json title --jq '.title')
+          current_title=$(gh pr view ${{ github.event.number }} --json title --jq '.title')
           if [[ $current_title != "${{ env.PREFIX }}: "* ]]; then
             gh pr edit --title "${{ env.PREFIX }}: $current_title"
           fi
