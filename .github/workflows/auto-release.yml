@@ -63,6 +63,8 @@ jobs:
           # Print the changelog to the console
           echo "Changelog: ${changelog[*]}"
 
+          # TODO: add additional notes?
+
           # Export the changelog as a string
           echo "changelog<<EOF"$'\n'"${changelog[*]}"$'\n'EOF >> $GITHUB_OUTPUT
 
