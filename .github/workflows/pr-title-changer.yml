@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+
       - name: 📝 Modify PR Title
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
