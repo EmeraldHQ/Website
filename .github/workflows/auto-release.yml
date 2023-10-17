@@ -31,10 +31,9 @@ jobs:
           echo current_version=$(echo $latest_tag | sed "s/v//") >> $GITHUB_OUTPUT
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
-          # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot or renovate
-          # TODO: filter out commits that start with "infra: "
-          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
-          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
+          # Get all changes & authors of commits since last release, excluding merge commits, infra PRs and commits from dependabot or renovate
+          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$' --invert-grep --grep='^infra: '))
+          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$' --invert-grep --grep='^infra: '))
 
           # Map author emails to GitHub usernames in a map
           declare -A author_map
@@ -62,8 +61,6 @@ jobs:
 
           # Print the changelog to the console
           echo "Changelog: ${changelog[*]}"
-
-          # TODO: add additional notes?
 
           # Export the changelog as a string
           echo "changelog<<EOF"$'\n'"${changelog[*]}"$'\n'EOF >> $GITHUB_OUTPUT
