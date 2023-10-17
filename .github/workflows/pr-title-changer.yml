@@ -18,12 +18,14 @@ jobs:
     steps:
       - name: 📂 Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: 📝 Modify PR Title
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          current_title=$(gh pr view ${{ github.event.number }} --json title --jq '.title')
+          current_title=$(gh pr view --json title --jq '.title')
           if [[ $current_title != "${{ env.PREFIX }}: "* ]]; then
             gh pr edit --title "${{ env.PREFIX }}: $current_title"
           fi
