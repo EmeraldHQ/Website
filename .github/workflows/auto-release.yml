@@ -32,8 +32,8 @@ jobs:
           echo version=$(node -pe "require('./package.json').version") >> $GITHUB_OUTPUT
 
           # Get all changes & authors of commits since last release, excluding merge commits and commits from dependabot or renovate
-          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
-          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate).*)$'))
+          IFS=$'\n' changes=($(git log $latest_tag..HEAD --pretty="%s" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate\[bot\]).*)$'))
+          IFS=$'\n' authors=($(git log $latest_tag..HEAD --pretty="%ae" --no-merges --perl-regexp --author='^((?!dependabot\[bot\]|renovate\[bot\]).*)$'))
 
           # If there are no changes, set changelog as "_No changes_" and exit
           if [ ${#changes[@]} -eq 0 ]; then
