@@ -158,18 +158,15 @@ jobs:
             fi
           done
 
-          echo "code_changes=$code_changes"
-          echo "config_changes=$config_changes"
-
           echo "code_changes=$code_changes" >> $GITHUB_OUTPUT
           echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
 
       - name: ✨ Check Svelte format
-        if: steps.changed-files.code_changes == 'true'
+        if: steps.changed-files.outputs.code_changes == 'true'
         run: pnpm check
 
       - name: ✨ Check style with Prettier & ESLint
-        if: steps.changed-files.code_changes == 'true' || steps.changed-files.config_changes == 'true'
+        if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true'
         run: pnpm lint
 
       - name: 🔧 Fix lint
@@ -188,7 +185,7 @@ jobs:
     needs: prechecks
     if: (!failure() || github.event_name == 'push') && !cancelled()
     outputs:
-      has-built: ${{ steps.changed-files.requires_build }}
+      has-built: ${{ steps.changed-files.outputs.requires_build }}
 
     steps:
       - name: 📂 Checkout
@@ -214,42 +211,40 @@ jobs:
             fi
           done
 
-          echo "requires_build=$requires_build"
-
           echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
       - name: 🔧 Configure pages
         uses: actions/configure-pages@v3
-        if: github.event_name != 'pull_request' && steps.changed-files.requires_build == 'true'
+        if: github.event_name != 'pull_request' && steps.changed-files.outputs.requires_build == 'true'
         id: pages
         with:
           static_site_generator: sveltekit
 
       - name: 📥 Install pnpm
-        if: steps.changed-files.requires_build == 'true'
+        if: steps.changed-files.outputs.requires_build == 'true'
         uses: pnpm/action-setup@v2
         with:
           version: latest
 
       - name: 🧭 Setup Node
-        if: steps.changed-files.requires_build == 'true'
+        if: steps.changed-files.outputs.requires_build == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: latest
           cache: pnpm
 
       - name: 📥 Install NPM dependencies
-        if: steps.changed-files.requires_build == 'true'
+        if: steps.changed-files.outputs.requires_build == 'true'
         run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
 
       - name: 🔨 Build repo
-        if: steps.changed-files.requires_build == 'true'
+        if: steps.changed-files.outputs.requires_build == 'true'
         run: |
           touch static/.nojekyll
           pnpm build
 
       - name: 📤 Upload artifact
-        if: github.event_name == 'push' && steps.changed-files.requires_build == 'true'
+        if: github.event_name == 'push' && steps.changed-files.outputs.requires_build == 'true'
         uses: actions/upload-pages-artifact@v2
         with:
           path: build
