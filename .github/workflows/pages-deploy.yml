@@ -73,7 +73,7 @@ jobs:
           version: latest
 
       - name: 🧭 Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: latest
           cache: pnpm
@@ -221,7 +221,7 @@ jobs:
 
       - name: 🧭 Setup Node
         if: steps.changed-files.requires_build == 'true'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: latest
           cache: pnpm
