@@ -158,6 +158,9 @@ jobs:
             fi
           done
 
+          echo "code_changes=$code_changes"
+          echo "config_changes=$config_changes"
+
           echo "code_changes=$code_changes" >> $GITHUB_OUTPUT
           echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
 
@@ -210,6 +213,8 @@ jobs:
               break
             fi
           done
+
+          echo "requires_build=$requires_build"
 
           echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
