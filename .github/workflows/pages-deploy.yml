@@ -84,7 +84,7 @@ jobs:
       - name: 🔍 Detect file changes
         id: detect-changes-pnpm
         run: |
-          if [[ $(git diff --name-only) = pnpm-lock.yaml ]]; then
+          if [[ $(git diff --name-only) =~ pnpm-lock.yaml ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
@@ -112,7 +112,7 @@ jobs:
       - name: 🔍 Detect file changes
         id: detect-changes-inlang
         run: |
-          if [[ $(git diff --name-only) = inlang.config.js ]]; then
+          if [[ $(git diff --name-only) =~ inlang.config.js ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
@@ -145,7 +145,7 @@ jobs:
           config_changes=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file = *.svelte || $file = *.html || $file = *.css || $file = *.ts || $file = *.json || $file = *.png || $file = *.svg || $file = robots.txt ]]; then
+            if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
               echo "$file changes code"
               code_changes=true
             elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
@@ -205,8 +205,7 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file = *.svelte || $file = *.html || $file = *.css || $file = *.ts || $file = *.json || $file = *.png || $file = *.svg || $file = robots.txt || $file = package.json || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
-              echo "$file requires build"
+            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = package.json || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
               requires_build=true
               break
             fi
