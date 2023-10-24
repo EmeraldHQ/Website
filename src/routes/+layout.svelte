@@ -277,18 +277,20 @@
 					<h3 class="mb-5 text-primary">{column.name}</h3>
 					<div class="flex flex-col gap-2 child:w-fit">
 						{#each column.items as item}
+							{@const isExternal = item.href.startsWith("http")}
 							<!-- TODO: remove this condition once all links are "made" -->
 							{#if item.href === "."}
 								<span>{item.name}</span>
 							{:else}
 								<span
-									data-link={item.href}
-									class="after:opacity-70 data-[link^='http']:after:content-['↗']"
+									data-external="{isExternal}"
+									class="after:opacity-70 data-[external='true']:after:content-['↗']"
 								>
 									<a
 										href={item.href}
 										class="underline-offset-4 hover:text-dominant hover:underline"
-										rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+										target={isExternal ? "_blank" : "_self"}
+										rel={isExternal ? "noopener noreferrer" : undefined}
 									>
 										{item.name}
 									</a>
