@@ -206,6 +206,7 @@ jobs:
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
             if [[ $file =~ ^src/ || $file =~ ^static/ || $file = package.json || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
+              echo "$file requires build"
               requires_build=true
               break
             fi

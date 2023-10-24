@@ -399,7 +399,7 @@
 		<!-- Right part -->
 		<Mouse3DTilting
 			initialX={-32}
-			initialY={-14}
+			initialY={-13}
 			intensity={0.05}
 			scope={"#hero"}
 			class="relative hidden aspect-square max-h-full items-center justify-center child:absolute lg:ml-20 xl:flex"
