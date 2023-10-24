@@ -84,7 +84,7 @@ jobs:
       - name: 🔍 Detect file changes
         id: detect-changes-pnpm
         run: |
-          if [[ $(git diff --name-only) =~ pnpm-lock.yaml ]]; then
+          if [[ $(git diff --name-only) = pnpm-lock.yaml ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
@@ -112,7 +112,7 @@ jobs:
       - name: 🔍 Detect file changes
         id: detect-changes-inlang
         run: |
-          if [[ $(git diff --name-only) =~ inlang.config.js ]]; then
+          if [[ $(git diff --name-only) = inlang.config.js ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
@@ -145,15 +145,21 @@ jobs:
           config_changes=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
+            if [[ $file = *.svelte || $file = *.html || $file = *.css || $file = *.ts || $file = *.json || $file = *.png || $file = *.svg || $file = robots.txt ]]; then
+              echo "$file changes code"
               code_changes=true
-            elif [[ $file =~ ^.*.config.*s || $file =~ ^tsconfig.json ]]; then
+            elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
+              echo "$file changes config"
               config_changes=true
+            fi
+            if [[ $code_changes == 'true' && $config_changes == 'true' ]]; then
+              echo "Code and config changes detected, skipping further checks"
+              break
             fi
           done
 
-          echo "code_changes=${code_changes}" >> $GITHUB_OUTPUT
-          echo "config_changes=${config_changes}" >> $GITHUB_OUTPUT
+          echo "code_changes=$code_changes" >> $GITHUB_OUTPUT
+          echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
 
       - name: ✨ Check Svelte format
         if: steps.changed-files.code_changes == 'true'
@@ -199,12 +205,14 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ || $file =~ ^package.json || $file =~ ^pnpm-lock.yaml || $file =~ ^.*.config.*s || $file =~ ^tsconfig.json ]]; then
+            if [[ $file = *.svelte || $file = *.html || $file = *.css || $file = *.ts || $file = *.json || $file = *.png || $file = *.svg || $file = robots.txt || $file = package.json || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
+              echo "$file requires build"
               requires_build=true
+              break
             fi
           done
 
-          echo "requires_build=${requires_build}" >> $GITHUB_OUTPUT
+          echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
       - name: 🔧 Configure pages
         uses: actions/configure-pages@v3
