@@ -70,7 +70,7 @@ jobs:
           echo "Changelog: ${changelog[*]}"
 
           # Export the changelog as a string
-          echo "changelog<<EOF"$'\n'"${changelog[*]}"$'\n'EOF >> $GITHUB_OUTPUT
+          echo "changelog<<EOF"$'\n'"${changelog[*]//\"/\\\"}"$'\n'EOF >> $GITHUB_OUTPUT
 
       - name: ✨ Create release
         if: steps.version-check.outputs.version != steps.version-check.outputs.current_version

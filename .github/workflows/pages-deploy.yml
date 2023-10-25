@@ -284,7 +284,7 @@ jobs:
 
       - name: ⚓️ Unlighthouse check
         run: |
-          npm i -g @unlighthouse/cli puppeteer
+          bun i -g @unlighthouse/cli puppeteer
           unlighthouse-ci --site ${{ needs.deploy.outputs.page_url }} --budget 75
 
       - name: 📤 Upload artifact
