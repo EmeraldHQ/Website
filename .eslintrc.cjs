@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import("eslint").Linter.Config} */
+const config = {
 	root: true,
 	parser: "@typescript-eslint/parser",
 	extends: [
@@ -8,7 +9,6 @@ module.exports = {
 		"prettier"
 	],
 	plugins: ["@typescript-eslint"],
-	ignorePatterns: ["*.cjs"],
 	overrides: [
 		{
 			files: ["*.svelte"],
@@ -29,3 +29,5 @@ module.exports = {
 		node: true
 	}
 };
+
+module.exports = config;
