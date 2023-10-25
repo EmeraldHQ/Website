@@ -69,8 +69,9 @@ jobs:
           # Print the changelog to the console
           echo "Changelog: ${changelog[*]}"
 
-          # Export the changelog as a string
-          echo "changelog<<EOF"$'\n'"${changelog[*]//\"/\\\"}"$'\n'EOF >> $GITHUB_OUTPUT
+          # Export the changelog as a string, escaping double quotes and < characters when they are followed by a letter
+          escaped_changelog=$(printf '%s\n' "${changelog[*]//\"/\\\"}" | sed -e 's/\(<[a-z]\)/\\\1/g')
+          echo "changelog<<EOF"$'\n'"${escaped_changelog}"$'\n'"EOF" >> $GITHUB_OUTPUT
 
       - name: ✨ Create release
         if: steps.version-check.outputs.version != steps.version-check.outputs.current_version
