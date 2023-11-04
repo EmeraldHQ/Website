@@ -1,0 +1,23 @@
+name: Renovate Config Validation
+
+on:
+  pull_request:
+    paths:
+      - .github/renovate.json
+
+jobs:
+  renovate-config-validation:
+    name: Renovate Config Validator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📁 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: ✅ Validate Renovate Config
+        run: |
+          bun i -g renovate
+          renovate-config-validator
