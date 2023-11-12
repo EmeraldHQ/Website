@@ -2,6 +2,7 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["config:base", ":disableDependencyDashboard"],
 	"labels": ["dependencies"],
+	"rangeStrategy": "bump",
 	"packageRules": [
 		{
 			"matchManagers": ["github-actions", "npm"],
