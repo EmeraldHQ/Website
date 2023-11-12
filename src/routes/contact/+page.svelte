@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageData, Snapshot } from "./$types";
 	import { ROOT_URL } from "$config";
 	import { page } from "$app/stores";
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
@@ -8,11 +9,27 @@
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/Button.svelte";
 
+	export let data: PageData;
+
+	export const snapshot: Snapshot<typeof formValues> = {
+		capture: () => formValues,
+		restore: value => (formValues = value)
+	};
+
+	let formValues = {
+		name: "",
+		email: "",
+		company: "",
+		budget: "",
+		description: ""
+	};
+
+	// Form handling
 	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
-	function mailHandler(node: HTMLFormElement) {
+	function mailHandler(form: HTMLFormElement) {
 		// A modified version of https://svelte.dev/repl/167e7c7a05844e3dab686b4257641d73
 		let submitting = false;
-		const submitButton = node.querySelector("button[type='submit'], button:not([type])");
+		const submitButton = form.querySelector("button[type='submit'], button:not([type])");
 
 		function handle_submit(event: Event) {
 			event.preventDefault();
@@ -21,7 +38,7 @@
 			submitting = true;
 			submitButton?.setAttribute("disabled", "disabled");
 
-			const entries = [...new FormData(node).entries()].map(([key, value]) => {
+			const entries = [...new FormData(form).entries()].map(([key, value]) => {
 				if (key === "$budget") {
 					value = i(`contact.fields.budget.${value}`);
 				}
@@ -35,8 +52,8 @@
 
 			mailStatus = "sending";
 
-			fetch(node.action, {
-				method: node.method,
+			fetch(form.action, {
+				method: form.method,
 				headers: {
 					"Content-Type": "application/json"
 				},
@@ -45,12 +62,10 @@
 				.then(res => {
 					if (res.ok) {
 						mailStatus = "sent";
-						node.reset();
-						setTimeout(() => {
-							mailStatus = "idle";
-						}, 5000);
+						form.reset();
 					} else {
 						mailStatus = "error";
+						console.error("Error while sending mail: ", res);
 					}
 				})
 				.catch(e => {
@@ -60,24 +75,20 @@
 				.finally(() => {
 					submitting = false;
 					setTimeout(() => {
+						mailStatus = "idle";
 						submitButton?.removeAttribute("disabled");
 					}, 5000);
 				});
 		}
 
-		node.addEventListener("submit", handle_submit);
+		form.addEventListener("submit", handle_submit);
 
 		return {
 			destroy() {
-				node.removeEventListener("submit", handle_submit);
+				form.removeEventListener("submit", handle_submit);
 			}
 		};
 	}
-
-	const contact = {
-		name: "Reuben HATTAB",
-		phone: "+33 6 48 75 08 97"
-	};
 </script>
 
 <!-- Meta tags -->
@@ -162,6 +173,7 @@
 						<input
 							type="text"
 							name="name"
+							bind:value={formValues.name}
 							autocomplete="family-name"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.name")}
@@ -180,6 +192,7 @@
 						<input
 							type="email"
 							name="email"
+							bind:value={formValues.email}
 							autocomplete="email"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.email")}
@@ -196,6 +209,7 @@
 						<input
 							type="text"
 							name="$company"
+							bind:value={formValues.company}
 							autocomplete="organization"
 							class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							placeholder={i("contact.fields.company")}
@@ -209,15 +223,17 @@
 						</span>
 						<select
 							name="$budget"
+							bind:value={formValues.budget}
 							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
 							required
 						>
-							<option value="" selected disabled hidden>
+							<option value="" disabled hidden>
 								{i("contact.fields.budget.choose")}
 							</option>
 							<option class="bg-black/50" value="none">
 								{i("contact.fields.budget.none")}
 							</option>
+							<hr>
 							<option class="bg-black/50" value="less">
 								{i("contact.fields.budget.less")}
 							</option>
@@ -232,6 +248,7 @@
 						</span>
 						<textarea
 							name="message"
+							bind:value={formValues.description}
 							placeholder={i("contact.fields.description")}
 							rows="4"
 							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
@@ -273,17 +290,17 @@
 				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
 			>
 				<div class="flex flex-col">
-					<span class="text-xl font-medium text-dominant">{contact.name}</span>
+					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
 					<span class="font-light opacity-50">
 						{i("contact.callSection.job")} - Emerald Studio
 					</span>
 				</div>
-				<a href="tel:{contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
+				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
 					<Phone class="inline-block h-6 w-6" />
 					<span
 						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
 					>
-						{contact.phone}
+						{data.contact.phone}
 					</span>
 				</a>
 			</div>
