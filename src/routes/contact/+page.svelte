@@ -233,7 +233,7 @@
 							<option class="bg-black/50" value="none">
 								{i("contact.fields.budget.none")}
 							</option>
-							<hr>
+							<hr />
 							<option class="bg-black/50" value="less">
 								{i("contact.fields.budget.less")}
 							</option>

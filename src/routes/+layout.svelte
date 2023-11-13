@@ -283,7 +283,7 @@
 								<span>{item.name}</span>
 							{:else}
 								<span
-									data-external="{isExternal}"
+									data-external={isExternal}
 									class="after:opacity-70 data-[external='true']:after:content-['↗']"
 								>
 									<a
