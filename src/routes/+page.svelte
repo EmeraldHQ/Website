@@ -289,13 +289,24 @@
 
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
-		technoCards.addEventListener("scrollend", () => {
-			if (!technoCards) return; // fix "scrollLeft not found on undefined"?
+		function onTechnoCardsScrollEnd() {
+			if (!technoCards) return; // fix "scrollLeft not found on undefined"
 			const scrollDistance = technoCards.scrollLeft;
 			const containerWidth = technoCards.clientWidth;
 			currentCard = Math.round(scrollDistance / containerWidth);
 			hoverIcon(currentCard);
-		});
+		}
+
+		if ("onscrollend" in window) {
+			technoCards.addEventListener("scrollend", onTechnoCardsScrollEnd);
+		} else {
+			// Safari fallback
+			let i: ReturnType<typeof setTimeout>;
+			technoCards.addEventListener("scroll", () => {
+				clearTimeout(i);
+				i = setTimeout(onTechnoCardsScrollEnd, 100);
+			});
+		}
 
 		// On destroy, clear the interval
 		return () => clearInterval(interval);
