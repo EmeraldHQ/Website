@@ -276,17 +276,6 @@
 			interval = setInterval(autoScroll, DELAY);
 		});
 
-		// Add listeners to the icons to start/stop the interval on hover
-		[...technoIcons.children].forEach(icon => {
-			icon.addEventListener("mouseenter", () => {
-				clearInterval(interval);
-			});
-
-			icon.addEventListener("mouseleave", () => {
-				interval = setInterval(autoScroll, DELAY);
-			});
-		});
-
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
 		function onTechnoCardsScrollEnd() {
