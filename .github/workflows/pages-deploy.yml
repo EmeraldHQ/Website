@@ -220,7 +220,7 @@ jobs:
           echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
       - name: 🔧 Configure pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
         if: github.event_name != 'pull_request' && steps.changed-files.outputs.requires_build == 'true'
         id: pages
         with:
@@ -274,7 +274,7 @@ jobs:
 
     steps:
       - name: 🌍 Deploy Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v3
         id: deployment
 
   perf-check:
