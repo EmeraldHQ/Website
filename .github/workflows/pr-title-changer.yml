@@ -6,6 +6,7 @@ on:
       - src/**
       - static/**
       - tailwind.config.*
+      - package.json
 
 env:
   PREFIX: infra
