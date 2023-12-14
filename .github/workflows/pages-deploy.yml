@@ -135,11 +135,15 @@ jobs:
         run: |
           code_changes=false
           config_changes=false
+          deps_changes=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
             if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
               echo "$file changes code"
               code_changes=true
+            elif [[ $file = pnpm-lock.yaml ]]; then
+              echo "$file changes dependencies"
+              deps_changes=true
             elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
               echo "$file changes config"
               config_changes=true
@@ -152,13 +156,14 @@ jobs:
 
           echo "code_changes=$code_changes" >> $GITHUB_OUTPUT
           echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
+          echo "deps_changes=$deps_changes" >> $GITHUB_OUTPUT
 
       - name: ✨ Check Svelte format
         if: steps.changed-files.outputs.code_changes == 'true'
         run: bun check
 
       - name: ✨ Check style with Prettier & ESLint
-        if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true'
+        if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true' || steps.changed-files.outputs.deps_changes == 'true'
         run: bun lint
 
       - name: 🔧 Fix lint
@@ -197,7 +202,7 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = package.json || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
+            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
               echo "$file requires build"
               requires_build=true
               break
@@ -207,7 +212,7 @@ jobs:
           echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
       - name: 🔧 Configure pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
         if: github.event_name != 'pull_request' && steps.changed-files.outputs.requires_build == 'true'
         id: pages
         with:
@@ -250,7 +255,7 @@ jobs:
 
     steps:
       - name: 🌍 Deploy Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v3
         id: deployment
 
   perf-check:
@@ -269,7 +274,7 @@ jobs:
           unlighthouse-ci --site ${{ needs.deploy.outputs.page_url }} --budget 75
 
       - name: 📤 Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: unlighthouse-result
           path: .unlighthouse/ci-result.json
