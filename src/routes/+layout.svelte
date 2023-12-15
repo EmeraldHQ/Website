@@ -242,13 +242,13 @@
 					type="button"
 					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					on:click={() => {
-						showSlideOver = false;
 						slideOverCloseCallback = async () => {
 							if ($page.route.id !== "/") {
 								await goto("/");
 							}
 							scrollTo(item.href);
 						};
+						showSlideOver = false;
 					}}
 				>
 					{item.name}
@@ -258,8 +258,8 @@
 				type="button"
 				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 				on:click={() => {
-					showSlideOver = false;
 					slideOverCloseCallback = () => goto("/contact");
+					showSlideOver = false;
 				}}
 			>
 				{i("common.contact")}
