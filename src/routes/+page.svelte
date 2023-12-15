@@ -290,10 +290,10 @@
 			technoCards.addEventListener("scrollend", onTechnoCardsScrollEnd);
 		} else {
 			// Safari fallback
-			let i: ReturnType<typeof setTimeout>;
+			let timeout: ReturnType<typeof setTimeout>;
 			technoCards.addEventListener("scroll", () => {
-				clearTimeout(i);
-				i = setTimeout(onTechnoCardsScrollEnd, 100);
+				clearTimeout(timeout);
+				timeout = setTimeout(onTechnoCardsScrollEnd, 100);
 			});
 		}
 
