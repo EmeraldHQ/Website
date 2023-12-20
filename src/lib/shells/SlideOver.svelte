@@ -58,7 +58,7 @@
 										<div class="ml-3 flex h-7 items-center">
 											<button type="button" class="-m-2 p-2 hover:opacity-75" on:click={close}>
 												<span class="sr-only">{i("a11y.aria.panel-close")}</span>
-												<XMark class="h-6 w-6" aria-hidden="true" />
+												<XMark class="size-6" aria-hidden="true" />
 											</button>
 										</div>
 									</div>

@@ -38,7 +38,7 @@
 			role="radio"
 			aria-checked={index === currentIndex}
 			tabindex="0"
-			class="grid overflow-hidden rounded-full px-4 py-1 text-center child:col-start-1 child:col-end-1 child:row-start-1 child:row-end-1"
+			class="grid overflow-hidden rounded-full px-4 py-1 text-center *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
 			class:group={hoverValues.length > index}
 			class:bg-slate-500={index === currentIndex}
 			class:hover:bg-slate-600={index === currentIndex}

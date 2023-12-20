@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
-import defaultTheme from "tailwindcss/defaultTheme";
+import { fontFamily, screens } from "tailwindcss/defaultTheme";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 import tailwindcss3d from "tailwindcss-3d";
 import svgToTinyDataUri from "mini-svg-data-uri";
@@ -10,12 +10,12 @@ export default {
 	theme: {
 		screens: {
 			xs: "475px",
-			...defaultTheme.screens,
+			...screens,
 			xxl: "1600px"
 		},
 		extend: {
 			fontFamily: {
-				sans: ["Chillax", ...defaultTheme.fontFamily.sans],
+				sans: ["Chillax", ...fontFamily.sans],
 				variable: "Chillax Variable"
 			},
 			colors: {
@@ -45,12 +45,6 @@ export default {
 		}
 	},
 	plugins: [
-		plugin(function ({ addVariant }) {
-			addVariant("child", "& > *");
-			addVariant("child-hover", "& > *:hover");
-			addVariant("child-focus", "& > *:focus");
-			addVariant("hover-child", "&:hover > *");
-		}),
 		tailwindcss3d,
 		plugin(function ({ matchUtilities, theme }) {
 			matchUtilities(

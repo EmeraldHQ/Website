@@ -165,7 +165,7 @@
 			<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
 			<input type="text" name="honeypot" class="hidden" />
 			<div class="mb-4 grid gap-8 sm:grid-cols-2">
-				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+				<div class="flex flex-col gap-6 *:flex *:flex-col *:gap-1">
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
 							{i("contact.labels.name")}
@@ -216,7 +216,7 @@
 						/>
 					</label>
 				</div>
-				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+				<div class="flex flex-col gap-6 *:flex *:flex-col *:gap-1">
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
 							{i("contact.labels.budget")}
@@ -261,16 +261,16 @@
 				<Button submit>
 					{#if mailStatus === "sending"}
 						<!-- TODO: Replace with a library icon -->
-						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 h-5 w-5 animate-spin" />
+						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 size-5 animate-spin" />
 						{i("contact.sendButton.loading")}
 					{:else if mailStatus === "sent"}
-						<Check class="h-6 w-6" />
+						<Check class="size-6" />
 						{i("contact.sendButton.success")}
 					{:else if mailStatus === "error"}
-						<XMark class="h-6 w-6" />
+						<XMark class="size-6" />
 						{i("contact.sendButton.error")}
 					{:else}
-						<PaperAirplane class="h-6 w-6" />
+						<PaperAirplane class="size-6" />
 						{i("contact.sendButton.default")}
 					{/if}
 				</Button>
@@ -296,7 +296,7 @@
 					</span>
 				</div>
 				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
-					<Phone class="inline-block h-6 w-6" />
+					<Phone class="inline-block size-6" />
 					<span
 						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
 					>
