@@ -78,6 +78,7 @@
 
 	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
+	let slideOverCloseCallback: () => void = () => {};
 
 	let shrinkNavBar = false;
 
@@ -225,7 +226,13 @@
 </div>
 
 <!-- Responsive slide-over -->
-<SlideOver bind:show={showSlideOver}>
+<SlideOver
+	bind:show={showSlideOver}
+	afterClose={() => {
+		slideOverCloseCallback();
+		slideOverCloseCallback = () => {};
+	}}
+>
 	<svelte:fragment slot="content">
 		<div
 			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
@@ -235,13 +242,13 @@
 					type="button"
 					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					on:click={() => {
-						showSlideOver = false;
-						setTimeout(async () => {
+						slideOverCloseCallback = async () => {
 							if ($page.route.id !== "/") {
 								await goto("/");
 							}
 							scrollTo(item.href);
-						}, 300);
+						};
+						showSlideOver = false;
 					}}
 				>
 					{item.name}
@@ -251,8 +258,8 @@
 				type="button"
 				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 				on:click={() => {
+					slideOverCloseCallback = () => goto("/contact");
 					showSlideOver = false;
-					setTimeout(() => goto("/contact"), 300);
 				}}
 			>
 				{i("common.contact")}
