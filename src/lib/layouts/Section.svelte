@@ -1,6 +1,6 @@
 <section
 	id={$$props.id}
-	class="py-16 child:mx-16 md:child:mx-32 xxl:child:!mx-auto xxl:child:max-w-screen-2xl
+	class="py-16 *:mx-16 md:*:mx-32 xxl:*:!mx-auto xxl:*:max-w-screen-2xl
 	{$$props.class ?? ''}"
 >
 	{#if $$slots.title}

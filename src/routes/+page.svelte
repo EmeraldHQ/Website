@@ -386,13 +386,11 @@
 			<h2 class="pt-10 text-xl font-normal text-gray-400">
 				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
 			</h2>
-			<div
-				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
-			>
+			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
 				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
-				<!--				<Button styleType="minimal" class="hover-child:translate-x-1">-->
+				<!--				<Button styleType="minimal" class="hover:*:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
-				<!--					<ChevronRight class="h-4 w-4 transition-transform duration-500" />-->
+				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
 				<!--				</Button>-->
 			</div>
 		</div>
@@ -402,26 +400,26 @@
 			initialY={-13}
 			intensity={0.05}
 			scope={"#hero"}
-			class="relative hidden aspect-square max-h-full items-center justify-center child:absolute lg:ml-20 xl:flex"
+			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
-			<Window class="h-full w-full text-dominant" />
+			<Window class="size-full text-dominant" />
 			<div
 				class="bottom-10 left-10 w-36 perspective-[312rem] transform-style-3d translate-z-28
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
-				<CodeBracket class="h-full w-full" />
+				<CodeBracket class="size-full" />
 			</div>
 			<div
 				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
 			>
-				<Sparkles class="h-full w-full" />
+				<Sparkles class="size-full" />
 			</div>
 			<div
 				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
 			>
-				<DevicePhoneMobile class="h-full w-full" />
+				<DevicePhoneMobile class="size-full" />
 			</div>
 		</Mouse3DTilting>
 	</div>
@@ -452,7 +450,7 @@
 			on:click={() => scrollTo("#process")}
 		>
 			<ArrowDown
-				class="h-8 w-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
+				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
@@ -467,24 +465,24 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			on:click={() => scrollToProcessCard("left")}
 		>
-			<ChevronLeft class="h-10 w-10 text-dominant" />
+			<ChevronLeft class="size-10 text-dominant" />
 		</button>
 		<div
 			bind:this={processCards}
-			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start lg:justify-center"
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 *:snap-start lg:justify-center"
 		>
 			{#each processSections as { title, icon, description }, index}
 				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
 					<span
-						class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
+						class="absolute -z-10 flex size-full items-center justify-center text-9xl font-medium text-gray-700/75"
 					>
 						{index + 1}
 					</span>
 					<div class="flex w-fit flex-row items-center gap-4">
-						<svelte:component this={icon} class="h-10 w-10 text-dominant" />
+						<svelte:component this={icon} class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
-					<p class="h-full w-full pt-4 text-lg font-normal text-gray-200">
+					<p class="size-full pt-4 text-lg font-normal text-gray-200">
 						{description}
 					</p>
 				</div>
@@ -495,7 +493,7 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			on:click={() => scrollToProcessCard("right")}
 		>
-			<ChevronRight class="h-10 w-10 text-dominant" />
+			<ChevronRight class="size-10 text-dominant" />
 		</button>
 	</div>
 </Section>
@@ -530,11 +528,11 @@
 			<div class="flex items-end justify-end">
 				<Button
 					styleType="minimal"
-					class="gap-2 text-end text-lg hover-child:translate-x-1"
+					class="gap-2 text-end text-lg hover:*:translate-x-1"
 					on:click={() => goto("/contact")}
 				>
 					{solutions.slice(-1)[0]?.description ?? ""}
-					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
+					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>
@@ -551,7 +549,7 @@
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
 				<div class="grid grid-flow-col items-start justify-start gap-x-4">
-					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
+					<svelte:component this={value.icon} class="size-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
 						<p class="text-lg text-gray-200">
@@ -574,7 +572,7 @@
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
-			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
+			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 *:snap-start sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
 				<div
@@ -593,7 +591,7 @@
 		<div class="aspect-square h-56 lg:h-48">
 			<div
 				bind:this={technoIcons}
-				class="relative flex h-full w-full items-center justify-center -rotate-45"
+				class="relative flex size-full items-center justify-center -rotate-45"
 			>
 				{#each technologiesSections as techno, index}
 					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
@@ -634,9 +632,9 @@
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
-		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
+		<Button type="minimal" class="gap-2 text-end text-lg hover:*:translate-x-1">
 			{i("home.about-us.more")}
-			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
 	</div> -->
 </Section>

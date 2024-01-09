@@ -68,7 +68,7 @@
 												on:click={() => (show = false)}
 											>
 												<span class="sr-only">{i("a11y.aria.panel-close")}</span>
-												<XMark class="h-6 w-6" aria-hidden="true" />
+												<XMark class="size-6" aria-hidden="true" />
 											</button>
 										</div>
 									</div>
