@@ -4,7 +4,6 @@
 	import Button from "$elements/Button.svelte";
 	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
-	import { scrollTo } from "$utils/scroll";
 	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
@@ -160,7 +159,7 @@
 										if ($page.route.id !== "/") {
 											await goto("/");
 										}
-										scrollTo(item.href);
+										document.querySelector(item.href)?.scrollIntoView();
 									}
 								}}
 							>
@@ -241,7 +240,7 @@
 							if ($page.route.id !== "/") {
 								await goto("/");
 							}
-							scrollTo(item.href);
+							document.querySelector(item.href)?.scrollIntoView();
 						};
 						showSlideOver = false;
 					}}

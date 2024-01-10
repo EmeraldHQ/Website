@@ -6,7 +6,6 @@
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/Button.svelte";
 	import {
 		Cloud,
@@ -450,8 +449,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("#process")}
-			on:click={() => scrollTo("#process")}
+			on:keypress={() => document.querySelector("#process")?.scrollIntoView()}
+			on:click={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
 				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
