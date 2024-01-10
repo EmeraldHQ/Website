@@ -110,12 +110,7 @@
 					type="button"
 					class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:row-start-1 *:row-end-1"
 					on:click={() => {
-						$page.route.id === "/"
-							? window.scrollTo({
-									top: 0,
-									behavior: "smooth"
-								})
-							: goto("/");
+						$page.route.id === "/" ? window.scrollTo({ top: 0 }) : goto("/");
 					}}
 				>
 					{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
@@ -337,8 +332,8 @@
 		<button
 			type="button"
 			class="absolute bottom-0 left-0 right-0 mx-auto hidden w-fit text-center sm:block"
-			on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-			on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+			on:click={() => window.scrollTo({ top: 0 })}
+			on:keypress={() => window.scrollTo({ top: 0 })}
 		>
 			<ArrowUp
 				class="size-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
@@ -349,8 +344,8 @@
 			<button
 				type="button"
 				class="sm:hidden"
-				on:click={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+				on:click={() => window.scrollTo({ top: 0 })}
+				on:keypress={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
 					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
