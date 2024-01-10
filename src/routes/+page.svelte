@@ -211,10 +211,11 @@
 	}
 
 	// Auto-scroll technologies cards
-	const DELAY = 5000;
-	let currentCard = 0;
+	const TECHNO_AUTO_SCROLL_DELAY = 5000;
+	let currentTechnoCard = 0;
+	let shouldResetTechnoScrollTimer = false;
 
-	function hoverIcon(index: number) {
+	function hoverTechnoIcon(index: number) {
 		const icons = technoIcons.children;
 		if (!icons || icons.length < index) return;
 		const icon = icons[index];
@@ -227,7 +228,7 @@
 		}
 	}
 
-	function scrollToCard(index: number) {
+	function scrollToTechnoCard(index: number) {
 		const cards = technoCards?.children;
 		if (!cards || cards.length < index) return;
 		const card = cards[index];
@@ -251,20 +252,20 @@
 
 		// Hover the first icon on load, otherwise
 		// no icon is hovered until the first scroll
-		hoverIcon(currentCard);
+		hoverTechnoIcon(currentTechnoCard);
 
 		// Auto-scroll function
-		const autoScroll = () => {
-			if (currentCard === cards.length - 1) {
-				currentCard = 0;
+		function autoScroll() {
+			if (currentTechnoCard === cards.length - 1) {
+				currentTechnoCard = 0;
 			} else {
-				currentCard++;
+				currentTechnoCard++;
 			}
-			scrollToCard(currentCard);
-		};
+			scrollToTechnoCard(currentTechnoCard);
+		}
 
 		// Initial interval definition, start auto-scrolling
-		let interval = setInterval(autoScroll, DELAY);
+		let interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 
 		// Stop the interval on hover of the cards
 		technoCards.addEventListener("mouseenter", () => {
@@ -273,27 +274,32 @@
 
 		// Restart the interval on mouse leave
 		technoCards.addEventListener("mouseleave", () => {
-			interval = setInterval(autoScroll, DELAY);
+			interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 		});
 
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
 		function onTechnoCardsScrollEnd() {
+			if (shouldResetTechnoScrollTimer) {
+				clearInterval(interval);
+				interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
+				shouldResetTechnoScrollTimer = false;
+			}
 			if (!technoCards) return; // fix "scrollLeft not found on undefined"
 			const scrollDistance = technoCards.scrollLeft;
 			const containerWidth = technoCards.clientWidth;
-			currentCard = Math.round(scrollDistance / containerWidth);
-			hoverIcon(currentCard);
+			currentTechnoCard = Math.round(scrollDistance / containerWidth);
+			hoverTechnoIcon(currentTechnoCard);
 		}
 
 		if ("onscrollend" in window) {
 			technoCards.addEventListener("scrollend", onTechnoCardsScrollEnd);
 		} else {
 			// Safari fallback
-			let i: ReturnType<typeof setTimeout>;
+			let timeout: ReturnType<typeof setTimeout>;
 			technoCards.addEventListener("scroll", () => {
-				clearTimeout(i);
-				i = setTimeout(onTechnoCardsScrollEnd, 100);
+				clearTimeout(timeout);
+				timeout = setTimeout(onTechnoCardsScrollEnd, 100);
 			});
 		}
 
@@ -600,7 +606,10 @@
 						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
 						hover:bg-gray-500 hover:scale-110
 						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
-						on:click={() => scrollToCard(index)}
+						on:click={() => {
+							scrollToTechnoCard(index);
+							shouldResetTechnoScrollTimer = true;
+						}}
 					>
 						<svelte:component
 							this={techno.icon}
