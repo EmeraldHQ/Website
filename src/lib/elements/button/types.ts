@@ -4,15 +4,15 @@ type AnchorElement = HTMLAnchorAttributes & {
 	href?: HTMLAnchorAttributes["href"];
 	type?: never;
 } & Expand<{
-	el?: HTMLAnchorElement
-}>;
+		el?: HTMLAnchorElement;
+	}>;
 
 type ButtonElement = HTMLButtonAttributes & {
 	type?: HTMLButtonAttributes["type"];
 	href?: never;
 } & Expand<{
-	el?: HTMLButtonElement
-}>;
+		el?: HTMLButtonElement;
+	}>;
 
 type Props = (AnchorElement | ButtonElement) & {
 	variant?: "primary" | "secondary" | "link";
