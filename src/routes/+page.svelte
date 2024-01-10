@@ -531,7 +531,7 @@
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button variant="link" class="gap-2 text-end text-lg hover:*:translate-x-1" href="/contact">
+				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
@@ -653,6 +653,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(i("home.cta-bottom.title"))}
 		</h3>
-		<Button class="scale-110" href="/contact">{i("common.contact")}</Button>
+		<Button href="/contact" class="scale-110">{i("common.contact")}</Button>
 	</div>
 </Section>

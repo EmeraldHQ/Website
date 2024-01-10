@@ -182,7 +182,7 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button variant="secondary" href="/contact">
+					<Button variant="secondary" href="/contact" tabindex={showButton ? 0 : -1}>
 						{i("common.contact")}
 					</Button>
 				</span>
