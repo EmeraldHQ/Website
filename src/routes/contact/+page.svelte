@@ -7,7 +7,7 @@
 	import { i } from "@inlang/sdk-js";
 	import { c } from "$lib/utils/inlang-color";
 	import Section from "$layouts/Section.svelte";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 
 	export let data: PageData;
 
@@ -258,7 +258,7 @@
 				</div>
 			</div>
 			<div class="flex justify-end">
-				<Button submit>
+				<Button type="submit">
 					{#if mailStatus === "sending"}
 						<!-- TODO: Replace with a library icon -->
 						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 size-5 animate-spin" />
