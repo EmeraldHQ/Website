@@ -17,14 +17,18 @@
 	 * The optional title of the slide over, displayed in the header.
 	 */
 	export let title: string | undefined = undefined;
-
-	function close() {
-		show = false;
-	}
+	/**
+	 * The callback function to call when the slideover opened.
+	 */
+	export let afterOpen: () => void = () => {};
+	/**
+	 * The callback function to call when the slideover closed.
+	 */
+	export let afterClose: () => void = () => {};
 </script>
 
 <Transition {show}>
-	<Dialog class="relative z-10" on:close={close}>
+	<Dialog class="relative z-10" on:close={() => (show = false)}>
 		<TransitionChild
 			enter="ease-in-out duration-500"
 			enterFrom="opacity-0"
@@ -46,6 +50,8 @@
 						leave="ease-in-out duration-500 sm:duration-700"
 						leaveFrom="translate-x-0"
 						leaveTo="translate-x-full"
+						on:introend={afterOpen}
+						on:outroend={afterClose}
 					>
 						<!-- FIXME: close on click not working for some reason (lib bug or height/placement issue?) -->
 						<div class="pointer-events-auto h-full w-screen max-w-md">
@@ -56,9 +62,13 @@
 											{title}
 										</DialogTitle>
 										<div class="ml-3 flex h-7 items-center">
-											<button type="button" class="-m-2 p-2 hover:opacity-75" on:click={close}>
+											<button
+												type="button"
+												class="-m-2 p-2 hover:opacity-75"
+												on:click={() => (show = false)}
+											>
 												<span class="sr-only">{i("a11y.aria.panel-close")}</span>
-												<XMark class="h-6 w-6" aria-hidden="true" />
+												<XMark class="size-6" aria-hidden="true" />
 											</button>
 										</div>
 									</div>

@@ -45,12 +45,6 @@ export default {
 		}
 	},
 	plugins: [
-		plugin(function ({ addVariant }) {
-			addVariant("child", "& > *");
-			addVariant("child-hover", "& > *:hover");
-			addVariant("child-focus", "& > *:focus");
-			addVariant("hover-child", "&:hover > *");
-		}),
 		tailwindcss3d,
 		plugin(function ({ matchUtilities, theme }) {
 			matchUtilities(

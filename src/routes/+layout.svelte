@@ -78,6 +78,7 @@
 
 	$: showButton = scrollY >= scrollDistanceContactButton;
 	let showSlideOver = false;
+	let slideOverCloseCallback: () => void = () => {};
 
 	let shrinkNavBar = false;
 
@@ -98,7 +99,7 @@
 
 <!-- Navbar -->
 <div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
-	<div class="w-full max-w-large-screen child:backdrop-blur-sm child:backdrop-saturate-150">
+	<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
 		<nav
 			class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
 			class:!h-16={shrinkNavBar || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
@@ -107,7 +108,7 @@
 			<div class="mr-auto flex items-center gap-5">
 				<button
 					type="button"
-					class="grid origin-left overflow-hidden scale-110 child:col-start-1 child:row-start-1 child:row-end-1"
+					class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:row-start-1 *:row-end-1"
 					on:click={() => {
 						$page.route.id === "/"
 							? window.scrollTo({
@@ -191,7 +192,7 @@
 					aria-label={i("a11y.aria.menu")}
 					on:click={() => (showSlideOver = true)}
 				>
-					<Bars3 class="h-8 w-8" />
+					<Bars3 class="size-8" />
 				</button>
 			</div>
 		</nav>
@@ -225,23 +226,29 @@
 </div>
 
 <!-- Responsive slide-over -->
-<SlideOver bind:show={showSlideOver}>
+<SlideOver
+	bind:show={showSlideOver}
+	afterClose={() => {
+		slideOverCloseCallback();
+		slideOverCloseCallback = () => {};
+	}}
+>
 	<svelte:fragment slot="content">
 		<div
-			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium child:after:!-bottom-3 child:after:!h-2"
+			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
 		>
 			{#each navbarItems as item}
 				<button
 					type="button"
 					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					on:click={() => {
-						showSlideOver = false;
-						setTimeout(async () => {
+						slideOverCloseCallback = async () => {
 							if ($page.route.id !== "/") {
 								await goto("/");
 							}
 							scrollTo(item.href);
-						}, 300);
+						};
+						showSlideOver = false;
 					}}
 				>
 					{item.name}
@@ -251,8 +258,8 @@
 				type="button"
 				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 				on:click={() => {
+					slideOverCloseCallback = () => goto("/contact");
 					showSlideOver = false;
-					setTimeout(() => goto("/contact"), 300);
 				}}
 			>
 				{i("common.contact")}
@@ -275,7 +282,7 @@
 			{#each footerItems as column}
 				<div class="min-w-fit">
 					<h3 class="mb-5 text-primary">{column.name}</h3>
-					<div class="flex flex-col gap-2 child:w-fit">
+					<div class="flex flex-col gap-2 *:w-fit">
 						{#each column.items as item}
 							{@const isExternal = item.href.startsWith("http")}
 							<!-- TODO: remove this condition once all links are "made" -->
@@ -303,7 +310,7 @@
 		</div>
 	</div>
 	<!-- Bottom links & settings -->
-	<div class="relative mt-10 flex items-end justify-between child:h-min">
+	<div class="relative mt-10 flex items-end justify-between *:h-min">
 		<!-- Left -->
 		<div>
 			<div class="mb-5 divide-x divide-gray-400 text-primary">
@@ -315,7 +322,7 @@
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						<Github class="h-8 w-8" />
+						<Github class="size-8" />
 					</a>
 					<span
 						class="select-none opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
@@ -334,7 +341,7 @@
 			on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 		>
 			<ArrowUp
-				class="h-8 w-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+				class="size-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 			/>
 		</button>
 		<!-- Right -->
@@ -346,7 +353,7 @@
 				on:keypress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
 				<ArrowUp
-					class="h-8 w-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</button>
 			<RadioButtonsGroup
