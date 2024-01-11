@@ -141,20 +141,30 @@ jobs:
       - name: 🔨 Compile Inlang
         run: pnpm ci:compile-inlang
 
+      - name: ✅ Validate Inlang
+        run: pnpx @inlang/cli@latest validate --project ./project.inlang
+
+      - name: ✨ Lint localizations
+        run: pnpx @inlang/cli@latest lint --project ./project.inlang
+
+      # TODO: Wait for parseable output from Inlang lint to run machine translation accordingly
+
       - name: ✨ Check Svelte format
+        id: svelte-format
         if: steps.changed-files.outputs.code_changes == 'true'
         run: pnpm check
 
       - name: ✨ Check style with Prettier & ESLint
+        id: prettier-eslint
         if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true' || steps.changed-files.outputs.deps_changes == 'true'
         run: pnpm lint
 
       - name: 🔧 Fix lint
-        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
         run: pnpm format
 
       - name: 📤 Commit lint fixes
-        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Fix lint
