@@ -5,7 +5,8 @@
 	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 	import { scrollTo } from "$utils/scroll";
-	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
+	import * as m from "$paraglide/messages";
+	import { availableLanguageTags, languageTag, setLanguageTag } from "$paraglide/runtime";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
 	import { fade } from "svelte/transition";
@@ -25,42 +26,42 @@
 	// Config
 	let navbarItems: { name: string; href: string }[] = [];
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
-	$: if (language) {
+	$: if (languageTag()) {
 		navbarItems = [
-			{ name: i("common.pages.process"), href: "#process" },
-			{ name: i("common.pages.solutions"), href: "#solutions" }, // Dropdown: 5/6 solutions
-			{ name: i("common.pages.technologies"), href: "#technologies" },
-			{ name: i("common.pages.company"), href: "#about-us" } // Dropdown: Values, Who we are
+			{ name: m.commonPagesProcess(), href: "#process" },
+			{ name: m.commonPagesSolutions(), href: "#solutions" }, // Dropdown: 5/6 solutions
+			{ name: m.commonPagesTechnologies(), href: "#technologies" },
+			{ name: m.commonPagesCompany(), href: "#about-us" } // Dropdown: Values, Who we are
 		];
 		footerItems = [
 			{
-				name: i("common.pages.solutions"),
+				name: m.commonPagesSolutions(),
 				items: [
-					{ name: i("common.solutions.comprehensive"), href: "." },
-					{ name: i("common.solutions.web-app"), href: "." },
-					{ name: i("common.solutions.landing"), href: "." },
-					{ name: i("common.solutions.ecommerce"), href: "." },
-					{ name: i("common.solutions.rewrite"), href: "." },
-					{ name: i("common.solutions.custom"), href: "/contact" }
+					{ name: m.commonSolutionsComprehensive(), href: "." },
+					{ name: m.commonSolutionsWebApp(), href: "." },
+					{ name: m.commonSolutionsLanding(), href: "." },
+					{ name: m.commonSolutionsEcommerce(), href: "." },
+					{ name: m.commonSolutionsRewrite(), href: "." },
+					{ name: m.commonSolutionsCustom(), href: "/contact" }
 				]
 			},
 			{
-				name: i("common.pages.title"),
+				name: m.commonPagesTitle(),
 				items: [
-					{ name: i("common.pages.home"), href: "/" },
-					{ name: i("common.pages.process"), href: "." },
-					{ name: i("common.pages.solutions"), href: "." },
-					{ name: i("common.pages.technologies"), href: "." }
+					{ name: m.commonPagesHome(), href: "/" },
+					{ name: m.commonPagesProcess(), href: "." },
+					{ name: m.commonPagesSolutions(), href: "." },
+					{ name: m.commonPagesTechnologies(), href: "." }
 				]
 			},
 			{
-				name: i("common.pages.company"),
+				name: m.commonPagesCompany(),
 				items: [
-					{ name: i("common.company.about"), href: "." },
-					{ name: i("common.contact"), href: "/contact" },
-					{ name: i("common.company.team"), href: "." },
-					{ name: i("common.company.env"), href: "." },
-					{ name: i("common.company.oss"), href: "https://github.com/EmeraldHQ" }
+					{ name: m.commonCompanyAbout(), href: "." },
+					{ name: m.commonContact(), href: "/contact" },
+					{ name: m.commonCompanyTeam(), href: "." },
+					{ name: m.commonCompanyEnv(), href: "." },
+					{ name: m.commonCompanyOss(), href: "https://github.com/EmeraldHQ" }
 				]
 			}
 		];
@@ -123,7 +124,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/logo-small.svg"
-							alt={i("a11y.alt.logo-small")}
+							alt={m.a11yAltLogoSmall()}
 							width="28"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -133,7 +134,7 @@
 							in:fade={{ delay: 250 }}
 							out:fade
 							src="/logo-title.svg"
-							alt={i("a11y.alt.logo")}
+							alt={m.a11yAltLogo()}
 							width="100"
 							height="32"
 							class="h-8 transition-opacity duration-300 hover:opacity-70"
@@ -183,13 +184,13 @@
 					class:pointer-events-none={!showButton}
 				>
 					<Button styleType="secondary" on:click={() => goto("/contact")}>
-						{i("common.contact")}
+						{m.commonContact()}
 					</Button>
 				</span>
 				<button
 					type="button"
 					class="lg:hidden"
-					aria-label={i("a11y.aria.menu")}
+					aria-label={m.a11yAriaMenu()}
 					on:click={() => (showSlideOver = true)}
 				>
 					<Bars3 class="size-8" />
@@ -262,7 +263,7 @@
 					showSlideOver = false;
 				}}
 			>
-				{i("common.contact")}
+				{m.commonContact()}
 			</button>
 		</div>
 	</svelte:fragment>
@@ -276,7 +277,7 @@
 	<!-- Main grid -->
 	<div class="flex flex-col gap-20 xl:flex-row xl:gap-0">
 		<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
-			<img src="/logo-title.svg" alt={i("a11y.alt.logo")} width="174" height="56" />
+			<img src="/logo-title.svg" alt={m.a11yAltLogo()} width="174" height="56" />
 		</a>
 		<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
 			{#each footerItems as column}
@@ -318,7 +319,7 @@
 					<a
 						href="https://github.com/EmeraldHQ/Website"
 						class="peer z-10 transition-opacity duration-300 hover:opacity-70"
-						aria-label={i("a11y.aria.source")}
+						aria-label={m.a11yAriaSource()}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -357,17 +358,13 @@
 				/>
 			</button>
 			<RadioButtonsGroup
-				values={languages.map(language => language.toUpperCase())}
-				defaultIndex={languages.indexOf(language)}
-				description={i("a11y.aria.radio-language")}
+				values={availableLanguageTags.map(language => language.toUpperCase())}
+				defaultIndex={availableLanguageTags.indexOf(languageTag())}
+				description={m.a11yAriaRadioLanguage()}
 				class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
-				on:hover={async e => {
-					const lang = languages[e.detail.index];
-					lang ? await loadResource(lang) : console.warn(`Language ${lang} not found`);
-				}}
 				on:change={e => {
-					const lang = languages[e.detail.index];
-					lang ? switchLanguage(lang) : console.error(`Language ${lang} not found`);
+					const lang = availableLanguageTags[e.detail.index];
+					lang ? setLanguageTag(lang) : console.error(`Language ${lang} not found`);
 				}}
 			/>
 		</div>
