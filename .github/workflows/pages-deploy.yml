@@ -106,6 +106,17 @@ jobs:
         if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
+      - name: 🔨 Compile Inlang
+        run: pnpm ci:compile-inlang
+
+      - name: ✅ Validate Inlang
+        run: pnpx @inlang/cli@latest validate --project ./project.inlang
+
+      - name: ✨ Lint localizations
+        run: pnpx @inlang/cli@latest lint --project ./project.inlang
+
+      # TODO: Wait for parseable output from Inlang lint to run machine translation accordingly
+
       - name: 🔍 Get modified files
         id: modified-files
         uses: tj-actions/changed-files@v41
@@ -137,17 +148,6 @@ jobs:
           echo "code_changes=$code_changes" >> $GITHUB_OUTPUT
           echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
           echo "deps_changes=$deps_changes" >> $GITHUB_OUTPUT
-
-      - name: 🔨 Compile Inlang
-        run: pnpm ci:compile-inlang
-
-      - name: ✅ Validate Inlang
-        run: pnpx @inlang/cli@latest validate --project ./project.inlang
-
-      - name: ✨ Lint localizations
-        run: pnpx @inlang/cli@latest lint --project ./project.inlang
-
-      # TODO: Wait for parseable output from Inlang lint to run machine translation accordingly
 
       - name: ✨ Check Svelte format
         id: svelte-format
