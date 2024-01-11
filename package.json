@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "vite",
 		"dev-exposed": "vite --host",
+		"ci:compile-inlang": "paraglide-js compile --project ./project.inlang",
 		"build": "vite build",
 		"preview": "vite preview",
 		"deps:install": "pnpm i",

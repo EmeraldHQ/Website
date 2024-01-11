@@ -138,6 +138,9 @@ jobs:
           echo "config_changes=$config_changes" >> $GITHUB_OUTPUT
           echo "deps_changes=$deps_changes" >> $GITHUB_OUTPUT
 
+      - name: 🔨 Compile Inlang
+        run: pnpm ci:compile-inlang
+
       - name: ✨ Check Svelte format
         if: steps.changed-files.outputs.code_changes == 'true'
         run: pnpm check
