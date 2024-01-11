@@ -40,7 +40,7 @@
 
 			const entries = [...new FormData(form).entries()].map(([key, value]) => {
 				if (key === "$budget") {
-					// @ts-expect-error
+					// @ts-expect-error - Calling a function with a string
 					value = m[`contactFieldBudget${value}`]();
 				}
 				return [key, value];
