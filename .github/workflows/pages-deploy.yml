@@ -112,10 +112,34 @@ jobs:
       - name: ✅ Validate Inlang
         run: pnpx @inlang/cli@latest validate --project ./project.inlang
 
-      - name: ✨ Lint localizations
+      - name: ✨ Check for missing localizations
+        id: missing-localizations
         run: pnpx @inlang/cli@latest lint --project ./project.inlang
 
-      # TODO: Wait for parseable output from Inlang lint to run machine translation accordingly
+      - name: 🔤 Translate missing localizations
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
+        run: pnpx @inlang/cli@latest machine translate --project ./project.inlang
+
+      - name: 📤 Commit localization fixes
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Fix localizations
+
+      - name: ❌ Exit if localization fixes have been committed
+        if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
+        run: exit 1
+
+      - name: ✨ Lint check localizations
+        id: check-localizations
+        run: |
+          # Remove all lines that contain "error" in ./project.inlang/settings.json
+          sed -i '/\"error\"/d' ./project.inlang/settings.json
+          # Replace all "warning"s in ./project.inlang/settings.json with "error"
+          sed -i 's/\"warning\"/\"error\"/g' ./project.inlang/settings.json
+          pnpx @inlang/cli@latest lint --project ./project.inlang
+          # Restore ./project.inlang/settings.json
+          git restore ./project.inlang/settings.json
 
       - name: 🔍 Get modified files
         id: modified-files
