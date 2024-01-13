@@ -2,11 +2,10 @@
 	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
-	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 	import {
 		Cloud,
 		Heart,
@@ -390,8 +389,8 @@
 				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
 			</h2>
 			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
-				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
-				<!--				<Button styleType="minimal" class="hover:*:translate-x-1">-->
+				<Button href="/contact">{i("common.contact")}</Button>
+				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
 				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
 				<!--				</Button>-->
@@ -524,16 +523,12 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{i("home.solutions.more.before-link")}
-				<!--				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>-->
+				<!--				<Button variant="minimal">{i("home.solutions.more.link")}</Button>-->
 				{i("home.solutions.more.link")}
 				{i("home.solutions.more.after-link")}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button
-					styleType="minimal"
-					class="gap-2 text-end text-lg hover:*:translate-x-1"
-					on:click={() => goto("/contact")}
-				>
+				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
@@ -638,7 +633,7 @@
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
-		<Button type="minimal" class="gap-2 text-end text-lg hover:*:translate-x-1">
+		<Button type="link" class="gap-2 text-end text-lg hover:*:translate-x-1">
 			{i("home.about-us.more")}
 			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
@@ -655,6 +650,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(i("home.cta-bottom.title"))}
 		</h3>
-		<Button class="scale-110" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+		<Button href="/contact" class="scale-110">{i("common.contact")}</Button>
 	</div>
 </Section>

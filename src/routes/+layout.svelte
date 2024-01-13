@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 	import { i, language, languages, loadResource, switchLanguage } from "@inlang/sdk-js";
@@ -176,7 +176,7 @@
 					class:duration-1000={showButton}
 					class:pointer-events-none={!showButton}
 				>
-					<Button styleType="secondary" on:click={() => goto("/contact")}>
+					<Button variant="secondary" href="/contact" tabindex={showButton ? 0 : -1}>
 						{i("common.contact")}
 					</Button>
 				</span>
