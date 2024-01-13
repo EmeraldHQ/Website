@@ -5,7 +5,6 @@
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import { scrollTo } from "$utils/scroll";
 	import Button from "$elements/button";
 	import {
 		Cloud,
@@ -147,8 +146,7 @@
 		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
 		const rightScroll = processCards.scrollLeft + processCards.offsetWidth;
 		processCards.scrollTo({
-			left: button === "left" ? leftScroll : rightScroll,
-			behavior: "smooth"
+			left: button === "left" ? leftScroll : rightScroll
 		});
 	}
 
@@ -234,8 +232,7 @@
 		if (!card) return;
 
 		technoCards.scrollTo({
-			left: card.clientWidth * index,
-			behavior: "smooth"
+			left: card.clientWidth * index
 		});
 	}
 
@@ -451,8 +448,8 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("#process")}
-			on:click={() => scrollTo("#process")}
+			on:keypress={() => document.querySelector("#process")?.scrollIntoView()}
+			on:click={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
 				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
@@ -474,7 +471,7 @@
 		</button>
 		<div
 			bind:this={processCards}
-			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 *:snap-start lg:justify-center"
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 *:snap-start motion-safe:scroll-smooth lg:justify-center"
 		>
 			{#each processSections as { title, icon, description }, index}
 				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
@@ -573,7 +570,7 @@
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
-			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 *:snap-start sm:max-w-none"
+			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 *:snap-start motion-safe:scroll-smooth sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
 				<div
