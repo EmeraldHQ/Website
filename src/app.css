@@ -8,6 +8,10 @@
 		@apply bg-dominant/75 text-primary;
 	}
 
+	html {
+		@apply motion-safe:scroll-smooth;
+	}
+
 	body {
 		@apply bg-primary text-primary;
 	}
