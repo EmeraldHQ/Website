@@ -107,7 +107,7 @@ jobs:
         run: exit 1
 
       - name: 🔨 Compile Inlang
-        run: pnpm ci:compile-inlang
+        run: pnpm exec paraglide-js compile --project ./project.inlang
 
       - name: ✅ Validate Inlang
         run: pnpx @inlang/cli@latest validate --project ./project.inlang
