@@ -650,11 +650,11 @@
 <Section>
 	<div class="my-32 flex flex-col items-center justify-center">
 		<p class="text-lg text-gray-400 xs:text-2xl">
-			{m.homeBottomCTASubtitle()}
+			{m.homeBottomCtaSubtitle()}
 		</p>
 		<h3 class="mx-10 mb-16 mt-4 text-center text-3xl font-medium xs:text-5xl">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html c(m.homeBottomCTATitle())}
+			{@html c(m.homeBottomCtaTitle())}
 		</h3>
 		<Button class="scale-110" on:click={() => goto("/contact")}>{m.commonContact()}</Button>
 	</div>
