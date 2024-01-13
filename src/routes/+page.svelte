@@ -2,11 +2,10 @@
 	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
-	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 	import {
 		Cloud,
 		Heart,
@@ -391,8 +390,8 @@
 				{m.homeHeroSubtitleFirst()}<br />{m.homeHeroSubtitleSecond()}
 			</h2>
 			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
-				<Button on:click={() => goto("/contact")}>{m.commonContact()}</Button>
-				<!--				<Button styleType="minimal" class="hover:*:translate-x-1">-->
+				<Button href="/contact">{m.commonContact()}</Button>
+				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
 				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
 				<!--				</Button>-->
@@ -525,16 +524,12 @@
 			{/each}
 			<em class="text-center sm:hidden">
 				{m.homeSolutionsMoreBeforeLink()}
-				<!--				<Button styleType="minimal">{m.homeSolutionsMoreLink()}</Button>-->
+				<!--				<Button variant="minimal">{m.homeSolutionsMoreLink()}</Button>-->
 				{m.homeSolutionsMoreLink()}
 				{m.homeSolutionsMoreAfterLink()}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button
-					styleType="minimal"
-					class="gap-2 text-end text-lg hover:*:translate-x-1"
-					on:click={() => goto("/contact")}
-				>
+				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
@@ -639,7 +634,7 @@
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
-		<Button type="minimal" class="gap-2 text-end text-lg hover:*:translate-x-1">
+		<Button type="link" class="gap-2 text-end text-lg hover:*:translate-x-1">
 			{m.homeAboutUsMore()}
 			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
@@ -656,6 +651,6 @@
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(m.homeBottomCtaTitle())}
 		</h3>
-		<Button class="scale-110" on:click={() => goto("/contact")}>{m.commonContact()}</Button>
+		<Button href="/contact" class="scale-110">{m.commonContact()}</Button>
 	</div>
 </Section>

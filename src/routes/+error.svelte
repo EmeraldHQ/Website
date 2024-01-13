@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import { CodeBracket, Sparkles } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { ExclamationCircle, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
@@ -71,12 +70,7 @@
 	</div>
 
 	<!-- Bottom button -->
-	<Button
-		styleType="secondary"
-		on:click={() => {
-			goto("/", { replaceState: true });
-		}}
-	>
+	<Button variant="secondary" href="/">
 		{m.errorGoHome()}
 	</Button>
 </div>
