@@ -2,7 +2,6 @@
 	import "../app.css";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
-	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
@@ -30,10 +29,7 @@
 	}
 
 	// Inlang
-	let currentLanguageTag: (typeof availableLanguageTags)[number] = "en";
-	onSetLanguageTag(newLanguageTag => {
-		currentLanguageTag = newLanguageTag;
-
+	onSetLanguageTag(() => {
 		navbarItems = [
 			{ name: m.commonPagesProcess(), href: "#process" },
 			{ name: m.commonPagesSolutions(), href: "#solutions" }, // Dropdown: 5/6 solutions
@@ -75,11 +71,13 @@
 	});
 
 	onMount(() => {
-		const lang = localStorage.getItem("language");
+		let lang = localStorage.getItem("language");
 		if (lang && isAvailableLanguageTag(lang)) {
-			setLanguageTag(lang);
+			if (languageTag() !== lang) {
+				setLanguageTag(lang);
+			}
 		} else {
-			const lang = navigator.language;
+			lang = navigator.language;
 			if (isAvailableLanguageTag(lang)) {
 				setLanguageTag(lang);
 			} else {
