@@ -5,7 +5,7 @@
 	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import * as m from "$paraglide/messages";
-	import { c } from "$lib/utils/inlang-color";
+	import { c } from "$utils/inlang";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 

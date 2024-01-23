@@ -27,7 +27,7 @@
 	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
 	import * as m from "$paraglide/messages";
 	import { languageTag } from "$paraglide/runtime";
-	import { c } from "$utils/inlang-color";
+	import { c } from "$utils/inlang";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 

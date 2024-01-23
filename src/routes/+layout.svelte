@@ -1,12 +1,16 @@
 <script lang="ts">
 	import "../app.css";
 	import { onMount } from "svelte";
+	import { fade } from "svelte/transition";
+	import { browser } from "$app/environment";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import Button from "$elements/button";
-	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
-	import SlideOver from "$shells/SlideOver.svelte";
-	import * as m from "$paraglide/messages";
+	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
+	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import resolveConfig from "tailwindcss/resolveConfig";
+	import tailwindConfig from "../../tailwind.config";
+	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
+	import { i18n } from "$utils/inlang";
 	import {
 		availableLanguageTags,
 		isAvailableLanguageTag,
@@ -14,11 +18,10 @@
 		onSetLanguageTag,
 		setLanguageTag
 	} from "$paraglide/runtime";
-	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Github } from "@inqling/svelte-icons/simple-icons";
-	import { fade } from "svelte/transition";
-	import resolveConfig from "tailwindcss/resolveConfig";
-	import tailwindConfig from "../../tailwind.config";
+	import * as m from "$paraglide/messages";
+	import Button from "$elements/button";
+	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
+	import SlideOver from "$shells/SlideOver.svelte";
 
 	// Breadcrumb
 	let currentRoute: string[] = [];
@@ -69,9 +72,8 @@
 				]
 			}
 		];
-
-		localStorage.setItem("language", newLanguageTag);
 	});
+
 	onMount(() => {
 		const lang = localStorage.getItem("language");
 		if (lang && isAvailableLanguageTag(lang)) {
@@ -135,7 +137,7 @@
 <!-- Binding for scroll-dependent elements -->
 <svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
 
-{#key currentLanguageTag}
+<ParaglideJS {i18n}>
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
@@ -397,10 +399,15 @@
 					class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
 					on:change={e => {
 						const lang = availableLanguageTags[e.detail.index];
-						lang ? setLanguageTag(lang) : console.error(`Language ${lang} not found`);
+						if (lang) {
+							setLanguageTag(lang);
+							localStorage.setItem("language", lang);
+						} else {
+							console.error(`Language ${lang} not found`);
+						}
 					}}
 				/>
 			</div>
 		</div>
 	</footer>
-{/key}
+</ParaglideJS>
