@@ -15,7 +15,7 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"ci:update-inlang": "node ./scripts/update-inlang-config.js",
-		"prepare": "husky install"
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@inlang/sdk-js": "^0.11.8",
