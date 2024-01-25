@@ -1,15 +1,15 @@
 <script lang="ts">
 	import "../app.css";
 	import { fade } from "svelte/transition";
-	import { goto } from "$app/navigation";
+	import { beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
-	import { i18n } from "$utils/inlang";
-	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
+	import { deconstructPathname, i18n } from "$utils/inlang";
+	import { availableLanguageTags, languageTag, onSetLanguageTag, sourceLanguageTag } from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
 	import Button from "$elements/button";
 	import SlideOver from "$shells/SlideOver.svelte";
@@ -60,6 +60,14 @@
 				]
 			}
 		];
+	});
+
+	beforeNavigate(({ to, type }) => {
+		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
+		if (type === "link" && to.route.id === $page.route.id) {
+			const [lang = sourceLanguageTag] = deconstructPathname(to.url.pathname, to.route.id);
+			localStorage.setItem("language", lang);
+		}
 	});
 
 	// Tailwind
@@ -363,17 +371,9 @@
 				>
 					{#each availableLanguageTags as lang}
 						<a
-							href={i18n.resolveRoute(
-								availableLanguageTags.includes(
-									$page.url.pathname.split("/").filter(Boolean)[0] ?? ""
-								)
-									? $page.url.pathname.replace(
-											`/${$page.url.pathname.split("/").filter(Boolean)[0] ?? ""}`,
-											"/"
-										)
-									: $page.url.pathname,
-								lang
-							)}
+							data-sveltekit-preload-data="tap"
+							data-sveltekit-preload-code="hover"
+							href={i18n.resolveRoute($page.route.id ?? "/", lang)}
 							hreflang={lang}
 							role="radio"
 							aria-current={lang === languageTag() ? "page" : undefined}
