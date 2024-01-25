@@ -9,7 +9,12 @@
 	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
 	import { deconstructPathname, i18n } from "$utils/inlang";
-	import { availableLanguageTags, languageTag, onSetLanguageTag, sourceLanguageTag } from "$paraglide/runtime";
+	import {
+		availableLanguageTags,
+		languageTag,
+		onSetLanguageTag,
+		sourceLanguageTag
+	} from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
 	import Button from "$elements/button";
 	import SlideOver from "$shells/SlideOver.svelte";
