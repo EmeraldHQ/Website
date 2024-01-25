@@ -294,7 +294,7 @@
 										class="after:opacity-70 data-[external='true']:after:content-['↗']"
 									>
 										<a
-											href={i18n.resolveRoute(item.href)}
+											href={isExternal ? item.href : i18n.resolveRoute(item.href)}
 											class="underline-offset-4 hover:text-dominant hover:underline"
 											target={isExternal ? "_blank" : "_self"}
 											rel={isExternal ? "noopener noreferrer" : undefined}
