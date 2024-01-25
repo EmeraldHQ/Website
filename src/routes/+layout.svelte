@@ -29,7 +29,10 @@
 	}
 
 	// Inlang
+	let currentLanguageTag: typeof availableLanguageTags[number] = "en";
 	onSetLanguageTag(() => {
+		currentLanguageTag = languageTag();
+
 		navbarItems = [
 			{ name: m.commonPagesProcess(), href: "#process" },
 			{ name: m.commonPagesSolutions(), href: "#solutions" }, // Dropdown: 5/6 solutions
@@ -135,7 +138,7 @@
 <!-- Binding for scroll-dependent elements -->
 <svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
 
-<ParaglideJS {i18n}>
+<ParaglideJS {i18n} languageTag={currentLanguageTag}>
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
