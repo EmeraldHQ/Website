@@ -98,12 +98,6 @@
 	titleTemplate="%s | Emerald Studio"
 	description={m.contactDescription()}
 	canonical="{ROOT_URL}{$page.route.id}"
-	languageAlternates={[
-		{
-			hrefLang: "fr",
-			href: `${ROOT_URL}${$page.route.id}`
-		}
-	]}
 	openGraph={{
 		images: [
 			{

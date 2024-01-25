@@ -1,6 +1,5 @@
 <script lang="ts">
 	import "../app.css";
-	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
@@ -10,16 +9,9 @@
 	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
 	import { i18n } from "$utils/inlang";
-	import {
-		availableLanguageTags,
-		isAvailableLanguageTag,
-		languageTag,
-		onSetLanguageTag,
-		setLanguageTag
-	} from "$paraglide/runtime";
+	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
 	import Button from "$elements/button";
-	import RadioButtonsGroup from "$elements/RadioButtonsGroup.svelte";
 	import SlideOver from "$shells/SlideOver.svelte";
 
 	// Breadcrumb
@@ -29,10 +21,7 @@
 	}
 
 	// Inlang
-	let currentLanguageTag: (typeof availableLanguageTags)[number] = "en";
 	onSetLanguageTag(() => {
-		currentLanguageTag = languageTag();
-
 		navbarItems = [
 			{ name: m.commonPagesProcess(), href: "#process" },
 			{ name: m.commonPagesSolutions(), href: "#solutions" }, // Dropdown: 5/6 solutions
@@ -71,32 +60,6 @@
 				]
 			}
 		];
-	});
-
-	onMount(() => {
-		let lang = localStorage.getItem("language");
-		if (lang && isAvailableLanguageTag(lang)) {
-			if (languageTag() !== lang) {
-				setLanguageTag(lang);
-			}
-		} else {
-			lang = navigator.language;
-			if (isAvailableLanguageTag(lang)) {
-				setLanguageTag(lang);
-			} else {
-				const splitLang = lang.split("-");
-				if (splitLang.length > 1) {
-					const firstPart = splitLang[0];
-					if (firstPart && isAvailableLanguageTag(firstPart)) {
-						setLanguageTag(firstPart);
-					} else {
-						setLanguageTag("en");
-					}
-				} else {
-					setLanguageTag("en");
-				}
-			}
-		}
 	});
 
 	// Tailwind
@@ -138,7 +101,7 @@
 <!-- Binding for scroll-dependent elements -->
 <svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
 
-<ParaglideJS {i18n} languageTag={currentLanguageTag} noAlternateLinks>
+<ParaglideJS {i18n}>
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
@@ -312,7 +275,7 @@
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 		<!-- Main grid -->
 		<div class="flex flex-col gap-20 xl:flex-row xl:gap-0">
-			<a href="/" class="h-8 transition-opacity duration-300 hover:opacity-70">
+			<a href={i18n.resolveRoute("/")} class="h-8 transition-opacity duration-300 hover:opacity-70">
 				<img src="/logo-title.svg" alt={m.a11yAltLogo()} width="174" height="56" />
 			</a>
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
@@ -331,7 +294,7 @@
 										class="after:opacity-70 data-[external='true']:after:content-['↗']"
 									>
 										<a
-											href={item.href}
+											href={i18n.resolveRoute(item.href)}
 											class="underline-offset-4 hover:text-dominant hover:underline"
 											target={isExternal ? "_blank" : "_self"}
 											rel={isExternal ? "noopener noreferrer" : undefined}
@@ -393,21 +356,27 @@
 						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 					/>
 				</button>
-				<RadioButtonsGroup
-					values={availableLanguageTags.map(language => language.toUpperCase())}
-					defaultIndex={availableLanguageTags.indexOf(languageTag())}
-					description={m.a11yAriaRadioLanguage()}
-					class="origin-bottom-right scale-75 xs:scale-90 sm:scale-100"
-					on:change={e => {
-						const lang = availableLanguageTags[e.detail.index];
-						if (lang) {
-							setLanguageTag(lang);
-							localStorage.setItem("language", lang);
-						} else {
-							console.error(`Language ${lang} not found`);
-						}
-					}}
-				/>
+				<div
+					role="radiogroup"
+					aria-label={m.a11yAriaRadioLanguage()}
+					class="inline-flex origin-bottom-right space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black scale-75 xs:scale-90 sm:scale-100"
+				>
+					{#each availableLanguageTags as lang}
+						<a
+							href={i18n.resolveRoute($page.url.pathname, lang)}
+							hreflang={lang}
+							role="radio"
+							aria-current={lang === languageTag() ? "page" : undefined}
+							aria-checked={lang === languageTag()}
+							class="grid overflow-hidden rounded-full px-4 py-1 text-center uppercase transition-opacity duration-300 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1 group-hover:opacity-0"
+							class:bg-slate-500={lang === languageTag()}
+							class:hover:bg-slate-600={lang === languageTag()}
+							class:hover:bg-slate-800={lang !== languageTag()}
+						>
+							{lang}
+						</a>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</footer>

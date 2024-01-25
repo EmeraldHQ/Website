@@ -314,12 +314,6 @@
 	titleTemplate="%s | Emerald Studio"
 	description={m.homeDescription()}
 	canonical={ROOT_URL}
-	languageAlternates={[
-		{
-			hrefLang: "fr",
-			href: ROOT_URL
-		}
-	]}
 	openGraph={{
 		images: [
 			{
