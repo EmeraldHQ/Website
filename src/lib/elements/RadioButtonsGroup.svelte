@@ -1,15 +1,15 @@
 <!-- Inspired by https://www.skeleton.dev/components/radio-groups -->
-<script lang="ts">
+<script lang="ts" generics="T extends string">
 	import { createEventDispatcher } from "svelte";
 
 	/**
-	 * The content of each toggle. Likely a string or an icon. Mandatory.
+	 * The content of each toggle. Likely a string or an icon.
 	 */
-	export let values: unknown[];
+	export let values: T[];
 	/**
 	 * The content of each toggle when hovered. Likely a string or an icon.
 	 */
-	export let hoverValues: unknown[] = [];
+	export let hoverValues: T[] = [];
 	/**
 	 * The index of the default toggle. Defaults to 0, set to 0 if the value is out of bounds of `values`.
 	 */
@@ -17,7 +17,7 @@
 	let currentIndex: number;
 	$: currentIndex = defaultIndex < values.length && defaultIndex >= 0 ? defaultIndex : 0;
 	/**
-	 * The description of the radio buttons group. Used for accessibility. Mandatory.
+	 * The description of the radio buttons group. Used for accessibility.
 	 */
 	export let description: string;
 
@@ -30,8 +30,7 @@
 <div
 	role="radiogroup"
 	aria-label={description}
-	class="inline-flex space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black
-	{$$props.class ?? ''}"
+	class="inline-flex space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black{$$props.class ? ` ${$$props.class}` : ''}"
 >
 	{#each values as toggle, index}
 		<button
