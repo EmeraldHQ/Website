@@ -363,7 +363,17 @@
 				>
 					{#each availableLanguageTags as lang}
 						<a
-							href={i18n.resolveRoute($page.url.pathname, lang)}
+							href={i18n.resolveRoute(
+								availableLanguageTags.includes(
+									$page.url.pathname.split("/").filter(Boolean)[0] ?? ""
+								)
+									? $page.url.pathname.replace(
+											`/${$page.url.pathname.split("/").filter(Boolean)[0] ?? ""}`,
+											"/"
+										)
+									: $page.url.pathname,
+								lang
+							)}
 							hreflang={lang}
 							role="radio"
 							aria-current={lang === languageTag() ? "page" : undefined}
