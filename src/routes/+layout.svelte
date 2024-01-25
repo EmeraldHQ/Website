@@ -29,7 +29,7 @@
 	}
 
 	// Inlang
-	let currentLanguageTag: typeof availableLanguageTags[number] = "en";
+	let currentLanguageTag: (typeof availableLanguageTags)[number] = "en";
 	onSetLanguageTag(() => {
 		currentLanguageTag = languageTag();
 
