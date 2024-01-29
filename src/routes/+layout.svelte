@@ -376,7 +376,7 @@
 				>
 					{#each availableLanguageTags as lang}
 						<a
-							data-sveltekit-preload-data="tap"
+							data-sveltekit-preload-data="off"
 							data-sveltekit-preload-code="hover"
 							href={i18n.resolveRoute($page.route.id ?? "/", lang)}
 							hreflang={lang}
