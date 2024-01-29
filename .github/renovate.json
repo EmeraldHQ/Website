@@ -6,7 +6,6 @@
 	"packageRules": [
 		{
 			"matchManagers": ["github-actions", "npm"],
-			"excludePackagePatterns": ["^@inlang"],
 			"groupName": "{{manager}}",
 			"addLabels": ["{{manager}}"]
 		},

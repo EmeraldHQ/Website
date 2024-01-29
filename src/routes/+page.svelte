@@ -25,8 +25,9 @@
 		DevicePhoneMobile
 	} from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
-	import { i, language } from "@inlang/sdk-js";
-	import { c } from "$utils/inlang-color";
+	import * as m from "$paraglide/messages";
+	import { languageTag } from "$paraglide/runtime";
+	import { c } from "$utils/inlang";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 
@@ -48,91 +49,91 @@
 		description: string;
 	}[] = [];
 	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
-	$: if (language) {
+	$: if (languageTag()) {
 		processSections = [
 			{
-				title: i("common.process.design"),
+				title: m.commonProcessDesign(),
 				icon: PaintBrush,
-				description: i("home.process.design-desc")
+				description: m.homeProcessDesignDesc()
 			},
 			{
-				title: i("common.process.development"),
+				title: m.commonProcessDevelopment(),
 				icon: CodeBracket,
-				description: i("home.process.development-desc")
+				description: m.homeProcessDevelopmentDesc()
 			},
 			{
-				title: i("common.process.hosting"),
+				title: m.commonProcessHosting(),
 				icon: Cloud,
-				description: i("home.process.hosting-desc")
+				description: m.homeProcessHostingDesc()
 			}
 		];
 		solutionsSections = [
 			{
-				title: i("common.solutions.comprehensive"),
-				description: i("home.solutions.comprehensive-desc")
+				title: m.commonSolutionsComprehensive(),
+				description: m.homeSolutionsComprehensiveDesc()
 			},
 			{
-				title: i("common.solutions.web-app"),
-				description: i("home.solutions.web-app-desc")
+				title: m.commonSolutionsWebApp(),
+				description: m.homeSolutionsWebAppDesc()
 			},
 			{
-				title: i("common.solutions.landing"),
-				description: i("home.solutions.landing-desc")
+				title: m.commonSolutionsLanding(),
+				description: m.homeSolutionsLandingDesc()
 			},
 			{
-				title: i("common.solutions.ecommerce"),
-				description: i("home.solutions.ecommerce-desc")
+				title: m.commonSolutionsEcommerce(),
+				description: m.homeSolutionsEcommerceDesc()
 			},
 			{
-				title: i("common.solutions.rewrite"),
-				description: i("home.solutions.rewrite-desc")
+				title: m.commonSolutionsRewrite(),
+				description: m.homeSolutionsRewriteDesc()
 			},
 			{
-				title: i("common.solutions.custom"),
-				description: i("home.solutions.custom-desc")
+				title: m.commonSolutionsCustom(),
+				description: m.homeSolutionsCustomDesc()
 			}
 		];
 		solutions = solutionsSections;
 		valuesSections = [
 			{
 				icon: Trophy,
-				title: i("home.values.quality.title"),
-				description: i("home.values.quality.desc")
+				title: m.homeValuesQualityTitle(),
+				description: m.homeValuesQualityDesc()
 			},
 			{
 				icon: Heart,
-				title: i("home.values.passion.title"),
-				description: i("home.values.passion.desc")
+				title: m.homeValuesPassionTitle(),
+				description: m.homeValuesPassionDesc()
 			},
 			{
 				icon: WrenchScrewdriver,
-				title: i("home.values.automation.title"),
-				description: i("home.values.automation.desc")
+				title: m.homeValuesAutomationTitle(),
+				description: m.homeValuesAutomationDesc()
 			},
 			{
 				icon: RocketLaunch,
-				title: i("home.values.performance.title"),
-				description: i("home.values.performance.desc")
+				title: m.homeValuesPerformanceTitle(),
+				description: m.homeValuesPerformanceDesc()
 			}
 		];
 		technologiesSections = [
 			{
-				title: c(i("home.technologies.framework.title")),
+				title: c(m.homeTechnologiesFrameworkTitle()),
 				icon: Svelte,
 				brandColor: "#FF3E00",
-				description: i("home.technologies.framework.desc")
+				description: m.homeTechnologiesFrameworkDesc()
 			},
 			{
-				title: c(i("home.technologies.database.title")),
+				title: c(m.homeTechnologiesDatabaseTitle()),
 				icon: Postgresql,
 				brandColor: "#4169E1",
-				description: i("home.technologies.database.desc")
+				description: m.homeTechnologiesDatabaseDesc()
 			},
 			{
-				title: c(i("home.technologies.infrastructure.title")),
+				title: c(m.homeTechnologiesInfrastructureTitle()),
 				icon: Vercel,
 				brandColor: "#FFFFFF",
-				description: i("home.technologies.infrastructure.desc")
+				description: m.homeTechnologiesInfrastructureDesc()
 			}
 		];
 	}
@@ -309,23 +310,17 @@
 
 <!-- Meta tags -->
 <MetaTags
-	title={i("common.pages.home")}
+	title={m.commonPagesHome()}
 	titleTemplate="%s | Emerald Studio"
-	description={i("home.description")}
+	description={m.homeDescription()}
 	canonical={ROOT_URL}
-	languageAlternates={[
-		{
-			hrefLang: "fr",
-			href: ROOT_URL
-		}
-	]}
 	openGraph={{
 		images: [
 			{
-				url: `${ROOT_URL}/${i("home.og-banner")}`,
+				url: `${ROOT_URL}/${m.homeOgBanner()}`,
 				width: 512,
 				height: 256,
-				alt: i("a11y.alt.og-banner")
+				alt: m.a11yAltOgBanner()
 			}
 		],
 		siteName: "Emerald Studio"
@@ -336,10 +331,10 @@
 		site: "@EmeraldStudio", // Someday
 		handle: "@EmeraldStudio"
 		*/
-		title: `${i("common.pages.home")} | Emerald Studio`,
-		description: i("home.description"),
-		image: `${ROOT_URL}/${i("home.og-banner")}`,
-		imageAlt: i("a11y.alt.og-banner")
+		title: `${m.commonPagesHome()} | Emerald Studio`,
+		description: m.homeDescription(),
+		image: `${ROOT_URL}/${m.homeOgBanner()}`,
+		imageAlt: m.a11yAltOgBanner()
 	}}
 	additionalRobotsProps={{
 		noarchive: true
@@ -384,12 +379,12 @@
 			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
 		>
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<h1>{@html c(i("home.hero.title.first"))}<br />{@html c(i("home.hero.title.second"))}</h1>
+			<h1>{@html c(m.homeHeroTitleFirst())}<br />{@html c(m.homeHeroTitleSecond())}</h1>
 			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
+				{m.homeHeroSubtitleFirst()}<br />{m.homeHeroSubtitleSecond()}
 			</h2>
 			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
-				<Button href="/contact">{i("common.contact")}</Button>
+				<Button href="/contact">{m.commonContact()}</Button>
 				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
 				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
@@ -509,7 +504,7 @@
 	/>
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.solutions.title"))}
+		{@html c(m.homeSolutionsTitle())}
 	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -522,10 +517,10 @@
 				</div>
 			{/each}
 			<em class="text-center sm:hidden">
-				{i("home.solutions.more.before-link")}
-				<!--				<Button variant="minimal">{i("home.solutions.more.link")}</Button>-->
-				{i("home.solutions.more.link")}
-				{i("home.solutions.more.after-link")}
+				{m.homeSolutionsMoreBeforeLink()}
+				<!--				<Button variant="minimal">{m.homeSolutionsMoreLink()}</Button>-->
+				{m.homeSolutionsMoreLink()}
+				{m.homeSolutionsMoreAfterLink()}
 			</em>
 			<div class="flex items-end justify-end">
 				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
@@ -541,7 +536,7 @@
 <Section id="values" class="relative py-20">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.values.title"))}
+		{@html c(m.homeValuesTitle())}
 	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
@@ -564,7 +559,7 @@
 <Section id="technologies">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.technologies.title"))}
+		{@html c(m.homeTechnologiesTitle())}
 	</svelte:fragment>
 	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
@@ -621,20 +616,20 @@
 <Section id="about-us">
 	<svelte:fragment slot="title">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.about-us.title"))}
+		{@html c(m.homeAboutUsTitle())}
 	</svelte:fragment>
 	<div class="flex items-center justify-center pb-10">
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
 		>
 			<p class="text-lg text-gray-200">
-				{i("home.about-us.desc")}
+				{m.homeAboutUsDesc()}
 			</p>
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
 		<Button type="link" class="gap-2 text-end text-lg hover:*:translate-x-1">
-			{i("home.about-us.more")}
+			{m.homeAboutUsMore()}
 			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
 	</div> -->
@@ -644,12 +639,12 @@
 <Section>
 	<div class="my-32 flex flex-col items-center justify-center">
 		<p class="text-lg text-gray-400 xs:text-2xl">
-			{i("home.cta-bottom.subtitle")}
+			{m.homeBottomCtaSubtitle()}
 		</p>
 		<h3 class="mx-10 mb-16 mt-4 text-center text-3xl font-medium xs:text-5xl">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html c(i("home.cta-bottom.title"))}
+			{@html c(m.homeBottomCtaTitle())}
 		</h3>
-		<Button href="/contact" class="scale-110">{i("common.contact")}</Button>
+		<Button href="/contact" class="scale-110">{m.commonContact()}</Button>
 	</div>
 </Section>

@@ -4,11 +4,11 @@
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import { CodeBracket, Sparkles } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { ExclamationCircle, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
-	import { i } from "@inlang/sdk-js";
+	import * as m from "$paraglide/messages";
 </script>
 
 <svelte:head>
-	<title>{i("errors.error")} {$page.status} | Emerald Studio</title>
+	<title>{m.errorError()} {$page.status} | Emerald Studio</title>
 </svelte:head>
 
 <div
@@ -71,6 +71,6 @@
 
 	<!-- Bottom button -->
 	<Button variant="secondary" href="/">
-		{i("errors.go-home")}
+		{m.errorGoHome()}
 	</Button>
 </div>

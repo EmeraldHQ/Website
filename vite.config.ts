@@ -1,9 +1,15 @@
-import inlangPlugin from "@inlang/sdk-js/adapter-sveltekit";
 import { sveltekit } from "@sveltejs/kit/vite";
+import { paraglide } from "@inlang/paraglide-js-adapter-sveltekit/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-	plugins: [inlangPlugin(), sveltekit()],
+	plugins: [
+		sveltekit(),
+		paraglide({
+			project: "./project.inlang",
+			outdir: "./src/paraglide"
+		})
+	],
 	server: {
 		fs: {
 			allow: ["."]

@@ -4,6 +4,7 @@ node_modules
 /.svelte-kit
 /.idea
 /package
+**/*.inlang/project_id
 .env
 .env.*
 !.env.example

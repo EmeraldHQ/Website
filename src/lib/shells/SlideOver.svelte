@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { i } from "@inlang/sdk-js";
+	import * as m from "$paraglide/messages";
 	import { XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import {
 		Dialog,
@@ -67,7 +67,7 @@
 												class="-m-2 p-2 hover:opacity-75"
 												on:click={() => (show = false)}
 											>
-												<span class="sr-only">{i("a11y.aria.panel-close")}</span>
+												<span class="sr-only">{m.a11yAriaPanelClose()}</span>
 												<XMark class="size-6" aria-hidden="true" />
 											</button>
 										</div>
