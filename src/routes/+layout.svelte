@@ -12,8 +12,7 @@
 	import {
 		availableLanguageTags,
 		languageTag,
-		onSetLanguageTag,
-		sourceLanguageTag
+		onSetLanguageTag
 	} from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
 	import Button from "$elements/button";

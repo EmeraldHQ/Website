@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Props, Events } from "./types";
-	import { i18n } from "$utils/inlang";
 
 	type $$Props = Props;
 	type $$Events = Events;
