@@ -8,7 +8,7 @@
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
-	import { deconstructPathname, i18n } from "$utils/inlang";
+	import { i18n } from "$utils/inlang";
 	import {
 		availableLanguageTags,
 		languageTag,
@@ -70,7 +70,7 @@
 	beforeNavigate(({ to, type }) => {
 		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
 		if (type === "link" && to.route.id === $page.route.id) {
-			const [lang = sourceLanguageTag] = deconstructPathname(to.url.pathname, to.route.id);
+			const lang = i18n.getLanguageFromUrl(to.url);
 			localStorage.setItem("language", lang);
 		}
 	});
