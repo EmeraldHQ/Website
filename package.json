@@ -1,6 +1,6 @@
 {
 	"name": "emerald-website",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"private": true,
 	"scripts": {
 		"dev": "vite",
@@ -17,8 +17,8 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@inlang/paraglide-js": "^1.1.1",
-		"@inlang/paraglide-js-adapter-sveltekit": "^0.2.2",
+		"@inlang/paraglide-js": "^1.2.2",
+		"@inlang/paraglide-js-adapter-sveltekit": "^0.3.2",
 		"@inqling/svelte-icons": "^4.1.0",
 		"@rgossiaux/svelte-headlessui": "^2.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",

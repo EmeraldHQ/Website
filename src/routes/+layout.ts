@@ -6,7 +6,7 @@ import {
 	isAvailableLanguageTag,
 	sourceLanguageTag
 } from "$paraglide/runtime";
-import { deconstructPathname, i18n } from "$utils/inlang";
+import { i18n } from "$utils/inlang";
 
 export const prerender = true;
 
@@ -17,8 +17,7 @@ export const load: LayoutLoad = ({ route, url }) => {
 		lang: (typeof availableLanguageTags)[number] = sourceLanguageTag
 	) {
 		if (!route.id) return;
-		const [, unprefixedPathname] = deconstructPathname(url.pathname, route.id);
-		const resolved = i18n.resolveRoute(unprefixedPathname, lang);
+		const resolved = i18n.resolveRoute(route.id, lang);
 		if (resolved !== url.pathname) {
 			redirect(307, resolved);
 		}
@@ -30,12 +29,14 @@ export const load: LayoutLoad = ({ route, url }) => {
 	} else {
 		lang = navigator.language;
 		if (isAvailableLanguageTag(lang)) {
+			localStorage.setItem("language", lang);
 			conditionallyRedirectTo(lang);
 		} else {
 			const splitLang = lang.split("-");
 			if (splitLang.length > 1) {
 				const firstPart = splitLang[0];
 				if (firstPart && isAvailableLanguageTag(firstPart)) {
+					localStorage.setItem("language", firstPart);
 					conditionallyRedirectTo(firstPart);
 				} else {
 					conditionallyRedirectTo();
