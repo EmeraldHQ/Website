@@ -13,6 +13,9 @@ const config = {
 			$shells: "./src/lib/shells",
 			$utils: "./src/lib/utils",
 			$config: "./src/lib/config"
+		},
+		prerendering: {
+			origin: "https://emeraldstudio.fr"
 		}
 	},
 	vitePlugin: {
