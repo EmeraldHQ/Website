@@ -14,7 +14,7 @@ const config = {
 			$utils: "./src/lib/utils",
 			$config: "./src/lib/config"
 		},
-		prerendering: {
+		prerender: {
 			origin: "https://emeraldstudio.fr"
 		}
 	},
