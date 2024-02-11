@@ -318,10 +318,11 @@
 	>
 		<!-- Left part -->
 		<div class="flex flex-col gap-10 sm:mx-auto">
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			<h1 class="text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html c(m.homeHeroTitleFirst())}
 				<br />
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html c(m.homeHeroTitleSecond())}
 			</h1>
 			<h2 class="text-xl text-gray-400">
@@ -442,16 +443,12 @@
 </Section>
 
 <!-- Solutions -->
-<Section id="solutions" class="relative py-20">
+<Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
 		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/[0.2]
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeSolutionsTitle())}
-	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each solutions.slice(0, -1) as solution}
@@ -479,11 +476,7 @@
 </Section>
 
 <!-- Values -->
-<Section id="values" class="relative py-20">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeValuesTitle())}
-	</svelte:fragment>
+<Section id="values" title={m.homeValuesTitle()} class="relative py-20">
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
@@ -502,11 +495,7 @@
 </Section>
 
 <!-- Technologies -->
-<Section id="technologies">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeTechnologiesTitle())}
-	</svelte:fragment>
+<Section id="technologies" title={m.homeTechnologiesTitle()}>
 	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
@@ -559,11 +548,7 @@
 </Section>
 
 <!-- About us -->
-<Section id="about-us">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeAboutUsTitle())}
-	</svelte:fragment>
+<Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { twMerge } from "tailwind-merge";
+	import { c } from "$utils/inlang";
+
+	export let title: string | undefined = undefined;
 
 	export let id: string | undefined = undefined;
+
 	let className: string | null | undefined = undefined;
 	export { className as class };
 </script>
@@ -14,9 +18,10 @@
 	)}
 	{...$$restProps}
 >
-	{#if $$slots.title}
+	{#if title}
 		<h2 class="pb-10 text-4xl font-medium drop-shadow-lg">
-			<slot name="title" />
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html c(title)}
 		</h2>
 	{/if}
 	<slot />

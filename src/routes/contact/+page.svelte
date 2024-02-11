@@ -2,7 +2,6 @@
 	import type { PageData, Snapshot } from "./$types";
 	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import * as m from "$paraglide/messages";
-	import { c } from "$utils/inlang";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 
@@ -93,9 +92,7 @@
 <div
 	class="relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
 >
-	<Section>
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<svelte:fragment slot="title">{@html c(m.contactTitle())}</svelte:fragment>
+	<Section id="contact" title={m.contactTitle()}>
 		<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
 			<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
 			<input type="text" name="honeypot" class="hidden" />
@@ -211,34 +208,30 @@
 				</Button>
 			</div>
 		</form>
-		<div class="my-8 flex items-center justify-center">
-			<div class="w-full border-b border-dominant"></div>
-			<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
-			<div class="w-full border-b border-dominant"></div>
-		</div>
-		<div>
-			<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html c(m.contactCallSectionTitle())}
-			</h2>
-			<div
-				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-			>
-				<div class="flex flex-col">
-					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
-					<span class="font-light opacity-50">
-						{m.contactCallSectionJob()} - Emerald Studio
-					</span>
-				</div>
-				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
-					<Phone class="inline-block size-6" />
-					<span
-						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
-					>
-						{data.contact.phone}
-					</span>
-				</a>
+	</Section>
+	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
+		<div class="w-full border-b border-dominant"></div>
+		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
+		<div class="w-full border-b border-dominant"></div>
+	</div>
+	<Section id="sales" title={m.contactCallSectionTitle()}>
+		<div
+			class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
+		>
+			<div class="flex flex-col">
+				<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
+				<span class="font-light opacity-50">
+					{m.contactCallSectionJob()} - Emerald Studio
+				</span>
 			</div>
+			<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
+				<Phone class="inline-block size-6" />
+				<span
+					class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
+				>
+					{data.contact.phone}
+				</span>
+			</a>
 		</div>
 	</Section>
 </div>
