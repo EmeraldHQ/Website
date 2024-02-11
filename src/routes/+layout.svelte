@@ -2,7 +2,6 @@
 	import "../app.css";
 	import type { LayoutData } from "./$types";
 	import { fade } from "svelte/transition";
-	import { ROOT_URL } from "$config";
 	import { beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";

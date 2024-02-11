@@ -35,6 +35,11 @@ const config = {
 		browser: true,
 		es2017: true,
 		node: true
+	},
+	rules: {
+		// Prefer { myFunction: () => {} } over { myFunction() {} }
+		// https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
+		"@typescript-eslint/method-signature-style": ["error", "property"]
 	}
 };
 
