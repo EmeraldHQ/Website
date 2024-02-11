@@ -1,10 +1,14 @@
 <script lang="ts">
 	import "../app.css";
+	import type { LayoutData } from "./$types";
 	import { fade } from "svelte/transition";
+	import { ROOT_URL } from "$config";
 	import { beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
 	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
+	import extend from "just-extend";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
@@ -19,6 +23,20 @@
 	$: if ($page.route.id) {
 		currentRoute = $page.route.id.split("/").filter(Boolean);
 	}
+
+	// Meta tags
+	export let data: LayoutData;
+	let metadata: MetaTagsProps;
+	$: metadata = extend(true, {}, data.baseMetaTags, {
+		title: $page.data.pageTitle,
+		twitter: {
+			title:
+				data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
+				$page.data.pageTitle
+		}
+	});
+	let schemas: JsonLdProps["schema"] = [];
+	$: schemas = [...(data.baseSchemas ?? []), ...($page.data.pageSchemas ?? [])].filter(Boolean);
 
 	// Inlang
 	onSetLanguageTag(() => {
@@ -110,6 +128,10 @@
 <svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
 
 <ParaglideJS {i18n}>
+	<MetaTags {...metadata} />
+
+	<JsonLd schema={schemas} />
+
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">

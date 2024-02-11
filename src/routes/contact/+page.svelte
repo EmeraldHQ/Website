@@ -1,8 +1,5 @@
 <script lang="ts">
 	import type { PageData, Snapshot } from "./$types";
-	import { ROOT_URL } from "$config";
-	import { page } from "$app/stores";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
 	import * as m from "$paraglide/messages";
 	import { c } from "$utils/inlang";
@@ -91,63 +88,6 @@
 		};
 	}
 </script>
-
-<!-- Meta tags -->
-<MetaTags
-	title={m.contactPageTitle()}
-	titleTemplate="%s | Emerald Studio"
-	description={m.contactDescription()}
-	canonical="{ROOT_URL}{$page.route.id}"
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${m.homeOgBanner()}`,
-				width: 512,
-				height: 256,
-				alt: m.a11yAltOgBanner()
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		title: `${m.contactPageTitle()} | Emerald Studio`,
-		description: m.contactDescription(),
-		image: `${ROOT_URL}/${m.homeOgBanner()}`,
-		imageAlt: m.a11yAltOgBanner()
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		},
-		// Add type WebSite from home once done
-		{
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{
-					"@type": "ListItem",
-					position: 1,
-					name: m.commonPagesHome(),
-					item: ROOT_URL
-				},
-				{
-					"@type": "ListItem",
-					position: 2,
-					name: m.contactPageTitle(),
-					item: `${ROOT_URL}${$page.route.id}`
-				}
-			]
-		}
-	]}
-/>
 
 <!-- Page -->
 <div

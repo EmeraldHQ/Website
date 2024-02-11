@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 	import MagneticElement from "$shells/MagneticElement.svelte";
@@ -16,7 +15,6 @@
 		Window,
 		WrenchScrewdriver
 	} from "@inqling/svelte-icons/heroicon-24-outline";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
 	import {
 		ArrowDown,
 		ChevronRight,
@@ -307,62 +305,6 @@
 
 <!-- Window bindings -->
 <svelte:window bind:innerWidth />
-
-<!-- Meta tags -->
-<MetaTags
-	title={m.commonPagesHome()}
-	titleTemplate="%s | Emerald Studio"
-	description={m.homeDescription()}
-	canonical={ROOT_URL}
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${m.homeOgBanner()}`,
-				width: 512,
-				height: 256,
-				alt: m.a11yAltOgBanner()
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		/*
-		site: "@EmeraldStudio", // Someday
-		handle: "@EmeraldStudio"
-		*/
-		title: `${m.commonPagesHome()} | Emerald Studio`,
-		description: m.homeDescription(),
-		image: `${ROOT_URL}/${m.homeOgBanner()}`,
-		imageAlt: m.a11yAltOgBanner()
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		} /*,
-		// Add FAQ?
-		{
-			"@type": "WebSite",
-			url: ROOT_URL,
-			potentialAction: {
-				"@type": "SearchAction",
-				target: {
-					"@type": "EntryPoint",
-					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
-				},
-				"query-input": "required name=search_term_string"
-			}
-		}*/
-	]}
-/>
 
 <!-- Body -->
 <!-- Hero -->

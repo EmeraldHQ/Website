@@ -56,6 +56,9 @@ devDependencies:
   husky:
     specifier: ^9.0.10
     version: 9.0.10
+  just-extend:
+    specifier: ^6.2.0
+    version: 6.2.0
   mini-svg-data-uri:
     specifier: ^1.4.4
     version: 1.4.4
@@ -2182,6 +2185,10 @@ packages:
       lodash.once: 4.1.1
       ms: 2.1.2
       semver: 7.5.4
+    dev: true
+
+  /just-extend@6.2.0:
+    resolution: {integrity: sha512-cYofQu2Xpom82S6qD778jBDpwvvy39s1l/hrYij2u9AMdQcGRpaBu6kY4mVhuno5kJVi1DAz4aiphA2WI1/OAw==}
     dev: true
 
   /jwa@1.4.1:
