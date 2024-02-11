@@ -379,9 +379,15 @@
 			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
 		>
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<h1>{@html c(m.homeHeroTitleFirst())}<br />{@html c(m.homeHeroTitleSecond())}</h1>
+			<h1>
+				{@html c(m.homeHeroTitleFirst())}
+				<br />
+				{@html c(m.homeHeroTitleSecond())}
+			</h1>
 			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				{m.homeHeroSubtitleFirst()}<br />{m.homeHeroSubtitleSecond()}
+				{m.homeHeroSubtitleFirst()}
+				<br />
+				{m.homeHeroSubtitleSecond()}
 			</h2>
 			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
 				<Button href="/contact">{m.commonContact()}</Button>
@@ -401,7 +407,7 @@
 		>
 			<Window class="size-full text-dominant" />
 			<div
-				class="bottom-10 left-10 w-36 perspective-[312rem] transform-style-3d translate-z-28
+				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
 				<CodeBracket class="size-full" />
@@ -479,7 +485,7 @@
 						<svelte:component this={icon} class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
-					<p class="size-full pt-4 text-lg font-normal text-gray-200">
+					<p class="size-full text-pretty pt-4 text-lg font-normal text-gray-200">
 						{description}
 					</p>
 				</div>
@@ -511,7 +517,7 @@
 			{#each solutions.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{solution.description}
 					</p>
 				</div>
@@ -545,7 +551,7 @@
 					<svelte:component this={value.icon} class="size-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
-						<p class="text-lg text-gray-200">
+						<p class="text-pretty text-lg text-gray-200">
 							{value.description}
 						</p>
 					</div>
@@ -573,7 +579,7 @@
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{techno.description}
 					</p>
 				</div>
@@ -622,7 +628,7 @@
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
 		>
-			<p class="text-lg text-gray-200">
+			<p class="text-pretty text-lg text-gray-200">
 				{m.homeAboutUsDesc()}
 			</p>
 		</div>
