@@ -4,7 +4,7 @@
 	import { useId } from "$utils/id";
 
 	// Constants
-	const elementId = `svelte-magnetic-element-${useId()}`;
+	const id = `svelte-magnetic-element-${useId()}`;
 	const dispatch = createEventDispatcher<{
 		in_zone: { element: HTMLElement };
 		out_zone: { element: HTMLElement };
@@ -19,6 +19,9 @@
 	 * The interpolation factor for the magnetic effect. Often a value between 0 and 1. Defaults to 0.8.
 	 */
 	export let interpolationFactor = 0.8;
+
+	let className: string | null | undefined = undefined;
+	export { className as class };
 
 	// Magnetic Object
 	class MagneticObject {
@@ -104,11 +107,11 @@
 	}
 
 	onMount(() => {
-		const button = document.querySelector(`.${elementId} > *`);
+		const button = document.querySelector(`#${id} > *`);
 		new MagneticObject(<HTMLElement>button);
 	});
 </script>
 
-<div class="{elementId} {$$props.class ?? ''}">
+<div {id} class={className}>
 	<slot />
 </div>

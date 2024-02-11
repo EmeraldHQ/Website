@@ -317,21 +317,19 @@
 		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
 	>
 		<!-- Left part -->
-		<div
-			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
-		>
+		<div class="flex flex-col gap-10 sm:mx-auto">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<h1>
+			<h1 class="text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl">
 				{@html c(m.homeHeroTitleFirst())}
 				<br />
 				{@html c(m.homeHeroTitleSecond())}
 			</h1>
-			<h2 class="pt-10 text-xl font-normal text-gray-400">
+			<h2 class="text-xl text-gray-400">
 				{m.homeHeroSubtitleFirst()}
 				<br />
 				{m.homeHeroSubtitleSecond()}
 			</h2>
-			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
+			<div class="flex origin-bottom-left flex-col gap-5 scale-110 *:max-w-fit xs:flex-row">
 				<Button href="/contact">{m.commonContact()}</Button>
 				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
 				<!--					{i("home.hero.cta-secondary")}-->
@@ -344,7 +342,7 @@
 			initialX={-32}
 			initialY={-13}
 			intensity={0.05}
-			scope={"#hero"}
+			scope="#hero"
 			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
 			<Window class="size-full text-dominant" />
