@@ -304,8 +304,11 @@
 
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 		<!-- Main grid -->
-		<div class="flex flex-col gap-20 xl:flex-row xl:gap-0">
-			<a href={i18n.resolveRoute("/")} class="h-8 transition-opacity duration-300 hover:opacity-70">
+		<div class="flex flex-col justify-start gap-16 xl:flex-row xl:gap-0">
+			<a
+				href={i18n.resolveRoute("/")}
+				class="w-fit transition-opacity duration-300 hover:opacity-70"
+			>
 				<img src="/logo-title.svg" alt={m.a11yAltLogo()} width="174" height="56" />
 			</a>
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
