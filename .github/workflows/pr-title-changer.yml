@@ -12,19 +12,14 @@ env:
   PREFIX: infra
 
 jobs:
-  pr-title-modifier:
-    name: PR Title Modifier
+  get-modified-files:
+    name: PR Title Modifier - Check
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' && github.actor != 'emeraldstudio-bot'
-    permissions:
-      pull-requests: write
+    outputs:
+      infra_changes: ${{ steps.infra-changed-files.outputs.infra_changes }}
 
     steps:
-      - name: 📂 Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
       - name: 🔍 Get modified files
         id: modified-files
         uses: tj-actions/changed-files@v42
@@ -49,8 +44,21 @@ jobs:
             echo "infra_changes=false" >> $GITHUB_OUTPUT
           fi
 
+  pr-title-modifier:
+    name: PR Title Modifier
+    runs-on: ubuntu-latest
+    needs: get-modified-files
+    if: needs.get-modified-files.outputs.infra_changes == 'true'
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: 📂 Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - name: 📝 Modify PR Title
-        if: steps.infra-changed-files.outputs.infra_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
