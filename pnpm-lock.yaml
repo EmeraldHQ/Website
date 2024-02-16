@@ -7,13 +7,13 @@ settings:
 devDependencies:
   '@inlang/paraglide-js':
     specifier: ^1.2.3
-    version: 1.2.3(@sinclair/typebox@0.31.28)
+    version: 1.2.3(@sinclair/typebox@0.32.14)
   '@inlang/paraglide-js-adapter-sveltekit':
     specifier: ^0.3.5
-    version: 0.3.5(@sinclair/typebox@0.31.28)(@sveltejs/kit@2.5.0)
+    version: 0.3.5(@sinclair/typebox@0.32.14)(@sveltejs/kit@2.5.0)
   '@inqling/svelte-icons':
-    specifier: ^4.1.1
-    version: 4.1.1(svelte@4.2.10)
+    specifier: ^4.1.2
+    version: 4.1.2(svelte@4.2.10)
   '@rgossiaux/svelte-headlessui':
     specifier: ^2.0.0
     version: 2.0.0(svelte@4.2.10)
@@ -409,6 +409,14 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
+  /@inlang/language-tag@1.4.0(@sinclair/typebox@0.32.14):
+    resolution: {integrity: sha512-IKAhzWphmdnzraUYrhAeETZYUm/O8zCKgZi3w6r/5bgRgFq1eh1ZEBfvobGGyuKsMmFdWxb9AjUG+HBIU90IHw==}
+    peerDependencies:
+      '@sinclair/typebox': ^0.31.17
+    dependencies:
+      '@sinclair/typebox': 0.32.14
+    dev: true
+
   /@inlang/message-lint-rule@1.4.1(@sinclair/typebox@0.31.28):
     resolution: {integrity: sha512-kwl3IXD2bjnaFBZC7jZe2xioyTqF+7V9G9RDSkzYv9bl2hC+lvjhPGZJnJ7/a8Bpp1ENdUt7CaDJ3UlcDbUjMQ==}
     peerDependencies:
@@ -441,12 +449,12 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/paraglide-js-adapter-sveltekit@0.3.5(@sinclair/typebox@0.31.28)(@sveltejs/kit@2.5.0):
+  /@inlang/paraglide-js-adapter-sveltekit@0.3.5(@sinclair/typebox@0.32.14)(@sveltejs/kit@2.5.0):
     resolution: {integrity: sha512-NbIRjspapQhxxxulI4v3hcFjzYN4wMEwdtV73Cym0P6PNOfPLyrZsBnfIXuITQoOdOP8F54SMovCMGx/gIxI8A==}
     peerDependencies:
       '@sveltejs/kit': ^2.4.3
     dependencies:
-      '@inlang/paraglide-js-adapter-vite': 1.2.12(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js-adapter-vite': 1.2.12(@sinclair/typebox@0.32.14)
       '@sveltejs/kit': 2.5.0(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.10)(vite@5.1.0)
       dedent: 1.5.1
       devalue: 4.3.2
@@ -458,10 +466,10 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-unplugin@1.4.1(@sinclair/typebox@0.31.28):
+  /@inlang/paraglide-js-adapter-unplugin@1.4.1(@sinclair/typebox@0.32.14):
     resolution: {integrity: sha512-LoANbaba+C8wq0J5qvmn42E/2gc20BkprQwr16dMf0hf+VlAmIrHi9YwpKhdHoB4zvjKzDkv7rhoxQXrWLASBA==}
     dependencies:
-      '@inlang/paraglide-js': 1.2.3(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js': 1.2.3(@sinclair/typebox@0.32.14)
       '@inlang/sdk': 0.26.1
       '@lix-js/client': 0.8.0
       unplugin: 1.5.1
@@ -471,22 +479,22 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-vite@1.2.12(@sinclair/typebox@0.31.28):
+  /@inlang/paraglide-js-adapter-vite@1.2.12(@sinclair/typebox@0.32.14):
     resolution: {integrity: sha512-lVcFFxv8EY7DilIubMccGJhHec1OBALgk4fRAEdRSO0B7olfaWuxzmnsjthPyKCBaAk9ni+Ez/zJLW51ngLiGw==}
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.4.1(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js-adapter-unplugin': 1.4.1(@sinclair/typebox@0.32.14)
     transitivePeerDependencies:
       - '@sinclair/typebox'
       - babel-plugin-macros
       - debug
     dev: true
 
-  /@inlang/paraglide-js@1.2.3(@sinclair/typebox@0.31.28):
+  /@inlang/paraglide-js@1.2.3(@sinclair/typebox@0.32.14):
     resolution: {integrity: sha512-Hc0KM9aCZHJTp6OY52KhwrLlN+pXoGTPJ5du1UBrWXuWd95B+u5x3Yu3DxSgaGa/3zcTR860KAMfGL+/SM6ptg==}
     hasBin: true
     dependencies:
       '@inlang/detect-json-formatting': 1.0.0
-      '@inlang/language-tag': 1.4.0(@sinclair/typebox@0.31.28)
+      '@inlang/language-tag': 1.4.0(@sinclair/typebox@0.32.14)
       commander: 11.1.0
       consola: 3.2.3
       dedent: 1.5.1
@@ -560,8 +568,8 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inqling/svelte-icons@4.1.1(svelte@4.2.10):
-    resolution: {integrity: sha512-qbQXTd14kbr7E8ENgfAv87HaCOOOQ9+/7eB5ScMENZtl588FPl8KQyo24DBUV2chT7Ly9+xPDuox5cIaZPEGsQ==}
+  /@inqling/svelte-icons@4.1.2(svelte@4.2.10):
+    resolution: {integrity: sha512-LCfhsj6uaEx7pi1mWX37anSlxl9VF+q02r8f6VFhs/5Ulw7jly7nTq7eiSYeJrTxuvcx0geaLR7ncK9BQh1yqg==}
     peerDependencies:
       svelte: '>=3.0.0'
     dependencies:
@@ -987,6 +995,10 @@ packages:
 
   /@sinclair/typebox@0.31.28:
     resolution: {integrity: sha512-/s55Jujywdw/Jpan+vsy6JZs1z2ZTGxTmbZTPiuSL2wz9mfzA2gN1zzaqmvfi4pq+uOt7Du85fkiwv5ymW84aQ==}
+    dev: true
+
+  /@sinclair/typebox@0.32.14:
+    resolution: {integrity: sha512-EC77Mw8huT2z9YlYbWfpIQgN6shZE1tH4NP4/Trig8UBel9FZNMZRJ42ubJI8PLor2uIU+waLml1dce5ReCOPg==}
     dev: true
 
   /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.5.0):
