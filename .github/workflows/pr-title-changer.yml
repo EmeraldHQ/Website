@@ -25,7 +25,32 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
+      - name: 🔍 Get modified files
+        id: modified-files
+        uses: tj-actions/changed-files@v42
+        with:
+          fetch_depth: 1
+          files_ignore: |
+            src/**
+            static/**
+            tailwind.config.*
+            package.json
+
+      - name: 📋 List all changed files for this commit
+        if: steps.modified-files.outputs.any_changed == 'true'
+        id: infra-changed-files
+        run: |
+          count=$(echo "${{ steps.modified-files.outputs.all_changed_files }}" | wc -l)
+          if [ $count -gt 0 ]; then
+            echo "$count infrastructure files changed in the last commit"
+            echo "infra_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No infrastructure files changed in the last commit"
+            echo "infra_changes=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: 📝 Modify PR Title
+        if: steps.infra-changed-files.outputs.infra_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
