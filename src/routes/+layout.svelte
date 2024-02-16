@@ -107,9 +107,8 @@
 	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
 
 	$: showButton = scrollY >= scrollDistanceContactButton;
-	let showSlideOver = false;
-	let slideOverCloseCallback: () => void = () => {};
 
+	let showSlideOver = false;
 	let shrinkNavBar = false;
 
 	$: if (scrollY) {
@@ -256,46 +255,38 @@
 	</div>
 
 	<!-- Responsive slide-over -->
-	<SlideOver
-		bind:show={showSlideOver}
-		afterClose={() => {
-			slideOverCloseCallback();
-			slideOverCloseCallback = () => {};
-		}}
-	>
-		<svelte:fragment slot="content">
-			<div
-				class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
-			>
-				{#each navbarItems as item}
-					<button
-						type="button"
-						class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-						on:click={() => {
-							slideOverCloseCallback = async () => {
-								if ($page.route.id !== "/") {
-									await goto("/");
-								}
-								document.querySelector(item.href)?.scrollIntoView();
-							};
-							showSlideOver = false;
-						}}
-					>
-						{item.name}
-					</button>
-				{/each}
+	<SlideOver bind:show={showSlideOver} let:onClose>
+		<div
+			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
+		>
+			{#each navbarItems as item}
 				<button
 					type="button"
-					class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					on:click={() => {
-						slideOverCloseCallback = () => goto("/contact");
+						onClose.set(async () => {
+							if ($page.route.id !== "/") {
+								await goto("/");
+							}
+							document.querySelector(item.href)?.scrollIntoView();
+						});
 						showSlideOver = false;
 					}}
 				>
-					{m.commonContact()}
+					{item.name}
 				</button>
-			</div>
-		</svelte:fragment>
+			{/each}
+			<button
+				type="button"
+				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+				on:click={() => {
+					onClose.set(() => goto("/contact"));
+					showSlideOver = false;
+				}}
+			>
+				{m.commonContact()}
+			</button>
+		</div>
 	</SlideOver>
 
 	<main>
