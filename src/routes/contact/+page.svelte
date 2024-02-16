@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { PageData, Snapshot } from "./$types";
-	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import Check from "@inqling/svelte-icons/heroicon-24-outline/check.svelte";
+	import PaperAirplane from "@inqling/svelte-icons/heroicon-24-outline/paper-airplane.svelte";
+	import Phone from "@inqling/svelte-icons/heroicon-24-outline/phone.svelte";
+	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
 	import * as m from "$paraglide/messages";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";

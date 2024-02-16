@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as m from "$paraglide/messages";
-	import { XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
 	import {
 		Dialog,
 		DialogOverlay,

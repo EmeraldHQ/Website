@@ -4,8 +4,9 @@
 	import { fade } from "svelte/transition";
 	import { beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Github } from "@inqling/svelte-icons/simple-icons";
+	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
+	import Bars3 from "@inqling/svelte-icons/heroicon-24-solid/bars-3.svelte";
+	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
 	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
 	import extend from "just-extend";
 	import resolveConfig from "tailwindcss/resolveConfig";
@@ -303,7 +304,7 @@
 
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 		<!-- Main grid -->
-		<div class="flex flex-col justify-start gap-16 xl:flex-row xl:gap-0">
+		<div class="flex flex-col gap-16 xl:flex-row xl:gap-0">
 			<a
 				href={i18n.resolveRoute("/")}
 				class="w-fit transition-opacity duration-300 hover:opacity-70"

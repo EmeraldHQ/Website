@@ -5,24 +5,22 @@
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
-	import {
-		Cloud,
-		Heart,
-		PaintBrush,
-		RocketLaunch,
-		Sparkles,
-		Trophy,
-		Window,
-		WrenchScrewdriver
-	} from "@inqling/svelte-icons/heroicon-24-outline";
-	import {
-		ArrowDown,
-		ChevronRight,
-		ChevronLeft,
-		CodeBracket,
-		DevicePhoneMobile
-	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
+	import Cloud from "@inqling/svelte-icons/heroicon-24-outline/cloud.svelte";
+	import Heart from "@inqling/svelte-icons/heroicon-24-outline/heart.svelte";
+	import PaintBrush from "@inqling/svelte-icons/heroicon-24-outline/paint-brush.svelte";
+	import RocketLaunch from "@inqling/svelte-icons/heroicon-24-outline/rocket-launch.svelte";
+	import Sparkles from "@inqling/svelte-icons/heroicon-24-outline/sparkles.svelte";
+	import Trophy from "@inqling/svelte-icons/heroicon-24-outline/trophy.svelte";
+	import Window from "@inqling/svelte-icons/heroicon-24-outline/window.svelte";
+	import WrenchScrewdriver from "@inqling/svelte-icons/heroicon-24-outline/wrench-screwdriver.svelte";
+	import ArrowDown from "@inqling/svelte-icons/heroicon-24-solid/arrow-down.svelte";
+	import ChevronRight from "@inqling/svelte-icons/heroicon-24-solid/chevron-right.svelte";
+	import ChevronLeft from "@inqling/svelte-icons/heroicon-24-solid/chevron-left.svelte";
+	import CodeBracket from "@inqling/svelte-icons/heroicon-24-solid/code-bracket.svelte";
+	import DevicePhoneMobile from "@inqling/svelte-icons/heroicon-24-solid/device-phone-mobile.svelte";
+	import Postgresql from "@inqling/svelte-icons/simple-icons/postgresql.svelte";
+	import Svelte from "@inqling/svelte-icons/simple-icons/svelte.svelte";
+	import Vercel from "@inqling/svelte-icons/simple-icons/vercel.svelte";
 	import * as m from "$paraglide/messages";
 	import { languageTag } from "$paraglide/runtime";
 	import { c } from "$utils/inlang";
