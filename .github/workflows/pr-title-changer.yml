@@ -12,43 +12,9 @@ env:
   PREFIX: infra
 
 jobs:
-  get-modified-files:
-    name: PR Title Modifier - Check
-    runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' && github.actor != 'emeraldstudio-bot'
-    outputs:
-      infra_changes: ${{ steps.infra-changed-files.outputs.infra_changes }}
-
-    steps:
-      - name: 🔍 Get modified files
-        id: modified-files
-        uses: tj-actions/changed-files@v42
-        with:
-          fetch_depth: 1
-          files_ignore: |
-            src/**
-            static/**
-            tailwind.config.*
-            package.json
-
-      - name: 📋 List all changed files for this commit
-        if: steps.modified-files.outputs.any_changed == 'true'
-        id: infra-changed-files
-        run: |
-          count=$(echo "${{ steps.modified-files.outputs.all_changed_files }}" | wc -l)
-          if [ $count -gt 0 ]; then
-            echo "$count infrastructure files changed in the last commit"
-            echo "infra_changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "No infrastructure files changed in the last commit"
-            echo "infra_changes=false" >> $GITHUB_OUTPUT
-          fi
-
   pr-title-modifier:
     name: PR Title Modifier
     runs-on: ubuntu-latest
-    needs: get-modified-files
-    if: needs.get-modified-files.outputs.infra_changes == 'true'
     permissions:
       pull-requests: write
 
@@ -58,7 +24,20 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
+      - name: 📋 Count all changed files for this commit
+        id: infra-changed-files
+        run: |
+          count=$(git diff --name-only HEAD^ HEAD | grep -vE 'src/|static/|tailwind.config.*|package.json' | wc -l)
+          if [ $count -gt 0 ]; then
+            echo "$count infrastructure files changed in the last commit"
+            echo "infra_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No infrastructure files changed in the last commit"
+            echo "infra_changes=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: 📝 Modify PR Title
+        if: steps.infra-changed-files.outputs.infra_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
