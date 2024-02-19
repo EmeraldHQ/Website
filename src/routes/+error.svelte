@@ -24,7 +24,7 @@
 		>
 			{$page.status}
 		</h1>
-		<h2 class="text-5xl font-medium xs:text-7xl md:text-[6rem]">
+		<h2 class="text-5xl font-medium xs:text-7xl md:text-8xl">
 			{$page.error?.message.toLowerCase()}
 		</h2>
 	</div>

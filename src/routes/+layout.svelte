@@ -356,7 +356,7 @@
 				on:keypress={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
-					class="size-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</button>
 			<!-- Right -->

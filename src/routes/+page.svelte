@@ -308,7 +308,7 @@
 <!-- Hero -->
 <div
 	id="hero"
-	class="relative -mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
+	class="relative -mt-28 flex h-svh flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
 >
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10
@@ -443,7 +443,7 @@
 <!-- Solutions -->
 <Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/[0.2]
+		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
