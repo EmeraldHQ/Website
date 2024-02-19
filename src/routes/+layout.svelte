@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import type { LayoutData } from "./$types";
-	import { beforeNavigate, goto } from "$app/navigation";
+	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
 	import Bars3 from "@inqling/svelte-icons/heroicon-24-solid/bars-3.svelte";
@@ -78,11 +78,17 @@
 	});
 
 	beforeNavigate(({ to, type }) => {
+		document.documentElement.classList.remove("motion-safe:scroll-smooth");
 		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
 		if (type === "link" && to.route.id === $page.route.id) {
 			const lang = i18n.getLanguageFromUrl(to.url);
 			localStorage.setItem("language", lang);
 		}
+	});
+
+	afterNavigate(async ({ complete }) => {
+		await complete;
+		document.documentElement.classList.add("motion-safe:scroll-smooth");
 	});
 
 	// Config
