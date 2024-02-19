@@ -6,7 +6,7 @@ echo "$FILES" | xargs pnpm prettier --ignore-unknown --check --log-level warn ||
     echo "Prettier failed! Please fix the errors and try again."
     exit 1
 }
-echo "$FILES" | xargs pnpm eslint || {
+pnpm eslint . || {
     echo "ESLint failed! Please fix the errors and try again."
     exit 1
 }
