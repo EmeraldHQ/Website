@@ -306,10 +306,7 @@
 
 <!-- Body -->
 <!-- Hero -->
-<div
-	id="hero"
-	class="relative -mt-28 flex h-svh flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
->
+<div id="hero" class="flex h-[80svh] flex-col items-center justify-center">
 	<div
 		class="m-auto grid h-fit grid-cols-1 items-center px-10
 		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
@@ -328,12 +325,16 @@
 				<br />
 				{m.homeHeroSubtitleSecond()}
 			</h2>
-			<div class="flex origin-bottom-left flex-col gap-5 scale-110 *:max-w-fit xs:flex-row">
+			<div
+				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
+			>
 				<Button href="/contact">{m.commonContact()}</Button>
-				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
-				<!--					{i("home.hero.cta-secondary")}-->
-				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
-				<!--				</Button>-->
+				<!-- <Button variant="link" class="group">
+					{m.homeHeroSecondaryCta()}
+					<ChevronRight
+						class="size-4 transition-transform duration-500 group-hover:translate-x-1"
+					/>
+				</Button> -->
 			</div>
 		</div>
 		<!-- Right part -->
@@ -367,7 +368,7 @@
 	</div>
 	<!-- Bottom arrow -->
 	<MagneticElement
-		class="pb-10 transition-transform duration-500"
+		class="absolute bottom-0 mb-10 transition-transform duration-500"
 		on:in_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
