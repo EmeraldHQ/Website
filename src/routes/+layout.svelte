@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "../app.css";
 	import type { LayoutData } from "./$types";
-	import { fade } from "svelte/transition";
 	import { beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
@@ -9,8 +8,6 @@
 	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
 	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
 	import extend from "just-extend";
-	import resolveConfig from "tailwindcss/resolveConfig";
-	import tailwindConfig from "../../tailwind.config";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
 	import { i18n } from "$utils/inlang";
 	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
@@ -88,16 +85,11 @@
 		}
 	});
 
-	// Tailwind
-	const fullTailwindConfig = resolveConfig(tailwindConfig);
-	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
-
 	// Config
 	let navbarItems: { name: string; href: string }[] = [];
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 
 	// Bindings & variables
-	let innerWidth = 0;
 	let innerHeight = 0;
 	let scrollY = 0;
 
@@ -106,25 +98,23 @@
 	let scrollDistanceLogoSwitch = 0;
 	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
 
-	$: showButton = scrollY >= scrollDistanceContactButton;
+	$: showButton = !!scrollY && scrollY >= scrollDistanceContactButton;
 
 	let showSlideOver = false;
-	let shrinkNavBar = false;
 
+	let isPastLogoScrollDistance = false;
 	$: if (scrollY) {
 		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		if (scrollY < scrollDistanceLogoSwitch - rem) {
-			shrinkNavBar = false;
-		}
-
-		if (scrollY >= scrollDistanceLogoSwitch) {
-			shrinkNavBar = true;
+			isPastLogoScrollDistance = false;
+		} else if (scrollY >= scrollDistanceLogoSwitch) {
+			isPastLogoScrollDistance = true;
 		}
 	}
 </script>
 
 <!-- Binding for scroll-dependent elements -->
-<svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
+<svelte:window bind:innerHeight bind:scrollY />
 
 <ParaglideJS {i18n}>
 	<MetaTags {...metadata} />
@@ -135,8 +125,8 @@
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
 			<nav
-				class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
-				class:!h-16={shrinkNavBar || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
+				class="delay-250 mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20"
+				class:xs:!h-16={!!scrollY && isPastLogoScrollDistance}
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
@@ -147,27 +137,22 @@
 							$page.route.id === "/" ? window.scrollTo({ top: 0 }) : goto("/");
 						}}
 					>
-						{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
-							<img
-								in:fade={{ delay: 250 }}
-								out:fade
-								src="/logo-small.svg"
-								alt={m.a11yAltLogoSmall()}
-								width="28"
-								height="32"
-								class="h-8 transition-opacity duration-300 hover:opacity-70"
-							/>
-						{:else}
-							<img
-								in:fade={{ delay: 250 }}
-								out:fade
-								src="/logo-title.svg"
-								alt={m.a11yAltLogo()}
-								width="100"
-								height="32"
-								class="h-8 transition-opacity duration-300 hover:opacity-70"
-							/>
-						{/if}
+						<img
+							src="/logo-small.svg"
+							alt={m.a11yAltLogoSmall()}
+							width="28"
+							height="32"
+							class="h-8 transition-opacity duration-300 hover:opacity-70"
+							class:xs:opacity-0={!scrollY || !isPastLogoScrollDistance}
+						/>
+						<img
+							src="/logo-title.svg"
+							alt={m.a11yAltLogo()}
+							width="100"
+							height="32"
+							class="h-8 opacity-0 transition-opacity duration-300 hover:opacity-70"
+							class:xs:opacity-100={!scrollY || !isPastLogoScrollDistance}
+						/>
 					</button>
 				</div>
 				<!-- Right navigation -->
