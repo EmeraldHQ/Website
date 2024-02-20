@@ -306,24 +306,21 @@
 
 <!-- Body -->
 <!-- Hero -->
-<div id="hero" class="flex h-[80svh] flex-col items-center justify-center">
-	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10
-		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
-	>
+<div
+	class="before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] xxl:before:max-h-[90svh]"
+></div>
+<div id="hero" class="relative flex h-[80svh] flex-col items-center justify-center">
+	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
 		<div class="flex flex-col gap-10 sm:mx-auto">
-			<h1 class="text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl">
+			<h1
+				class="text-pretty text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
+			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html c(m.homeHeroTitleFirst())}
-				<br />
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html c(m.homeHeroTitleSecond())}
+				{@html c(m.homeHeroTitle())}
 			</h1>
-			<h2 class="text-xl text-gray-400">
-				{m.homeHeroSubtitleFirst()}
-				<br />
-				{m.homeHeroSubtitleSecond()}
+			<h2 class="text-pretty text-xl text-gray-400">
+				{m.homeHeroSubtitle()}
 			</h2>
 			<div
 				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
