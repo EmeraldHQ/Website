@@ -37,9 +37,12 @@ const config = {
 		node: true
 	},
 	rules: {
-		// Prefer { myFunction: () => {} } over { myFunction() {} }
+		// Prefer `{ myFunction: () => {} }` over `{ myFunction() {} }`
 		// https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
-		"@typescript-eslint/method-signature-style": ["error", "property"]
+		"@typescript-eslint/method-signature-style": ["error", "property"],
+		// Force the use of `import type { A }` over `import { type A }`
+  // https://typescript-eslint.io/rules/no-import-type-side-effects/
+		"@typescript-eslint/no-import-type-side-effects": "error"
 	}
 };
 
