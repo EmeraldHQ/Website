@@ -136,12 +136,18 @@
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
-					<button
-						type="button"
-						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:row-start-1 *:row-end-1"
-						on:click={() => {
-							$page.route.id === "/" ? window.scrollTo({ top: 0 }) : goto("/");
-						}}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<svelte:element
+						this={$page.route.id === "/" ? "button" : "a"}
+						type={$page.route.id === "/" ? "button" : undefined}
+						href={$page.route.id === "/" ? undefined : "/"}
+						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
+						on:click={$page.route.id === "/"
+							? () =>
+									window.scrollTo({
+										top: 0
+									})
+							: undefined}
 					>
 						<img
 							src="/logo-small.svg"
@@ -159,7 +165,7 @@
 							class="h-8 opacity-0 transition-opacity duration-300 hover:opacity-70"
 							class:xs:opacity-100={!scrollY || !isPastLogoScrollDistance}
 						/>
-					</button>
+					</svelte:element>
 				</div>
 				<!-- Right navigation -->
 				<div class="flex items-center gap-5 sm:gap-10">
@@ -168,25 +174,27 @@
 						class:-mr-40={!showButton}
 					>
 						{#each navbarItems as item}
-							{#if item.href === $page.route.id}
+							{@const linkClasses =
+								"relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
+							{#if i18n.route(item.href) === $page.route.id}
 								<span
 									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
 								>
 									{item.name}
 								</span>
+							{:else if item.href.startsWith("/")}
+								<a href={item.href} class={linkClasses}>
+									{item.name}
+								</a>
 							{:else}
 								<button
 									type="button"
-									class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+									class={linkClasses}
 									on:click={async () => {
-										if (item.href.startsWith("/")) {
-											await goto(item.href);
-										} else {
-											if ($page.route.id !== "/") {
-												await goto("/");
-											}
-											document.querySelector(item.href)?.scrollIntoView();
+										if ($page.route.id !== "/") {
+											await goto("/");
 										}
+										document.querySelector(item.href)?.scrollIntoView();
 									}}
 								>
 									{item.name}
