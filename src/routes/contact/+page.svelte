@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { PageData, Snapshot } from "./$types";
-	import { ROOT_URL } from "$config";
-	import { page } from "$app/stores";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import Check from "@inqling/svelte-icons/heroicon-24-outline/check.svelte";
+	import PaperAirplane from "@inqling/svelte-icons/heroicon-24-outline/paper-airplane.svelte";
+	import Phone from "@inqling/svelte-icons/heroicon-24-outline/phone.svelte";
+	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
 	import * as m from "$paraglide/messages";
-	import { c } from "$utils/inlang";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 
@@ -92,70 +91,11 @@
 	}
 </script>
 
-<!-- Meta tags -->
-<MetaTags
-	title={m.contactPageTitle()}
-	titleTemplate="%s | Emerald Studio"
-	description={m.contactDescription()}
-	canonical="{ROOT_URL}{$page.route.id}"
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${m.homeOgBanner()}`,
-				width: 512,
-				height: 256,
-				alt: m.a11yAltOgBanner()
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		title: `${m.contactPageTitle()} | Emerald Studio`,
-		description: m.contactDescription(),
-		image: `${ROOT_URL}/${m.homeOgBanner()}`,
-		imageAlt: m.a11yAltOgBanner()
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		},
-		// Add type WebSite from home once done
-		{
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{
-					"@type": "ListItem",
-					position: 1,
-					name: m.commonPagesHome(),
-					item: ROOT_URL
-				},
-				{
-					"@type": "ListItem",
-					position: 2,
-					name: m.contactPageTitle(),
-					item: `${ROOT_URL}${$page.route.id}`
-				}
-			]
-		}
-	]}
-/>
-
 <!-- Page -->
 <div
 	class="relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
 >
-	<Section>
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<svelte:fragment slot="title">{@html c(m.contactTitle())}</svelte:fragment>
+	<Section id="contact" title={m.contactTitle()}>
 		<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
 			<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
 			<input type="text" name="honeypot" class="hidden" />
@@ -271,16 +211,14 @@
 				</Button>
 			</div>
 		</form>
-		<div class="my-8 flex items-center justify-center">
-			<div class="w-full border-b border-dominant"></div>
-			<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
-			<div class="w-full border-b border-dominant"></div>
-		</div>
-		<div>
-			<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html c(m.contactCallSectionTitle())}
-			</h2>
+	</Section>
+	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
+		<div class="w-full border-b border-dominant"></div>
+		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
+		<div class="w-full border-b border-dominant"></div>
+	</div>
+	<Section id="sales" title={m.contactCallSectionTitle()}>
+		<div class="xxl:w-full">
 			<div
 				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
 			>

@@ -2,8 +2,9 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { useId } from "$utils/id";
+	import { twMerge } from "tailwind-merge";
 
-	const elementId = `svelte-mouse-tilt-${useId()}`;
+	const id = `svelte-mouse-tilt-${useId()}`;
 	let firstFire = true;
 	let isWorking = false;
 
@@ -25,6 +26,9 @@
 	 * Defaults to the whole body.
 	 */
 	export let scope = "body";
+
+	let className: string | null | undefined = undefined;
+	export { className as class };
 
 	// Rotate Element
 	async function rotateElement(event: MouseEvent, element: HTMLElement) {
@@ -66,7 +70,7 @@
 	}
 
 	onMount(() => {
-		const element = document.querySelector(`.${elementId}`);
+		const element = document.querySelector(`#${id}`);
 		const listener = (e: Event) => rotateElement(<MouseEvent>e, <HTMLElement>element);
 		const scopeElement = document.querySelector(scope) || document.body;
 		scopeElement.addEventListener("mousemove", listener);
@@ -78,7 +82,8 @@
 </script>
 
 <div
-	class="{elementId} transition-transform duration-500 {$$props.class ?? ''}"
+	{id}
+	class={twMerge("transition-transform duration-500", className)}
 	style="
 				--rotateX: 0deg;
 				--rotateY: 0deg;

@@ -2,8 +2,10 @@
 	import { page } from "$app/stores";
 	import Button from "$elements/button";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
-	import { CodeBracket, Sparkles } from "@inqling/svelte-icons/heroicon-24-solid";
-	import { ExclamationCircle, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
+	import CodeBracket from "@inqling/svelte-icons/heroicon-24-solid/code-bracket.svelte";
+	import Sparkles from "@inqling/svelte-icons/heroicon-24-solid/sparkles.svelte";
+	import ExclamationCircle from "@inqling/svelte-icons/heroicon-24-outline/exclamation-circle.svelte";
+	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
 	import * as m from "$paraglide/messages";
 </script>
 
@@ -22,7 +24,7 @@
 		>
 			{$page.status}
 		</h1>
-		<h2 class="text-5xl font-medium xs:text-7xl md:text-[6rem]">
+		<h2 class="text-5xl font-medium xs:text-7xl md:text-8xl">
 			{$page.error?.message.toLowerCase()}
 		</h2>
 	</div>

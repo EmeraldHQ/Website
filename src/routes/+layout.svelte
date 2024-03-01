@@ -1,12 +1,13 @@
 <script lang="ts">
 	import "../app.css";
-	import { fade } from "svelte/transition";
-	import { beforeNavigate, goto } from "$app/navigation";
+	import type { LayoutData } from "./$types";
+	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { ArrowUp, Bars3 } from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Github } from "@inqling/svelte-icons/simple-icons";
-	import resolveConfig from "tailwindcss/resolveConfig";
-	import tailwindConfig from "../../tailwind.config";
+	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
+	import Bars3 from "@inqling/svelte-icons/heroicon-24-solid/bars-3.svelte";
+	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
+	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
+	import extend from "just-extend";
 	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
 	import { i18n } from "$utils/inlang";
 	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
@@ -19,6 +20,20 @@
 	$: if ($page.route.id) {
 		currentRoute = $page.route.id.split("/").filter(Boolean);
 	}
+
+	// Meta tags
+	export let data: LayoutData;
+	let metadata: MetaTagsProps;
+	$: metadata = extend(true, {}, data.baseMetaTags, {
+		title: $page.data.pageTitle,
+		twitter: {
+			title:
+				data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
+				$page.data.pageTitle
+		}
+	});
+	let schemas: JsonLdProps["schema"] = [];
+	$: schemas = [...(data.baseSchemas ?? []), ...($page.data.pageSchemas ?? [])].filter(Boolean);
 
 	// Inlang
 	onSetLanguageTag(() => {
@@ -63,6 +78,7 @@
 	});
 
 	beforeNavigate(({ to, type }) => {
+		document.documentElement.classList.remove("motion-safe:scroll-smooth");
 		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
 		if (type === "link" && to.route.id === $page.route.id) {
 			const lang = i18n.getLanguageFromUrl(to.url);
@@ -70,16 +86,16 @@
 		}
 	});
 
-	// Tailwind
-	const fullTailwindConfig = resolveConfig(tailwindConfig);
-	const tailwindXsScreen = Number(fullTailwindConfig.theme.screens.xs.replace("px", ""));
+	afterNavigate(async ({ complete }) => {
+		await complete;
+		document.documentElement.classList.add("motion-safe:scroll-smooth");
+	});
 
 	// Config
 	let navbarItems: { name: string; href: string }[] = [];
 	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
 
 	// Bindings & variables
-	let innerWidth = 0;
 	let innerHeight = 0;
 	let scrollY = 0;
 
@@ -88,66 +104,68 @@
 	let scrollDistanceLogoSwitch = 0;
 	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
 
-	$: showButton = scrollY >= scrollDistanceContactButton;
+	$: showButton = !!scrollY && scrollY >= scrollDistanceContactButton;
+
 	let showSlideOver = false;
-	let slideOverCloseCallback: () => void = () => {};
 
-	let shrinkNavBar = false;
-
+	let isPastLogoScrollDistance = false;
 	$: if (scrollY) {
 		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		if (scrollY < scrollDistanceLogoSwitch - rem) {
-			shrinkNavBar = false;
-		}
-
-		if (scrollY >= scrollDistanceLogoSwitch) {
-			shrinkNavBar = true;
+			isPastLogoScrollDistance = false;
+		} else if (scrollY >= scrollDistanceLogoSwitch) {
+			isPastLogoScrollDistance = true;
 		}
 	}
 </script>
 
 <!-- Binding for scroll-dependent elements -->
-<svelte:window bind:innerWidth bind:innerHeight bind:scrollY />
+<svelte:window bind:innerHeight bind:scrollY />
 
 <ParaglideJS {i18n}>
+	<MetaTags {...metadata} />
+
+	<JsonLd schema={schemas} />
+
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
 		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
 			<nav
-				class="delay-250 mx-2 flex h-20 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20"
-				class:!h-16={shrinkNavBar || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
+				class="delay-250 mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20"
+				class:xs:!h-16={!!scrollY && isPastLogoScrollDistance}
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
-					<button
-						type="button"
-						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:row-start-1 *:row-end-1"
-						on:click={() => {
-							$page.route.id === "/" ? window.scrollTo({ top: 0 }) : goto("/");
-						}}
+					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<svelte:element
+						this={$page.route.id === "/" ? "button" : "a"}
+						type={$page.route.id === "/" ? "button" : undefined}
+						href={$page.route.id === "/" ? undefined : "/"}
+						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
+						on:click={$page.route.id === "/"
+							? () =>
+									window.scrollTo({
+										top: 0
+									})
+							: undefined}
 					>
-						{#if scrollY >= scrollDistanceLogoSwitch || (innerWidth > 0 && innerWidth < tailwindXsScreen)}
-							<img
-								in:fade={{ delay: 250 }}
-								out:fade
-								src="/logo-small.svg"
-								alt={m.a11yAltLogoSmall()}
-								width="28"
-								height="32"
-								class="h-8 transition-opacity duration-300 hover:opacity-70"
-							/>
-						{:else}
-							<img
-								in:fade={{ delay: 250 }}
-								out:fade
-								src="/logo-title.svg"
-								alt={m.a11yAltLogo()}
-								width="100"
-								height="32"
-								class="h-8 transition-opacity duration-300 hover:opacity-70"
-							/>
-						{/if}
-					</button>
+						<img
+							src="/logo-small.svg"
+							alt={m.a11yAltLogoSmall()}
+							width="28"
+							height="32"
+							class="h-8 transition-opacity duration-300 hover:opacity-70"
+							class:xs:opacity-0={!scrollY || !isPastLogoScrollDistance}
+						/>
+						<img
+							src="/logo-title.svg"
+							alt={m.a11yAltLogo()}
+							width="100"
+							height="32"
+							class="h-8 opacity-0 transition-opacity duration-300 hover:opacity-70"
+							class:xs:opacity-100={!scrollY || !isPastLogoScrollDistance}
+						/>
+					</svelte:element>
 				</div>
 				<!-- Right navigation -->
 				<div class="flex items-center gap-5 sm:gap-10">
@@ -156,25 +174,27 @@
 						class:-mr-40={!showButton}
 					>
 						{#each navbarItems as item}
-							{#if item.href === $page.route.id}
+							{@const linkClasses =
+								"relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
+							{#if i18n.route(item.href) === $page.route.id}
 								<span
 									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
 								>
 									{item.name}
 								</span>
+							{:else if item.href.startsWith("/")}
+								<a href={item.href} class={linkClasses}>
+									{item.name}
+								</a>
 							{:else}
 								<button
 									type="button"
-									class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+									class={linkClasses}
 									on:click={async () => {
-										if (item.href.startsWith("/")) {
-											await goto(item.href);
-										} else {
-											if ($page.route.id !== "/") {
-												await goto("/");
-											}
-											document.querySelector(item.href)?.scrollIntoView();
+										if ($page.route.id !== "/") {
+											await goto("/");
 										}
+										document.querySelector(item.href)?.scrollIntoView();
 									}}
 								>
 									{item.name}
@@ -234,46 +254,38 @@
 	</div>
 
 	<!-- Responsive slide-over -->
-	<SlideOver
-		bind:show={showSlideOver}
-		afterClose={() => {
-			slideOverCloseCallback();
-			slideOverCloseCallback = () => {};
-		}}
-	>
-		<svelte:fragment slot="content">
-			<div
-				class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
-			>
-				{#each navbarItems as item}
-					<button
-						type="button"
-						class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-						on:click={() => {
-							slideOverCloseCallback = async () => {
-								if ($page.route.id !== "/") {
-									await goto("/");
-								}
-								document.querySelector(item.href)?.scrollIntoView();
-							};
-							showSlideOver = false;
-						}}
-					>
-						{item.name}
-					</button>
-				{/each}
+	<SlideOver bind:show={showSlideOver} let:onClose>
+		<div
+			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
+		>
+			{#each navbarItems as item}
 				<button
 					type="button"
-					class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					on:click={() => {
-						slideOverCloseCallback = () => goto("/contact");
+						onClose.set(async () => {
+							if ($page.route.id !== "/") {
+								await goto("/");
+							}
+							document.querySelector(item.href)?.scrollIntoView();
+						});
 						showSlideOver = false;
 					}}
 				>
-					{m.commonContact()}
+					{item.name}
 				</button>
-			</div>
-		</svelte:fragment>
+			{/each}
+			<button
+				type="button"
+				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+				on:click={() => {
+					onClose.set(() => goto("/contact"));
+					showSlideOver = false;
+				}}
+			>
+				{m.commonContact()}
+			</button>
+		</div>
 	</SlideOver>
 
 	<main>
@@ -282,8 +294,11 @@
 
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 		<!-- Main grid -->
-		<div class="flex flex-col gap-20 xl:flex-row xl:gap-0">
-			<a href={i18n.resolveRoute("/")} class="h-8 transition-opacity duration-300 hover:opacity-70">
+		<div class="flex flex-col gap-16 xl:flex-row xl:gap-0">
+			<a
+				href={i18n.resolveRoute("/")}
+				class="w-fit transition-opacity duration-300 hover:opacity-70"
+			>
 				<img src="/logo-title.svg" alt={m.a11yAltLogo()} width="174" height="56" />
 			</a>
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
@@ -349,7 +364,7 @@
 				on:keypress={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
-					class="size-8 cursor-pointer rounded-full border-[1px] border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 				/>
 			</button>
 			<!-- Right -->

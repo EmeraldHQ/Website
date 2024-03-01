@@ -1,30 +1,26 @@
 <script lang="ts">
-	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
-	import {
-		Cloud,
-		Heart,
-		PaintBrush,
-		RocketLaunch,
-		Sparkles,
-		Trophy,
-		Window,
-		WrenchScrewdriver
-	} from "@inqling/svelte-icons/heroicon-24-outline";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import {
-		ArrowDown,
-		ChevronRight,
-		ChevronLeft,
-		CodeBracket,
-		DevicePhoneMobile
-	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
+	import Cloud from "@inqling/svelte-icons/heroicon-24-outline/cloud.svelte";
+	import Heart from "@inqling/svelte-icons/heroicon-24-outline/heart.svelte";
+	import PaintBrush from "@inqling/svelte-icons/heroicon-24-outline/paint-brush.svelte";
+	import RocketLaunch from "@inqling/svelte-icons/heroicon-24-outline/rocket-launch.svelte";
+	import Sparkles from "@inqling/svelte-icons/heroicon-24-outline/sparkles.svelte";
+	import Trophy from "@inqling/svelte-icons/heroicon-24-outline/trophy.svelte";
+	import Window from "@inqling/svelte-icons/heroicon-24-outline/window.svelte";
+	import WrenchScrewdriver from "@inqling/svelte-icons/heroicon-24-outline/wrench-screwdriver.svelte";
+	import ArrowDown from "@inqling/svelte-icons/heroicon-24-solid/arrow-down.svelte";
+	import ChevronRight from "@inqling/svelte-icons/heroicon-24-solid/chevron-right.svelte";
+	import ChevronLeft from "@inqling/svelte-icons/heroicon-24-solid/chevron-left.svelte";
+	import CodeBracket from "@inqling/svelte-icons/heroicon-24-solid/code-bracket.svelte";
+	import DevicePhoneMobile from "@inqling/svelte-icons/heroicon-24-solid/device-phone-mobile.svelte";
+	import Postgresql from "@inqling/svelte-icons/simple-icons/postgresql.svelte";
+	import Svelte from "@inqling/svelte-icons/simple-icons/svelte.svelte";
+	import Vercel from "@inqling/svelte-icons/simple-icons/vercel.svelte";
 	import * as m from "$paraglide/messages";
 	import { languageTag } from "$paraglide/runtime";
 	import { c } from "$utils/inlang";
@@ -308,87 +304,34 @@
 <!-- Window bindings -->
 <svelte:window bind:innerWidth />
 
-<!-- Meta tags -->
-<MetaTags
-	title={m.commonPagesHome()}
-	titleTemplate="%s | Emerald Studio"
-	description={m.homeDescription()}
-	canonical={ROOT_URL}
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${m.homeOgBanner()}`,
-				width: 512,
-				height: 256,
-				alt: m.a11yAltOgBanner()
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		/*
-		site: "@EmeraldStudio", // Someday
-		handle: "@EmeraldStudio"
-		*/
-		title: `${m.commonPagesHome()} | Emerald Studio`,
-		description: m.homeDescription(),
-		image: `${ROOT_URL}/${m.homeOgBanner()}`,
-		imageAlt: m.a11yAltOgBanner()
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		} /*,
-		// Add FAQ?
-		{
-			"@type": "WebSite",
-			url: ROOT_URL,
-			potentialAction: {
-				"@type": "SearchAction",
-				target: {
-					"@type": "EntryPoint",
-					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
-				},
-				"query-input": "required name=search_term_string"
-			}
-		}*/
-	]}
-/>
-
 <!-- Body -->
 <!-- Hero -->
 <div
-	id="hero"
-	class="relative -mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
->
-	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10
-		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
-	>
+	class="absolute inset-0 -z-10 max-w-full bg-gradient-to-l from-dominant to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none xxl:max-h-[90svh]"
+></div>
+<div id="hero" class="relative flex h-[85svh] flex-col items-center justify-center lg:h-[80svh]">
+	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
-		<div
-			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
-		>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<h1>{@html c(m.homeHeroTitleFirst())}<br />{@html c(m.homeHeroTitleSecond())}</h1>
-			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				{m.homeHeroSubtitleFirst()}<br />{m.homeHeroSubtitleSecond()}
+		<div class="flex flex-col gap-10 sm:mx-auto">
+			<h1
+				class="text-pretty text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
+			>
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html c(m.homeHeroTitle())}
+			</h1>
+			<h2 class="text-pretty text-xl text-gray-400">
+				{m.homeHeroSubtitle()}
 			</h2>
-			<div class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 *:max-w-fit xs:flex-row">
+			<div
+				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
+			>
 				<Button href="/contact">{m.commonContact()}</Button>
-				<!--				<Button variant="link" class="hover:*:translate-x-1">-->
-				<!--					{i("home.hero.cta-secondary")}-->
-				<!--					<ChevronRight class="size-4 transition-transform duration-500" />-->
-				<!--				</Button>-->
+				<!-- <Button variant="link" class="group">
+					{m.homeHeroSecondaryCta()}
+					<ChevronRight
+						class="size-4 transition-transform duration-500 group-hover:translate-x-1"
+					/>
+				</Button> -->
 			</div>
 		</div>
 		<!-- Right part -->
@@ -396,12 +339,12 @@
 			initialX={-32}
 			initialY={-13}
 			intensity={0.05}
-			scope={"#hero"}
+			scope="#hero"
 			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
 			<Window class="size-full text-dominant" />
 			<div
-				class="bottom-10 left-10 w-36 perspective-[312rem] transform-style-3d translate-z-28
+				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
 				<CodeBracket class="size-full" />
@@ -422,7 +365,7 @@
 	</div>
 	<!-- Bottom arrow -->
 	<MagneticElement
-		class="pb-10 transition-transform duration-500"
+		class="absolute bottom-0 mb-10 transition-transform duration-500"
 		on:in_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
@@ -479,7 +422,7 @@
 						<svelte:component this={icon} class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
-					<p class="size-full pt-4 text-lg font-normal text-gray-200">
+					<p class="size-full text-pretty pt-4 text-lg font-normal text-gray-200">
 						{description}
 					</p>
 				</div>
@@ -496,22 +439,18 @@
 </Section>
 
 <!-- Solutions -->
-<Section id="solutions" class="relative py-20">
+<Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/[0.2]
+		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeSolutionsTitle())}
-	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each solutions.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{solution.description}
 					</p>
 				</div>
@@ -533,11 +472,7 @@
 </Section>
 
 <!-- Values -->
-<Section id="values" class="relative py-20">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeValuesTitle())}
-	</svelte:fragment>
+<Section id="values" title={m.homeValuesTitle()} class="relative py-20">
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
@@ -545,7 +480,7 @@
 					<svelte:component this={value.icon} class="size-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
-						<p class="text-lg text-gray-200">
+						<p class="text-pretty text-lg text-gray-200">
 							{value.description}
 						</p>
 					</div>
@@ -556,11 +491,7 @@
 </Section>
 
 <!-- Technologies -->
-<Section id="technologies">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeTechnologiesTitle())}
-	</svelte:fragment>
+<Section id="technologies" title={m.homeTechnologiesTitle()}>
 	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
@@ -573,7 +504,7 @@
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{techno.description}
 					</p>
 				</div>
@@ -613,16 +544,12 @@
 </Section>
 
 <!-- About us -->
-<Section id="about-us">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(m.homeAboutUsTitle())}
-	</svelte:fragment>
+<Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
 		>
-			<p class="text-lg text-gray-200">
+			<p class="text-pretty text-lg text-gray-200">
 				{m.homeAboutUsDesc()}
 			</p>
 		</div>

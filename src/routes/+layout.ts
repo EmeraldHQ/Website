@@ -1,5 +1,6 @@
 import type { LayoutLoad } from "./$types";
 import { redirect } from "@sveltejs/kit";
+import type { MetaTagsProps } from "svelte-meta-tags";
 import { browser } from "$app/environment";
 import {
 	availableLanguageTags,
@@ -7,6 +8,7 @@ import {
 	sourceLanguageTag
 } from "$paraglide/runtime";
 import { i18n } from "$utils/inlang";
+import * as m from "$paraglide/messages";
 
 export const prerender = true;
 
@@ -46,4 +48,69 @@ export const load: LayoutLoad = ({ route, url }) => {
 			}
 		}
 	}
+
+	const baseMetaTags = {
+		titleTemplate: "%s | Emerald Studio",
+		get description() {
+			return this.twitter?.description;
+		},
+		canonical: url.href,
+		openGraph: {
+			images: [
+				{
+					url: `${url.origin}/${m.homeOgBanner(undefined, {
+						languageTag: i18n.getLanguageFromUrl(url)
+					})}`,
+					width: 512,
+					height: 256,
+					alt: m.a11yAltOgBanner(undefined, {
+						languageTag: i18n.getLanguageFromUrl(url)
+					})
+				}
+			],
+			siteName: "Emerald Studio"
+		},
+		twitter: {
+			cardType: "summary_large_image",
+			// site: "@EmeraldStudio" // Someday
+			description: m.homeDescription(undefined, {
+				languageTag: i18n.getLanguageFromUrl(url)
+			}),
+			image: `${url.origin}/${m.homeOgBanner(undefined, {
+				languageTag: i18n.getLanguageFromUrl(url)
+			})}`,
+			imageAlt: m.a11yAltOgBanner(undefined, {
+				languageTag: i18n.getLanguageFromUrl(url)
+			})
+		},
+		additionalRobotsProps: {
+			noarchive: true
+		}
+	} as const satisfies MetaTagsProps;
+
+	const baseSchemas = [
+		{
+			"@type": "Organization",
+			url: url.origin,
+			logo: `${url.origin}/favicon.svg`
+		} /*,
+		// Add FAQ?
+		{
+			"@type": "WebSite",
+			url: ROOT_URL,
+			potentialAction: {
+				"@type": "SearchAction",
+				target: {
+					"@type": "EntryPoint",
+					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
+				},
+				"query-input": "required name=search_term_string"
+			}
+		}*/
+	];
+
+	return {
+		baseMetaTags,
+		baseSchemas
+	};
 };
