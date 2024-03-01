@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@inlang/paraglide-js':
-    specifier: ^1.2.3
-    version: 1.2.3(@sinclair/typebox@0.31.28)
+    specifier: ^1.2.7
+    version: 1.2.7
   '@inlang/paraglide-js-adapter-sveltekit':
     specifier: ^0.3.5
     version: 0.3.5(@sinclair/typebox@0.31.28)(@sveltejs/kit@2.5.2)
@@ -495,6 +495,22 @@ packages:
       posthog-node: 3.1.3
     transitivePeerDependencies:
       - '@sinclair/typebox'
+      - babel-plugin-macros
+      - debug
+    dev: true
+
+  /@inlang/paraglide-js@1.2.7:
+    resolution: {integrity: sha512-tLJLReWwLpvOeNbquFB3kh2dQmgFnyY4wO8ksXvOAl19ca10q6NaRe46jXRmXewb4/z8o+aqdqqNvnnI4Yoskw==}
+    hasBin: true
+    dependencies:
+      '@inlang/detect-json-formatting': 1.0.0
+      commander: 11.1.0
+      consola: 3.2.3
+      dedent: 1.5.1
+      isomorphic-git: 1.24.5
+      json5: 2.2.3
+      posthog-node: 3.1.3
+    transitivePeerDependencies:
       - babel-plugin-macros
       - debug
     dev: true
