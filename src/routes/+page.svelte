@@ -307,9 +307,9 @@
 <!-- Body -->
 <!-- Hero -->
 <div
-	class="before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] xxl:before:max-h-[90svh]"
+	class="absolute inset-0 -z-10 max-w-full bg-gradient-to-l from-dominant to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none xxl:max-h-[90svh]"
 ></div>
-<div id="hero" class="relative flex h-[80svh] flex-col items-center justify-center">
+<div id="hero" class="relative flex h-[85svh] flex-col items-center justify-center lg:h-[80svh]">
 	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
 		<div class="flex flex-col gap-10 sm:mx-auto">

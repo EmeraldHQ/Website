@@ -218,23 +218,25 @@
 		<div class="w-full border-b border-dominant"></div>
 	</div>
 	<Section id="sales" title={m.contactCallSectionTitle()}>
-		<div
-			class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-		>
-			<div class="flex flex-col">
-				<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
-				<span class="font-light opacity-50">
-					{m.contactCallSectionJob()} - Emerald Studio
-				</span>
+		<div class="xxl:w-full">
+			<div
+				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
+			>
+				<div class="flex flex-col">
+					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
+					<span class="font-light opacity-50">
+						{m.contactCallSectionJob()} - Emerald Studio
+					</span>
+				</div>
+				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
+					<Phone class="inline-block size-6" />
+					<span
+						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
+					>
+						{data.contact.phone}
+					</span>
+				</a>
 			</div>
-			<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
-				<Phone class="inline-block size-6" />
-				<span
-					class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
-				>
-					{data.contact.phone}
-				</span>
-			</a>
 		</div>
 	</Section>
 </div>
