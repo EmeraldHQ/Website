@@ -105,15 +105,15 @@ jobs:
         run: bun run paraglide-js compile --project ./project.inlang
 
       - name: ✅ Validate Inlang
-        run: pnpx @inlang/cli@latest validate --project ./project.inlang
+        run: bunx @inlang/cli@latest validate --project ./project.inlang
 
       - name: ✨ Check for missing localizations
         id: missing-localizations
-        run: pnpx @inlang/cli@latest lint --project ./project.inlang
+        run: bunx @inlang/cli@latest lint --project ./project.inlang
 
       - name: 🔤 Translate missing localizations
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
-        run: pnpx @inlang/cli@latest machine translate --project ./project.inlang
+        run: bunx @inlang/cli@latest machine translate --project ./project.inlang
 
       - name: 📤 Commit localization fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
@@ -132,7 +132,7 @@ jobs:
           sed -i '/\"error\"/d' ./project.inlang/settings.json
           # Replace all "warning"s in ./project.inlang/settings.json with "error"
           sed -i 's/\"warning\"/\"error\"/g' ./project.inlang/settings.json
-          pnpx @inlang/cli@latest lint --project ./project.inlang
+          bunx @inlang/cli@latest lint --project ./project.inlang
           # Restore ./project.inlang/settings.json
           git restore ./project.inlang/settings.json
 
@@ -151,7 +151,7 @@ jobs:
             if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
               echo "$file changes code"
               code_changes=true
-            elif [[ $file = pnpm-lock.yaml ]]; then
+            elif [[ $file = bun.lockb ]]; then
               echo "$file changes dependencies"
               deps_changes=true
             elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
@@ -214,7 +214,7 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
+            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = bun.lockb || $file = *.config.*s || $file = tsconfig.json ]]; then
               echo "$file requires build"
               requires_build=true
               break

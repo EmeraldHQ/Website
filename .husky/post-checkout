@@ -3,5 +3,5 @@ if [ "$3" == 1 ]; then  # branch checkout only (not file checkout)
     bun install
     # remove local branches that have been deleted on remote
     git fetch -p
-    pnpx git-removed-branches -p -f
+    bunx git-removed-branches -p -f
 fi
