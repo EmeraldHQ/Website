@@ -26,6 +26,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  HUSKY: 0
+
 # Start the workflow
 jobs:
   permissions-check:
@@ -98,37 +101,44 @@ jobs:
         if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
-      - name: 🔧 Check Inlang config
-        run: bun ci:update-inlang
+      - name: 🔨 Compile Inlang
+        run: bun run paraglide-js compile --project ./project.inlang
 
-      - name: 🔍 Detect file changes
-        id: detect-changes-inlang
-        run: |
-          if [[ $(git diff --name-only) =~ inlang.config.js ]]; then
-            echo "changes_detected=true >> $GITHUB_OUTPUT"
-          else
-            echo "changes_detected=false >> $GITHUB_OUTPUT"
-          fi
+      - name: ✅ Validate Inlang
+        run: pnpx @inlang/cli@latest validate --project ./project.inlang
 
-      - name: ❌ Exit if Inlang config is not up-to-date
-        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-inlang.outputs.changes_detected == 'true'
-        run: exit 1
+      - name: ✨ Check for missing localizations
+        id: missing-localizations
+        run: pnpx @inlang/cli@latest lint --project ./project.inlang
 
-      - name: 📤 Commit updated Inlang config
-        id: auto-commit-action-inlang
-        if: needs.permissions-check.outputs.has-permissions == 'true'
+      - name: 🔤 Translate missing localizations
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
+        run: pnpx @inlang/cli@latest machine translate --project ./project.inlang
+
+      - name: 📤 Commit localization fixes
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Update Inlang config
-          file_pattern: inlang.config.js
+          commit_message: Fix localizations
 
-      - name: ❌ Exit if Inlang config has been committed
-        if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-inlang.outputs.changes_detected == 'true'
+      - name: ❌ Exit if localization fixes have been committed
+        if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
+
+      - name: ✨ Lint check localizations
+        id: check-localizations
+        run: |
+          # Remove all lines that contain "error" in ./project.inlang/settings.json
+          sed -i '/\"error\"/d' ./project.inlang/settings.json
+          # Replace all "warning"s in ./project.inlang/settings.json with "error"
+          sed -i 's/\"warning\"/\"error\"/g' ./project.inlang/settings.json
+          pnpx @inlang/cli@latest lint --project ./project.inlang
+          # Restore ./project.inlang/settings.json
+          git restore ./project.inlang/settings.json
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v40
+        uses: tj-actions/changed-files@v42
 
       - name: 📤 Export results
         id: changed-files
@@ -159,19 +169,21 @@ jobs:
           echo "deps_changes=$deps_changes" >> $GITHUB_OUTPUT
 
       - name: ✨ Check Svelte format
+        id: svelte-format
         if: steps.changed-files.outputs.code_changes == 'true'
         run: bun check
 
       - name: ✨ Check style with Prettier & ESLint
+        id: prettier-eslint
         if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true' || steps.changed-files.outputs.deps_changes == 'true'
         run: bun lint
 
       - name: 🔧 Fix lint
-        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
         run: bun format
 
       - name: 📤 Commit lint fixes
-        if: failure() && needs.permissions-check.outputs.has-permissions == 'true'
+        if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Fix lint
@@ -194,7 +206,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v40
+        uses: tj-actions/changed-files@v42
 
       - name: 📤 Export results
         id: changed-files
@@ -232,7 +244,7 @@ jobs:
 
       - name: 📤 Upload artifact
         if: github.event_name == 'push' && steps.changed-files.outputs.requires_build == 'true'
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build
 
@@ -255,7 +267,7 @@ jobs:
 
     steps:
       - name: 🌍 Deploy Pages
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
         id: deployment
 
   perf-check:

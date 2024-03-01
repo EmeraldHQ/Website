@@ -15,7 +15,7 @@ jobs:
   pr-title-modifier:
     name: PR Title Modifier
     runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]'
+    if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' && github.actor != 'emeraldstudio-bot'
     permissions:
       pull-requests: write
 
@@ -24,8 +24,22 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 2
+
+      - name: 📋 Count all changed files for this commit
+        id: infra-changed-files
+        run: |
+          count=$(git diff --name-only HEAD^ HEAD | grep -vE 'src/|static/|tailwind.config.*|package.json' | wc -l)
+          if [ $count -gt 0 ]; then
+            echo "$count infrastructure files changed in the last commit"
+            echo "infra_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No infrastructure files changed in the last commit"
+            echo "infra_changes=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: 📝 Modify PR Title
+        if: steps.infra-changed-files.outputs.infra_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

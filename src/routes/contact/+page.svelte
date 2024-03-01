@@ -1,13 +1,12 @@
 <script lang="ts">
 	import type { PageData, Snapshot } from "./$types";
-	import { ROOT_URL } from "$config";
-	import { page } from "$app/stores";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import { Check, PaperAirplane, Phone, XMark } from "@inqling/svelte-icons/heroicon-24-outline";
-	import { i } from "@inlang/sdk-js";
-	import { c } from "$lib/utils/inlang-color";
+	import Check from "@inqling/svelte-icons/heroicon-24-outline/check.svelte";
+	import PaperAirplane from "@inqling/svelte-icons/heroicon-24-outline/paper-airplane.svelte";
+	import Phone from "@inqling/svelte-icons/heroicon-24-outline/phone.svelte";
+	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
+	import * as m from "$paraglide/messages";
 	import Section from "$layouts/Section.svelte";
-	import Button from "$elements/Button.svelte";
+	import Button from "$elements/button";
 
 	export let data: PageData;
 
@@ -40,7 +39,8 @@
 
 			const entries = [...new FormData(form).entries()].map(([key, value]) => {
 				if (key === "$budget") {
-					value = i(`contact.fields.budget.${value}`);
+					// @ts-expect-error - Calling a function with a string
+					value = m[`contactFieldBudget${value}`]();
 				}
 				return [key, value];
 			});
@@ -91,84 +91,19 @@
 	}
 </script>
 
-<!-- Meta tags -->
-<MetaTags
-	title={i("contact.pageTitle")}
-	titleTemplate="%s | Emerald Studio"
-	description={i("contact.description")}
-	canonical="{ROOT_URL}{$page.route.id}"
-	languageAlternates={[
-		{
-			hrefLang: "fr",
-			href: `${ROOT_URL}${$page.route.id}`
-		}
-	]}
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${i("home.og-banner")}`,
-				width: 512,
-				height: 256,
-				alt: i("a11y.alt.og-banner")
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		title: `${i("contact.pageTitle")} | Emerald Studio`,
-		description: i("contact.description"),
-		image: `${ROOT_URL}/${i("home.og-banner")}`,
-		imageAlt: i("a11y.alt.og-banner")
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		},
-		// Add type WebSite from home once done
-		{
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{
-					"@type": "ListItem",
-					position: 1,
-					name: i("common.pages.home"),
-					item: ROOT_URL
-				},
-				{
-					"@type": "ListItem",
-					position: 2,
-					name: i("contact.pageTitle"),
-					item: `${ROOT_URL}${$page.route.id}`
-				}
-			]
-		}
-	]}
-/>
-
 <!-- Page -->
 <div
 	class="relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
 >
-	<Section>
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		<svelte:fragment slot="title">{@html c(i("contact.title"))}</svelte:fragment>
+	<Section id="contact" title={m.contactTitle()}>
 		<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
 			<input type="hidden" name="accessKey" value="eb32604f-b688-458e-b3d9-eeabb48ad9d1" />
 			<input type="text" name="honeypot" class="hidden" />
 			<div class="mb-4 grid gap-8 sm:grid-cols-2">
-				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+				<div class="flex flex-col gap-6 *:flex *:flex-col *:gap-1">
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-							{i("contact.labels.name")}
+							{m.contactLabelName()}
 						</span>
 						<input
 							type="text"
@@ -176,18 +111,18 @@
 							bind:value={formValues.name}
 							autocomplete="family-name"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-							placeholder={i("contact.fields.name")}
+							placeholder={m.contactFieldName()}
 							required
 						/>
 						<p
 							class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
 						>
-							{i("contact.fields.nameError")}
+							{m.contactFieldNameError()}
 						</p>
 					</label>
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-							{i("contact.labels.email")}
+							{m.contactLabelEmail()}
 						</span>
 						<input
 							type="email"
@@ -195,31 +130,31 @@
 							bind:value={formValues.email}
 							autocomplete="email"
 							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-							placeholder={i("contact.fields.email")}
+							placeholder={m.contactFieldEmail()}
 							required
 						/>
 						<p
 							class="hidden text-sm text-red-500 peer-placeholder-shown:!hidden peer-invalid:mt-2 peer-invalid:block"
 						>
-							{i("contact.fields.emailError")}
+							{m.contactFieldEmailError()}
 						</p>
 					</label>
 					<label>
-						{i("contact.labels.company")}
+						{m.contactLabelCompany()}
 						<input
 							type="text"
 							name="$company"
 							bind:value={formValues.company}
 							autocomplete="organization"
 							class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
-							placeholder={i("contact.fields.company")}
+							placeholder={m.contactFieldCompany()}
 						/>
 					</label>
 				</div>
-				<div class="flex flex-col gap-6 child:flex child:flex-col child:gap-1">
+				<div class="flex flex-col gap-6 *:flex *:flex-col *:gap-1">
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-							{i("contact.labels.budget")}
+							{m.contactLabelBudget()}
 						</span>
 						<select
 							name="$budget"
@@ -228,28 +163,28 @@
 							required
 						>
 							<option value="" disabled hidden>
-								{i("contact.fields.budget.choose")}
+								{m.contactFieldBudgetChoose()}
 							</option>
 							<option class="bg-black/50" value="none">
-								{i("contact.fields.budget.none")}
+								{m.contactFieldBudgetNone()}
 							</option>
 							<hr />
 							<option class="bg-black/50" value="less">
-								{i("contact.fields.budget.less")}
+								{m.contactFieldBudgetLess()}
 							</option>
-							<option class="bg-black/50" value="1k">{i("contact.fields.budget.1k")}</option>
-							<option class="bg-black/50" value="5k">{i("contact.fields.budget.5k")}</option>
-							<option class="bg-black/50" value="10k">{i("contact.fields.budget.10k")}</option>
+							<option class="bg-black/50" value="1k">{m.contactFieldBudget1k()}</option>
+							<option class="bg-black/50" value="5k">{m.contactFieldBudget5k()}</option>
+							<option class="bg-black/50" value="10k">{m.contactFieldBudget10k()}</option>
 						</select>
 					</label>
 					<label>
 						<span class="after:ml-0.5 after:text-red-500 after:content-['*']">
-							{i("contact.labels.description")}
+							{m.contactLabelDescription()}
 						</span>
 						<textarea
 							name="message"
 							bind:value={formValues.description}
-							placeholder={i("contact.fields.description")}
+							placeholder={m.contactFieldDescription()}
 							rows="4"
 							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							required
@@ -258,45 +193,43 @@
 				</div>
 			</div>
 			<div class="flex justify-end">
-				<Button submit>
+				<Button type="submit">
 					{#if mailStatus === "sending"}
 						<!-- TODO: Replace with a library icon -->
-						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 h-5 w-5 animate-spin" />
-						{i("contact.sendButton.loading")}
+						<img src="/assets/spinner.svg" alt="Spinner" class="mr-3 size-5 animate-spin" />
+						{m.contactSendButtonLoading()}
 					{:else if mailStatus === "sent"}
-						<Check class="h-6 w-6" />
-						{i("contact.sendButton.success")}
+						<Check class="size-6" />
+						{m.contactSendButtonSuccess()}
 					{:else if mailStatus === "error"}
-						<XMark class="h-6 w-6" />
-						{i("contact.sendButton.error")}
+						<XMark class="size-6" />
+						{m.contactSendButtonError()}
 					{:else}
-						<PaperAirplane class="h-6 w-6" />
-						{i("contact.sendButton.default")}
+						<PaperAirplane class="size-6" />
+						{m.contactSendButtonDefault()}
 					{/if}
 				</Button>
 			</div>
 		</form>
-		<div class="my-8 flex items-center justify-center">
-			<div class="w-full border-b border-dominant"></div>
-			<div class="mx-4 font-medium uppercase">{i("contact.orLabel")}</div>
-			<div class="w-full border-b border-dominant"></div>
-		</div>
-		<div>
-			<h2 class="mb-10 text-3xl font-medium drop-shadow-lg">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html c(i("contact.callSection.title"))}
-			</h2>
+	</Section>
+	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
+		<div class="w-full border-b border-dominant"></div>
+		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
+		<div class="w-full border-b border-dominant"></div>
+	</div>
+	<Section id="sales" title={m.contactCallSectionTitle()}>
+		<div class="xxl:w-full">
 			<div
 				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
 			>
 				<div class="flex flex-col">
 					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
 					<span class="font-light opacity-50">
-						{i("contact.callSection.job")} - Emerald Studio
+						{m.contactCallSectionJob()} - Emerald Studio
 					</span>
 				</div>
 				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
-					<Phone class="inline-block h-6 w-6" />
+					<Phone class="inline-block size-6" />
 					<span
 						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
 					>

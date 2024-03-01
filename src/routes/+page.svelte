@@ -1,34 +1,29 @@
 <script lang="ts">
-	import { ROOT_URL } from "$config";
 	import { onMount, type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
-	import { goto } from "$app/navigation";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import Section from "$layouts/Section.svelte";
-	import { scrollTo } from "$utils/scroll";
-	import Button from "$elements/Button.svelte";
-	import {
-		Cloud,
-		Heart,
-		PaintBrush,
-		RocketLaunch,
-		Sparkles,
-		Trophy,
-		Window,
-		WrenchScrewdriver
-	} from "@inqling/svelte-icons/heroicon-24-outline";
-	import { JsonLd, MetaTags } from "svelte-meta-tags";
-	import {
-		ArrowDown,
-		ChevronRight,
-		ChevronLeft,
-		CodeBracket,
-		DevicePhoneMobile
-	} from "@inqling/svelte-icons/heroicon-24-solid";
-	import { Postgresql, Svelte, Vercel } from "@inqling/svelte-icons/simple-icons";
-	import { i, language } from "@inlang/sdk-js";
-	import { c } from "$utils/inlang-color";
+	import Button from "$elements/button";
+	import Cloud from "@inqling/svelte-icons/heroicon-24-outline/cloud.svelte";
+	import Heart from "@inqling/svelte-icons/heroicon-24-outline/heart.svelte";
+	import PaintBrush from "@inqling/svelte-icons/heroicon-24-outline/paint-brush.svelte";
+	import RocketLaunch from "@inqling/svelte-icons/heroicon-24-outline/rocket-launch.svelte";
+	import Sparkles from "@inqling/svelte-icons/heroicon-24-outline/sparkles.svelte";
+	import Trophy from "@inqling/svelte-icons/heroicon-24-outline/trophy.svelte";
+	import Window from "@inqling/svelte-icons/heroicon-24-outline/window.svelte";
+	import WrenchScrewdriver from "@inqling/svelte-icons/heroicon-24-outline/wrench-screwdriver.svelte";
+	import ArrowDown from "@inqling/svelte-icons/heroicon-24-solid/arrow-down.svelte";
+	import ChevronRight from "@inqling/svelte-icons/heroicon-24-solid/chevron-right.svelte";
+	import ChevronLeft from "@inqling/svelte-icons/heroicon-24-solid/chevron-left.svelte";
+	import CodeBracket from "@inqling/svelte-icons/heroicon-24-solid/code-bracket.svelte";
+	import DevicePhoneMobile from "@inqling/svelte-icons/heroicon-24-solid/device-phone-mobile.svelte";
+	import Postgresql from "@inqling/svelte-icons/simple-icons/postgresql.svelte";
+	import Svelte from "@inqling/svelte-icons/simple-icons/svelte.svelte";
+	import Vercel from "@inqling/svelte-icons/simple-icons/vercel.svelte";
+	import * as m from "$paraglide/messages";
+	import { languageTag } from "$paraglide/runtime";
+	import { c } from "$utils/inlang";
 	import resolveConfig from "tailwindcss/resolveConfig";
 	import tailwindConfig from "../../tailwind.config";
 
@@ -50,91 +45,91 @@
 		description: string;
 	}[] = [];
 	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
-	$: if (language) {
+	$: if (languageTag()) {
 		processSections = [
 			{
-				title: i("common.process.design"),
+				title: m.commonProcessDesign(),
 				icon: PaintBrush,
-				description: i("home.process.design-desc")
+				description: m.homeProcessDesignDesc()
 			},
 			{
-				title: i("common.process.development"),
+				title: m.commonProcessDevelopment(),
 				icon: CodeBracket,
-				description: i("home.process.development-desc")
+				description: m.homeProcessDevelopmentDesc()
 			},
 			{
-				title: i("common.process.hosting"),
+				title: m.commonProcessHosting(),
 				icon: Cloud,
-				description: i("home.process.hosting-desc")
+				description: m.homeProcessHostingDesc()
 			}
 		];
 		solutionsSections = [
 			{
-				title: i("common.solutions.comprehensive"),
-				description: i("home.solutions.comprehensive-desc")
+				title: m.commonSolutionsComprehensive(),
+				description: m.homeSolutionsComprehensiveDesc()
 			},
 			{
-				title: i("common.solutions.web-app"),
-				description: i("home.solutions.web-app-desc")
+				title: m.commonSolutionsWebApp(),
+				description: m.homeSolutionsWebAppDesc()
 			},
 			{
-				title: i("common.solutions.landing"),
-				description: i("home.solutions.landing-desc")
+				title: m.commonSolutionsLanding(),
+				description: m.homeSolutionsLandingDesc()
 			},
 			{
-				title: i("common.solutions.ecommerce"),
-				description: i("home.solutions.ecommerce-desc")
+				title: m.commonSolutionsEcommerce(),
+				description: m.homeSolutionsEcommerceDesc()
 			},
 			{
-				title: i("common.solutions.rewrite"),
-				description: i("home.solutions.rewrite-desc")
+				title: m.commonSolutionsRewrite(),
+				description: m.homeSolutionsRewriteDesc()
 			},
 			{
-				title: i("common.solutions.custom"),
-				description: i("home.solutions.custom-desc")
+				title: m.commonSolutionsCustom(),
+				description: m.homeSolutionsCustomDesc()
 			}
 		];
 		solutions = solutionsSections;
 		valuesSections = [
 			{
 				icon: Trophy,
-				title: i("home.values.quality.title"),
-				description: i("home.values.quality.desc")
+				title: m.homeValuesQualityTitle(),
+				description: m.homeValuesQualityDesc()
 			},
 			{
 				icon: Heart,
-				title: i("home.values.passion.title"),
-				description: i("home.values.passion.desc")
+				title: m.homeValuesPassionTitle(),
+				description: m.homeValuesPassionDesc()
 			},
 			{
 				icon: WrenchScrewdriver,
-				title: i("home.values.automation.title"),
-				description: i("home.values.automation.desc")
+				title: m.homeValuesAutomationTitle(),
+				description: m.homeValuesAutomationDesc()
 			},
 			{
 				icon: RocketLaunch,
-				title: i("home.values.performance.title"),
-				description: i("home.values.performance.desc")
+				title: m.homeValuesPerformanceTitle(),
+				description: m.homeValuesPerformanceDesc()
 			}
 		];
 		technologiesSections = [
 			{
-				title: c(i("home.technologies.framework.title")),
+				title: c(m.homeTechnologiesFrameworkTitle()),
 				icon: Svelte,
 				brandColor: "#FF3E00",
-				description: i("home.technologies.framework.desc")
+				description: m.homeTechnologiesFrameworkDesc()
 			},
 			{
-				title: c(i("home.technologies.database.title")),
+				title: c(m.homeTechnologiesDatabaseTitle()),
 				icon: Postgresql,
 				brandColor: "#4169E1",
-				description: i("home.technologies.database.desc")
+				description: m.homeTechnologiesDatabaseDesc()
 			},
 			{
-				title: c(i("home.technologies.infrastructure.title")),
+				title: c(m.homeTechnologiesInfrastructureTitle()),
 				icon: Vercel,
 				brandColor: "#FFFFFF",
-				description: i("home.technologies.infrastructure.desc")
+				description: m.homeTechnologiesInfrastructureDesc()
 			}
 		];
 	}
@@ -148,8 +143,7 @@
 		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
 		const rightScroll = processCards.scrollLeft + processCards.offsetWidth;
 		processCards.scrollTo({
-			left: button === "left" ? leftScroll : rightScroll,
-			behavior: "smooth"
+			left: button === "left" ? leftScroll : rightScroll
 		});
 	}
 
@@ -211,10 +205,11 @@
 	}
 
 	// Auto-scroll technologies cards
-	const DELAY = 5000;
-	let currentCard = 0;
+	const TECHNO_AUTO_SCROLL_DELAY = 5000;
+	let currentTechnoCard = 0;
+	let shouldResetTechnoScrollTimer = false;
 
-	function hoverIcon(index: number) {
+	function hoverTechnoIcon(index: number) {
 		const icons = technoIcons.children;
 		if (!icons || icons.length < index) return;
 		const icon = icons[index];
@@ -227,15 +222,14 @@
 		}
 	}
 
-	function scrollToCard(index: number) {
+	function scrollToTechnoCard(index: number) {
 		const cards = technoCards?.children;
 		if (!cards || cards.length < index) return;
 		const card = cards[index];
 		if (!card) return;
 
 		technoCards.scrollTo({
-			left: card.clientWidth * index,
-			behavior: "smooth"
+			left: card.clientWidth * index
 		});
 	}
 
@@ -251,20 +245,20 @@
 
 		// Hover the first icon on load, otherwise
 		// no icon is hovered until the first scroll
-		hoverIcon(currentCard);
+		hoverTechnoIcon(currentTechnoCard);
 
 		// Auto-scroll function
-		const autoScroll = () => {
-			if (currentCard === cards.length - 1) {
-				currentCard = 0;
+		function autoScroll() {
+			if (currentTechnoCard === cards.length - 1) {
+				currentTechnoCard = 0;
 			} else {
-				currentCard++;
+				currentTechnoCard++;
 			}
-			scrollToCard(currentCard);
-		};
+			scrollToTechnoCard(currentTechnoCard);
+		}
 
 		// Initial interval definition, start auto-scrolling
-		let interval = setInterval(autoScroll, DELAY);
+		let interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 
 		// Stop the interval on hover of the cards
 		technoCards.addEventListener("mouseenter", () => {
@@ -273,27 +267,32 @@
 
 		// Restart the interval on mouse leave
 		technoCards.addEventListener("mouseleave", () => {
-			interval = setInterval(autoScroll, DELAY);
+			interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 		});
 
 		// Scroll handler to update the hovered icon depending on
 		// the card we scrolled to
 		function onTechnoCardsScrollEnd() {
+			if (shouldResetTechnoScrollTimer) {
+				clearInterval(interval);
+				interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
+				shouldResetTechnoScrollTimer = false;
+			}
 			if (!technoCards) return; // fix "scrollLeft not found on undefined"
 			const scrollDistance = technoCards.scrollLeft;
 			const containerWidth = technoCards.clientWidth;
-			currentCard = Math.round(scrollDistance / containerWidth);
-			hoverIcon(currentCard);
+			currentTechnoCard = Math.round(scrollDistance / containerWidth);
+			hoverTechnoIcon(currentTechnoCard);
 		}
 
 		if ("onscrollend" in window) {
 			technoCards.addEventListener("scrollend", onTechnoCardsScrollEnd);
 		} else {
 			// Safari fallback
-			let i: ReturnType<typeof setTimeout>;
+			let timeout: ReturnType<typeof setTimeout>;
 			technoCards.addEventListener("scroll", () => {
-				clearTimeout(i);
-				i = setTimeout(onTechnoCardsScrollEnd, 100);
+				clearTimeout(timeout);
+				timeout = setTimeout(onTechnoCardsScrollEnd, 100);
 			});
 		}
 
@@ -305,95 +304,34 @@
 <!-- Window bindings -->
 <svelte:window bind:innerWidth />
 
-<!-- Meta tags -->
-<MetaTags
-	title={i("common.pages.home")}
-	titleTemplate="%s | Emerald Studio"
-	description={i("home.description")}
-	canonical={ROOT_URL}
-	languageAlternates={[
-		{
-			hrefLang: "fr",
-			href: ROOT_URL
-		}
-	]}
-	openGraph={{
-		images: [
-			{
-				url: `${ROOT_URL}/${i("home.og-banner")}`,
-				width: 512,
-				height: 256,
-				alt: i("a11y.alt.og-banner")
-			}
-		],
-		siteName: "Emerald Studio"
-	}}
-	twitter={{
-		cardType: "summary_large_image",
-		/*
-		site: "@EmeraldStudio", // Someday
-		handle: "@EmeraldStudio"
-		*/
-		title: `${i("common.pages.home")} | Emerald Studio`,
-		description: i("home.description"),
-		image: `${ROOT_URL}/${i("home.og-banner")}`,
-		imageAlt: i("a11y.alt.og-banner")
-	}}
-	additionalRobotsProps={{
-		noarchive: true
-	}}
-/>
-
-<JsonLd
-	schema={[
-		{
-			"@type": "Organization",
-			url: ROOT_URL,
-			logo: `${ROOT_URL}/favicon.svg`
-		} /*,
-		// Add FAQ?
-		{
-			"@type": "WebSite",
-			url: ROOT_URL,
-			potentialAction: {
-				"@type": "SearchAction",
-				target: {
-					"@type": "EntryPoint",
-					urlTemplate: `${ROOT_URL}/search?q={search_term_string}`
-				},
-				"query-input": "required name=search_term_string"
-			}
-		}*/
-	]}
-/>
-
 <!-- Body -->
 <!-- Hero -->
 <div
-	id="hero"
-	class="relative -mt-28 flex h-[100svh] flex-col items-center justify-center pt-28 md:-mt-32 md:pt-28"
->
-	<div
-		class="m-auto grid h-fit grid-cols-1 items-center px-10
-		before:absolute before:inset-0 before:-z-10 before:max-w-full before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:px-32 xl:grid-cols-2"
-	>
+	class="absolute inset-0 -z-10 max-w-full bg-gradient-to-l from-dominant to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none xxl:max-h-[90svh]"
+></div>
+<div id="hero" class="relative flex h-[85svh] flex-col items-center justify-center lg:h-[80svh]">
+	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
-		<div
-			class="flex flex-col justify-center text-4xl font-medium sm:mx-auto sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
-		>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<h1>{@html c(i("home.hero.title.first"))}<br />{@html c(i("home.hero.title.second"))}</h1>
-			<h2 class="pt-10 text-xl font-normal text-gray-400">
-				{i("home.hero.subtitle.first")}<br />{i("home.hero.subtitle.second")}
+		<div class="flex flex-col gap-10 sm:mx-auto">
+			<h1
+				class="text-pretty text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
+			>
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html c(m.homeHeroTitle())}
+			</h1>
+			<h2 class="text-pretty text-xl text-gray-400">
+				{m.homeHeroSubtitle()}
 			</h2>
 			<div
-				class="flex origin-bottom-left flex-col gap-5 pt-10 scale-110 child:max-w-fit xs:flex-row"
+				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
 			>
-				<Button on:click={() => goto("/contact")}>{i("common.contact")}</Button>
-				<!--				<Button styleType="minimal" class="hover-child:translate-x-1">-->
-				<!--					{i("home.hero.cta-secondary")}-->
-				<!--					<ChevronRight class="h-4 w-4 transition-transform duration-500" />-->
-				<!--				</Button>-->
+				<Button href="/contact">{m.commonContact()}</Button>
+				<!-- <Button variant="link" class="group">
+					{m.homeHeroSecondaryCta()}
+					<ChevronRight
+						class="size-4 transition-transform duration-500 group-hover:translate-x-1"
+					/>
+				</Button> -->
 			</div>
 		</div>
 		<!-- Right part -->
@@ -401,33 +339,33 @@
 			initialX={-32}
 			initialY={-13}
 			intensity={0.05}
-			scope={"#hero"}
-			class="relative hidden aspect-square max-h-full items-center justify-center child:absolute lg:ml-20 xl:flex"
+			scope="#hero"
+			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
-			<Window class="h-full w-full text-dominant" />
+			<Window class="size-full text-dominant" />
 			<div
-				class="bottom-10 left-10 w-36 perspective-[312rem] transform-style-3d translate-z-28
+				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
-				<CodeBracket class="h-full w-full" />
+				<CodeBracket class="size-full" />
 			</div>
 			<div
 				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
 			>
-				<Sparkles class="h-full w-full" />
+				<Sparkles class="size-full" />
 			</div>
 			<div
 				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16
 				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
 			>
-				<DevicePhoneMobile class="h-full w-full" />
+				<DevicePhoneMobile class="size-full" />
 			</div>
 		</Mouse3DTilting>
 	</div>
 	<!-- Bottom arrow -->
 	<MagneticElement
-		class="pb-10 transition-transform duration-500"
+		class="absolute bottom-0 mb-10 transition-transform duration-500"
 		on:in_zone={e => {
 			const element = e.detail.element;
 			element.style.transitionDuration = "500ms";
@@ -448,11 +386,11 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => scrollTo("#process")}
-			on:click={() => scrollTo("#process")}
+			on:keypress={() => document.querySelector("#process")?.scrollIntoView()}
+			on:click={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
-				class="h-8 w-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
+				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
 				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
@@ -467,24 +405,24 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			on:click={() => scrollToProcessCard("left")}
 		>
-			<ChevronLeft class="h-10 w-10 text-dominant" />
+			<ChevronLeft class="size-10 text-dominant" />
 		</button>
 		<div
 			bind:this={processCards}
-			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 child:snap-start lg:justify-center"
+			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 *:snap-start motion-safe:scroll-smooth lg:justify-center"
 		>
 			{#each processSections as { title, icon, description }, index}
 				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
 					<span
-						class="absolute -z-10 flex h-full w-full items-center justify-center text-9xl font-medium text-gray-700/75"
+						class="absolute -z-10 flex size-full items-center justify-center text-9xl font-medium text-gray-700/75"
 					>
 						{index + 1}
 					</span>
 					<div class="flex w-fit flex-row items-center gap-4">
-						<svelte:component this={icon} class="h-10 w-10 text-dominant" />
+						<svelte:component this={icon} class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
-					<p class="h-full w-full pt-4 text-lg font-normal text-gray-200">
+					<p class="size-full text-pretty pt-4 text-lg font-normal text-gray-200">
 						{description}
 					</p>
 				</div>
@@ -495,46 +433,38 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			on:click={() => scrollToProcessCard("right")}
 		>
-			<ChevronRight class="h-10 w-10 text-dominant" />
+			<ChevronRight class="size-10 text-dominant" />
 		</button>
 	</div>
 </Section>
 
 <!-- Solutions -->
-<Section id="solutions" class="relative py-20">
+<Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/[0.2]
+		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.solutions.title"))}
-	</svelte:fragment>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each solutions.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{solution.description}
 					</p>
 				</div>
 			{/each}
 			<em class="text-center sm:hidden">
-				{i("home.solutions.more.before-link")}
-				<!--				<Button styleType="minimal">{i("home.solutions.more.link")}</Button>-->
-				{i("home.solutions.more.link")}
-				{i("home.solutions.more.after-link")}
+				{m.homeSolutionsMoreBeforeLink()}
+				<!--				<Button variant="minimal">{m.homeSolutionsMoreLink()}</Button>-->
+				{m.homeSolutionsMoreLink()}
+				{m.homeSolutionsMoreAfterLink()}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button
-					styleType="minimal"
-					class="gap-2 text-end text-lg hover-child:translate-x-1"
-					on:click={() => goto("/contact")}
-				>
+				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
 					{solutions.slice(-1)[0]?.description ?? ""}
-					<ChevronRight class="h-4 w-4 transition-transform duration-500" />
+					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
 			</div>
 		</div>
@@ -542,19 +472,15 @@
 </Section>
 
 <!-- Values -->
-<Section id="values" class="relative py-20">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.values.title"))}
-	</svelte:fragment>
+<Section id="values" title={m.homeValuesTitle()} class="relative py-20">
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
 				<div class="grid grid-flow-col items-start justify-start gap-x-4">
-					<svelte:component this={value.icon} class="h-10 w-10 text-dominant" />
+					<svelte:component this={value.icon} class="size-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
-						<p class="text-lg text-gray-200">
+						<p class="text-pretty text-lg text-gray-200">
 							{value.description}
 						</p>
 					</div>
@@ -565,16 +491,12 @@
 </Section>
 
 <!-- Technologies -->
-<Section id="technologies">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.technologies.title"))}
-	</svelte:fragment>
+<Section id="technologies" title={m.homeTechnologiesTitle()}>
 	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
 			bind:this={technoCards}
-			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 child:snap-start sm:max-w-none"
+			class="flex max-w-full snap-x snap-mandatory gap-8 overflow-x-auto py-4 *:snap-start motion-safe:scroll-smooth sm:max-w-none"
 		>
 			{#each technologiesSections as techno}
 				<div
@@ -582,7 +504,7 @@
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
-					<p class="text-lg text-gray-200">
+					<p class="text-pretty text-lg text-gray-200">
 						{techno.description}
 					</p>
 				</div>
@@ -593,7 +515,7 @@
 		<div class="aspect-square h-56 lg:h-48">
 			<div
 				bind:this={technoIcons}
-				class="relative flex h-full w-full items-center justify-center -rotate-45"
+				class="relative flex size-full items-center justify-center -rotate-45"
 			>
 				{#each technologiesSections as techno, index}
 					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
@@ -602,7 +524,10 @@
 						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
 						hover:bg-gray-500 hover:scale-110
 						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
-						on:click={() => scrollToCard(index)}
+						on:click={() => {
+							scrollToTechnoCard(index);
+							shouldResetTechnoScrollTimer = true;
+						}}
 					>
 						<svelte:component
 							this={techno.icon}
@@ -619,24 +544,20 @@
 </Section>
 
 <!-- About us -->
-<Section id="about-us">
-	<svelte:fragment slot="title">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html c(i("home.about-us.title"))}
-	</svelte:fragment>
+<Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
 		>
-			<p class="text-lg text-gray-200">
-				{i("home.about-us.desc")}
+			<p class="text-pretty text-lg text-gray-200">
+				{m.homeAboutUsDesc()}
 			</p>
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
-		<Button type="minimal" class="gap-2 text-end text-lg hover-child:translate-x-1">
-			{i("home.about-us.more")}
-			<ChevronRight class="h-4 w-4 min-w-max transition-transform duration-500" />
+		<Button type="link" class="gap-2 text-end text-lg hover:*:translate-x-1">
+			{m.homeAboutUsMore()}
+			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
 	</div> -->
 </Section>
@@ -645,12 +566,12 @@
 <Section>
 	<div class="my-32 flex flex-col items-center justify-center">
 		<p class="text-lg text-gray-400 xs:text-2xl">
-			{i("home.cta-bottom.subtitle")}
+			{m.homeBottomCtaSubtitle()}
 		</p>
 		<h3 class="mx-10 mb-16 mt-4 text-center text-3xl font-medium xs:text-5xl">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html c(i("home.cta-bottom.title"))}
+			{@html c(m.homeBottomCtaTitle())}
 		</h3>
-		<Button class="scale-110" on:click={() => goto("/contact")}>{i("common.contact")}</Button>
+		<Button href="/contact" class="scale-110">{m.commonContact()}</Button>
 	</div>
 </Section>

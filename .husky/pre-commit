@@ -1,0 +1,12 @@
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+# Check lint for all selected files
+echo "$FILES" | xargs pnpm prettier --ignore-unknown --check --log-level warn || {
+    echo "Prettier failed! Please fix the errors and try again."
+    exit 1
+}
+pnpm eslint . || {
+    echo "ESLint failed! Please fix the errors and try again."
+    exit 1
+}
