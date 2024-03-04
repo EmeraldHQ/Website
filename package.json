@@ -17,7 +17,7 @@
 	"devDependencies": {
 		"@inlang/paraglide-js": "^1.2.7",
 		"@inlang/paraglide-js-adapter-sveltekit": "^0.5.5",
-		"@inqling/svelte-icons": "<= 4.1.2 || ^4.1.4",
+		"@inqling/svelte-icons": "^4.1.2",
 		"@rgossiaux/svelte-headlessui": "^2.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.2",
