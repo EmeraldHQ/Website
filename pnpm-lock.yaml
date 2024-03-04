@@ -12,7 +12,7 @@ devDependencies:
     specifier: ^0.5.5
     version: 0.5.5(@sveltejs/kit@2.5.2)
   '@inqling/svelte-icons':
-    specifier: ^4.1.2
+    specifier: <= 4.1.2 || ^4.1.4
     version: 4.1.2(svelte@4.2.12)
   '@rgossiaux/svelte-headlessui':
     specifier: ^2.0.0
@@ -84,8 +84,8 @@ devDependencies:
     specifier: ^3.6.6
     version: 3.6.6(postcss@8.4.35)(svelte@4.2.12)
   svelte-meta-tags:
-    specifier: ^3.1.0
-    version: 3.1.0(svelte@4.2.12)(typescript@5.3.3)
+    specifier: ^3.1.1
+    version: 3.1.1(svelte@4.2.12)(typescript@5.3.3)
   tailwind-merge:
     specifier: ^2.2.1
     version: 2.2.1
@@ -3200,8 +3200,8 @@ packages:
       svelte: 4.2.12
     dev: true
 
-  /svelte-meta-tags@3.1.0(svelte@4.2.12)(typescript@5.3.3):
-    resolution: {integrity: sha512-wFBfpktSua1R5rdvQ/aFucvXmRqzDhRYrPpMQ/pL4+KL5QHIzomPf29a5WN3yDR0reSy1PXyQ2ah0+uCYCbi0g==}
+  /svelte-meta-tags@3.1.1(svelte@4.2.12)(typescript@5.3.3):
+    resolution: {integrity: sha512-tSWU1xbRGV5rkDN4wWXZfY24BRuhPa3Z8W2Zpt3GCv01QQdWRhhgmlpYVdfoSPNQX060bDB/JM1cu4H+lXxe8w==}
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0
     dependencies:
