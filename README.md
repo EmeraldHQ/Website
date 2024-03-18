@@ -5,6 +5,6 @@
 ## Build locally
 
 ```bash
-pnpm i
-pnpm dev
+bun i
+bun dev
 ```
