@@ -297,7 +297,7 @@
 		<div class="flex flex-col gap-16 xl:flex-row xl:gap-0">
 			<a
 				href={i18n.resolveRoute("/")}
-				class="w-fit transition-opacity duration-300 hover:opacity-70"
+				class="size-fit transition-opacity duration-300 hover:opacity-70"
 			>
 				<img src="/logo-title.svg" alt={m.a11yAltLogo()} width="174" height="56" />
 			</a>
