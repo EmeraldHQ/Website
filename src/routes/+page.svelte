@@ -472,7 +472,7 @@
 </Section>
 
 <!-- Values -->
-<Section id="values" title={m.homeValuesTitle()} class="relative mx-auto py-20 xl:max-w-6xl">
+<Section id="values" title={m.homeValuesTitle()} class="relative mx-auto py-20">
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
@@ -491,11 +491,7 @@
 </Section>
 
 <!-- Technologies -->
-<Section
-	id="technologies"
-	title={m.homeTechnologiesTitle()}
-	class="mx-auto xl:max-w-6xl xxl:max-w-4xl"
->
+<Section id="technologies" title={m.homeTechnologiesTitle()}>
 	<div class="flex flex-col items-center gap-8 max-sm:!mx-8 sm:flex-row">
 		<!-- Left part -->
 		<div
@@ -516,7 +512,7 @@
 		</div>
 
 		<!-- Right part -->
-		<div class="aspect-square h-56 lg:h-48">
+		<div class="aspect-square h-56 lg:h-64 xl:h-72">
 			<div
 				bind:this={technoIcons}
 				class="relative flex size-full items-center justify-center -rotate-45"
@@ -548,7 +544,7 @@
 </Section>
 
 <!-- About us -->
-<Section id="about-us" title={m.homeAboutUsTitle()} class="mx-auto xl:max-w-6xl xxl:max-w-5xl">
+<Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
 			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
