@@ -13,7 +13,7 @@
 <section
 	{id}
 	class={twMerge(
-		"scroll-mt-10 py-16 *:mx-16 sm:scroll-mt-16 md:scroll-mt-24 md:*:mx-32 xxl:*:!mx-auto xxl:*:max-w-screen-2xl",
+		"scroll-mt-10 py-16 *:mx-16 sm:scroll-mt-16 md:scroll-mt-24 md:*:mx-32 xxl:*:!mx-auto xxl:*:max-w-screen-xl",
 		className
 	)}
 	{...$$restProps}

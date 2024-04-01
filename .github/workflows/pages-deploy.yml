@@ -138,7 +138,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v42
+        uses: tj-actions/changed-files@v44
 
       - name: 📤 Export results
         id: changed-files
@@ -206,7 +206,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v42
+        uses: tj-actions/changed-files@v44
 
       - name: 📤 Export results
         id: changed-files
@@ -224,7 +224,7 @@ jobs:
           echo "requires_build=$requires_build" >> $GITHUB_OUTPUT
 
       - name: 🔧 Configure pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
         if: github.event_name != 'pull_request' && steps.changed-files.outputs.requires_build == 'true'
         id: pages
         with:

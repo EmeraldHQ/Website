@@ -472,7 +472,7 @@
 </Section>
 
 <!-- Values -->
-<Section id="values" title={m.homeValuesTitle()} class="relative py-20">
+<Section id="values" title={m.homeValuesTitle()} class="relative mx-auto py-20">
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
@@ -512,7 +512,7 @@
 		</div>
 
 		<!-- Right part -->
-		<div class="aspect-square h-56 lg:h-48">
+		<div class="aspect-square h-56 lg:h-64 xl:h-72">
 			<div
 				bind:this={technoIcons}
 				class="relative flex size-full items-center justify-center -rotate-45"
@@ -568,7 +568,7 @@
 		<p class="text-lg text-gray-400 xs:text-2xl">
 			{m.homeBottomCtaSubtitle()}
 		</p>
-		<h3 class="mx-10 mb-16 mt-4 text-center text-3xl font-medium xs:text-5xl">
+		<h3 class="mx-10 mb-16 mt-4 max-w-screen-xs text-center text-3xl font-medium xs:text-5xl">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(m.homeBottomCtaTitle())}
 		</h3>
