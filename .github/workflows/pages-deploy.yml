@@ -8,7 +8,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - pnpm-lock.yaml
+      - bun.lockb
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -17,7 +17,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - pnpm-lock.yaml
+      - bun.lockb
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -70,31 +70,23 @@ jobs:
           token: ${{ needs.permissions-check.outputs.has-permissions == 'false' && github.token || secrets.WORKFLOW_PAT }}
           fetch-depth: ${{ github.event_name == 'push' && 2 || 1 }}
 
-      - name: 📥 Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: 🧭 Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: 📥 Install NPM dependencies
-        run: pnpm i --no-frozen-lockfile
+      - name: 📥 Install dependencies
+        run: bun i
 
       - name: 🔍 Detect file changes
-        id: detect-changes-pnpm
+        id: detect-changes-bun
         run: |
-          if [[ $(git diff --name-only) =~ pnpm-lock.yaml ]]; then
+          if [[ $(git diff --name-only) =~ bun.lockb ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
           fi
 
       - name: ❌ Exit if lock file is not updated
-        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-pnpm.outputs.changes_detected == 'true'
+        if: needs.permissions-check.outputs.has-permissions == 'false' && steps.detect-changes-bun.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 📤 Commit updated lock file
@@ -103,25 +95,25 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update lock file
-          file_pattern: pnpm-lock.yaml
+          file_pattern: bun.lockb
 
       - name: ❌ Exit if lock file has been committed
         if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
         run: exit 1
 
       - name: 🔨 Compile Inlang
-        run: pnpm exec paraglide-js compile --project ./project.inlang
+        run: bun run paraglide-js compile --project ./project.inlang
 
       - name: ✅ Validate Inlang
-        run: pnpx @inlang/cli@latest validate --project ./project.inlang
+        run: bunx @inlang/cli@latest validate --project ./project.inlang
 
       - name: ✨ Check for missing localizations
         id: missing-localizations
-        run: pnpx @inlang/cli@latest lint --project ./project.inlang
+        run: bunx @inlang/cli@latest lint --project ./project.inlang
 
       - name: 🔤 Translate missing localizations
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
-        run: pnpx @inlang/cli@latest machine translate --project ./project.inlang
+        run: bunx @inlang/cli@latest machine translate --project ./project.inlang
 
       - name: 📤 Commit localization fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && steps.missing-localizations.outcome == 'failure'
@@ -140,7 +132,7 @@ jobs:
           sed -i '/\"error\"/d' ./project.inlang/settings.json
           # Replace all "warning"s in ./project.inlang/settings.json with "error"
           sed -i 's/\"warning\"/\"error\"/g' ./project.inlang/settings.json
-          pnpx @inlang/cli@latest lint --project ./project.inlang
+          bunx @inlang/cli@latest lint --project ./project.inlang
           # Restore ./project.inlang/settings.json
           git restore ./project.inlang/settings.json
 
@@ -159,7 +151,7 @@ jobs:
             if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
               echo "$file changes code"
               code_changes=true
-            elif [[ $file = pnpm-lock.yaml ]]; then
+            elif [[ $file = bun.lockb ]]; then
               echo "$file changes dependencies"
               deps_changes=true
             elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
@@ -179,16 +171,16 @@ jobs:
       - name: ✨ Check Svelte format
         id: svelte-format
         if: steps.changed-files.outputs.code_changes == 'true'
-        run: pnpm check
+        run: bun check
 
       - name: ✨ Check style with Prettier & ESLint
         id: prettier-eslint
         if: steps.changed-files.outputs.code_changes == 'true' || steps.changed-files.outputs.config_changes == 'true' || steps.changed-files.outputs.deps_changes == 'true'
-        run: pnpm lint
+        run: bun lint
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
-        run: pnpm format
+        run: bun format
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
@@ -222,7 +214,7 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = pnpm-lock.yaml || $file = *.config.*s || $file = tsconfig.json ]]; then
+            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = bun.lockb || $file = *.config.*s || $file = tsconfig.json ]]; then
               echo "$file requires build"
               requires_build=true
               break
@@ -238,28 +230,17 @@ jobs:
         with:
           static_site_generator: sveltekit
 
-      - name: 📥 Install pnpm
-        if: steps.changed-files.outputs.requires_build == 'true'
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+      - name: 🧭 Setup Bun
+        uses: oven-sh/setup-bun@v1
 
-      - name: 🧭 Setup Node
-        if: steps.changed-files.outputs.requires_build == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: pnpm
-
-      - name: 📥 Install NPM dependencies
-        if: steps.changed-files.outputs.requires_build == 'true'
-        run: pnpm i # no need for `--no-frozen-lockfile` here, as the sync is ensured by the `prechecks` job
+      - name: 📥 Install dependencies
+        run: bun i
 
       - name: 🔨 Build repo
         if: steps.changed-files.outputs.requires_build == 'true'
         run: |
           touch static/.nojekyll
-          pnpm build
+          bun run build
 
       - name: 📤 Upload artifact
         if: github.event_name == 'push' && steps.changed-files.outputs.requires_build == 'true'
