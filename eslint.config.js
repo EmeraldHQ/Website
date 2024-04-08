@@ -43,13 +43,6 @@ export default [
 		}
 	},
 	{
-		ignores: [
-			".DS_Store",
-			"build/",
-			".svelte-kit/",
-			"package/",
-			"vite.config.ts.*",
-			"src/paraglide/"
-		]
+		ignores: ["build/", ".svelte-kit/", "package/", "vite.config.ts.*"]
 	}
 ];
