@@ -29,7 +29,7 @@ jobs:
       - name: 📋 Count all changed files for this commit
         id: infra-changed-files
         run: |
-          count=$(git diff --name-only HEAD^ HEAD | grep -E '.github/|.husky/|.gitignore|LICENSE|README.md|' | wc -l)
+          count=$(git diff --name-only HEAD^ HEAD | grep -E '.github/|.husky/|.gitignore|LICENSE|README.md' | wc -l)
           if [ $count -gt 0 ]; then
             echo "$count infrastructure files changed in the last commit"
             echo "infra_changes=true" >> $GITHUB_OUTPUT
