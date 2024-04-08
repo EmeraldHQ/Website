@@ -188,7 +188,7 @@ jobs:
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
-        run: pnpm format
+        run: pnpm format && pnpm eslint --fix .
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')

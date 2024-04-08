@@ -15,7 +15,7 @@ jobs:
   pr-title-modifier:
     name: PR Title Modifier
     runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' && github.actor != 'emeraldstudio-bot'
+    if: github.event.pull_request.user.login != 'dependabot[bot]' && github.event.pull_request.user.login != 'renovate[bot]' && github.event.pull_request.user.login != 'emeraldstudio-bot'
     permissions:
       pull-requests: write
 
@@ -29,7 +29,7 @@ jobs:
       - name: 📋 Count all changed files for this commit
         id: infra-changed-files
         run: |
-          count=$(git diff --name-only HEAD^ HEAD | grep -vE 'src/|static/|tailwind.config.*|package.json' | wc -l)
+          count=$(git diff --name-only HEAD^ HEAD | grep -E '.github/|.husky/|.gitignore|LICENSE|README.md' | wc -l)
           if [ $count -gt 0 ]; then
             echo "$count infrastructure files changed in the last commit"
             echo "infra_changes=true" >> $GITHUB_OUTPUT
