@@ -10,7 +10,7 @@ export default [
 	...ts.configs.recommended,
 	...svelte.configs["flat/recommended"],
 	prettier,
-	...svelte.configs['flat/prettier'],
+	...svelte.configs["flat/prettier"],
 	{
 		languageOptions: {
 			globals: {
@@ -42,11 +42,6 @@ export default [
 		}
 	},
 	{
-		ignores: [
-			"build/",
-			".svelte-kit/",
-			"package/",
-			"src/paraglide/"
-		]
+		ignores: ["build/", ".svelte-kit/", "package/", "src/paraglide/"]
 	}
 ];
