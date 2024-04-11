@@ -1,7 +1,7 @@
 import js from "@eslint/js";
 import ts from "typescript-eslint";
 import svelte from "eslint-plugin-svelte";
-import prettier from "eslint-plugin-prettier/recommended";
+import prettier from "eslint-config-prettier";
 import globals from "globals";
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
@@ -10,12 +10,11 @@ export default [
 	...ts.configs.recommended,
 	...svelte.configs["flat/recommended"],
 	prettier,
+	...svelte.configs["flat/prettier"],
 	{
 		languageOptions: {
-			ecmaVersion: 2020,
 			globals: {
 				...globals.browser,
-				...globals.es2017,
 				...globals.node
 			}
 		}
@@ -43,6 +42,6 @@ export default [
 		}
 	},
 	{
-		ignores: ["build/", ".svelte-kit/", "package/", "vite.config.ts.*", "src/paraglide/"]
+		ignores: ["build/", ".svelte-kit/", "package/", "src/paraglide/"]
 	}
 ];
