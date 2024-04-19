@@ -8,7 +8,7 @@
 	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
 	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
 	import extend from "just-extend";
-	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
+	import { ParaglideJS } from "@inlang/paraglide-sveltekit";
 	import { i18n } from "$utils/inlang";
 	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
