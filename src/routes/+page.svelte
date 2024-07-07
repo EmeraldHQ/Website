@@ -344,20 +344,17 @@
 		>
 			<Window class="size-full text-dominant" />
 			<div
-				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
+				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24 before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
 			>
 				<CodeBracket class="size-full" />
 			</div>
 			<div
-				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
+				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20 before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
 			>
 				<Sparkles class="size-full" />
 			</div>
 			<div
-				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
+				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16 before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
 			>
 				<DevicePhoneMobile class="size-full" />
 			</div>
@@ -390,8 +387,7 @@
 			on:click={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
-				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
-				hover:border-dominant hover:bg-inherit hover:text-dominant"
+				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
 	</MagneticElement>
@@ -441,9 +437,7 @@
 <!-- Solutions -->
 <Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
-			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
-			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
+		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20 before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	/>
 	<div class="flex items-center justify-between">
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -521,9 +515,7 @@
 					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
 					<button
 						style="transform: translate({x}%, {y}%);"
-						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
-						hover:bg-gray-500 hover:scale-110
-						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
+						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700 hover:bg-gray-500 hover:scale-110 [&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
 						on:click={() => {
 							scrollToTechnoCard(index);
 							shouldResetTechnoScrollTimer = true;
@@ -532,9 +524,7 @@
 						<svelte:component
 							this={techno.icon}
 							style="--brand-color: {techno.brandColor}"
-							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45
-							group-hover:fill-[var(--brand-color)] group-hover:scale-110
-							group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
+							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45 group-hover:fill-[var(--brand-color)] group-hover:scale-110 group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
 						/>
 					</button>
 				{/each}
