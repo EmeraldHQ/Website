@@ -17,7 +17,7 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@inlang/paraglide-js": "^1.7.0",
+		"@inlang/paraglide-js": "^1.11.2",
 		"@inlang/paraglide-sveltekit": "^0.6.7",
 		"@inqling/svelte-icons": "<= 4.1.2 || >= 4.1.4",
 		"@rgossiaux/svelte-headlessui": "^2.0.0",
