@@ -146,7 +146,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
 
       - name: 📤 Export results
         id: changed-files
@@ -214,7 +214,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
 
       - name: 📤 Export results
         id: changed-files
