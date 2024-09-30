@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@inlang/paraglide-js':
-        specifier: ^1.7.0
-        version: 1.7.0
+        specifier: ^1.11.2
+        version: 1.11.2
       '@inlang/paraglide-sveltekit':
         specifier: ^0.6.7
         version: 0.6.7(@sveltejs/kit@2.5.6(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.15)(vite@5.2.9(@types/node@20.12.7)))(svelte@4.2.15)(vite@5.2.9(@types/node@20.12.7)))(svelte@4.2.15)
@@ -320,6 +320,10 @@ packages:
     resolution: {integrity: sha512-+nGyReKCcqtzhkryEguN8ftL2gvr8vukGBKWzGx0hq3ul0i3JNVwlzFohU+TKpRyUE36DzffngVQX3khH0Gu8g==}
     peerDependencies:
       '@sinclair/typebox': ^0.31.17
+
+  '@inlang/paraglide-js@1.11.2':
+    resolution: {integrity: sha512-T9HCQO30Sq6L8tXQfdJI2CNMeNQxtMepJyoBYgK5QEN2LuIUqaoTfsZ2GryAqwFdAEj5FSM5Kdnf7f6shFqBHw==}
+    hasBin: true
 
   '@inlang/paraglide-js@1.7.0':
     resolution: {integrity: sha512-FkyOqMAPd8iks66xZpIqzepzlnMPT/t7sHmZkwN9QzjFu6RUjdSbHSP6dZPdmD1puobhtDQcbbub6NA/OmpuzA==}
@@ -2229,6 +2233,18 @@ snapshots:
       '@inlang/message-lint-rule': 1.4.5(@sinclair/typebox@0.31.28)
       '@inlang/plugin': 2.4.9(@sinclair/typebox@0.31.28)
       '@sinclair/typebox': 0.31.28
+
+  '@inlang/paraglide-js@1.11.2':
+    dependencies:
+      '@inlang/detect-json-formatting': 1.0.0
+      commander: 11.1.0
+      consola: 3.2.3
+      dedent: 1.5.1
+      json5: 2.2.3
+      posthog-node: 3.1.3
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - debug
 
   '@inlang/paraglide-js@1.7.0':
     dependencies:
