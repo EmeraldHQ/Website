@@ -1,6 +1,5 @@
 <script lang="ts">
 	import "../app.css";
-	import type { LayoutData } from "./$types";
 	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
@@ -22,7 +21,7 @@
 	}
 
 	// Meta tags
-	export let data: LayoutData;
+	export let data;
 	let metadata: MetaTagsProps;
 	$: metadata = extend(true, {}, data.baseMetaTags, {
 		title: $page.data.pageTitle,
@@ -33,7 +32,7 @@
 		}
 	});
 	let schemas: JsonLdProps["schema"] = [];
-	$: schemas = [...(data.baseSchemas ?? []), ...($page.data.pageSchemas ?? [])].filter(Boolean);
+	$: schemas = [...data.baseSchemas, ...($page.data.pageSchemas ?? [])];
 
 	// Inlang
 	onSetLanguageTag(() => {

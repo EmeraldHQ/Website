@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData, Snapshot } from "./$types";
+	import type { Snapshot } from "./$types";
 	import Check from "@inqling/svelte-icons/heroicon-24-outline/check.svelte";
 	import PaperAirplane from "@inqling/svelte-icons/heroicon-24-outline/paper-airplane.svelte";
 	import Phone from "@inqling/svelte-icons/heroicon-24-outline/phone.svelte";
@@ -8,7 +8,7 @@
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 
-	export let data: PageData;
+	export let data;
 
 	export const snapshot: Snapshot<typeof formValues> = {
 		capture: () => formValues,
