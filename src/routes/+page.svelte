@@ -24,15 +24,6 @@
 	import * as m from "$paraglide/messages";
 	import { languageTag } from "$paraglide/runtime";
 	import { c } from "$utils/inlang";
-	import resolveConfig from "tailwindcss/resolveConfig";
-	import tailwindConfig from "../../tailwind.config";
-
-	// Tailwind
-	const fullTailwindConfig = resolveConfig(tailwindConfig);
-	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
-
-	// Keep only 3 solutions sections if the screen is too small
-	let innerWidth = $state(0);
 
 	// Sections
 	let processSections = $derived.by<
@@ -93,13 +84,6 @@
 			];
 		}
 		return [];
-	});
-	let solutions = $derived.by<typeof solutionsSections>(() => {
-		const initial = solutionsSections;
-		if (innerWidth > 0 && tailwindSmScreen > innerWidth) {
-			return initial.slice(0, 3).concat(initial.slice(-1));
-		}
-		return initial;
 	});
 	let valuesSections = $derived.by<
 		{
@@ -319,9 +303,6 @@
 	});
 </script>
 
-<!-- Window bindings -->
-<svelte:window bind:innerWidth />
-
 <!-- Body -->
 <!-- Hero -->
 <div
@@ -461,8 +442,10 @@
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	></div>
 	<div class="flex items-center justify-between">
-		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-			{#each solutions.slice(0, -1) as solution}
+		<div
+			class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3 max-sm:[&_*:nth-child(n+4):nth-child(-n+5)]:hidden"
+		>
+			{#each solutionsSections.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
 					<p class="text-pretty text-lg text-gray-200">
@@ -478,7 +461,7 @@
 			</em>
 			<div class="flex items-end justify-end">
 				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
-					{solutions.slice(-1)[0]?.description ?? ""}
+					{solutionsSections.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
 			</div>
