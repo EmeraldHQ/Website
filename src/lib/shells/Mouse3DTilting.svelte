@@ -12,21 +12,21 @@
 		/**
 		 * The initial X rotation of the element. Defaults to 0.
 		 */
-		initialX: number;
+		initialX?: number;
 		/**
 		 * The initial Y rotation of the element. Defaults to 0.
 		 */
-		initialY: number;
+		initialY?: number;
 		/**
 		 * The intensity of the mouse tilting effect. Often a value between 0 and 1. Defaults to 0.5.
 		 */
-		intensity: number;
+		intensity?: number;
 		/**
 		 * The scope of the mouse tilting effect. Defines a selector for the element to be actively tilting in.
 		 * Defaults to the whole body.
 		 */
-		scope: string;
-		class: string | null | undefined;
+		scope?: string;
+		class?: string | null | undefined;
 		children?: Snippet;
 	};
 	let {
