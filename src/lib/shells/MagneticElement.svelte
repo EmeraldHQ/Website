@@ -1,27 +1,36 @@
 <!-- Created from https://github.com/andrewwoan/magnetic-button-effect-tutorial-01 -->
 <script lang="ts">
-	import { createEventDispatcher, onMount } from "svelte";
+	import type { Snippet } from "svelte";
 	import { useId } from "$utils/id";
 
 	// Constants
 	const id = `svelte-magnetic-element-${useId()}`;
-	const dispatch = createEventDispatcher<{
-		in_zone: { element: HTMLElement };
-		out_zone: { element: HTMLElement };
-	}>();
 
-	// Configuration
-	/**
-	 * The trigger area for the magnetic effect. Defaults to 200.
-	 */
-	export let triggerArea = 200;
-	/**
-	 * The interpolation factor for the magnetic effect. Often a value between 0 and 1. Defaults to 0.8.
-	 */
-	export let interpolationFactor = 0.8;
-
-	let className: string | null | undefined = undefined;
-	export { className as class };
+	type Props = {
+		/**
+		 * The class of the magnetic element.
+		 */
+		class?: string | null | undefined;
+		/**
+		 * The trigger area for the magnetic effect. Defaults to 200.
+		 */
+		triggerArea?: number;
+		/**
+		 * The interpolation factor for the magnetic effect. Often a value between 0 and 1. Defaults to 0.8.
+		 */
+		interpolationFactor?: number;
+		in_zone?: (event: { element: HTMLElement }) => void;
+		out_zone?: (event: { element: HTMLElement }) => void;
+		children?: Snippet;
+	};
+	let {
+		class: className = undefined,
+		triggerArea = 200,
+		interpolationFactor = 0.8,
+		in_zone = () => {},
+		out_zone = () => {},
+		children
+	}: Props = $props();
 
 	// Magnetic Object
 	class MagneticObject {
@@ -71,7 +80,7 @@
 				if (!this.inArea) {
 					this.inArea = true;
 					this.domElement.classList.add("in-zone");
-					dispatch("in_zone", { element: this.domElement });
+					in_zone({ element: this.domElement });
 				}
 				targetHolder.x =
 					(this.mousePosition.x -
@@ -84,7 +93,7 @@
 			} else if (this.inArea) {
 				this.inArea = false;
 				this.domElement.classList.remove("in-zone");
-				dispatch("out_zone", { element: this.domElement });
+				out_zone({ element: this.domElement });
 			}
 			this.lerpingData["x"].target = targetHolder.x;
 			this.lerpingData["y"].target = targetHolder.y;
@@ -106,12 +115,12 @@
 		}
 	}
 
-	onMount(() => {
-		const button = document.querySelector(`#${id} > *`);
-		new MagneticObject(<HTMLElement>button);
+	$effect(() => {
+		const button = document.querySelector(`#${id} > *`) as HTMLElement;
+		new MagneticObject(button);
 	});
 </script>
 
 <div {id} class={className}>
-	<slot />
+	{@render children?.()}
 </div>

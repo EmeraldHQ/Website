@@ -384,18 +384,16 @@
 	<!-- Bottom arrow -->
 	<MagneticElement
 		class="absolute bottom-0 mb-10 transition-transform duration-500"
-		on:in_zone={e => {
-			const element = e.detail.element;
-			element.style.transitionDuration = "500ms";
+		in_zone={e => {
+			e.element.style.transitionDuration = "500ms";
 			setTimeout(() => {
-				element.style.removeProperty("transition-duration");
+				e.element.style.removeProperty("transition-duration");
 			}, 500);
-			if (element.parentElement) element.parentElement.style.transform = "scale(1.2)";
+			if (e.element.parentElement) e.element.parentElement.style.transform = "scale(1.2)";
 		}}
-		on:out_zone={e => {
-			const element = e.detail.element;
-			element.style.transitionDuration = "500ms";
-			if (element.parentElement) element.parentElement.style.transform = "scale(1)";
+		out_zone={e => {
+			e.element.style.transitionDuration = "500ms";
+			if (e.element.parentElement) e.element.parentElement.style.transform = "scale(1)";
 		}}
 	>
 		<button
