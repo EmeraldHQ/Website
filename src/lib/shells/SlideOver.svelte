@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
 	import { writable } from "svelte/store";
 	import * as m from "$paraglide/messages";
 	import XMark from "@inqling/svelte-icons/heroicon-24-outline/x-mark.svelte";
@@ -10,14 +11,20 @@
 		TransitionChild
 	} from "@rgossiaux/svelte-headlessui";
 
-	/**
-	 * Whether the slide over is shown or not.
-	 */
-	export let show = false;
-	/**
-	 * The optional title of the slide over, displayed in the header.
-	 */
-	export let title: string | undefined = undefined;
+	type Props = {
+		/**
+		 * Whether the slide over is shown or not.
+		 */
+		show?: boolean;
+		/**
+		 * The optional title of the slide over, displayed in the header.
+		 */
+		title?: string | undefined;
+		children?: Snippet<[{ onClose: typeof onCloseStore }]>;
+		footer?: Snippet;
+	};
+
+	let { show = $bindable(false), title = undefined, children, footer }: Props = $props();
 
 	/**
 	 * A store containing a callback function to call when the slideover closed.
@@ -62,7 +69,7 @@
 										<button
 											type="button"
 											class="-m-2 p-2 hover:opacity-75"
-											on:click={() => (show = false)}
+											onclick={() => (show = false)}
 										>
 											<span class="sr-only">{m.a11yAriaPanelClose()}</span>
 											<XMark class="size-6" aria-hidden="true" />
@@ -71,13 +78,13 @@
 								</div>
 
 								<div class="-my-6 h-full">
-									<slot onClose={onCloseStore} />
+									{@render children?.({ onClose: onCloseStore })}
 								</div>
 							</div>
 
-							{#if $$slots.footer}
+							{#if footer}
 								<div class="border-t border-primary px-4 py-6 sm:px-6">
-									<slot name="footer" />
+									{@render footer?.()}
 								</div>
 							{/if}
 						</div>

@@ -15,24 +15,30 @@
 	import SlideOver from "$shells/SlideOver.svelte";
 
 	// Breadcrumb
-	let currentRoute: string[] = [];
-	$: if ($page.route.id) {
-		currentRoute = $page.route.id.split("/").filter(Boolean);
-	}
+	let currentRoute = $derived.by(() => {
+		if ($page.route.id) {
+			return $page.route.id.split("/").filter(Boolean);
+		}
+		return [];
+	});
 
 	// Meta tags
-	export let data;
-	let metadata: MetaTagsProps;
-	$: metadata = extend(true, {}, data.baseMetaTags, {
-		title: $page.data.pageTitle,
-		twitter: {
-			title:
-				data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
-				$page.data.pageTitle
-		}
-	});
-	let schemas: JsonLdProps["schema"] = [];
-	$: schemas = [...data.baseSchemas, ...($page.data.pageSchemas ?? [])];
+	let { data, children } = $props();
+	let metadata: MetaTagsProps = $derived(
+		extend(true, {}, data.baseMetaTags, {
+			title: $page.data.pageTitle,
+			twitter: {
+				title:
+					data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
+					$page.data.pageTitle
+			}
+		})
+	);
+
+	let schema = $derived<JsonLdProps["schema"]>([
+		...data.baseSchemas,
+		...($page.data.pageSchemas ?? [])
+	]);
 
 	// Inlang
 	onSetLanguageTag(() => {
@@ -91,31 +97,31 @@
 	});
 
 	// Config
-	let navbarItems: { name: string; href: string }[] = [];
-	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
+	let navbarItems: { name: string; href: string }[] = $state([]);
+	let footerItems: { name: string; items: { name: string; href: string }[] }[] = $state([]);
 
 	// Bindings & variables
-	let innerHeight = 0;
-	let scrollY = 0;
+	let innerHeight = $state(0);
+	let scrollY = $state(0);
 
-	let scrollDistanceContactButton = 0;
-	$: scrollDistanceContactButton = innerHeight * 0.7;
-	let scrollDistanceLogoSwitch = 0;
-	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
+	let scrollDistanceContactButton = $derived(innerHeight * 0.7);
+	let scrollDistanceLogoSwitch = $derived(innerHeight * 0.95);
 
-	$: showButton = !!scrollY && scrollY >= scrollDistanceContactButton;
+	let showButton = $derived(!!scrollY && scrollY >= scrollDistanceContactButton);
 
-	let showSlideOver = false;
+	let showSlideOver = $state(false);
 
-	let isPastLogoScrollDistance = false;
-	$: if (scrollY) {
-		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-		if (scrollY < scrollDistanceLogoSwitch - rem) {
-			isPastLogoScrollDistance = false;
-		} else if (scrollY >= scrollDistanceLogoSwitch) {
-			isPastLogoScrollDistance = true;
+	let isPastLogoScrollDistance = $derived.by(() => {
+		if (scrollY) {
+			const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+			if (scrollY < scrollDistanceLogoSwitch - rem) {
+				return false;
+			} else if (scrollY >= scrollDistanceLogoSwitch) {
+				return true;
+			}
 		}
-	}
+		return false;
+	});
 </script>
 
 <!-- Binding for scroll-dependent elements -->
@@ -124,7 +130,7 @@
 <ParaglideJS {i18n}>
 	<MetaTags {...metadata} />
 
-	<JsonLd schema={schemas} />
+	<JsonLd {schema} />
 
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
@@ -135,13 +141,13 @@
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
-					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svelte:element
 						this={$page.route.id === "/" ? "button" : "a"}
 						type={$page.route.id === "/" ? "button" : undefined}
 						href={$page.route.id === "/" ? undefined : "/"}
 						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
-						on:click={$page.route.id === "/"
+						onclick={$page.route.id === "/"
 							? () =>
 									window.scrollTo({
 										top: 0
@@ -189,7 +195,7 @@
 								<button
 									type="button"
 									class={linkClasses}
-									on:click={async () => {
+									onclick={async () => {
 										if ($page.route.id !== "/") {
 											await goto("/");
 										}
@@ -217,7 +223,7 @@
 						type="button"
 						class="lg:hidden"
 						aria-label={m.a11yAriaMenu()}
-						on:click={() => (showSlideOver = true)}
+						onclick={() => (showSlideOver = true)}
 					>
 						<Bars3 class="size-8" />
 					</button>
@@ -253,42 +259,44 @@
 	</div>
 
 	<!-- Responsive slide-over -->
-	<SlideOver bind:show={showSlideOver} let:onClose>
-		<div
-			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
-		>
-			{#each navbarItems as item}
+	<SlideOver bind:show={showSlideOver}>
+		{#snippet children({ onClose })}
+			<div
+				class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
+			>
+				{#each navbarItems as item}
+					<button
+						type="button"
+						class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+						onclick={() => {
+							onClose.set(async () => {
+								if ($page.route.id !== "/") {
+									await goto("/");
+								}
+								document.querySelector(item.href)?.scrollIntoView();
+							});
+							showSlideOver = false;
+						}}
+					>
+						{item.name}
+					</button>
+				{/each}
 				<button
 					type="button"
-					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-					on:click={() => {
-						onClose.set(async () => {
-							if ($page.route.id !== "/") {
-								await goto("/");
-							}
-							document.querySelector(item.href)?.scrollIntoView();
-						});
+					class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+					onclick={() => {
+						onClose.set(() => goto("/contact"));
 						showSlideOver = false;
 					}}
 				>
-					{item.name}
+					{m.commonContact()}
 				</button>
-			{/each}
-			<button
-				type="button"
-				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-				on:click={() => {
-					onClose.set(() => goto("/contact"));
-					showSlideOver = false;
-				}}
-			>
-				{m.commonContact()}
-			</button>
-		</div>
+			</div>
+		{/snippet}
 	</SlideOver>
 
 	<main>
-		<slot />
+		{@render children?.()}
 	</main>
 
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
@@ -359,8 +367,7 @@
 			<button
 				type="button"
 				class="absolute bottom-0 left-0 right-0 mx-auto hidden w-fit text-center sm:block"
-				on:click={() => window.scrollTo({ top: 0 })}
-				on:keypress={() => window.scrollTo({ top: 0 })}
+				onclick={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
 					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
@@ -368,12 +375,7 @@
 			</button>
 			<!-- Right -->
 			<div class="flex flex-col items-end gap-2">
-				<button
-					type="button"
-					class="sm:hidden"
-					on:click={() => window.scrollTo({ top: 0 })}
-					on:keypress={() => window.scrollTo({ top: 0 })}
-				>
+				<button type="button" class="sm:hidden" onclick={() => window.scrollTo({ top: 0 })}>
 					<ArrowUp
 						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
 					/>
