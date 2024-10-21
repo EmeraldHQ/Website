@@ -1,13 +1,23 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
 	import { twMerge } from "tailwind-merge";
 	import { c } from "$utils/inlang";
 
-	export let title: string | undefined = undefined;
+	type Props = {
+		title?: string | undefined;
+		id?: string | undefined;
+		class?: string | null | undefined;
+		children?: Snippet;
+		[key: string]: unknown;
+	};
 
-	export let id: string | undefined = undefined;
-
-	let className: string | null | undefined = undefined;
-	export { className as class };
+	let {
+		title = undefined,
+		id = undefined,
+		class: className = undefined,
+		children,
+		...rest
+	}: Props = $props();
 </script>
 
 <section
@@ -16,7 +26,7 @@
 		"scroll-mt-10 py-16 *:mx-16 sm:scroll-mt-16 md:scroll-mt-24 md:*:mx-32 xxl:*:!mx-auto xxl:*:max-w-screen-xl",
 		className
 	)}
-	{...$$restProps}
+	{...rest}
 >
 	{#if title}
 		<h2 class="pb-10 text-4xl font-medium drop-shadow-lg">
@@ -24,5 +34,5 @@
 			{@html c(title)}
 		</h2>
 	{/if}
-	<slot />
+	{@render children?.()}
 </section>

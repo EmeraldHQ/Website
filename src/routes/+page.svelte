@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, type SvelteComponent } from "svelte";
+	import { type SvelteComponent } from "svelte";
 	import type { SvelteHTMLElements } from "svelte/elements";
 	import MagneticElement from "$shells/MagneticElement.svelte";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
@@ -24,122 +24,133 @@
 	import * as m from "$paraglide/messages";
 	import { languageTag } from "$paraglide/runtime";
 	import { c } from "$utils/inlang";
-	import resolveConfig from "tailwindcss/resolveConfig";
-	import tailwindConfig from "../../tailwind.config";
-
-	// Tailwind
-	const fullTailwindConfig = resolveConfig(tailwindConfig);
-	const tailwindSmScreen = Number(fullTailwindConfig.theme.screens.sm.replace("px", ""));
 
 	// Sections
-	let processSections: {
-		title: string;
-		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
-		description: string;
-	}[] = [];
-	let solutionsSections: { title: string; description: string }[] = [];
-	let solutions: typeof solutionsSections = [];
-	let valuesSections: {
-		icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
-		title: string;
-		description: string;
-	}[] = [];
-	let technologiesSections: typeof processSections & { brandColor: string }[] = [];
-	$: if (languageTag()) {
-		processSections = [
-			{
-				title: m.commonProcessDesign(),
-				icon: PaintBrush,
-				description: m.homeProcessDesignDesc()
-			},
-			{
-				title: m.commonProcessDevelopment(),
-				icon: CodeBracket,
-				description: m.homeProcessDevelopmentDesc()
-			},
-			{
-				title: m.commonProcessHosting(),
-				icon: Cloud,
-				description: m.homeProcessHostingDesc()
-			}
-		];
-		solutionsSections = [
-			{
-				title: m.commonSolutionsComprehensive(),
-				description: m.homeSolutionsComprehensiveDesc()
-			},
-			{
-				title: m.commonSolutionsWebApp(),
-				description: m.homeSolutionsWebAppDesc()
-			},
-			{
-				title: m.commonSolutionsLanding(),
-				description: m.homeSolutionsLandingDesc()
-			},
-			{
-				title: m.commonSolutionsEcommerce(),
-				description: m.homeSolutionsEcommerceDesc()
-			},
-			{
-				title: m.commonSolutionsRewrite(),
-				description: m.homeSolutionsRewriteDesc()
-			},
-			{
-				title: m.commonSolutionsCustom(),
-				description: m.homeSolutionsCustomDesc()
-			}
-		];
-		solutions = solutionsSections;
-		valuesSections = [
-			{
-				icon: Trophy,
-				title: m.homeValuesQualityTitle(),
-				description: m.homeValuesQualityDesc()
-			},
-			{
-				icon: Heart,
-				title: m.homeValuesPassionTitle(),
-				description: m.homeValuesPassionDesc()
-			},
-			{
-				icon: WrenchScrewdriver,
-				title: m.homeValuesAutomationTitle(),
-				description: m.homeValuesAutomationDesc()
-			},
-			{
-				icon: RocketLaunch,
-				title: m.homeValuesPerformanceTitle(),
-				description: m.homeValuesPerformanceDesc()
-			}
-		];
-		technologiesSections = [
-			{
-				title: c(m.homeTechnologiesFrameworkTitle()),
-				icon: Svelte,
-				brandColor: "#FF3E00",
-				description: m.homeTechnologiesFrameworkDesc()
-			},
-			{
-				title: c(m.homeTechnologiesDatabaseTitle()),
-				icon: Postgresql,
-				brandColor: "#4169E1",
-				description: m.homeTechnologiesDatabaseDesc()
-			},
-			{
-				title: c(m.homeTechnologiesInfrastructureTitle()),
-				icon: Vercel,
-				brandColor: "#FFFFFF",
-				description: m.homeTechnologiesInfrastructureDesc()
-			}
-		];
-	}
+	let processSections = $derived.by<
+		{
+			title: string;
+			icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+			description: string;
+		}[]
+	>(() => {
+		if (languageTag()) {
+			return [
+				{
+					title: m.commonProcessDesign(),
+					icon: PaintBrush,
+					description: m.homeProcessDesignDesc()
+				},
+				{
+					title: m.commonProcessDevelopment(),
+					icon: CodeBracket,
+					description: m.homeProcessDevelopmentDesc()
+				},
+				{
+					title: m.commonProcessHosting(),
+					icon: Cloud,
+					description: m.homeProcessHostingDesc()
+				}
+			];
+		}
+		return [];
+	});
+	let solutionsSections = $derived.by<{ title: string; description: string }[]>(() => {
+		if (languageTag()) {
+			return [
+				{
+					title: m.commonSolutionsComprehensive(),
+					description: m.homeSolutionsComprehensiveDesc()
+				},
+				{
+					title: m.commonSolutionsWebApp(),
+					description: m.homeSolutionsWebAppDesc()
+				},
+				{
+					title: m.commonSolutionsLanding(),
+					description: m.homeSolutionsLandingDesc()
+				},
+				{
+					title: m.commonSolutionsEcommerce(),
+					description: m.homeSolutionsEcommerceDesc()
+				},
+				{
+					title: m.commonSolutionsRewrite(),
+					description: m.homeSolutionsRewriteDesc()
+				},
+				{
+					title: m.commonSolutionsCustom(),
+					description: m.homeSolutionsCustomDesc()
+				}
+			];
+		}
+		return [];
+	});
+	let valuesSections = $derived.by<
+		{
+			icon: typeof SvelteComponent<SvelteHTMLElements["svg"]>;
+			title: string;
+			description: string;
+		}[]
+	>(() => {
+		if (languageTag()) {
+			return [
+				{
+					icon: Trophy,
+					title: m.homeValuesQualityTitle(),
+					description: m.homeValuesQualityDesc()
+				},
+				{
+					icon: Heart,
+					title: m.homeValuesPassionTitle(),
+					description: m.homeValuesPassionDesc()
+				},
+				{
+					icon: WrenchScrewdriver,
+					title: m.homeValuesAutomationTitle(),
+					description: m.homeValuesAutomationDesc()
+				},
+				{
+					icon: RocketLaunch,
+					title: m.homeValuesPerformanceTitle(),
+					description: m.homeValuesPerformanceDesc()
+				}
+			];
+		}
+		return [];
+	});
+	let technologiesSections = $derived.by<typeof processSections & { brandColor: string }[]>(() => {
+		if (languageTag()) {
+			return [
+				{
+					title: c(m.homeTechnologiesFrameworkTitle()),
+					icon: Svelte,
+					brandColor: "#FF3E00",
+					description: m.homeTechnologiesFrameworkDesc()
+				},
+				{
+					title: c(m.homeTechnologiesDatabaseTitle()),
+					icon: Postgresql,
+					brandColor: "#4169E1",
+					description: m.homeTechnologiesDatabaseDesc()
+				},
+				{
+					title: c(m.homeTechnologiesInfrastructureTitle()),
+					icon: Vercel,
+					brandColor: "#FFFFFF",
+					description: m.homeTechnologiesInfrastructureDesc()
+				}
+			];
+		}
+		return [];
+	});
 
 	// Process cards
-	let processCards: HTMLElement;
-	let leftButton: HTMLButtonElement;
-	let rightButton: HTMLButtonElement;
+	let processCards = $state<HTMLElement>();
+	let leftButton = $state<HTMLButtonElement>();
+	let rightButton = $state<HTMLButtonElement>();
 
 	function scrollToProcessCard(button: "left" | "right") {
+		if (!processCards) return;
 		const leftScroll = processCards.scrollLeft - processCards.offsetWidth;
 		const rightScroll = processCards.scrollLeft + processCards.offsetWidth;
 		processCards.scrollTo({
@@ -151,7 +162,7 @@
 		if (!processCards || !leftButton || !rightButton) return;
 
 		const processCardWidth = processCards.clientWidth;
-		// Hide left button if we are at the beginning
+		// Hide the left button if we are at the beginning
 		if (processCards.scrollLeft < processCardWidth) {
 			leftButton.style.opacity = "0";
 			leftButton.disabled = true;
@@ -160,7 +171,7 @@
 			leftButton.disabled = false;
 		}
 
-		// Hide right button if we are at the end
+		// Hide the right button if we are at the end
 		if (processCards.scrollLeft > processCards.scrollWidth - processCardWidth * 2) {
 			rightButton.style.opacity = "0";
 			rightButton.disabled = true;
@@ -171,8 +182,8 @@
 	}
 
 	// Technologies cards
-	let technoCards: HTMLElement;
-	let technoIcons: HTMLElement;
+	let technoCards = $state<HTMLElement>();
+	let technoIcons = $state<HTMLElement>();
 
 	function getOffset(
 		totalPoints: number,
@@ -194,22 +205,13 @@
 		};
 	}
 
-	// Keep only 3 solutions sections if screen is too small
-	let innerWidth = 0;
-	$: if (innerWidth > 0) {
-		if (tailwindSmScreen > innerWidth) {
-			solutions = solutionsSections.slice(0, 3).concat(solutionsSections.slice(-1));
-		} else {
-			solutions = solutionsSections;
-		}
-	}
-
 	// Auto-scroll technologies cards
 	const TECHNO_AUTO_SCROLL_DELAY = 5000;
 	let currentTechnoCard = 0;
-	let shouldResetTechnoScrollTimer = false;
+	let shouldResetTechnoScrollTimer = $state(false);
 
 	function hoverTechnoIcon(index: number) {
+		if (!technoIcons) return;
 		const icons = technoIcons.children;
 		if (!icons || icons.length < index) return;
 		const icon = icons[index];
@@ -228,15 +230,15 @@
 		const card = cards[index];
 		if (!card) return;
 
-		technoCards.scrollTo({
+		technoCards?.scrollTo({
 			left: card.clientWidth * index
 		});
 	}
 
-	onMount(() => {
+	$effect(() => {
 		// === Process section ===
 		hideProcessButton();
-		processCards.addEventListener("scroll", hideProcessButton);
+		processCards?.addEventListener("scroll", hideProcessButton);
 
 		// === Auto-scroll technologies cards ===
 		// Initial checks
@@ -249,7 +251,7 @@
 
 		// Auto-scroll function
 		function autoScroll() {
-			if (currentTechnoCard === cards.length - 1) {
+			if (cards && currentTechnoCard === cards.length - 1) {
 				currentTechnoCard = 0;
 			} else {
 				currentTechnoCard++;
@@ -261,12 +263,12 @@
 		let interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 
 		// Stop the interval on hover of the cards
-		technoCards.addEventListener("mouseenter", () => {
+		technoCards?.addEventListener("mouseenter", () => {
 			clearInterval(interval);
 		});
 
 		// Restart the interval on mouse leave
-		technoCards.addEventListener("mouseleave", () => {
+		technoCards?.addEventListener("mouseleave", () => {
 			interval = setInterval(autoScroll, TECHNO_AUTO_SCROLL_DELAY);
 		});
 
@@ -286,11 +288,11 @@
 		}
 
 		if ("onscrollend" in window) {
-			technoCards.addEventListener("scrollend", onTechnoCardsScrollEnd);
+			technoCards?.addEventListener("scrollend", onTechnoCardsScrollEnd);
 		} else {
 			// Safari fallback
 			let timeout: ReturnType<typeof setTimeout>;
-			technoCards.addEventListener("scroll", () => {
+			technoCards?.addEventListener("scroll", () => {
 				clearTimeout(timeout);
 				timeout = setTimeout(onTechnoCardsScrollEnd, 100);
 			});
@@ -300,9 +302,6 @@
 		return () => clearInterval(interval);
 	});
 </script>
-
-<!-- Window bindings -->
-<svelte:window bind:innerWidth />
 
 <!-- Body -->
 <!-- Hero -->
@@ -366,18 +365,16 @@
 	<!-- Bottom arrow -->
 	<MagneticElement
 		class="absolute bottom-0 mb-10 transition-transform duration-500"
-		on:in_zone={e => {
-			const element = e.detail.element;
-			element.style.transitionDuration = "500ms";
+		in_zone={e => {
+			e.element.style.transitionDuration = "500ms";
 			setTimeout(() => {
-				element.style.removeProperty("transition-duration");
+				e.element.style.removeProperty("transition-duration");
 			}, 500);
-			if (element.parentElement) element.parentElement.style.transform = "scale(1.2)";
+			if (e.element.parentElement) e.element.parentElement.style.transform = "scale(1.2)";
 		}}
-		on:out_zone={e => {
-			const element = e.detail.element;
-			element.style.transitionDuration = "500ms";
-			if (element.parentElement) element.parentElement.style.transform = "scale(1)";
+		out_zone={e => {
+			e.element.style.transitionDuration = "500ms";
+			if (e.element.parentElement) e.element.parentElement.style.transform = "scale(1)";
 		}}
 	>
 		<button
@@ -386,8 +383,7 @@
 					transition-property: transform;
 					transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 				"
-			on:keypress={() => document.querySelector("#process")?.scrollIntoView()}
-			on:click={() => document.querySelector("#process")?.scrollIntoView()}
+			onclick={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
 				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
@@ -403,7 +399,7 @@
 		<button
 			bind:this={leftButton}
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
-			on:click={() => scrollToProcessCard("left")}
+			onclick={() => scrollToProcessCard("left")}
 		>
 			<ChevronLeft class="size-10 text-dominant" />
 		</button>
@@ -411,7 +407,7 @@
 			bind:this={processCards}
 			class="flex snap-x snap-mandatory gap-16 overflow-x-auto overflow-y-hidden py-8 *:snap-start motion-safe:scroll-smooth lg:justify-center"
 		>
-			{#each processSections as { title, icon, description }, index}
+			{#each processSections as { title, icon: IconComp, description }, index}
 				<div class="relative max-lg:min-w-full lg:w-1/4 lg:pb-4">
 					<span
 						class="absolute -z-10 flex size-full items-center justify-center text-9xl font-medium text-gray-700/75"
@@ -419,7 +415,7 @@
 						{index + 1}
 					</span>
 					<div class="flex w-fit flex-row items-center gap-4">
-						<svelte:component this={icon} class="size-10 text-dominant" />
+						<IconComp class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
 					<p class="size-full text-pretty pt-4 text-lg font-normal text-gray-200">
@@ -431,7 +427,7 @@
 		<button
 			bind:this={rightButton}
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
-			on:click={() => scrollToProcessCard("right")}
+			onclick={() => scrollToProcessCard("right")}
 		>
 			<ChevronRight class="size-10 text-dominant" />
 		</button>
@@ -444,10 +440,12 @@
 		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
-	/>
+	></div>
 	<div class="flex items-center justify-between">
-		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-			{#each solutions.slice(0, -1) as solution}
+		<div
+			class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3 max-sm:[&_*:nth-child(n+4):nth-child(-n+5)]:hidden"
+		>
+			{#each solutionsSections.slice(0, -1) as solution}
 				<div>
 					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
 					<p class="text-pretty text-lg text-gray-200">
@@ -463,7 +461,7 @@
 			</em>
 			<div class="flex items-end justify-end">
 				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
-					{solutions.slice(-1)[0]?.description ?? ""}
+					{solutionsSections.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
 			</div>
@@ -477,7 +475,7 @@
 		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
 			{#each valuesSections as value}
 				<div class="grid grid-flow-col items-start justify-start gap-x-4">
-					<svelte:component this={value.icon} class="size-10 text-dominant" />
+					<value.icon class="size-10 text-dominant" />
 					<div>
 						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
 						<p class="text-pretty text-lg text-gray-200">
@@ -524,13 +522,12 @@
 						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
 						hover:bg-gray-500 hover:scale-110
 						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
-						on:click={() => {
+						onclick={() => {
 							scrollToTechnoCard(index);
 							shouldResetTechnoScrollTimer = true;
 						}}
 					>
-						<svelte:component
-							this={techno.icon}
+						<techno.icon
 							style="--brand-color: {techno.brandColor}"
 							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45
 							group-hover:fill-[var(--brand-color)] group-hover:scale-110

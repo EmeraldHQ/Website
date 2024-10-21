@@ -1,6 +1,6 @@
 <!-- Created from https://codepen.io/kevinpowell/pen/GRBdLEv -->
 <script lang="ts">
-	import { onMount } from "svelte";
+	import type { Snippet } from "svelte";
 	import { useId } from "$utils/id";
 	import { twMerge } from "tailwind-merge";
 
@@ -8,27 +8,35 @@
 	let firstFire = true;
 	let isWorking = false;
 
-	// Svelte Props
-	/**
-	 * The initial X rotation of the element. Defaults to 0.
-	 */
-	export let initialX = 0;
-	/**
-	 * The initial Y rotation of the element. Defaults to 0.
-	 */
-	export let initialY = 0;
-	/**
-	 * The intensity of the mouse tilting effect. Often a value between 0 and 1. Defaults to 0.5.
-	 */
-	export let intensity = 0.5;
-	/**
-	 * The scope of the mouse tilting effect. Defines a selector for the element to be actively tilting in.
-	 * Defaults to the whole body.
-	 */
-	export let scope = "body";
-
-	let className: string | null | undefined = undefined;
-	export { className as class };
+	type Props = {
+		/**
+		 * The initial X rotation of the element. Defaults to 0.
+		 */
+		initialX?: number;
+		/**
+		 * The initial Y rotation of the element. Defaults to 0.
+		 */
+		initialY?: number;
+		/**
+		 * The intensity of the mouse tilting effect. Often a value between 0 and 1. Defaults to 0.5.
+		 */
+		intensity?: number;
+		/**
+		 * The scope of the mouse tilting effect. Defines a selector for the element to be actively tilting in.
+		 * Defaults to the whole body.
+		 */
+		scope?: string;
+		class?: string | null | undefined;
+		children?: Snippet;
+	};
+	let {
+		initialX = 0,
+		initialY = 0,
+		intensity = 0.5,
+		scope = "body",
+		class: className = undefined,
+		children
+	}: Props = $props();
 
 	// Rotate Element
 	async function rotateElement(event: MouseEvent, element: HTMLElement) {
@@ -69,9 +77,9 @@
 		}
 	}
 
-	onMount(() => {
+	$effect(() => {
 		const element = document.querySelector(`#${id}`);
-		const listener = (e: Event) => rotateElement(<MouseEvent>e, <HTMLElement>element);
+		const listener = (e: Event) => rotateElement(e as MouseEvent, element as HTMLElement);
 		const scopeElement = document.querySelector(scope) || document.body;
 		scopeElement.addEventListener("mousemove", listener);
 
@@ -93,5 +101,5 @@
 				transform-style: preserve-3d;
 	"
 >
-	<slot />
+	{@render children?.()}
 </div>

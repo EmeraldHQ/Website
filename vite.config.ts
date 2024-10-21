@@ -9,10 +9,5 @@ export default defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide"
 		})
-	],
-	server: {
-		fs: {
-			allow: ["."]
-		}
-	}
+	]
 });

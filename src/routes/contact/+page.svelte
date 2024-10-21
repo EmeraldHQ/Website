@@ -8,23 +8,23 @@
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 
-	export let data;
+	let { data } = $props();
 
 	export const snapshot: Snapshot<typeof formValues> = {
 		capture: () => formValues,
 		restore: value => (formValues = value)
 	};
 
-	let formValues = {
+	let formValues = $state({
 		name: "",
 		email: "",
 		company: "",
 		budget: "",
 		description: ""
-	};
+	});
 
 	// Form handling
-	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
+	let mailStatus = $state<"idle" | "sending" | "sent" | "error">("idle");
 	function mailHandler(form: HTMLFormElement) {
 		// A modified version of https://svelte.dev/repl/167e7c7a05844e3dab686b4257641d73
 		let submitting = false;
@@ -188,7 +188,7 @@
 							rows="4"
 							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							required
-						/>
+						></textarea>
 					</label>
 				</div>
 			</div>
