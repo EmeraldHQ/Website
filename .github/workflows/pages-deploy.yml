@@ -72,8 +72,6 @@ jobs:
 
       - name: 📥 Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: latest
 
       - name: 🧭 Setup Node
         uses: actions/setup-node@v4
@@ -241,8 +239,6 @@ jobs:
       - name: 📥 Install pnpm
         if: steps.changed-files.outputs.requires_build == 'true'
         uses: pnpm/action-setup@v4
-        with:
-          version: latest
 
       - name: 🧭 Setup Node
         if: steps.changed-files.outputs.requires_build == 'true'
