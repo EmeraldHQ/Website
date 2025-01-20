@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import Button from "$elements/button";
 	import Mouse3DTilting from "$shells/Mouse3DTilting.svelte";
 	import CodeBracket from "@inqling/svelte-icons/heroicon-24-solid/code-bracket.svelte";
@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>{m.errorError()} {$page.status} | Emerald Studio</title>
+	<title>{m.errorError()} {page.status} | Emerald Studio</title>
 </svelte:head>
 
 <div
@@ -22,10 +22,10 @@
 		<h1
 			class="text-9xl font-semibold text-dominant xs:text-[12rem] sm:text-[14rem] md:text-[16rem]"
 		>
-			{$page.status}
+			{page.status}
 		</h1>
 		<h2 class="text-5xl font-medium xs:text-7xl md:text-8xl">
-			{$page.error?.message.toLowerCase()}
+			{page.error?.message.toLowerCase()}
 		</h2>
 	</div>
 
