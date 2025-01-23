@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { ButtonRootProps as ButtonProps } from "bits-ui";
-	import { twMerge } from "tailwind-merge";
+	import { type ClassNameValue, twMerge } from "tailwind-merge";
 
 	type Props = {
 		/**
 		 * Defines the style of the button. Defaults to `"primary"`.
 		 */
 		variant?: "primary" | "secondary" | "link";
-		class?: ButtonProps["class"];
+		class?: ClassNameValue;
 	} & ButtonProps;
 
 	let {

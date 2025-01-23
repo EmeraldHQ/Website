@@ -7,18 +7,16 @@
 		"dev-exposed": "vite --host",
 		"build": "vite build",
 		"preview": "vite preview",
-		"deps:install": "pnpm i",
-		"deps:update": "pnpm up",
-		"deps:update-latest": "pnpm up -L",
 		"check": "svelte-kit sync && svelte-check --tsconfig tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"prepare": "husky"
+		"prepare": "svelte-kit sync && husky"
 	},
 	"devDependencies": {
-		"@inlang/paraglide-js": "^1.11.3",
-		"@inlang/paraglide-sveltekit": "^0.8.7",
+		"@eslint/js": "^9.18.0",
+		"@inlang/paraglide-js": "^1.11.8",
+		"@inlang/paraglide-sveltekit": "0.8.7",
 		"@inqling/svelte-icons": "<= 4.1.2 || >= 4.1.4",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.16.0",
@@ -32,7 +30,6 @@
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.14.0",
 		"husky": "^9.1.7",
-		"just-extend": "^6.2.0",
 		"mini-svg-data-uri": "^1.4.4",
 		"postcss": "^8.5.1",
 		"postcss-import": "^16.1.0",
@@ -52,5 +49,11 @@
 		"vaul-svelte": "^0.3.2",
 		"vite": "^6.0.7"
 	},
-	"type": "module"
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	},
+	"type": "module",
+	"packageManager": "pnpm@10.0.0"
 }

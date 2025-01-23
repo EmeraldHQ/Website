@@ -1,12 +1,11 @@
 <script lang="ts">
 	import "../app.css";
 	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
 	import Bars3 from "@inqling/svelte-icons/heroicon-24-solid/bars-3.svelte";
 	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
 	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
-	import extend from "just-extend";
 	import { ParaglideJS } from "@inlang/paraglide-sveltekit";
 	import { i18n } from "$utils/inlang";
 	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
@@ -15,29 +14,25 @@
 	import SlideOver from "$shells/SlideOver.svelte";
 
 	// Breadcrumb
-	let currentRoute = $derived.by(() => {
-		if ($page.route.id) {
-			return $page.route.id.split("/").filter(Boolean);
-		}
-		return [];
-	});
+	let currentRoute = $derived(page.route.id?.split("/").filter(Boolean) ?? []);
 
 	// Meta tags
 	let { data, children } = $props();
-	let metadata: MetaTagsProps = $derived(
-		extend(true, {}, data.baseMetaTags, {
-			title: $page.data.pageTitle,
+	let metadata = $derived<MetaTagsProps>({
+		...data.baseMetaTags,
+		...{
+			title: page.data.pageTitle,
 			twitter: {
 				title:
-					data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
-					$page.data.pageTitle
+					data.baseMetaTags?.titleTemplate.replace(/%s/g, page.data.pageTitle) ??
+					page.data.pageTitle
 			}
-		})
-	);
+		}
+	});
 
 	let schema = $derived<JsonLdProps["schema"]>([
 		...data.baseSchemas,
-		...($page.data.pageSchemas ?? [])
+		...(page.data.pageSchemas ?? [])
 	]);
 
 	// Inlang
@@ -85,7 +80,7 @@
 	beforeNavigate(({ to, type }) => {
 		document.documentElement.classList.remove("motion-safe:scroll-smooth");
 		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
-		if (type === "link" && to.route.id === $page.route.id) {
+		if (type === "link" && to.route.id === page.route.id) {
 			const lang = i18n.getLanguageFromUrl(to.url);
 			localStorage.setItem("language", lang);
 		}
@@ -143,11 +138,11 @@
 				<div class="mr-auto flex items-center gap-5">
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svelte:element
-						this={$page.route.id === "/" ? "button" : "a"}
-						type={$page.route.id === "/" ? "button" : undefined}
-						href={$page.route.id === "/" ? undefined : "/"}
+						this={page.route.id === "/" ? "button" : "a"}
+						type={page.route.id === "/" ? "button" : undefined}
+						href={page.route.id === "/" ? undefined : "/"}
 						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
-						onclick={$page.route.id === "/"
+						onclick={page.route.id === "/"
 							? () =>
 									window.scrollTo({
 										top: 0
@@ -181,7 +176,7 @@
 						{#each navbarItems as item}
 							{@const linkClasses =
 								"relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
-							{#if i18n.route(item.href) === $page.route.id}
+							{#if i18n.route(item.href) === page.route.id}
 								<span
 									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
 								>
@@ -196,7 +191,7 @@
 									type="button"
 									class={linkClasses}
 									onclick={async () => {
-										if ($page.route.id !== "/") {
+										if (page.route.id !== "/") {
 											await goto("/");
 										}
 										document.querySelector(item.href)?.scrollIntoView();
@@ -270,7 +265,7 @@
 						class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 						onclick={() => {
 							onClose.set(async () => {
-								if ($page.route.id !== "/") {
+								if (page.route.id !== "/") {
 									await goto("/");
 								}
 								document.querySelector(item.href)?.scrollIntoView();
@@ -389,7 +384,7 @@
 						<a
 							data-sveltekit-preload-data="off"
 							data-sveltekit-preload-code="hover"
-							href={i18n.resolveRoute($page.route.id ?? "/", lang)}
+							href={i18n.resolveRoute(page.route.id ?? "/", lang)}
 							hreflang={lang}
 							role="radio"
 							aria-current={lang === languageTag() ? "page" : undefined}
