@@ -93,7 +93,7 @@
 
 <!-- Page -->
 <div
-	class="relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:from-dominant before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
+	class="before:from-dominant relative -mt-28 justify-center pt-28 before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-l before:to-transparent before:opacity-20 before:content-[''] md:-mt-40 md:pt-40"
 >
 	<Section id="contact" title={m.contactTitle()}>
 		<form action="https://api.staticforms.xyz/submit" method="post" use:mailHandler>
@@ -110,7 +110,7 @@
 							name="name"
 							bind:value={formValues.name}
 							autocomplete="family-name"
-							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							class="peer focus:border-dominant rounded-full border bg-black/25 px-4 py-1 shadow-md focus:outline-0"
 							placeholder={m.contactFieldName()}
 							required
 						/>
@@ -129,7 +129,7 @@
 							name="email"
 							bind:value={formValues.email}
 							autocomplete="email"
-							class="peer rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							class="peer focus:border-dominant rounded-full border bg-black/25 px-4 py-1 shadow-md focus:outline-0"
 							placeholder={m.contactFieldEmail()}
 							required
 						/>
@@ -146,7 +146,7 @@
 							name="$company"
 							bind:value={formValues.company}
 							autocomplete="organization"
-							class="rounded-full border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							class="focus:border-dominant rounded-full border bg-black/25 px-4 py-1 shadow-md focus:outline-0"
 							placeholder={m.contactFieldCompany()}
 						/>
 					</label>
@@ -159,7 +159,7 @@
 						<select
 							name="$budget"
 							bind:value={formValues.budget}
-							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
+							class="focus:outline-dominant w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 ring-1 shadow-md outline outline-1"
 							required
 						>
 							<option value="" disabled hidden>
@@ -186,7 +186,7 @@
 							bind:value={formValues.description}
 							placeholder={m.contactFieldDescription()}
 							rows="4"
-							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
+							class="focus:border-dominant resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:outline-0"
 							required
 						></textarea>
 					</label>
@@ -212,18 +212,16 @@
 			</div>
 		</form>
 	</Section>
-	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
-		<div class="w-full border-b border-dominant"></div>
+	<div class="xxl:mx-auto xxl:max-w-screen-2xl mx-16 flex items-center justify-center md:mx-32">
+		<div class="border-dominant w-full border-b"></div>
 		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
-		<div class="w-full border-b border-dominant"></div>
+		<div class="border-dominant w-full border-b"></div>
 	</div>
 	<Section id="sales" title={m.contactCallSectionTitle()}>
 		<div class="xxl:w-full">
-			<div
-				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-			>
+			<div class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] bg-black/75 p-6 shadow-2xl">
 				<div class="flex flex-col">
-					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
+					<span class="text-dominant text-xl font-medium">{data.contact.name}</span>
 					<span class="font-light opacity-50">
 						{m.contactCallSectionJob()} - Emerald Studio
 					</span>
@@ -231,7 +229,7 @@
 				<a href="tel:{data.contact.phone.replace(/ /g, '')}" class="flex w-fit gap-2">
 					<Phone class="inline-block size-6" />
 					<span
-						class="underline decoration-dominant decoration-from-font underline-offset-4 hover:decoration-auto"
+						class="decoration-dominant underline decoration-from-font underline-offset-4 hover:decoration-auto"
 					>
 						{data.contact.phone}
 					</span>

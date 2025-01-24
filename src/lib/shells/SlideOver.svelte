@@ -59,9 +59,9 @@
 	<Drawer.Portal>
 		<Drawer.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Drawer.Content
-			class="fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col bg-secondary"
+			class="bg-bg-secondary fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col"
 		>
-			<Drawer.Close class="ml-auto mr-5 mt-5 p-2 transition-opacity hover:opacity-75">
+			<Drawer.Close class="mt-5 mr-5 ml-auto p-2 transition-opacity hover:opacity-75">
 				<span class="sr-only" bind:this={closer}>{m.a11yAriaPanelClose()}</span>
 				<XMark class="size-6" aria-hidden="true" />
 			</Drawer.Close>
@@ -72,7 +72,7 @@
 			{/if}
 			{@render children?.({ onClose: onCloseStore })}
 			{#if footer}
-				<div class="border-t border-primary px-4 py-6 sm:px-6">
+				<div class="border-border-primary border-t px-4 py-6 sm:px-6">
 					{@render footer?.()}
 				</div>
 			{/if}

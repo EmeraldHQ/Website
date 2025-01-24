@@ -306,23 +306,23 @@
 <!-- Body -->
 <!-- Hero -->
 <div
-	class="absolute inset-0 -z-10 max-w-full bg-gradient-to-l from-dominant to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none xxl:max-h-[90svh]"
+	class="from-dominant xxl:max-h-[90svh] absolute inset-0 -z-10 max-w-full bg-gradient-to-l to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none"
 ></div>
 <div id="hero" class="relative flex h-[85svh] flex-col items-center justify-center lg:h-[80svh]">
 	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
 		<div class="flex flex-col gap-10 sm:mx-auto">
 			<h1
-				class="text-pretty text-4xl font-medium sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl xxl:text-7xl"
+				class="xxl:text-7xl text-4xl font-medium text-pretty sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl"
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html c(m.homeHeroTitle())}
 			</h1>
-			<h2 class="text-pretty text-xl text-gray-400">
+			<h2 class="text-xl text-pretty text-gray-400">
 				{m.homeHeroSubtitle()}
 			</h2>
 			<div
-				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
+				class="xs:flex-row xs:gap-12 flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110"
 			>
 				<Button href="/contact">{m.commonContact()}</Button>
 				<!-- <Button variant="link" class="group">
@@ -341,22 +341,22 @@
 			scope="#hero"
 			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
-			<Window class="size-full text-dominant" />
+			<Window class="text-dominant size-full" />
 			<div
-				class="bottom-10 left-0 w-36 perspective-[312rem] transform-style-3d translate-z-24
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-[''] before:-translate-z-28"
+				class="transform-style-3d bottom-10 left-0 w-36 translate-z-24 perspective-[312rem]
+				before:absolute before:inset-0 before:-z-10 before:-translate-z-28 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-['']"
 			>
 				<CodeBracket class="size-full" />
 			</div>
 			<div
-				class="left-1/2 top-0 w-36 perspective-[312rem] transform-style-3d translate-z-20
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-[''] before:-translate-z-20"
+				class="transform-style-3d top-0 left-1/2 w-36 translate-z-20 perspective-[312rem]
+				before:absolute before:inset-0 before:-z-10 before:-translate-z-20 before:rounded-full before:bg-black before:opacity-50 before:blur-lg before:content-['']"
 			>
 				<Sparkles class="size-full" />
 			</div>
 			<div
-				class="-right-10 bottom-0 w-36 perspective-[312rem] transform-style-3d translate-z-16
-				before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-[''] before:-translate-z-16"
+				class="transform-style-3d -right-10 bottom-0 w-36 translate-z-16 perspective-[312rem]
+				before:absolute before:inset-0 before:-z-10 before:-translate-z-16 before:rounded-full before:bg-black before:opacity-[0.55] before:blur-lg before:content-['']"
 			>
 				<DevicePhoneMobile class="size-full" />
 			</div>
@@ -386,8 +386,8 @@
 			onclick={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
-				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-inverted
-				hover:border-dominant hover:bg-inherit hover:text-dominant"
+				class="bg-dominant text-text-inverted hover:border-dominant hover:text-dominant size-8 cursor-pointer rounded-full border
+				border-transparent p-1.5 hover:bg-inherit"
 			/>
 		</button>
 	</MagneticElement>
@@ -401,7 +401,7 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			onclick={() => scrollToProcessCard("left")}
 		>
-			<ChevronLeft class="size-10 text-dominant" />
+			<ChevronLeft class="text-dominant size-10" />
 		</button>
 		<div
 			bind:this={processCards}
@@ -415,10 +415,10 @@
 						{index + 1}
 					</span>
 					<div class="flex w-fit flex-row items-center gap-4">
-						<IconComp class="size-10 text-dominant" />
+						<IconComp class="text-dominant size-10" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
-					<p class="size-full text-pretty pt-4 text-lg font-normal text-gray-200">
+					<p class="size-full pt-4 text-lg font-normal text-pretty text-gray-200">
 						{description}
 					</p>
 				</div>
@@ -429,7 +429,7 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			onclick={() => scrollToProcessCard("right")}
 		>
-			<ChevronRight class="size-10 text-dominant" />
+			<ChevronRight class="text-dominant size-10" />
 		</button>
 	</div>
 </Section>
@@ -437,18 +437,18 @@
 <!-- Solutions -->
 <Section id="solutions" title={m.homeSolutionsTitle()} class="relative py-20">
 	<div
-		class="absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-[''] bg-grid-slate-500/20
+		class="grid-bg absolute inset-0 -z-10 !mx-0 w-screen !max-w-full bg-left content-['']
 			before:absolute before:inset-0 before:bg-gradient-to-t before:from-transparent before:via-transparent before:via-80% before:to-black before:content-['']
 			after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-transparent after:via-80% after:to-black after:content-['']"
 	></div>
 	<div class="flex items-center justify-between">
 		<div
-			class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2 lg:grid-cols-3 max-sm:[&_*:nth-child(n+4):nth-child(-n+5)]:hidden"
+			class="grid gap-x-16 gap-y-12 pt-4 pb-8 sm:grid-cols-2 lg:grid-cols-3 max-sm:[&_*:nth-child(n+4):nth-child(-n+5)]:hidden"
 		>
 			{#each solutionsSections.slice(0, -1) as solution}
 				<div>
-					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
-					<p class="text-pretty text-lg text-gray-200">
+					<h3 class="text-dominant text-xl font-medium">{solution.title}</h3>
+					<p class="text-lg text-pretty text-gray-200">
 						{solution.description}
 					</p>
 				</div>
@@ -460,7 +460,7 @@
 				{m.homeSolutionsMoreAfterLink()}
 			</em>
 			<div class="flex items-end justify-end">
-				<Button variant="link" href="/contact" class="gap-2 text-end text-lg hover:*:translate-x-1">
+				<Button variant="link" href="/contact" class="gap-2 text-end text-lg *:hover:translate-x-1">
 					{solutionsSections.slice(-1)[0]?.description ?? ""}
 					<ChevronRight class="size-4 transition-transform duration-500" />
 				</Button>
@@ -472,13 +472,13 @@
 <!-- Values -->
 <Section id="values" title={m.homeValuesTitle()} class="relative mx-auto py-20">
 	<div class="flex items-center justify-between">
-		<div class="grid gap-x-16 gap-y-12 pb-8 pt-4 sm:grid-cols-2">
+		<div class="grid gap-x-16 gap-y-12 pt-4 pb-8 sm:grid-cols-2">
 			{#each valuesSections as value}
 				<div class="grid grid-flow-col items-start justify-start gap-x-4">
-					<value.icon class="size-10 text-dominant" />
+					<value.icon class="text-dominant size-10" />
 					<div>
-						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
-						<p class="text-pretty text-lg text-gray-200">
+						<h3 class="text-dominant text-xl font-medium">{value.title}</h3>
+						<p class="text-lg text-pretty text-gray-200">
 							{value.description}
 						</p>
 					</div>
@@ -498,11 +498,11 @@
 		>
 			{#each technologiesSections as techno}
 				<div
-					class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter"
+					class="bg-glass flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 p-8 backdrop-blur-sm backdrop-filter"
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
-					<p class="text-pretty text-lg text-gray-200">
+					<p class="text-lg text-pretty text-gray-200">
 						{techno.description}
 					</p>
 				</div>
@@ -513,15 +513,15 @@
 		<div class="aspect-square h-56 lg:h-64 xl:h-72">
 			<div
 				bind:this={technoIcons}
-				class="relative flex size-full items-center justify-center -rotate-45"
+				class="relative flex size-full -rotate-45 items-center justify-center"
 			>
 				{#each technologiesSections as techno, index}
 					{@const { x, y } = getOffset(technologiesSections.length, index, 50, false)}
 					<button
 						style="transform: translate({x}%, {y}%);"
-						class="group absolute flex aspect-square h-1/2 items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
-						hover:bg-gray-500 hover:scale-110
-						[&.is-selected]:z-10 [&.is-selected]:bg-gray-600 [&.is-selected]:scale-110"
+						class="group absolute flex aspect-square h-1/2 cursor-pointer items-center justify-center rounded-full bg-gray-400/75 transition-all duration-700
+						hover:scale-110 hover:bg-gray-500
+						[&.is-selected]:z-10 [&.is-selected]:scale-110 [&.is-selected]:bg-gray-600"
 						onclick={() => {
 							scrollToTechnoCard(index);
 							shouldResetTechnoScrollTimer = true;
@@ -529,9 +529,9 @@
 					>
 						<techno.icon
 							style="--brand-color: {techno.brandColor}"
-							class="w-1/2 drop-shadow-md transition-all duration-700 rotate-45
-							group-hover:fill-[var(--brand-color)] group-hover:scale-110
-							group-[.is-selected]:fill-[var(--brand-color)] group-[.is-selected]:scale-110"
+							class="w-1/2 rotate-45 drop-shadow-md transition-all duration-700
+							group-hover:scale-110 group-hover:fill-[var(--brand-color)]
+							group-[.is-selected]:scale-110 group-[.is-selected]:fill-[var(--brand-color)]"
 						/>
 					</button>
 				{/each}
@@ -544,15 +544,15 @@
 <Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
-			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white border-opacity-25 bg-glass p-8 backdrop-blur backdrop-filter max-sm:!-mx-8"
+			class="bg-glass flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 p-8 backdrop-blur-sm backdrop-filter max-sm:!-mx-8"
 		>
-			<p class="text-pretty text-lg text-gray-200">
+			<p class="text-lg text-pretty text-gray-200">
 				{m.homeAboutUsDesc()}
 			</p>
 		</div>
 	</div>
 	<!-- <div class="flex items-center justify-end">
-		<Button type="link" class="gap-2 text-end text-lg hover:*:translate-x-1">
+		<Button type="link" class="gap-2 text-end text-lg *:hover:translate-x-1">
 			{m.homeAboutUsMore()}
 			<ChevronRight class="size-4 min-w-max transition-transform duration-500" />
 		</Button>
@@ -562,10 +562,10 @@
 <!-- Bottom CTA -->
 <Section>
 	<div class="my-32 flex flex-col items-center justify-center">
-		<p class="text-lg text-gray-400 xs:text-2xl">
+		<p class="xs:text-2xl text-lg text-gray-400">
 			{m.homeBottomCtaSubtitle()}
 		</p>
-		<h3 class="mx-10 mb-16 mt-4 max-w-screen-xs text-center text-3xl font-medium xs:text-5xl">
+		<h3 class="max-w-screen-xs xs:text-5xl mx-10 mt-4 mb-16 text-center text-3xl font-medium">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(m.homeBottomCtaTitle())}
 		</h3>

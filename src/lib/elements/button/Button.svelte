@@ -37,11 +37,11 @@
 
 {#if variant === "primary"}
 	{@render buttonCore(
-		"inline-flex items-center gap-2 rounded-xl border border-transparent bg-dominant px-3 py-1 text-lg font-medium text-inverted shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant"
+		"inline-flex items-center gap-2 rounded-xl border border-transparent bg-dominant px-3 py-1 text-lg font-medium text-text-inverted shadow-lg shadow-shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant"
 	)}
 {:else if variant === "secondary"}
 	{@render buttonCore(
-		"inline-flex items-center gap-2 rounded-xl border border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-primary hover:text-primary"
+		"inline-flex items-center gap-2 rounded-xl border border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-shadow-primary/25 transition-colors duration-300 hover:border-border-primary hover:text-text-primary"
 	)}
 {:else if variant === "link"}
 	{@render buttonCore(
