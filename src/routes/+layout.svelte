@@ -93,8 +93,8 @@
 	});
 
 	// Config
-	let navbarItems: { name: string; href: string }[] = $state([]);
-	let footerItems: { name: string; items: { name: string; href: string }[] }[] = $state([]);
+	let navbarItems = $state<{ name: string; href: string }[]>([]);
+	let footerItems = $state<{ name: string; items: { name: string; href: string }[] }[]>([]);
 
 	// Bindings & variables
 	let scrollDistanceContactButton = $derived((innerHeight.current ?? 0) * 0.7);
