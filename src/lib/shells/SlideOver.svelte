@@ -59,7 +59,7 @@
 	<Drawer.Portal>
 		<Drawer.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Drawer.Content
-			class="bg-bg-secondary fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col"
+			class="fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col bg-bg-secondary"
 		>
 			<Drawer.Close
 				class="mt-5 mr-5 ml-auto cursor-pointer p-2 transition-opacity hover:opacity-75"
@@ -74,7 +74,7 @@
 			{/if}
 			{@render children?.({ onClose: onCloseStore })}
 			{#if footer}
-				<div class="border-border-primary border-t px-4 py-6 sm:px-6">
+				<div class="border-t border-border-primary px-4 py-6 sm:px-6">
 					{@render footer?.()}
 				</div>
 			{/if}

@@ -122,10 +122,10 @@
 
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
-		<div class="max-w-large-screen w-full *:backdrop-blur-xs *:backdrop-saturate-150">
+		<div class="w-full max-w-large-screen *:backdrop-blur-xs *:backdrop-saturate-150">
 			<nav
 				class={[
-					"xs:h-20 mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] delay-250 duration-300 ease-in-out sm:mx-5 md:mx-10 md:px-20",
+					"mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] delay-250 duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20",
 					{
 						"xs:!h-16": !!scrollY.current && isPastLogoScrollDistance
 					}
@@ -187,7 +187,7 @@
 								"relative after:absolute cursor-pointer after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
 							{#if i18n.route(item.href) === page.route.id}
 								<span
-									class="text-dominant after:bg-dominant relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:content-['']"
+									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
 								>
 									{item.name}
 								</span>
@@ -214,7 +214,7 @@
 					<span
 						id="contact-us"
 						class={[
-							"max-xs:hidden transition-opacity",
+							"transition-opacity max-xs:hidden",
 							{
 								"pointer-events-none opacity-0 duration-200": !showButton,
 								"duration-1000": showButton
@@ -273,7 +273,7 @@
 				{#each navbarItems as item}
 					<button
 						type="button"
-						class="after:bg-dominant relative cursor-pointer after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:duration-300 after:content-[''] hover:after:w-full"
+						class="relative cursor-pointer after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 						onclick={() => {
 							onClose.set(async () => {
 								if (page.route.id !== "/") {
@@ -289,7 +289,7 @@
 				{/each}
 				<button
 					type="button"
-					class="text-dominant after:bg-dominant relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:duration-300 after:content-[''] hover:after:w-full"
+					class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 					onclick={() => {
 						onClose.set(() => goto("/contact"));
 						showSlideOver = false;
@@ -305,7 +305,7 @@
 		{@render children?.()}
 	</main>
 
-	<footer class="xs:p-24 border-t border-gray-500 p-16 text-gray-400">
+	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
 		<!-- Main grid -->
 		<div class="flex flex-col gap-16 xl:flex-row xl:gap-0">
 			<a
@@ -317,7 +317,7 @@
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
 				{#each footerItems as column}
 					<div class="min-w-fit">
-						<h3 class="text-text-primary mb-5">{column.name}</h3>
+						<h3 class="mb-5 text-text-primary">{column.name}</h3>
 						<div class="flex flex-col gap-2 *:w-fit">
 							{#each column.items as item}
 								{@const isExternal = item.href.startsWith("http")}
@@ -331,7 +331,7 @@
 									>
 										<a
 											href={isExternal ? item.href : i18n.resolveRoute(item.href)}
-											class="hover:text-dominant underline-offset-4 hover:underline"
+											class="underline-offset-4 hover:text-dominant hover:underline"
 											target={isExternal ? "_blank" : "_self"}
 											rel={isExternal ? "noopener noreferrer" : undefined}
 										>
@@ -349,7 +349,7 @@
 		<div class="relative mt-10 flex items-end justify-between *:h-min">
 			<!-- Left -->
 			<div>
-				<div class="text-text-primary mb-5 divide-x divide-gray-400">
+				<div class="mb-5 divide-x divide-gray-400 text-text-primary">
 					<div class="inline-flex h-8 items-center gap-1">
 						<a
 							href="https://github.com/EmeraldHQ/Website"
@@ -376,20 +376,20 @@
 				onclick={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
-					class="border-dominant text-dominant hover:bg-dominant hover:text-text-inverted size-8 cursor-pointer rounded-full border p-1.5 transition-colors duration-300 hover:border-transparent"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 				/>
 			</button>
 			<!-- Right -->
 			<div class="flex flex-col items-end gap-2">
 				<button type="button" class="sm:hidden" onclick={() => window.scrollTo({ top: 0 })}>
 					<ArrowUp
-						class="border-dominant text-dominant hover:bg-dominant hover:text-text-inverted size-8 cursor-pointer rounded-full border p-1.5 transition-colors duration-300 hover:border-transparent"
+						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 					/>
 				</button>
 				<div
 					role="radiogroup"
 					aria-label={m.a11yAriaRadioLanguage()}
-					class="text-text-primary xs:scale-90 inline-flex origin-bottom-right scale-75 space-x-1 rounded-full border border-gray-400 p-1 shadow-2xl shadow-black sm:scale-100"
+					class="inline-flex origin-bottom-right scale-75 space-x-1 rounded-full border border-gray-400 p-1 text-text-primary shadow-2xl shadow-black xs:scale-90 sm:scale-100"
 				>
 					{#each availableLanguageTags as lang}
 						<a

@@ -306,14 +306,14 @@
 <!-- Body -->
 <!-- Hero -->
 <div
-	class="from-dominant xxl:max-h-[90svh] absolute inset-0 -z-10 max-w-full bg-gradient-to-l to-transparent opacity-20 content-[''] lg:max-h-[90svh] xl:max-h-none"
+	class="absolute inset-0 -z-10 max-w-full bg-gradient-to-l from-dominant to-transparent opacity-20 content-[''] xxl:max-h-[90svh] lg:max-h-[90svh] xl:max-h-none"
 ></div>
 <div id="hero" class="relative flex h-[85svh] flex-col items-center justify-center lg:h-[80svh]">
 	<div class="m-auto grid h-fit w-2/3 max-w-screen-lg grid-cols-1 items-center xl:grid-cols-2">
 		<!-- Left part -->
 		<div class="flex flex-col gap-10 sm:mx-auto">
 			<h1
-				class="xxl:text-7xl text-4xl font-medium text-pretty sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl"
+				class="text-4xl font-medium text-pretty xxl:text-7xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-6xl"
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html c(m.homeHeroTitle())}
@@ -322,7 +322,7 @@
 				{m.homeHeroSubtitle()}
 			</h2>
 			<div
-				class="xs:flex-row xs:gap-12 flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110"
+				class="flex flex-col gap-5 *:max-w-fit *:origin-bottom-left *:scale-110 xs:flex-row xs:gap-12"
 			>
 				<Button href="/contact">{m.commonContact()}</Button>
 				<!-- <Button variant="link" class="group">
@@ -341,7 +341,7 @@
 			scope="#hero"
 			class="relative hidden aspect-square max-h-full items-center justify-center *:absolute lg:ml-20 xl:flex"
 		>
-			<Window class="text-dominant size-full" />
+			<Window class="size-full text-dominant" />
 			<div
 				class="transform-style-3d bottom-10 left-0 w-36 translate-z-24 perspective-[312rem]
 				before:absolute before:inset-0 before:-z-10 before:-translate-z-28 before:rounded-full before:bg-black before:opacity-[0.35] before:blur-lg before:content-['']"
@@ -386,8 +386,8 @@
 			onclick={() => document.querySelector("#process")?.scrollIntoView()}
 		>
 			<ArrowDown
-				class="bg-dominant text-text-inverted hover:border-dominant hover:text-dominant size-8 cursor-pointer rounded-full border
-				border-transparent p-1.5 hover:bg-inherit"
+				class="size-8 cursor-pointer rounded-full border border-transparent bg-dominant p-1.5 text-text-inverted
+				hover:border-dominant hover:bg-inherit hover:text-dominant"
 			/>
 		</button>
 	</MagneticElement>
@@ -401,7 +401,7 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			onclick={() => scrollToProcessCard("left")}
 		>
-			<ChevronLeft class="text-dominant size-10" />
+			<ChevronLeft class="size-10 text-dominant" />
 		</button>
 		<div
 			bind:this={processCards}
@@ -415,7 +415,7 @@
 						{index + 1}
 					</span>
 					<div class="flex w-fit flex-row items-center gap-4">
-						<IconComp class="text-dominant size-10" />
+						<IconComp class="size-10 text-dominant" />
 						<h3 class="text-2xl font-medium">{title}</h3>
 					</div>
 					<p class="size-full pt-4 text-lg font-normal text-pretty text-gray-200">
@@ -429,7 +429,7 @@
 			class="transition-opacity duration-300 ease-in-out lg:hidden"
 			onclick={() => scrollToProcessCard("right")}
 		>
-			<ChevronRight class="text-dominant size-10" />
+			<ChevronRight class="size-10 text-dominant" />
 		</button>
 	</div>
 </Section>
@@ -447,7 +447,7 @@
 		>
 			{#each solutionsSections.slice(0, -1) as solution}
 				<div>
-					<h3 class="text-dominant text-xl font-medium">{solution.title}</h3>
+					<h3 class="text-xl font-medium text-dominant">{solution.title}</h3>
 					<p class="text-lg text-pretty text-gray-200">
 						{solution.description}
 					</p>
@@ -475,9 +475,9 @@
 		<div class="grid gap-x-16 gap-y-12 pt-4 pb-8 sm:grid-cols-2">
 			{#each valuesSections as value}
 				<div class="grid grid-flow-col items-start justify-start gap-x-4">
-					<value.icon class="text-dominant size-10" />
+					<value.icon class="size-10 text-dominant" />
 					<div>
-						<h3 class="text-dominant text-xl font-medium">{value.title}</h3>
+						<h3 class="text-xl font-medium text-dominant">{value.title}</h3>
 						<p class="text-lg text-pretty text-gray-200">
 							{value.description}
 						</p>
@@ -498,7 +498,7 @@
 		>
 			{#each technologiesSections as techno}
 				<div
-					class="bg-glass flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 p-8 backdrop-blur-sm backdrop-filter"
+					class="flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 bg-glass p-8 backdrop-blur-sm backdrop-filter"
 				>
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 					<h3 class="text-xl font-medium">{@html techno.title}</h3>
@@ -544,7 +544,7 @@
 <Section id="about-us" title={m.homeAboutUsTitle()}>
 	<div class="flex items-center justify-center pb-10">
 		<div
-			class="bg-glass flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 p-8 backdrop-blur-sm backdrop-filter max-sm:!-mx-8"
+			class="flex min-w-full flex-col gap-4 rounded-3xl border border-white/25 bg-glass p-8 backdrop-blur-sm backdrop-filter max-sm:!-mx-8"
 		>
 			<p class="text-lg text-pretty text-gray-200">
 				{m.homeAboutUsDesc()}
@@ -562,10 +562,10 @@
 <!-- Bottom CTA -->
 <Section>
 	<div class="my-32 flex flex-col items-center justify-center">
-		<p class="xs:text-2xl text-lg text-gray-400">
+		<p class="text-lg text-gray-400 xs:text-2xl">
 			{m.homeBottomCtaSubtitle()}
 		</p>
-		<h3 class="max-w-screen-xs xs:text-5xl mx-10 mt-4 mb-16 text-center text-3xl font-medium">
+		<h3 class="mx-10 mt-4 mb-16 max-w-screen-xs text-center text-3xl font-medium xs:text-5xl">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html c(m.homeBottomCtaTitle())}
 		</h3>

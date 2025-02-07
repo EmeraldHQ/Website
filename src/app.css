@@ -33,7 +33,7 @@
 	}
 
 	body {
-		@apply bg-bg-primary text-text-primary font-chillax;
+		@apply bg-bg-primary font-chillax text-text-primary;
 	}
 
 	:root {
