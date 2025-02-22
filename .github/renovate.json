@@ -5,7 +5,7 @@
 	"rangeStrategy": "bump",
 	"packageRules": [
 		{
-			"matchManagers": ["github-actions", "npm"],
+			"matchManagers": ["github-actions", "bun"],
 			"excludePackagePatterns": ["^@inlang/"],
 			"groupName": "{{manager}}",
 			"addLabels": ["{{manager}}"]
