@@ -8,7 +8,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - bun.lockb
+      - bun.lock
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -17,7 +17,7 @@ on:
       - src/**
       - static/**
       - package.json
-      - bun.lockb
+      - bun.lock
       - "*.config.*s"
       - tsconfig.json
       - .github/workflows/*
@@ -79,7 +79,7 @@ jobs:
       - name: 🔍 Detect file changes
         id: detect-changes-bun
         run: |
-          if [[ $(git diff --name-only) =~ bun.lockb ]]; then
+          if [[ $(git diff --name-only) =~ bun.lock ]]; then
             echo "changes_detected=true >> $GITHUB_OUTPUT"
           else
             echo "changes_detected=false >> $GITHUB_OUTPUT"
@@ -95,7 +95,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update lock file
-          file_pattern: bun.lockb
+          file_pattern: bun.lock
 
       - name: ❌ Exit if lock file has been committed
         if: needs.permissions-check.outputs.has-permissions == 'true' && steps.auto-commit-action-lock.outputs.changes_detected == 'true'
@@ -151,7 +151,7 @@ jobs:
             if [[ $file =~ ^src/ || $file =~ ^static/ ]]; then
               echo "$file changes code"
               code_changes=true
-            elif [[ $file = bun.lockb ]]; then
+            elif [[ $file = bun.lock ]]; then
               echo "$file changes dependencies"
               deps_changes=true
             elif [[ $file = *.config.*s || $file = tsconfig.json ]]; then
@@ -214,7 +214,7 @@ jobs:
           requires_build=false
 
           for file in ${{ steps.modified-files.outputs.all_changed_files }}; do
-            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = bun.lockb || $file = *.config.*s || $file = tsconfig.json ]]; then
+            if [[ $file =~ ^src/ || $file =~ ^static/ || $file = bun.lock || $file = *.config.*s || $file = tsconfig.json ]]; then
               echo "$file requires build"
               requires_build=true
               break
@@ -273,7 +273,7 @@ jobs:
   perf-check:
     name: Performance checks
     runs-on: ubuntu-latest
-    needs: [build, deploy]
+    needs: [ build, deploy ]
     if: github.event_name == 'push' && !failure() && !cancelled() && needs.build.outputs.has-built == 'true'
 
     steps:
