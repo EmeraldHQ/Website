@@ -159,7 +159,7 @@
 						<select
 							name="$budget"
 							bind:value={formValues.budget}
-							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
+							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 ring-1 shadow-md outline outline-1 focus:outline-dominant"
 							required
 						>
 							<option value="" disabled hidden>
@@ -212,16 +212,14 @@
 			</div>
 		</form>
 	</Section>
-	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
+	<div class="mx-16 flex items-center justify-center xxl:mx-auto xxl:max-w-screen-2xl md:mx-32">
 		<div class="w-full border-b border-dominant"></div>
 		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
 		<div class="w-full border-b border-dominant"></div>
 	</div>
 	<Section id="sales" title={m.contactCallSectionTitle()}>
 		<div class="xxl:w-full">
-			<div
-				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-			>
+			<div class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] bg-black/75 p-6 shadow-2xl">
 				<div class="flex flex-col">
 					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
 					<span class="font-light opacity-50">

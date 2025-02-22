@@ -27,26 +27,26 @@
 	 * To work around this, we create a proxy around the `show` prop to trigger a close animation when
 	 * the prop is set to `false`.
 	 */
-	let isOpen = $state(show);
+	let open = $state(show);
 	let closer = $state<HTMLSpanElement>();
 
 	$effect(() => {
 		if (show) {
-			isOpen = true;
+			open = true;
 		} else {
 			closer?.click();
 		}
 	});
 
 	/**
-	 * A store containing a callback function to call when the slideover closed.
+	 * A store containing a callback function to call when the slide-over closed.
 	 */
 	const onCloseStore = writable(() => {});
 </script>
 
 <Drawer.Root
 	direction="right"
-	bind:open={isOpen}
+	bind:open
 	onOpenChange={isOpen => {
 		if (isOpen) return; // this seems unnecessary because it seems to never be called with `true`
 		setTimeout(() => {
@@ -59,9 +59,11 @@
 	<Drawer.Portal>
 		<Drawer.Overlay class="fixed inset-0 z-50 bg-black/80" />
 		<Drawer.Content
-			class="fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col bg-secondary"
+			class="fixed inset-y-0 right-0 z-50 flex h-auto w-screen max-w-md flex-col bg-bg-secondary"
 		>
-			<Drawer.Close class="ml-auto mr-5 mt-5 p-2 transition-opacity hover:opacity-75">
+			<Drawer.Close
+				class="mt-5 mr-5 ml-auto cursor-pointer p-2 transition-opacity hover:opacity-75"
+			>
 				<span class="sr-only" bind:this={closer}>{m.a11yAriaPanelClose()}</span>
 				<XMark class="size-6" aria-hidden="true" />
 			</Drawer.Close>
@@ -72,7 +74,7 @@
 			{/if}
 			{@render children?.({ onClose: onCloseStore })}
 			{#if footer}
-				<div class="border-t border-primary px-4 py-6 sm:px-6">
+				<div class="border-t border-border-primary px-4 py-6 sm:px-6">
 					{@render footer?.()}
 				</div>
 			{/if}

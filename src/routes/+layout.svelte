@@ -1,5 +1,6 @@
 <script lang="ts">
 	import "../app.css";
+	import { innerHeight, scrollY } from "svelte/reactivity/window";
 	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
@@ -92,35 +93,27 @@
 	});
 
 	// Config
-	let navbarItems: { name: string; href: string }[] = $state([]);
-	let footerItems: { name: string; items: { name: string; href: string }[] }[] = $state([]);
+	let navbarItems = $state<{ name: string; href: string }[]>([]);
+	let footerItems = $state<{ name: string; items: { name: string; href: string }[] }[]>([]);
 
 	// Bindings & variables
-	let innerHeight = $state(0);
-	let scrollY = $state(0);
+	let scrollDistanceContactButton = $derived((innerHeight.current ?? 0) * 0.7);
+	let scrollDistanceLogoSwitch = $derived((innerHeight.current ?? 0) * 0.95);
 
-	let scrollDistanceContactButton = $derived(innerHeight * 0.7);
-	let scrollDistanceLogoSwitch = $derived(innerHeight * 0.95);
-
-	let showButton = $derived(!!scrollY && scrollY >= scrollDistanceContactButton);
+	let showButton = $derived(!!scrollY.current && scrollY.current >= scrollDistanceContactButton);
 
 	let showSlideOver = $state(false);
 
 	let isPastLogoScrollDistance = $derived.by(() => {
-		if (scrollY) {
-			const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-			if (scrollY < scrollDistanceLogoSwitch - rem) {
-				return false;
-			} else if (scrollY >= scrollDistanceLogoSwitch) {
-				return true;
-			}
+		if (!scrollY.current) return false;
+		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+		if (scrollY.current < scrollDistanceLogoSwitch - rem) {
+			return false;
+		} else if (scrollY.current >= scrollDistanceLogoSwitch + rem) {
+			return true;
 		}
-		return false;
 	});
 </script>
-
-<!-- Binding for scroll-dependent elements -->
-<svelte:window bind:innerHeight bind:scrollY />
 
 <ParaglideJS {i18n}>
 	<MetaTags {...metadata} />
@@ -129,10 +122,14 @@
 
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
-		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
+		<div class="w-full max-w-large-screen *:backdrop-blur-xs *:backdrop-saturate-150">
 			<nav
-				class="delay-250 mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20"
-				class:xs:!h-16={!!scrollY && isPastLogoScrollDistance}
+				class={[
+					"mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] delay-250 duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20",
+					{
+						"xs:!h-16": !!scrollY.current && isPastLogoScrollDistance
+					}
+				]}
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
@@ -141,7 +138,7 @@
 						this={page.route.id === "/" ? "button" : "a"}
 						type={page.route.id === "/" ? "button" : undefined}
 						href={page.route.id === "/" ? undefined : "/"}
-						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
+						class="grid origin-left scale-110 cursor-pointer overflow-hidden *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
 						onclick={page.route.id === "/"
 							? () =>
 									window.scrollTo({
@@ -154,28 +151,40 @@
 							alt={m.a11yAltLogoSmall()}
 							width="28"
 							height="32"
-							class="h-8 transition-opacity duration-300 hover:opacity-70"
-							class:xs:opacity-0={!scrollY || !isPastLogoScrollDistance}
+							class={[
+								"h-8 transition-opacity duration-300 hover:opacity-100",
+								{
+									"xs:opacity-0": !scrollY.current || !isPastLogoScrollDistance
+								}
+							]}
 						/>
 						<img
 							src="/logo-title.svg"
 							alt={m.a11yAltLogo()}
 							width="100"
 							height="32"
-							class="h-8 opacity-0 transition-opacity duration-300 hover:opacity-70"
-							class:xs:opacity-100={!scrollY || !isPastLogoScrollDistance}
+							class={[
+								"h-8 opacity-0 transition-opacity duration-300 hover:opacity-100",
+								{
+									"xs:opacity-100": !scrollY.current || !isPastLogoScrollDistance
+								}
+							]}
 						/>
 					</svelte:element>
 				</div>
 				<!-- Right navigation -->
 				<div class="flex items-center gap-5 sm:gap-10">
 					<div
-						class="hidden items-center gap-10 duration-700 ease-out lg:flex"
-						class:-mr-40={!showButton}
+						class={[
+							"hidden items-center gap-10 duration-700 ease-out lg:flex",
+							{
+								"-mr-40": !showButton
+							}
+						]}
 					>
 						{#each navbarItems as item}
 							{@const linkClasses =
-								"relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
+								"relative after:absolute cursor-pointer after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
 							{#if i18n.route(item.href) === page.route.id}
 								<span
 									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
@@ -204,11 +213,13 @@
 					</div>
 					<span
 						id="contact-us"
-						class="transition-opacity max-xs:hidden"
-						class:opacity-0={!showButton}
-						class:duration-200={!showButton}
-						class:duration-1000={showButton}
-						class:pointer-events-none={!showButton}
+						class={[
+							"transition-opacity max-xs:hidden",
+							{
+								"pointer-events-none opacity-0 duration-200": !showButton,
+								"duration-1000": showButton
+							}
+						]}
 					>
 						<Button variant="secondary" href="/contact" tabindex={showButton ? 0 : -1}>
 							{m.commonContact()}
@@ -216,7 +227,7 @@
 					</span>
 					<button
 						type="button"
-						class="lg:hidden"
+						class="cursor-pointer lg:hidden"
 						aria-label={m.a11yAriaMenu()}
 						onclick={() => (showSlideOver = true)}
 					>
@@ -262,7 +273,7 @@
 				{#each navbarItems as item}
 					<button
 						type="button"
-						class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+						class="relative cursor-pointer after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
 						onclick={() => {
 							onClose.set(async () => {
 								if (page.route.id !== "/") {
@@ -306,7 +317,7 @@
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
 				{#each footerItems as column}
 					<div class="min-w-fit">
-						<h3 class="mb-5 text-primary">{column.name}</h3>
+						<h3 class="mb-5 text-text-primary">{column.name}</h3>
 						<div class="flex flex-col gap-2 *:w-fit">
 							{#each column.items as item}
 								{@const isExternal = item.href.startsWith("http")}
@@ -338,7 +349,7 @@
 		<div class="relative mt-10 flex items-end justify-between *:h-min">
 			<!-- Left -->
 			<div>
-				<div class="mb-5 divide-x divide-gray-400 text-primary">
+				<div class="mb-5 divide-x divide-gray-400 text-text-primary">
 					<div class="inline-flex h-8 items-center gap-1">
 						<a
 							href="https://github.com/EmeraldHQ/Website"
@@ -350,7 +361,7 @@
 							<Github class="size-8" />
 						</a>
 						<span
-							class="select-none opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
+							class="-translate-x-4 scale-75 opacity-0 duration-300 select-none peer-hover:translate-x-0 peer-hover:scale-100 peer-hover:opacity-70"
 						>
 							↗
 						</span>
@@ -361,24 +372,24 @@
 			<!-- Middle -->
 			<button
 				type="button"
-				class="absolute bottom-0 left-0 right-0 mx-auto hidden w-fit text-center sm:block"
+				class="absolute right-0 bottom-0 left-0 mx-auto hidden w-fit text-center sm:block"
 				onclick={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
-					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 				/>
 			</button>
 			<!-- Right -->
 			<div class="flex flex-col items-end gap-2">
 				<button type="button" class="sm:hidden" onclick={() => window.scrollTo({ top: 0 })}>
 					<ArrowUp
-						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 					/>
 				</button>
 				<div
 					role="radiogroup"
 					aria-label={m.a11yAriaRadioLanguage()}
-					class="inline-flex origin-bottom-right space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black scale-75 xs:scale-90 sm:scale-100"
+					class="inline-flex origin-bottom-right scale-75 space-x-1 rounded-full border border-gray-400 p-1 text-text-primary shadow-2xl shadow-black xs:scale-90 sm:scale-100"
 				>
 					{#each availableLanguageTags as lang}
 						<a
@@ -389,10 +400,13 @@
 							role="radio"
 							aria-current={lang === languageTag() ? "page" : undefined}
 							aria-checked={lang === languageTag()}
-							class="grid overflow-hidden rounded-full px-4 py-1 text-center uppercase transition-opacity duration-300 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1 group-hover:opacity-0"
-							class:bg-slate-500={lang === languageTag()}
-							class:hover:bg-slate-600={lang === languageTag()}
-							class:hover:bg-slate-800={lang !== languageTag()}
+							class={[
+								"grid overflow-hidden rounded-full px-4 py-1 text-center uppercase transition-opacity duration-300 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1 group-hover:opacity-0",
+								{
+									"bg-slate-500 hover:bg-slate-600": lang === languageTag(),
+									"hover:bg-slate-800": lang !== languageTag()
+								}
+							]}
 						>
 							{lang}
 						</a>
