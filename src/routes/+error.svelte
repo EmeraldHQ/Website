@@ -52,7 +52,7 @@
 		<div class="flex justify-end">
 			<Mouse3DTilting initialX={-20} initialY={20} intensity={0.05} class="size-24">
 				<div
-					class="size-full -translate-y-36 translate-x-20 text-gray-200/75
+					class="size-full translate-x-20 -translate-y-36 text-gray-200/75
 					before:absolute before:inset-0 before:-z-10 before:rounded-full before:bg-black before:opacity-30 before:blur-lg before:content-['']
 					xs:-translate-x-28 sm:-translate-x-40 sm:-translate-y-10 md:translate-y-0 lg:-translate-x-72 xl:-translate-x-96"
 				>
