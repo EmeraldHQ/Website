@@ -138,7 +138,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
 
       - name: 📤 Export results
         id: changed-files
@@ -180,7 +180,7 @@ jobs:
 
       - name: 🔧 Fix lint
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
-        run: bun format
+        run: bun format && bun run eslint --fix .
 
       - name: 📤 Commit lint fixes
         if: failure() && needs.permissions-check.outputs.has-permissions == 'true' && (steps.svelte-format.outcome == 'failure' || steps.prettier-eslint.outcome == 'failure')
@@ -206,7 +206,7 @@ jobs:
 
       - name: 🔍 Get modified files
         id: modified-files
-        uses: tj-actions/changed-files@v44
+        uses: tj-actions/changed-files@v45
 
       - name: 📤 Export results
         id: changed-files
@@ -278,7 +278,7 @@ jobs:
 
     steps:
       - name: 🧭 Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
 
       - name: ⚓️ Unlighthouse check
         run: |

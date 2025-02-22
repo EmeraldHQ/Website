@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageData, Snapshot } from "./$types";
+	import type { Snapshot } from "./$types";
 	import Check from "@inqling/svelte-icons/heroicon-24-outline/check.svelte";
 	import PaperAirplane from "@inqling/svelte-icons/heroicon-24-outline/paper-airplane.svelte";
 	import Phone from "@inqling/svelte-icons/heroicon-24-outline/phone.svelte";
@@ -8,23 +8,23 @@
 	import Section from "$layouts/Section.svelte";
 	import Button from "$elements/button";
 
-	export let data: PageData;
+	let { data } = $props();
 
 	export const snapshot: Snapshot<typeof formValues> = {
 		capture: () => formValues,
 		restore: value => (formValues = value)
 	};
 
-	let formValues = {
+	let formValues = $state({
 		name: "",
 		email: "",
 		company: "",
 		budget: "",
 		description: ""
-	};
+	});
 
 	// Form handling
-	let mailStatus: "idle" | "sending" | "sent" | "error" = "idle";
+	let mailStatus = $state<"idle" | "sending" | "sent" | "error">("idle");
 	function mailHandler(form: HTMLFormElement) {
 		// A modified version of https://svelte.dev/repl/167e7c7a05844e3dab686b4257641d73
 		let submitting = false;
@@ -159,7 +159,7 @@
 						<select
 							name="$budget"
 							bind:value={formValues.budget}
-							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 shadow-md outline outline-1 ring-1 focus:outline-dominant"
+							class="w-full rounded-full border border-r-8 border-transparent bg-black/25 px-2 py-1 ring-1 shadow-md outline outline-1 focus:outline-dominant"
 							required
 						>
 							<option value="" disabled hidden>
@@ -188,7 +188,7 @@
 							rows="4"
 							class="resize-none rounded-2xl border bg-black/25 px-4 py-1 shadow-md focus:border-dominant focus:outline-0"
 							required
-						/>
+						></textarea>
 					</label>
 				</div>
 			</div>
@@ -212,16 +212,14 @@
 			</div>
 		</form>
 	</Section>
-	<div class="mx-16 flex items-center justify-center md:mx-32 xxl:mx-auto xxl:max-w-screen-2xl">
+	<div class="mx-16 flex items-center justify-center xxl:mx-auto xxl:max-w-screen-2xl md:mx-32">
 		<div class="w-full border-b border-dominant"></div>
 		<div class="mx-4 font-medium uppercase">{m.contactOrLabel()}</div>
 		<div class="w-full border-b border-dominant"></div>
 	</div>
 	<Section id="sales" title={m.contactCallSectionTitle()}>
 		<div class="xxl:w-full">
-			<div
-				class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] border-opacity-50 bg-black/75 p-6 shadow-2xl"
-			>
+			<div class="flex w-fit flex-col gap-4 rounded-3xl border-[0.5px] bg-black/75 p-6 shadow-2xl">
 				<div class="flex flex-col">
 					<span class="text-xl font-medium text-dominant">{data.contact.name}</span>
 					<span class="font-light opacity-50">

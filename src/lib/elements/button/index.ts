@@ -1,3 +1,4 @@
-export { default } from "./Button.svelte";
+import Button from "./Button.svelte";
 
-export * from "./types";
+export default Button;
+export type { ButtonRootProps as RootProps } from "bits-ui";

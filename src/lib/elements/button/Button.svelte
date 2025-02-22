@@ -1,84 +1,50 @@
 <script lang="ts">
-	import type { Props, Events } from "./types";
-	import { twMerge } from "tailwind-merge";
+	import type { ButtonRootProps as ButtonProps } from "bits-ui";
+	import { type ClassNameValue, twMerge } from "tailwind-merge";
 
-	type $$Props = Props;
-	type $$Events = Events;
-	export let href: $$Props["href"] = undefined;
-	export let type: $$Props["type"] = "button";
-	export let el: $$Props["el"] = undefined;
-	/**
-	 * Defines the style of the button. Defaults to `"primary"`.
-	 */
-	export let variant: $$Props["variant"] = "primary";
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	type Props = {
+		/**
+		 * Defines the style of the button. Defaults to `"primary"`.
+		 */
+		variant?: "primary" | "secondary" | "link";
+		class?: ClassNameValue;
+	} & ButtonProps;
+
+	let {
+		href = undefined,
+		type = "button",
+		variant = "primary",
+		class: className = undefined,
+		children,
+		ref,
+		...rest
+	}: Props = $props();
 </script>
 
+{#snippet buttonCore(mainClasses: string)}
+	<svelte:element
+		this={href ? "a" : "button"}
+		bind:this={ref}
+		type={href ? undefined : type}
+		{href}
+		class={twMerge(mainClasses, className)}
+		tabindex="0"
+		{...rest}
+	>
+		{@render children?.()}
+	</svelte:element>
+{/snippet}
+
 {#if variant === "primary"}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<svelte:element
-		this={href ? "a" : "button"}
-		bind:this={el}
-		type={href ? undefined : type}
-		{href}
-		class={twMerge(
-			"inline-flex items-center gap-2 rounded-xl border border-transparent bg-dominant px-3 py-1 text-lg font-medium text-inverted shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant",
-			className
-		)}
-		on:click
-		on:change
-		on:keydown
-		on:keyup
-		on:mouseenter
-		on:mouseleave
-		tabindex="0"
-		{...$$restProps}
-	>
-		<slot />
-	</svelte:element>
+	{@render buttonCore(
+		"inline-flex items-center gap-2 rounded-xl border border-transparent bg-dominant px-3 py-1 text-lg font-medium text-text-inverted shadow-lg shadow-shadow-primary/25 transition-colors duration-300 hover:border-dominant hover:bg-inherit hover:text-dominant"
+	)}
 {:else if variant === "secondary"}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<svelte:element
-		this={href ? "a" : "button"}
-		bind:this={el}
-		type={href ? undefined : type}
-		{href}
-		class={twMerge(
-			"inline-flex items-center gap-2 rounded-xl border border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-primary/25 transition-colors duration-300 hover:border-primary hover:text-primary",
-			className
-		)}
-		on:click
-		on:change
-		on:keydown
-		on:keyup
-		on:mouseenter
-		on:mouseleave
-		tabindex="0"
-		{...$$restProps}
-	>
-		<slot />
-	</svelte:element>
+	{@render buttonCore(
+		"inline-flex items-center gap-2 rounded-xl border border-dominant px-3 py-1 text-lg font-medium text-dominant shadow-lg shadow-shadow-primary/25 transition-colors duration-300 hover:border-border-primary hover:text-text-primary"
+	)}
 {:else if variant === "link"}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<svelte:element
-		this={href ? "a" : "button"}
-		bind:this={el}
-		type={href ? undefined : type}
-		{href}
-		class={twMerge(
-			"inline-flex items-center gap-1 text-base font-normal text-dominant underline-offset-4 hover:underline",
-			className
-		)}
-		on:click
-		on:change
-		on:keydown
-		on:keyup
-		on:mouseenter
-		on:mouseleave
-		tabindex="0"
-		{...$$restProps}
-	>
-		<slot />
-	</svelte:element>
+	{@render buttonCore(
+		"inline-flex items-center gap-1 text-base font-normal text-dominant underline-offset-4 hover:underline"
+	)}
 {/if}

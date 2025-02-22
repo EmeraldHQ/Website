@@ -13,7 +13,11 @@ import * as m from "$paraglide/messages";
 export const prerender = true;
 
 export const load: LayoutLoad = ({ route, url }) => {
-	if (!browser) return;
+	if (!browser) {
+		return {
+			baseSchemas: []
+		};
+	}
 
 	function conditionallyRedirectTo(
 		lang: (typeof availableLanguageTags)[number] = sourceLanguageTag

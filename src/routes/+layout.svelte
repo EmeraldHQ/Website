@@ -1,14 +1,13 @@
 <script lang="ts">
 	import "../app.css";
-	import type { LayoutData } from "./$types";
+	import { innerHeight, scrollY } from "svelte/reactivity/window";
 	import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import ArrowUp from "@inqling/svelte-icons/heroicon-24-solid/arrow-up.svelte";
 	import Bars3 from "@inqling/svelte-icons/heroicon-24-solid/bars-3.svelte";
 	import Github from "@inqling/svelte-icons/simple-icons/github.svelte";
 	import { JsonLd, MetaTags, type JsonLdProps, type MetaTagsProps } from "svelte-meta-tags";
-	import extend from "just-extend";
-	import { ParaglideJS } from "@inlang/paraglide-js-adapter-sveltekit";
+	import { ParaglideJS } from "@inlang/paraglide-sveltekit";
 	import { i18n } from "$utils/inlang";
 	import { availableLanguageTags, languageTag, onSetLanguageTag } from "$paraglide/runtime";
 	import * as m from "$paraglide/messages";
@@ -16,24 +15,26 @@
 	import SlideOver from "$shells/SlideOver.svelte";
 
 	// Breadcrumb
-	let currentRoute: string[] = [];
-	$: if ($page.route.id) {
-		currentRoute = $page.route.id.split("/").filter(Boolean);
-	}
+	let currentRoute = $derived(page.route.id?.split("/").filter(Boolean) ?? []);
 
 	// Meta tags
-	export let data: LayoutData;
-	let metadata: MetaTagsProps;
-	$: metadata = extend(true, {}, data.baseMetaTags, {
-		title: $page.data.pageTitle,
-		twitter: {
-			title:
-				data.baseMetaTags?.titleTemplate.replace(/%s/g, $page.data.pageTitle) ??
-				$page.data.pageTitle
+	let { data, children } = $props();
+	let metadata = $derived<MetaTagsProps>({
+		...data.baseMetaTags,
+		...{
+			title: page.data.pageTitle,
+			twitter: {
+				title:
+					data.baseMetaTags?.titleTemplate.replace(/%s/g, page.data.pageTitle) ??
+					page.data.pageTitle
+			}
 		}
 	});
-	let schemas: JsonLdProps["schema"] = [];
-	$: schemas = [...(data.baseSchemas ?? []), ...($page.data.pageSchemas ?? [])].filter(Boolean);
+
+	let schema = $derived<JsonLdProps["schema"]>([
+		...data.baseSchemas,
+		...(page.data.pageSchemas ?? [])
+	]);
 
 	// Inlang
 	onSetLanguageTag(() => {
@@ -80,7 +81,7 @@
 	beforeNavigate(({ to, type }) => {
 		document.documentElement.classList.remove("motion-safe:scroll-smooth");
 		if (!to || !to.route.id) return; // to === null -> external link, to.route.id === null -> 404
-		if (type === "link" && to.route.id === $page.route.id) {
+		if (type === "link" && to.route.id === page.route.id) {
 			const lang = i18n.getLanguageFromUrl(to.url);
 			localStorage.setItem("language", lang);
 		}
@@ -92,57 +93,53 @@
 	});
 
 	// Config
-	let navbarItems: { name: string; href: string }[] = [];
-	let footerItems: { name: string; items: { name: string; href: string }[] }[] = [];
+	let navbarItems = $state<{ name: string; href: string }[]>([]);
+	let footerItems = $state<{ name: string; items: { name: string; href: string }[] }[]>([]);
 
 	// Bindings & variables
-	let innerHeight = 0;
-	let scrollY = 0;
+	let scrollDistanceContactButton = $derived((innerHeight.current ?? 0) * 0.7);
+	let scrollDistanceLogoSwitch = $derived((innerHeight.current ?? 0) * 0.95);
 
-	let scrollDistanceContactButton = 0;
-	$: scrollDistanceContactButton = innerHeight * 0.7;
-	let scrollDistanceLogoSwitch = 0;
-	$: scrollDistanceLogoSwitch = innerHeight * 0.95;
+	let showButton = $derived(!!scrollY.current && scrollY.current >= scrollDistanceContactButton);
 
-	$: showButton = !!scrollY && scrollY >= scrollDistanceContactButton;
+	let showSlideOver = $state(false);
 
-	let showSlideOver = false;
-
-	let isPastLogoScrollDistance = false;
-	$: if (scrollY) {
+	let isPastLogoScrollDistance = $derived.by(() => {
+		if (!scrollY.current) return false;
 		const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-		if (scrollY < scrollDistanceLogoSwitch - rem) {
-			isPastLogoScrollDistance = false;
-		} else if (scrollY >= scrollDistanceLogoSwitch) {
-			isPastLogoScrollDistance = true;
+		if (scrollY.current < scrollDistanceLogoSwitch - rem) {
+			return false;
+		} else if (scrollY.current >= scrollDistanceLogoSwitch + rem) {
+			return true;
 		}
-	}
+	});
 </script>
-
-<!-- Binding for scroll-dependent elements -->
-<svelte:window bind:innerHeight bind:scrollY />
 
 <ParaglideJS {i18n}>
 	<MetaTags {...metadata} />
 
-	<JsonLd schema={schemas} />
+	<JsonLd {schema} />
 
 	<!-- Navbar -->
 	<div class="sticky top-0 z-10 flex w-full justify-center pt-5 md:pt-10">
-		<div class="w-full max-w-large-screen *:backdrop-blur-sm *:backdrop-saturate-150">
+		<div class="w-full max-w-large-screen *:backdrop-blur-xs *:backdrop-saturate-150">
 			<nav
-				class="delay-250 mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20"
-				class:xs:!h-16={!!scrollY && isPastLogoScrollDistance}
+				class={[
+					"mx-2 flex h-16 items-center justify-center rounded-full bg-black/60 px-10 py-5 transition-[height] delay-250 duration-300 ease-in-out xs:h-20 sm:mx-5 md:mx-10 md:px-20",
+					{
+						"xs:!h-16": !!scrollY.current && isPastLogoScrollDistance
+					}
+				]}
 			>
 				<!-- Left logo -->
 				<div class="mr-auto flex items-center gap-5">
-					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<svelte:element
-						this={$page.route.id === "/" ? "button" : "a"}
-						type={$page.route.id === "/" ? "button" : undefined}
-						href={$page.route.id === "/" ? undefined : "/"}
-						class="grid origin-left overflow-hidden scale-110 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
-						on:click={$page.route.id === "/"
+						this={page.route.id === "/" ? "button" : "a"}
+						type={page.route.id === "/" ? "button" : undefined}
+						href={page.route.id === "/" ? undefined : "/"}
+						class="grid origin-left scale-110 cursor-pointer overflow-hidden *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1"
+						onclick={page.route.id === "/"
 							? () =>
 									window.scrollTo({
 										top: 0
@@ -154,29 +151,41 @@
 							alt={m.a11yAltLogoSmall()}
 							width="28"
 							height="32"
-							class="h-8 transition-opacity duration-300 hover:opacity-70"
-							class:xs:opacity-0={!scrollY || !isPastLogoScrollDistance}
+							class={[
+								"h-8 transition-opacity duration-300 hover:opacity-100",
+								{
+									"xs:opacity-0": !scrollY.current || !isPastLogoScrollDistance
+								}
+							]}
 						/>
 						<img
 							src="/logo-title.svg"
 							alt={m.a11yAltLogo()}
 							width="100"
 							height="32"
-							class="h-8 opacity-0 transition-opacity duration-300 hover:opacity-70"
-							class:xs:opacity-100={!scrollY || !isPastLogoScrollDistance}
+							class={[
+								"h-8 opacity-0 transition-opacity duration-300 hover:opacity-100",
+								{
+									"xs:opacity-100": !scrollY.current || !isPastLogoScrollDistance
+								}
+							]}
 						/>
 					</svelte:element>
 				</div>
 				<!-- Right navigation -->
 				<div class="flex items-center gap-5 sm:gap-10">
 					<div
-						class="hidden items-center gap-10 duration-700 ease-out lg:flex"
-						class:-mr-40={!showButton}
+						class={[
+							"hidden items-center gap-10 duration-700 ease-out lg:flex",
+							{
+								"-mr-40": !showButton
+							}
+						]}
 					>
 						{#each navbarItems as item}
 							{@const linkClasses =
-								"relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
-							{#if i18n.route(item.href) === $page.route.id}
+								"relative after:absolute cursor-pointer after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"}
+							{#if i18n.route(item.href) === page.route.id}
 								<span
 									class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-full after:bg-dominant after:content-['']"
 								>
@@ -190,8 +199,8 @@
 								<button
 									type="button"
 									class={linkClasses}
-									on:click={async () => {
-										if ($page.route.id !== "/") {
+									onclick={async () => {
+										if (page.route.id !== "/") {
 											await goto("/");
 										}
 										document.querySelector(item.href)?.scrollIntoView();
@@ -204,11 +213,13 @@
 					</div>
 					<span
 						id="contact-us"
-						class="transition-opacity max-xs:hidden"
-						class:opacity-0={!showButton}
-						class:duration-200={!showButton}
-						class:duration-1000={showButton}
-						class:pointer-events-none={!showButton}
+						class={[
+							"transition-opacity max-xs:hidden",
+							{
+								"pointer-events-none opacity-0 duration-200": !showButton,
+								"duration-1000": showButton
+							}
+						]}
 					>
 						<Button variant="secondary" href="/contact" tabindex={showButton ? 0 : -1}>
 							{m.commonContact()}
@@ -216,9 +227,9 @@
 					</span>
 					<button
 						type="button"
-						class="lg:hidden"
+						class="cursor-pointer lg:hidden"
 						aria-label={m.a11yAriaMenu()}
-						on:click={() => (showSlideOver = true)}
+						onclick={() => (showSlideOver = true)}
 					>
 						<Bars3 class="size-8" />
 					</button>
@@ -254,42 +265,44 @@
 	</div>
 
 	<!-- Responsive slide-over -->
-	<SlideOver bind:show={showSlideOver} let:onClose>
-		<div
-			class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
-		>
-			{#each navbarItems as item}
+	<SlideOver bind:show={showSlideOver}>
+		{#snippet children({ onClose })}
+			<div
+				class="flex h-full flex-col items-center justify-center gap-20 text-4xl font-medium *:after:!-bottom-3 *:after:!h-2"
+			>
+				{#each navbarItems as item}
+					<button
+						type="button"
+						class="relative cursor-pointer after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+						onclick={() => {
+							onClose.set(async () => {
+								if (page.route.id !== "/") {
+									await goto("/");
+								}
+								document.querySelector(item.href)?.scrollIntoView();
+							});
+							showSlideOver = false;
+						}}
+					>
+						{item.name}
+					</button>
+				{/each}
 				<button
 					type="button"
-					class="relative after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-					on:click={() => {
-						onClose.set(async () => {
-							if ($page.route.id !== "/") {
-								await goto("/");
-							}
-							document.querySelector(item.href)?.scrollIntoView();
-						});
+					class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
+					onclick={() => {
+						onClose.set(() => goto("/contact"));
 						showSlideOver = false;
 					}}
 				>
-					{item.name}
+					{m.commonContact()}
 				</button>
-			{/each}
-			<button
-				type="button"
-				class="relative text-dominant after:absolute after:-bottom-1.5 after:left-0 after:h-1 after:w-0 after:bg-dominant after:duration-300 after:content-[''] hover:after:w-full"
-				on:click={() => {
-					onClose.set(() => goto("/contact"));
-					showSlideOver = false;
-				}}
-			>
-				{m.commonContact()}
-			</button>
-		</div>
+			</div>
+		{/snippet}
 	</SlideOver>
 
 	<main>
-		<slot />
+		{@render children?.()}
 	</main>
 
 	<footer class="border-t border-gray-500 p-16 text-gray-400 xs:p-24">
@@ -304,7 +317,7 @@
 			<div class="flex flex-wrap gap-x-20 gap-y-16 md:justify-evenly xl:w-full">
 				{#each footerItems as column}
 					<div class="min-w-fit">
-						<h3 class="mb-5 text-primary">{column.name}</h3>
+						<h3 class="mb-5 text-text-primary">{column.name}</h3>
 						<div class="flex flex-col gap-2 *:w-fit">
 							{#each column.items as item}
 								{@const isExternal = item.href.startsWith("http")}
@@ -336,7 +349,7 @@
 		<div class="relative mt-10 flex items-end justify-between *:h-min">
 			<!-- Left -->
 			<div>
-				<div class="mb-5 divide-x divide-gray-400 text-primary">
+				<div class="mb-5 divide-x divide-gray-400 text-text-primary">
 					<div class="inline-flex h-8 items-center gap-1">
 						<a
 							href="https://github.com/EmeraldHQ/Website"
@@ -348,7 +361,7 @@
 							<Github class="size-8" />
 						</a>
 						<span
-							class="select-none opacity-0 duration-300 -translate-x-4 scale-75 peer-hover:opacity-70 peer-hover:translate-x-0 peer-hover:scale-100"
+							class="-translate-x-4 scale-75 opacity-0 duration-300 select-none peer-hover:translate-x-0 peer-hover:scale-100 peer-hover:opacity-70"
 						>
 							↗
 						</span>
@@ -359,44 +372,41 @@
 			<!-- Middle -->
 			<button
 				type="button"
-				class="absolute bottom-0 left-0 right-0 mx-auto hidden w-fit text-center sm:block"
-				on:click={() => window.scrollTo({ top: 0 })}
-				on:keypress={() => window.scrollTo({ top: 0 })}
+				class="absolute right-0 bottom-0 left-0 mx-auto hidden w-fit text-center sm:block"
+				onclick={() => window.scrollTo({ top: 0 })}
 			>
 				<ArrowUp
-					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+					class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 				/>
 			</button>
 			<!-- Right -->
 			<div class="flex flex-col items-end gap-2">
-				<button
-					type="button"
-					class="sm:hidden"
-					on:click={() => window.scrollTo({ top: 0 })}
-					on:keypress={() => window.scrollTo({ top: 0 })}
-				>
+				<button type="button" class="sm:hidden" onclick={() => window.scrollTo({ top: 0 })}>
 					<ArrowUp
-						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-inverted"
+						class="size-8 cursor-pointer rounded-full border border-dominant p-1.5 text-dominant transition-colors duration-300 hover:border-transparent hover:bg-dominant hover:text-text-inverted"
 					/>
 				</button>
 				<div
 					role="radiogroup"
 					aria-label={m.a11yAriaRadioLanguage()}
-					class="inline-flex origin-bottom-right space-x-1 rounded-full border border-gray-400 p-1 text-primary shadow-2xl shadow-black scale-75 xs:scale-90 sm:scale-100"
+					class="inline-flex origin-bottom-right scale-75 space-x-1 rounded-full border border-gray-400 p-1 text-text-primary shadow-2xl shadow-black xs:scale-90 sm:scale-100"
 				>
 					{#each availableLanguageTags as lang}
 						<a
 							data-sveltekit-preload-data="off"
 							data-sveltekit-preload-code="hover"
-							href={i18n.resolveRoute($page.route.id ?? "/", lang)}
+							href={i18n.resolveRoute(page.route.id ?? "/", lang)}
 							hreflang={lang}
 							role="radio"
 							aria-current={lang === languageTag() ? "page" : undefined}
 							aria-checked={lang === languageTag()}
-							class="grid overflow-hidden rounded-full px-4 py-1 text-center uppercase transition-opacity duration-300 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1 group-hover:opacity-0"
-							class:bg-slate-500={lang === languageTag()}
-							class:hover:bg-slate-600={lang === languageTag()}
-							class:hover:bg-slate-800={lang !== languageTag()}
+							class={[
+								"grid overflow-hidden rounded-full px-4 py-1 text-center uppercase transition-opacity duration-300 *:col-start-1 *:col-end-1 *:row-start-1 *:row-end-1 group-hover:opacity-0",
+								{
+									"bg-slate-500 hover:bg-slate-600": lang === languageTag(),
+									"hover:bg-slate-800": lang !== languageTag()
+								}
+							]}
 						>
 							{lang}
 						</a>
