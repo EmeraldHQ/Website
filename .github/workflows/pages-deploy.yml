@@ -273,7 +273,7 @@ jobs:
   perf-check:
     name: Performance checks
     runs-on: ubuntu-latest
-    needs: [ build, deploy ]
+    needs: [build, deploy]
     if: github.event_name == 'push' && !failure() && !cancelled() && needs.build.outputs.has-built == 'true'
 
     steps:
