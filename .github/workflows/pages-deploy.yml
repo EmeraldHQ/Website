@@ -71,7 +71,7 @@ jobs:
           fetch-depth: ${{ github.event_name == 'push' && 2 || 1 }}
 
       - name: 🧭 Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
 
       - name: 📥 Install dependencies
         run: bun i
@@ -231,7 +231,7 @@ jobs:
           static_site_generator: sveltekit
 
       - name: 🧭 Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
 
       - name: 📥 Install dependencies
         run: bun i
